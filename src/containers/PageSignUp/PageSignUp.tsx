@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import LayoutPage from "components/LayoutPage/LayoutPage";
 import facebookSvg from "images/Facebook.svg";
 import twitterSvg from "images/Twitter.svg";
@@ -7,6 +7,8 @@ import Input from "components/Input/Input";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import NcLink from "components/NcLink/NcLink";
 import { Helmet } from "react-helmet";
+import axios from "../../axiosInstance";
+import { useHistory } from "react-router-dom";
 
 export interface PageSignUpProps {
   className?: string;
@@ -31,6 +33,42 @@ const loginSocials = [
 ];
 
 const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
+  const [user, setUser] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+  const { firstName, lastName, email, password } = user;
+  const [errors, setErros] = useState([]);
+  let history = useHistory();
+  
+  const register = (e) => {
+    e.preventDefault();
+    axios
+      .post("/authentication/register", user)
+
+      .then((res) => {
+        console.log(res.data);
+        history.push("/login");
+      })
+
+      .catch((err) => {
+        setErros(err.response.data);
+      });
+  };
+
+  useEffect(() => {
+    console.log(errors);
+  }, [errors]);
+
+  const onchange = (e) => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
     <div className={`nc-PageSignUp ${className}`} data-nc-id="PageSignUp">
       <Helmet>
@@ -68,7 +106,34 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
             <div className="absolute left-0 w-full top-1/2 transform -translate-y-1/2 border border-neutral-100 dark:border-neutral-800"></div>
           </div>
           {/* FORM */}
-          <form className="grid grid-cols-1 gap-6" action="#" method="post">
+          <form
+            className="grid grid-cols-1 gap-6"
+            onSubmit={(e) => register(e)}
+          >
+            <label className="block">
+              <span className="text-neutral-800 dark:text-neutral-200">
+                First Name
+              </span>
+              <Input
+                onChange={(e) => onchange(e)}
+                type="text"
+                name="firstName"
+                className="mt-1"
+                value={firstName}
+              />
+            </label>
+            <label className="block">
+              <span className="text-neutral-800 dark:text-neutral-200">
+                Last Name
+              </span>
+              <Input
+                onChange={(e) => onchange(e)}
+                type="text"
+                name="lastName"
+                className="mt-1"
+                value={lastName}
+              />
+            </label>
             <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
                 Email address
@@ -77,13 +142,28 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 type="email"
                 placeholder="example@example.com"
                 className="mt-1"
+                name="email"
+                onChange={(e) => onchange(e)}
+                value={email}
               />
             </label>
             <label className="block">
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
                 Password
               </span>
-              <Input type="password" className="mt-1" />
+              <Input
+                onChange={(e) => onchange(e)}
+                type="password"
+                name="password"
+                className="mt-1"
+                value={password}
+              />
+            </label>
+            <label className="block">
+              <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
+                Confirm Password
+              </span>
+              <Input type="password" name="ConfirmPassword" className="mt-1" />
             </label>
             <ButtonPrimary type="submit">Continue</ButtonPrimary>
           </form>

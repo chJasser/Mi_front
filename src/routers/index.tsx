@@ -107,7 +107,7 @@ const Routes = () => {
   return (
     <BrowserRouter
       basename={
-        process.env.REACT_APP_LRT_OR_RTL === "rtl" ? "/ncmaz-rtl" : "/ncmaz"
+        process.env.REACT_APP_LRT_OR_RTL 
       }
     >
       <ScrollToTop />
