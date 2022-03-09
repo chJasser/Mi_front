@@ -35,7 +35,6 @@ const loginSocials = [
 ];
 
 const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
- 
   const dispatch = useDispatch();
   const [user, setUser] = useState({ email: "", password: "" });
 
@@ -46,12 +45,31 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
     });
   };
 
+  const validate = (values) => {
+    const errors = {email:"",password:""};
+    if (!values.password) {
+      errors.password = "Required";
+    } else if (values.password.length > 15) {
+      errors.password = "Must be 15 characters or less";
+    }
+
+    if (!values.email) {
+      errors.email = "Required";
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+    ) {
+      errors.email = "Invalid email address";
+    }
+
+    return errors;
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     axios
       .post("/authentication/login", user)
       .then((res) => {
-        dispatch(login(res.data.token))
+        dispatch(login(res.data.token));
         console.log(res.data);
       }) // re-direct to login on successful register
 
@@ -97,7 +115,10 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
             <div className="absolute left-0 w-full top-1/2 transform -translate-y-1/2 border border-neutral-100 dark:border-neutral-800"></div>
           </div>
           {/* FORM */}
-          <form className="grid grid-cols-1 gap-6" onSubmit={(e) => onSubmit(e)}>
+          <form
+            className="grid grid-cols-1 gap-6"
+            onSubmit={(e) => onSubmit(e)}
+          >
             <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
                 Email address
