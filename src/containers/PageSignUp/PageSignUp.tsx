@@ -9,6 +9,8 @@ import NcLink from "components/NcLink/NcLink";
 import { Helmet } from "react-helmet";
 import axios from "../../axiosInstance";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "app/slices/userSlice";
 
 export interface PageSignUpProps {
   className?: string;
@@ -17,22 +19,36 @@ export interface PageSignUpProps {
 const loginSocials = [
   {
     name: "Continue with Facebook",
-    href: "#",
+    href: "http://localhost:5050/authentication/facebook",
     icon: facebookSvg,
   },
   {
-    name: "Continue with Twitter",
-    href: "#",
+    name: "Continue with Github",
+    href: "http://localhost:5050/authentication/github",
     icon: twitterSvg,
   },
   {
     name: "Continue with Google",
-    href: "#",
+    // href: "http://localhost:5050/authentication/google",
     icon: googleSvg,
   },
 ];
 
 const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
+  const [token, setToken] = useState("");
+  const dispatch = useDispatch();
+  useEffect(() => {
+    axios
+      .get("/authentication/google/callback")
+      .then((res) => {
+        console.log(res);
+        dispatch(login(res.data.token));
+      })
+      .catch((err) => {
+        setErros(err);
+      });
+  }, [token]);
+
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
@@ -42,7 +58,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
   const { firstName, lastName, email, password } = user;
   const [errors, setErros] = useState([]);
   let history = useHistory();
-  
+
   const register = (e) => {
     e.preventDefault();
     axios
@@ -83,6 +99,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
           <div className="grid gap-3">
             {loginSocials.map((item, index) => (
               <a
+               
                 key={index}
                 href={item.href}
                 className="nc-will-change-transform flex w-full rounded-lg bg-primary-50 dark:bg-neutral-800 px-4 py-3 transform transition-transform sm:px-6 hover:translate-y-[-2px]"

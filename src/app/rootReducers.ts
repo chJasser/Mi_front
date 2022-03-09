@@ -13,7 +13,7 @@ const rootReducers = {
   commentLikes: commentLikesReducer,
   pages: pagesReducer,
   mediaRunning: mediaRunningReducer,
-  userSlice: userSlice,
+  user: userSlice,
 };
 
 export default rootReducers;

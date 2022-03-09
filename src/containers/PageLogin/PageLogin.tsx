@@ -19,17 +19,17 @@ export interface PageLoginProps {
 const loginSocials = [
   {
     name: "Continue with Facebook",
-    href: "#",
+    href: "http://localhost:5050/authentication/facebook",
     icon: facebookSvg,
   },
   {
-    name: "Continue with Twitter",
-    href: "#",
+    name: "Continue with Github",
+    href: "http://localhost:5050/authentication/github",
     icon: twitterSvg,
   },
   {
     name: "Continue with Google",
-    href: "#",
+    href: "http://localhost:5050/authentication/google",
     icon: googleSvg,
   },
 ];
@@ -48,8 +48,6 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("ssss");
-
     axios
       .post("/authentication/login", user)
       .then((res) => {
