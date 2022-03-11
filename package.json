@@ -5,9 +5,12 @@
   "homepage": ".",
   "dependencies": {
     "@craco/craco": "^6.1.2",
+    "@emotion/react": "^11.8.1",
+    "@emotion/styled": "^11.8.1",
     "@glidejs/glide": "^3.4.1",
     "@headlessui/react": "^1.2.0",
     "@heroicons/react": "^1.0.1",
+    "@mui/material": "^5.5.0",
     "@reduxjs/toolkit": "^1.5.1",
     "@tailwindcss/aspect-ratio": "^0.2.1",
     "@tailwindcss/forms": "^0.3.2",
@@ -33,7 +36,8 @@
     "react-scripts": "4.0.3",
     "redux-persist": "^6.0.0",
     "typescript": "^4.1.2",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "craco start",
