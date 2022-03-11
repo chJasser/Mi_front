@@ -1,5 +1,5 @@
 import LayoutPage from "components/LayoutPage/LayoutPage";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import facebookSvg from "images/Facebook.svg";
 import twitterSvg from "images/Twitter.svg";
 import googleSvg from "images/Google.svg";
@@ -7,7 +7,6 @@ import Input from "components/Input/Input";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import NcLink from "components/NcLink/NcLink";
 import { Helmet } from "react-helmet";
-import { useHistory } from "react-router-dom";
 import axios from "../../axiosInstance";
 import { useDispatch } from "react-redux";
 import { login } from "app/slices/userSlice";

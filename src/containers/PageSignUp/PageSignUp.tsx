@@ -8,8 +8,6 @@ import ButtonPrimary from "components/Button/ButtonPrimary";
 import NcLink from "components/NcLink/NcLink";
 import { Helmet } from "react-helmet";
 import axios from "../../axiosInstance";
-import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import { Alert } from "@mui/material";
 import * as Yup from "yup";
@@ -17,6 +15,7 @@ import * as Yup from "yup";
 export interface PageSignUpProps {
   className?: string;
 }
+
 
 const loginSocials = [
   {
@@ -31,7 +30,7 @@ const loginSocials = [
   },
   {
     name: "Continue with Google",
-    // href: "http://localhost:5050/authentication/google",
+    href: "http://localhost:5050/authentication/google",
     icon: googleSvg,
   },
 ];
@@ -39,46 +38,6 @@ const loginSocials = [
 const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
   const [errors, setErrors] = useState(null);
   const [success, setSuccess] = useState(null);
-  // useEffect(() => {
-  //   axios
-  //     .get("/authentication/google/callback")
-  //     .then((res) => {
-  //       console.log(res);
-  //       dispatch(login(res.data.token));
-  //     })
-  //     .catch((err) => {
-  //       setErros(err);
-  //     });
-  // }, [token]);
-
-  let history = useHistory();
-
-  // const register = (e) => {
-  //   console.log(user);
-  //   e.preventDefault();
-  //   axios
-  //     .post("/authentication/register", user)
-
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       history.push("/login");
-  //     })
-
-  //     .catch((err) => {
-  //       setErros(err.response.data);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   console.log(errors);
-  // }, [errors]);
-
-  // const onchange = (e) => {
-  //   setUser({
-  //     ...user,
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
 
   const SignupForm = () => {
     const validationSchema = Yup.object({
@@ -241,8 +200,8 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
           <div className="grid gap-3">
             {loginSocials.map((item, index) => (
               <a
-                key={index}
                 href={item.href}
+                key={index}
                 className="nc-will-change-transform flex w-full rounded-lg bg-primary-50 dark:bg-neutral-800 px-4 py-3 transform transition-transform sm:px-6 hover:translate-y-[-2px]"
               >
                 <img

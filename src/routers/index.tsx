@@ -104,12 +104,9 @@ export const pages: Page[] = [
 ];
 
 const Routes = () => {
+
   return (
-    <BrowserRouter
-      basename={
-        process.env.REACT_APP_LRT_OR_RTL 
-      }
-    >
+    <BrowserRouter basename={process.env.REACT_APP_LRT_OR_RTL}>
       <ScrollToTop />
       <HeaderContainer />
       <Switch>
