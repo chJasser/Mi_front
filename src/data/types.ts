@@ -72,3 +72,28 @@ export interface VideoType {
   title: string;
   thumbnail: string;
 }
+/**
+ *
+ *
+ *
+ *
+ * khedmetna
+ *
+ *
+ *
+ */
+
+export interface ProductDataType {
+  id: string | number;
+  price: Number;
+  // creator: PostAuthorType;
+  createdAt: string;
+  category: string;
+  label: string;
+  marque: string;
+  description?: string;
+  state: string;
+  type: string;
+  images: string;
+  reference: string;
+}

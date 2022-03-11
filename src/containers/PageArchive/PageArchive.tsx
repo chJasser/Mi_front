@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import ModalCategories from "./ModalCategories";
 import ModalTags from "./ModalTags";
 import { DEMO_POSTS } from "data/posts";
@@ -16,15 +16,29 @@ import SectionGridCategoryBox from "components/SectionGridCategoryBox/SectionGri
 import ButtonSecondary from "components/Button/ButtonSecondary";
 import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
 import { DEMO_AUTHORS } from "data/authors";
-
+import axios from "axiosInstance";
+import Card11Product from "components/Card11/Card11Product";
 export interface PageArchiveProps {
   className?: string;
 }
 
 // Tag and category have same data type - we will use one demo data
 const posts: PostDataType[] = DEMO_POSTS.filter((_, i) => i < 16);
-
+var prods = [];
 const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    axios
+      .get("products/filter")
+      .then((res) => {
+        console.log(res.data.products);
+
+        setProducts(res.data.products);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
   const PAGE_DATA: TaxonomyType = DEMO_CATEGORIES[0];
 
   const FILTERS = [
@@ -41,7 +55,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       data-nc-id="PageArchive"
     >
       <Helmet>
-        <title>Archive || Blog Magazine React Template</title>
+        <title>Our Products || MI Universe</title>
       </Helmet>
 
       {/* HEADER */}
@@ -76,14 +90,12 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               <ArchiveFilterListBox lists={FILTERS} />
             </div>
           </div>
-
           {/* LOOP ITEMS */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
-            {posts.map((post) => (
-              <Card11 key={post.id} post={post} />
+            {products.map((product) => (
+              <Card11Product key={product._id} product={product} />
             ))}
           </div>
-
           {/* PAGINATIONS */}
           <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
             <Pagination />

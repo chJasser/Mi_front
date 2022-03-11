@@ -1,26 +1,25 @@
 import React, { FC, useState } from "react";
 import PostCardSaveAction from "components/PostCardSaveAction/PostCardSaveAction";
-import { PostDataType } from "data/types";
-import { Link } from "react-router-dom";
-import CategoryBadgeList from "components/CategoryBadgeList/CategoryBadgeList";
-import PostCardLikeAndComment from "components/PostCardLikeAndComment/PostCardLikeAndComment";
+import { ProductDataType } from "data/types";
+import ProductFeaturedMedia from "components/PostFeaturedMedia/ProductFeaturedMedia";
+import Badge from "components/Badge/Badge";
 import PostCardMeta from "components/PostCardMeta/PostCardMeta";
-import PostFeaturedMedia from "components/PostFeaturedMedia/PostFeaturedMedia";
-
 export interface Card11Props {
   className?: string;
-  post: PostDataType;
+  product;
   ratio?: string;
   hiddenAuthor?: boolean;
 }
 
-const Card11: FC<Card11Props> = ({
+const Card11Product: FC<Card11Props> = ({
   className = "h-full",
-  post,
+  product,
   hiddenAuthor = false,
   ratio = "aspect-w-4 aspect-h-3",
 }) => {
-  const { title, href, categories, date } = post;
+  const { label, createdAt, category, price, productImage } = product;
+
+  const date = createdAt.substring(0, 10);
 
   const [isHover, setIsHover] = useState(false);
 
@@ -36,33 +35,29 @@ const Card11: FC<Card11Props> = ({
         className={`block flex-shrink-0 relative w-full rounded-t-xl overflow-hidden ${ratio}`}
       >
         <div>
-          <PostFeaturedMedia post={post} isHover={isHover} />
+          <ProductFeaturedMedia product={product} isHover={isHover} />
         </div>
       </div>
-      <Link to={href} className="absolute inset-0"></Link>
+      {/* <Link to={href} className="absolute inset-0"></Link> */}
       <span className="absolute top-3 inset-x-3">
-        <CategoryBadgeList categories={categories} />
+        <Badge name={category} />
       </span>
 
       <div className="p-4 flex flex-col flex-grow space-y-3">
-        <PostCardMeta meta={post} />
-        {/* {!hiddenAuthor ? (
-          <PostCardMeta meta={post} />
-        ) : (
-          <span className="text-xs text-neutral-500">{date}</span>
-        )} */}
+        <PostCardMeta meta={product} />
+
+        <span className="text-xs text-neutral-500">{date}</span>
+
         <h2 className="nc-card-title block text-base font-semibold text-neutral-900 dark:text-neutral-100 ">
-          <Link to={href} className="line-clamp-2" title={title}>
-            {title}
-          </Link>
+          {label + " " + price + " $"}
         </h2>
         <div className="flex items-end justify-between mt-auto">
-          <PostCardLikeAndComment className="relative" postData={post} />
-          <PostCardSaveAction className="relative" postData={post} />
+          {/* <PostCardLikeAndComment className="relative" postData={post} />
+          <PostCardSaveAction className="relative" postData={post} /> */}
         </div>
       </div>
     </div>
   );
 };
 
-export default Card11;
+export default Card11Product;
