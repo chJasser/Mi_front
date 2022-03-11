@@ -53,6 +53,7 @@ export interface LocationStates {
   "/home-demo-5"?: {};
   "/home-demo-6"?: {};
   "/home-demo-7"?: {};
+  "/forgot-pass/:email"?: {};
 }
 
 export type PathName = keyof LocationStates;

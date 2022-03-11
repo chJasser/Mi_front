@@ -38,6 +38,7 @@ import PageHomeDemo6 from "containers/PageHome/PageHomeDemo6";
 import MediaRunningContainerForSafari from "containers/MediaRunningContainer/MediaRunningContainerForSafari";
 import isSafariBrowser from "utils/isSafariBrowser";
 import PageHomeDemo7 from "containers/PageHome/PageHomeDemo7";
+import RestPasswordComponent from "containers/PageForgotPass/ResetPasswordComponent.js";
 
 export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
@@ -100,11 +101,12 @@ export const pages: Page[] = [
   { path: "/home-demo-5", component: PageHomeDemo5 },
   { path: "/home-demo-6", component: PageHomeDemo6 },
   { path: "/home-demo-7", component: PageHomeDemo7 },
+  { path: "/forgot-pass/:email", component: RestPasswordComponent },
+
   //
 ];
 
 const Routes = () => {
-
   return (
     <BrowserRouter basename={process.env.REACT_APP_LRT_OR_RTL}>
       <ScrollToTop />
@@ -115,7 +117,8 @@ const Routes = () => {
             <Route
               key={path}
               component={component}
-              exact={!!exact}
+              exact
+              // exact={!!exact}
               path={path}
             />
           );
