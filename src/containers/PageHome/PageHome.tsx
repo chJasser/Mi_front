@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SectionLatestPosts from "./SectionLatestPosts";
 import SectionSliderPosts from "./SectionSliderPosts";
 import SectionMagazine1 from "./SectionMagazine1";
@@ -27,6 +27,9 @@ import SectionMagazine7 from "./SectionMagazine7";
 import SectionMagazine8 from "./SectionMagazine8";
 import SectionMagazine9 from "./SectionMagazine9";
 import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
+import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { login } from "app/slices/userSlice";
 
 //
 const POSTS: PostDataType[] = DEMO_POSTS;
@@ -37,6 +40,17 @@ const MAGAZINE2_POSTS = DEMO_POSTS.filter((_, i) => i >= 0 && i < 7);
 //
 
 const PageHome: React.FC = () => {
+  const [token, setToken] = useState(null);
+  const dispatch = useDispatch();
+  const search = useLocation().search;
+
+  useEffect(() => {
+    setToken(new URLSearchParams(search).get("token"));
+    if (token !== null) {
+      dispatch(login(token.substring(7)));
+    }
+  }, [token]);
+
   return (
     <div className="nc-PageHome relative">
       <Helmet>
