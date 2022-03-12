@@ -3,6 +3,7 @@ import axios from "axios";
 let initialState = {
 products: [],
 selectedProduct: {},
+loading:true,
 errors: "",
 };
 
@@ -13,8 +14,10 @@ reducers: {
 populateProducts(state, action) {
 state.products = action.payload;
 },
+//productdetail
 selectProduct(state, action) {
 state.selectedProduct = action.payload;
+
 },
 unselectProduct(state) {
 state.selectedProduct = null;
@@ -73,5 +76,5 @@ setErrors,
 deleteProduct,
 updateProduct,
 addProduct,
-} = productsSlice.actions;
-export default productsSlice.reducer;
+} = ProductsSlice.actions;
+export default ProductsSlice.reducer;

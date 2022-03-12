@@ -43,8 +43,6 @@
     "component": " npx generate-react-cli component"
   },
   "eslintConfig": {
-    
-     
     "extends": [
       "react-app",
       "react-app/jest"
@@ -55,7 +53,7 @@
     "rules": {
       "react-hooks/exhaustive-deps": 0,
       "no-unused-vars": 0,
-     "@typescript-eslint/no-unused-vars": 0
+      "@typescript-eslint/no-unused-vars": 0
     }
   },
   "browserslist": {

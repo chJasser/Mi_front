@@ -5,6 +5,7 @@ import darkmodeReducer from "./darkmode/darkmode";
 import pagesReducer from "./pages/pages";
 import mediaRunningReducer from "./mediaRunning/mediaRunning";
 import userSlice from "./slices/userSlice";
+import Productslice from "./productslice/Productslice";
 
 const rootReducers = {
   bookmark: bookmarkReducer,
@@ -13,7 +14,9 @@ const rootReducers = {
   commentLikes: commentLikesReducer,
   pages: pagesReducer,
   mediaRunning: mediaRunningReducer,
+  product:Productslice,
   user: userSlice,
+  
 };
 
 export default rootReducers;

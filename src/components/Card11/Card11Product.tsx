@@ -2,6 +2,7 @@ import React, { FC, useState } from "react";
 import PostCardSaveAction from "components/PostCardSaveAction/PostCardSaveAction";
 import { ProductDataType } from "data/types";
 import ProductFeaturedMedia from "components/PostFeaturedMedia/ProductFeaturedMedia";
+import PostCardLikeAndComment from "components/PostCardLikeAndComment/PostCardLikeAndComment";
 import Badge from "components/Badge/Badge";
 import PostCardMeta from "components/PostCardMeta/PostCardMeta";
 export interface Card11Props {
@@ -52,8 +53,9 @@ const Card11Product: FC<Card11Props> = ({
           {label + " " + price + " $"}
         </h2>
         <div className="flex items-end justify-between mt-auto">
-          {/* <PostCardLikeAndComment className="relative" postData={post} />
-          <PostCardSaveAction className="relative" postData={post} /> */}
+         {/*<PostCardLikeAndComment className="relative" postData={product} />
+
+  <PostCardSaveAction className="relative" postData={product} />*/ } 
         </div>
       </div>
     </div>
