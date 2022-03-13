@@ -9,14 +9,12 @@ import NcImage from "components/NcImage/NcImage";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-export interface MainNav1Props {
-  isTop: boolean;
-}
 
-const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
+
+const MaiNnavprod = ({ isTop }) => {
   const dispatch=useDispatch();
-  const cart = useSelector((state)=>state);
-  console.log(cart);
+  const cart = useSelector((state)=>state.cart.cartItems);
+  //console.log(cart);
   return (
     <div
       className={`nc-MainNav1 relative z-10 ${
@@ -33,7 +31,10 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
            <DarkModeContainer />
            <div className="" >
            <Link to="/dashboard/posts">
-           <img className="w-7 h-7" src="http://localhost:5050/uploads/R.png" />
+           <img className="w-7 h-7" src="http://localhost:5050/uploads/R.png" />{cart.length > 0 && (<span className="badge w-7 h-7">
+                  {cart.length} 
+               </span>)}
+               
             </Link>
 
            </div>
@@ -54,4 +55,4 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
   );
 };
 
-export default MainNav1;
+export default MaiNnavprod;

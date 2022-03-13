@@ -17,7 +17,7 @@ const rootReducers = {
   mediaRunning: mediaRunningReducer,
   product:Productslice,
   user: userSlice,
-  cart:carteSlice,
+  cart: carteSlice,
   
 };
 

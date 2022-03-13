@@ -1,25 +1,30 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "app/store";
-import React from 'react';
+import React, { useState } from 'react';
 import { additem } from "app/cartslice/carteSlice";
-export default function ProductScreen() {
+import { Link } from "react-router-dom";
+export default function ProductScreen(props) {
    // const product = data.products.find((x) => x._id === props.match.params.id);
    // if (!product) {
      // return <div> Product Not Found</div>;
    // }
    const dispatch= useDispatch();
-   
+  
   const product = useSelector((state)=>state.product.selectedProduct);
   console.log(product);
   
   
    const { _id,label,createdAt, category, price, productImage,description ,reference,remise} = product;
+   const [qty, setQty] = useState(1);
+  /*const addToCartHandler = () => {
+    props.history.push(`/dashboard/posts/${_id}?qty=${qty}`);
+  };*/
    const item={
     label: label,
     price:price,
     productImage:productImage,
     _id:_id,
-    qte:2,
+    qte:qty,
 
   }
    const base_url = "http://localhost:5050/";
@@ -44,6 +49,12 @@ export default function ProductScreen() {
                 ></Rating>
     </li>*/} 
               <li>Pirce : ${price}</li>
+              <li>Qty :
+                <input type="number" value={qty}
+                onChange={(e)=>{setQty(e.target.value)}}>
+                  
+                </input>
+              </li>
               <li>
                 Description:
                 <p>{reference}</p>
@@ -69,9 +80,13 @@ export default function ProductScreen() {
   </li>*/}
                 
                 <li>
-                  <button className="btn primary block" onClick={()=>{
+                  <Link to={`/dashboard/posts/${_id}?qty=${qty}`}>
+                  <button className="btn primary block"  onClick={()=>{
                     dispatch(additem(item))
+                    
+                  
                   }}>Add to Cart</button>
+                  </Link>
                 </li>
               </ul>
             </div>

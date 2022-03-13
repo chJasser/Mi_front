@@ -10,6 +10,16 @@ initialState:{
     total:0,
 },
 reducers:{
+  removeitem:(state,action)=>{
+    return {
+        ...state,
+        cartItems: state.cartItems.filter((x) => x.productid !== action.payload),
+      };
+
+},
+
+
+
 additem:(state,action)=>{
 //state.quantity+=1;
 let item={
@@ -31,17 +41,8 @@ const existItem = state.cartItems.find((x) => x.productid === item.productid);
       } else {
         return{...state, cartItems: [...state.cartItems, item]} ;
       }
-
-//state.total+=action.payload.price*action.payload.quantity;
-//localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
 },
-removeitem:(state,action)=>{
-    return {
-        ...state,
-        cartItems: state.cartItems.filter((x) => x.productid !== action.payload),
-      };
 
-},
 getTotal:(state)=>{
 
     

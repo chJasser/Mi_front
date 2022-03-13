@@ -9,6 +9,7 @@ import DashboardRoot from "./DashboardRoot";
 import DashboardSubcription from "./DashboardSubcription";
 import DashboardSubmitPost from "./DashboardSubmitPost";
 import { Helmet } from "react-helmet";
+import Cartproducts from "./Cartproducts";
 
 export interface PageDashboardProps {
   className?: string;
@@ -25,14 +26,14 @@ interface DashboardLocationState {
 }
 
 interface DashboardPage {
-  sPath: keyof DashboardLocationState;
+  //sPath: keyof DashboardLocationState;
   exact?: boolean;
   component: ComponentType<Object>;
   emoij: string;
   pageName: string;
 }
 
-const subPages: DashboardPage[] = [
+const subPages = [
   {
     sPath: "/root",
     exact: true,
@@ -41,8 +42,8 @@ const subPages: DashboardPage[] = [
     pageName: "Dash board",
   },
   {
-    sPath: "/posts",
-    component: DashboardPosts,
+    sPath: "/posts/:id?",
+    component: Cartproducts,
     emoij: "📕",
     pageName: "Posts",
   },
