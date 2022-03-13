@@ -6,6 +6,7 @@ import pagesReducer from "./pages/pages";
 import mediaRunningReducer from "./mediaRunning/mediaRunning";
 import userSlice from "./slices/userSlice";
 import Productslice from "./productslice/Productslice";
+import carteSlice from "./cartslice/carteSlice";
 
 const rootReducers = {
   bookmark: bookmarkReducer,
@@ -16,6 +17,7 @@ const rootReducers = {
   mediaRunning: mediaRunningReducer,
   product:Productslice,
   user: userSlice,
+  cart:carteSlice,
   
 };
 

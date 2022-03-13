@@ -20,6 +20,7 @@ import axios from "axiosInstance";
 import Card11Product from "components/Card11/Card11Product";
 import { useDispatch } from "react-redux";
 import { fetchProducts, populateProducts } from "app/productslice/Productslice";
+//import ModalCategoriesprod from "./Modalcategoriesprod";
 export interface PageArchiveProps {
   className?: string;
 }
@@ -85,7 +86,8 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
         <div>
           <div className="flex flex-col sm:items-center sm:justify-between sm:flex-row">
             <div className="flex space-x-2.5">
-              <ModalCategories categories={DEMO_CATEGORIES} />
+             {/*<ModalCategories categories={DEMO_CATEGORIES} />*/}
+            {/*<ModalCategoriesprod/>*/} 
               <ModalTags tags={DEMO_TAGS} />
             </div>
             <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>
@@ -97,6 +99,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
             {products.map((product) => (
               <Card11Product key={product._id} product={product} />
+              
             ))}
           </div>
           {/* PAGINATIONS */}

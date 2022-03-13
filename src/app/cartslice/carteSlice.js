@@ -10,7 +10,7 @@ initialState:{
     total:0,
 },
 reducers:{
-addProduct:(state,action)=>{
+additem:(state,action)=>{
 //state.quantity+=1;
 let item={
     label:action.payload.label,
@@ -18,7 +18,7 @@ let item={
     productImage:action.payload.productImage,
     remise:action.payload.discountPercent,
     productid:action.payload._id,
-    qte
+    qte:action.payload.qte,
 };
 const existItem = state.cartItems.find((x) => x.productid === item.productid);
       if (existItem) {
@@ -33,9 +33,9 @@ const existItem = state.cartItems.find((x) => x.productid === item.productid);
       }
 
 //state.total+=action.payload.price*action.payload.quantity;
-localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
+//localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
 },
-removeproduct:(state,action)=>{
+removeitem:(state,action)=>{
     return {
         ...state,
         cartItems: state.cartItems.filter((x) => x.productid !== action.payload),
@@ -50,3 +50,8 @@ getTotal:(state)=>{
 }
 
 })
+export const {
+  additem,
+  removeitem,
+  } = carteSlice.actions;
+  export default carteSlice.reducer;

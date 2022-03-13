@@ -83,12 +83,11 @@ const PageDashboard: FC<PageDashboardProps> = ({ className = "" }) => {
       <LayoutPage
         subHeading="View your dashboard, manage your Posts, Subscription, edit password and profile"
         headingEmoji="⚙"
-        heading="Dash board"
-      >
-        <div className="flex flex-col space-y-8 xl:space-y-0 xl:flex-row">
-          {/* SIDEBAR */}
+        heading="Dash board">
+          {<div className="flex flex-col space-y-8 xl:space-y-0 xl:flex-row">
+          {}
 
-          <div className="flex-shrink-0 max-w-xl xl:w-80 xl:pr-8">
+         {/* <div className="flex-shrink-0 max-w-xl xl:w-80 xl:pr-8">
             <ul className="text-base space-y-1 text-neutral-6000 dark:text-neutral-400">
               {subPages.map(({ sPath, pageName, emoij }, index) => {
                 return (
@@ -105,7 +104,7 @@ const PageDashboard: FC<PageDashboardProps> = ({ className = "" }) => {
                 );
               })}
             </ul>
-          </div>
+          </div>*/}
           <div className="border border-neutral-100 dark:border-neutral-800 md:hidden"></div>
           <div className="flex-grow">
             <Switch>
@@ -122,7 +121,7 @@ const PageDashboard: FC<PageDashboardProps> = ({ className = "" }) => {
               <Redirect to={path + "/root"} />
             </Switch>
           </div>
-        </div>
+        </div>}
       </LayoutPage>
     </div>
   );
