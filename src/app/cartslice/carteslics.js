@@ -1,14 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-let initialState = {
-  cartItems: [],
-    total: 0,
-}
-
-const carteSlice = createSlice({
-  name: "cart",
+const getTotalAmmount = (state) => {
+  const items = state.cartItems;
+  items.forEach((i) => {
+    return i.price * i.qte;
+  });
+};
+const carteslics = createSlice({
+  name: "carteslics",
   initialState: {
     cartItems: [],
+
     total: 0,
   },
   reducers: {
@@ -20,6 +22,8 @@ const carteSlice = createSlice({
         ),
       };
     },
+    updateqte: (state, action) => {},
+
     additem: (state, action) => {
       //state.quantity+=1;
       let item = {
@@ -27,7 +31,7 @@ const carteSlice = createSlice({
         price: action.payload.price,
         productImage: action.payload.productImage,
         remise: action.payload.discountPercent,
-        productid: action.payload._id,
+        productid: action.payload.productid,
         qte: action.payload.qte,
       };
       const existItem = state.cartItems.find(
@@ -46,16 +50,13 @@ const carteSlice = createSlice({
     },
 
     getTotal: (state) => {
-      let result = 0;
       return {
         ...state,
-       // cartItems: state.cartItems.map(item => result += item.price * item.qte
-          //result === 0 ? {...state, total: result} : console.log("error");
-        //),
-        total: state.total, result
-      }
-    }, 
+        total: getTotalAmmount(state),
+      };
+    },
   },
 });
-export const { additem, removeitem, getTotal } = carteSlice.actions;
-export default carteSlice.reducer;
+
+export const { additem, removeitem, getTotal, updateqte } = carteslics.actions;
+export default carteslics.reducer;

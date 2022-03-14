@@ -6,7 +6,8 @@ import pagesReducer from "./pages/pages";
 import mediaRunningReducer from "./mediaRunning/mediaRunning";
 import userSlice from "./slices/userSlice";
 import Productslice from "./productslice/Productslice";
-import carteSlice from "./cartslice/carteSlice";
+
+import carteslics from "./cartslice/carteslics";
 
 const rootReducers = {
   bookmark: bookmarkReducer,
@@ -17,7 +18,8 @@ const rootReducers = {
   mediaRunning: mediaRunningReducer,
   product:Productslice,
   user: userSlice,
-  cart: carteSlice,
+  carteslics:carteslics,
+  
 };
 
 export default rootReducers;

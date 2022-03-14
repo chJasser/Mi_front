@@ -11,10 +11,10 @@ import { useDispatch, useSelector } from "react-redux";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Badge from "@material-ui/core/Badge";
 
-const MaiNnavprod=({ isTop }) => {
+const MaiNnavprod = ({ isTop }) => {
   const dispatch = useDispatch();
-  const cart = useSelector((state)=>state.cart.cartItems);
-  //console.log(cart);
+  const cart = useSelector((state) => state.carteslics.cartItems);
+  console.log(cart);
   return (
     <div
       className={`nc-MainNav1 relative z-10 ${
@@ -31,7 +31,7 @@ const MaiNnavprod=({ isTop }) => {
             <DarkModeContainer />
             <div>
               <Link to="/dashboard/posts">
-                <Badge color="secondary" badgeContent={5}>
+                <Badge color="secondary" badgeContent={cart.length}>
                   {/* {cart.length} */}
                   <ShoppingCartIcon />{" "}
                 </Badge>

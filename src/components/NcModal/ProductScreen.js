@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "app/store";
 import React, { useState } from 'react';
-import { additem } from "app/cartslice/carteSlice";
+import { additem } from "app/cartslice/carteslics";
 import { Link } from "react-router-dom";
 export default function ProductScreen(props) {
    // const product = data.products.find((x) => x._id === props.match.params.id);
@@ -23,7 +23,7 @@ export default function ProductScreen(props) {
     label: label,
     price:price,
     productImage:productImage,
-    _id:_id,
+    productid:_id,
     qte:qty,
 
   }
