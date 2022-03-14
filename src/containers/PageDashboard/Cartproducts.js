@@ -2,12 +2,14 @@ import React from "react";
 import NcImage from "components/NcImage/NcImage";
 import Pagination from "components/Pagination/Pagination";
 import { useDispatch, useSelector } from "react-redux";
-import { removeitem } from "app/cartslice/carteSlice";
+import { removeitem, getTotal } from "app/cartslice/carteSlice";
+import ButtonPrimary from "components/Button/ButtonPrimary";
 
 
 const Cartproducts = () => {
-  
-const carteitems=useSelector((state)=>state.cart.cartItems);
+  let carteitems = [];
+carteitems=useSelector((state)=>state.cart.cartItems);
+const total = useSelector((state)=>state.cart.total)
 console.log(carteitems);
 const dispatch=useDispatch();
 const base_url = "http://localhost:5050/";
@@ -44,14 +46,12 @@ const base_url = "http://localhost:5050/";
                           containerClassName="flex-shrink-0 h-12 w-12 rounded-lg overflow-hidden lg:h-14 lg:w-14"
                           src={`${base_url}${item.productImage}`}
                         />
-                        
-                        
                       </div>
                     </td>
                     <td>
                     <div className="ml-4 flex-grow">
                           <h2 className="inline-flex line-clamp-2 text-sm font-semibold  dark:text-neutral-300">
-                            {item.price}
+                            {item.price}$
                           </h2>
                         </div>
                     </td>
@@ -85,7 +85,6 @@ const base_url = "http://localhost:5050/";
                         
                         className="text-rose-600 hover:text-rose-900"
                         onClick={()=>{ dispatch(removeitem(item.productid))}
-                           
                         }
                       >
                         Delete
@@ -98,8 +97,10 @@ const base_url = "http://localhost:5050/";
           </div>
         </div>
       </div>
-
-      <Pagination />
+      <ButtonPrimary href="/archive/the-demo-archive-slug">Shop More</ButtonPrimary>
+      <h3>Total Price : </h3>
+      {/* {`${total}$`} */}
+      {/* <Pagination /> */}
     </div>
   );
 };

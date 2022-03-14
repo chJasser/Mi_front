@@ -9,13 +9,14 @@ import NcImage from "components/NcImage/NcImage";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+
 export interface MainNav1Props {
   isTop: boolean;
 }
 
 const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
-  const dispatch=useDispatch();
-  const cart = useSelector((state)=>state);
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state);
   console.log(cart);
   return (
     <div
@@ -30,16 +31,18 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
         </div>
         <div className="flex-shrink-0 flex items-center justify-end text-neutral-700 dark:text-neutral-100 space-x-1">
           <div className="hidden items-center xl:flex space-x-1">
-           <DarkModeContainer />
-           <div className="" >
-           <Link to="/dashboard/posts">
-           <img className="w-7 h-7" src="http://localhost:5050/uploads/R.png" />
-            </Link>
+            <DarkModeContainer />
+            <div className="">
+              <Link to="/dashboard/posts">
+                <img
+                  className="w-7 h-7"
+                  src="http://localhost:5050/uploads/R.png"
+                />
+              </Link>
+            </div>
 
-           </div>
-          
             <SearchDropdown />
-            
+
             <div className="px-1" />
             <ButtonPrimary href="/login">Sign up</ButtonPrimary>
           </div>

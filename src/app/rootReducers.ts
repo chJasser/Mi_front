@@ -18,7 +18,6 @@ const rootReducers = {
   product:Productslice,
   user: userSlice,
   cart: carteSlice,
-  
 };
 
 export default rootReducers;
