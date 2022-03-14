@@ -40,6 +40,7 @@ import isSafariBrowser from "utils/isSafariBrowser";
 import PageHomeDemo7 from "containers/PageHome/PageHomeDemo7";
 import RestPasswordComponent from "containers/PageForgotPass/ResetPasswordComponent.js";
 import PagePassword from "containers/PageSignUp/PagePassword";
+import LoginRoute from "./LoginRoute";
 
 export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
@@ -90,9 +91,9 @@ export const pages: Page[] = [
   { path: "/about", component: PageAbout },
   { path: "/contact", component: PageContact },
   { path: "/page404", component: Page404 },
-  { path: "/login", component: PageLogin },
-  { path: "/signup", component: PageSignUp },
-  { path: "/forgot-pass", component: PageForgotPass },
+  { path: "/login", typeRoute: "auth", component: PageLogin },
+  { path: "/signup", typeRoute: "auth", component: PageSignUp },
+  { path: "/forgot-pass", exact:true,typeRoute: "auth", component: PageForgotPass },
   { path: "/dashboard", component: PageDashboard },
   { path: "/subscription", component: PageSubcription },
   //
@@ -102,8 +103,18 @@ export const pages: Page[] = [
   { path: "/home-demo-5", component: PageHomeDemo5 },
   { path: "/home-demo-6", component: PageHomeDemo6 },
   { path: "/home-demo-7", component: PageHomeDemo7 },
-  { path: "/forgot-pass/:email", component: RestPasswordComponent },
-  { path: "/passport/register", component: PagePassword },
+  {
+    path: "/forgot-pass/:email",
+   
+    typeRoute: "auth",
+    component: RestPasswordComponent,
+  },
+  {
+    path: "/passport/register",
+    typeRoute: "auth",
+    exact: true,
+    component: PagePassword,
+  },
 
   //
 ];
@@ -114,16 +125,26 @@ const Routes = () => {
       <ScrollToTop />
       <HeaderContainer />
       <Switch>
-        {pages.map(({ component, path, exact }) => {
-          return (
-            <Route
-              key={path}
-              component={component}
-              exact
-              // exact={!!exact}
-              path={path}
-            />
-          );
+        {pages.map(({ component, path, exact, typeRoute }) => {
+          if (typeRoute === "auth") {
+            return (
+              <LoginRoute
+                key={path}
+                component={component}
+                exact={!!exact}
+                path={path}
+              />
+            );
+          } else {
+            return (
+              <Route
+                key={path}
+                component={component}
+                exact={!!exact}
+                path={path}
+              />
+            );
+          }
         })}
         <Route component={Page404} />
       </Switch>
