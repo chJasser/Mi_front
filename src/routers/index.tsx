@@ -39,6 +39,7 @@ import MediaRunningContainerForSafari from "containers/MediaRunningContainer/Med
 import isSafariBrowser from "utils/isSafariBrowser";
 import PageHomeDemo7 from "containers/PageHome/PageHomeDemo7";
 import RestPasswordComponent from "containers/PageForgotPass/ResetPasswordComponent.js";
+import PagePassword from "containers/PageSignUp/PagePassword";
 
 export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
@@ -101,13 +102,8 @@ export const pages: Page[] = [
   // { path: "/home-demo-5", component: PageHomeDemo5 },
   // { path: "/home-demo-6", component: PageHomeDemo6 },
   // { path: "/home-demo-7", component: PageHomeDemo7 },
-  //{ path: "/home-demo-2", component: PageHomeDemo2 },
-  //{ path: "/home-demo-3", component: PageHomeDemo3 },
-  //{ path: "/home-demo-4", component: PageHomeDemo4 },
-  //{ path: "/home-demo-5", component: PageHomeDemo5 },
-  //{ path: "/home-demo-6", component: PageHomeDemo6 },
-  //{ path: "/home-demo-7", component: PageHomeDemo7 },
-  //{ path: "/forgot-pass/:email", component: RestPasswordComponent },
+  { path: "/forgot-pass/:email", component: RestPasswordComponent },
+  { path: "/passport/register", component: PagePassword },
 
   //
 ];

@@ -26,6 +26,8 @@
     "axios": "^0.26.1",
     "dotenv-cra": "^3.0.2",
     "formik": "^2.2.9",
+    "is-empty": "^1.2.0",
+    "jwt-decode": "^3.1.2",
     "query-string": "^7.1.1",
     "react": "^17.0.2",
     "react-audio-player": "^0.17.0",

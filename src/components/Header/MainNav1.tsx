@@ -5,12 +5,17 @@ import SearchDropdown from "./SearchDropdown";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import MenuBar from "components/MenuBar/MenuBar";
 import DarkModeContainer from "containers/DarkModeContainer/DarkModeContainer";
+import { isAuthenticated, logoutUser } from "app/slices/userSlice";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "app/hooks";
 
 export interface MainNav1Props {
   isTop: boolean;
 }
 
 const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
+  const isAuth = useSelector(isAuthenticated);
+  const dispatch = useAppDispatch();
   return (
     <div
       className={`nc-MainNav1 relative z-10 ${
@@ -27,10 +32,22 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
             <DarkModeContainer />
             <SearchDropdown />
             <div className="px-1" />
-            <ButtonPrimary href="/login">Sign up</ButtonPrimary>
+            {isAuth ? (
+              <ButtonPrimary onClick={()=>dispatch(logoutUser())}>
+                Logout
+              </ButtonPrimary>
+            ) : (
+              <ButtonPrimary href="/login">Sign up</ButtonPrimary>
+            )}
           </div>
           <div className="flex items-center xl:hidden">
-            <ButtonPrimary href="/login">Sign up</ButtonPrimary>
+            {isAuth ? (
+              <ButtonPrimary onClick={()=>dispatch(logoutUser())}>
+                Logout
+              </ButtonPrimary>
+            ) : (
+              <ButtonPrimary href="/login">Sign up</ButtonPrimary>
+            )}
             <div className="px-1" />
             <MenuBar />
           </div>
