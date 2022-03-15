@@ -40,7 +40,10 @@ import isSafariBrowser from "utils/isSafariBrowser";
 import PageHomeDemo7 from "containers/PageHome/PageHomeDemo7";
 import RestPasswordComponent from "containers/PageForgotPass/ResetPasswordComponent.js";
 import PagePassword from "containers/PageSignUp/PagePassword";
-import LoginRoute from "./LoginRoute";
+import AuthRoute from "./AuthRoute";
+import PageBecomeAnTeacher from "components/SectionBecomeAnTeacher/BecomeAnTeacher";
+import PageSeller from "components/SectionBecomeAnSeller/BecomeAnSeller";
+import BecomeTeacherRoute from "./BecomeSellerRoute";
 
 export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
@@ -93,7 +96,12 @@ export const pages: Page[] = [
   { path: "/page404", component: Page404 },
   { path: "/login", typeRoute: "auth", component: PageLogin },
   { path: "/signup", typeRoute: "auth", component: PageSignUp },
-  { path: "/forgot-pass", exact:true,typeRoute: "auth", component: PageForgotPass },
+  {
+    path: "/forgot-pass",
+    exact: true,
+    typeRoute: "auth",
+    component: PageForgotPass,
+  },
   { path: "/dashboard", component: PageDashboard },
   { path: "/subscription", component: PageSubcription },
   //
@@ -105,7 +113,7 @@ export const pages: Page[] = [
   { path: "/home-demo-7", component: PageHomeDemo7 },
   {
     path: "/forgot-pass/:email",
-   
+
     typeRoute: "auth",
     component: RestPasswordComponent,
   },
@@ -114,6 +122,17 @@ export const pages: Page[] = [
     typeRoute: "auth",
     exact: true,
     component: PagePassword,
+  },
+  {
+    path: "/become-teacher",
+    exact: true,
+    component: PageBecomeAnTeacher,
+  },
+  {
+    path: "/become-seller",
+    exact: true,
+    typeRoute: "seller",
+    component: PageSeller,
   },
 
   //
@@ -128,7 +147,16 @@ const Routes = () => {
         {pages.map(({ component, path, exact, typeRoute }) => {
           if (typeRoute === "auth") {
             return (
-              <LoginRoute
+              <AuthRoute
+                key={path}
+                component={component}
+                exact={!!exact}
+                path={path}
+              />
+            );
+          } else if (typeRoute === "seller") {
+            return (
+              <BecomeTeacherRoute
                 key={path}
                 component={component}
                 exact={!!exact}

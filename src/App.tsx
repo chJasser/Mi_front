@@ -1,11 +1,18 @@
-import { logoutUser, setCurrentUser } from "app/slices/userSlice";
+import {
+  getCurrentSeller,
+  logoutUser,
+  setCurrentUser,
+} from "app/slices/userSlice";
 import { store } from "app/store";
 import { setAuthToken } from "axiosInstance";
 import MyRouter from "routers/index";
 import jwt_decode from "jwt-decode";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+
 if (localStorage.token) {
   // Set auth token header auth
-  const token = localStorage.token;
+  var token = localStorage.token;
   setAuthToken(token);
   // Decode token and get user info and exp
 
@@ -13,7 +20,8 @@ if (localStorage.token) {
 
   // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded));
-  // // Check for expired token
+
+  // Check for expired token
 
   const currentTime = Date.now() / 1000; // to get in milliseconds
   if (decoded.expiresIn < currentTime) {
@@ -25,6 +33,13 @@ if (localStorage.token) {
 }
 
 export default function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (localStorage.token) {
+      dispatch(getCurrentSeller());
+    }
+  }, [token]);
+
   return (
     <div className="bg-white text-base dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">
       <MyRouter />

@@ -27,9 +27,17 @@ import SectionMagazine7 from "./SectionMagazine7";
 import SectionMagazine8 from "./SectionMagazine8";
 import SectionMagazine9 from "./SectionMagazine9";
 import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { login } from "app/slices/userSlice";
+import {
+  getCurrentSeller,
+  isAuthenticated,
+  login,
+  userRoles,
+} from "app/slices/userSlice";
+import SectionBecomeAnTeacher from "components/SectionBecomeAnTeacher/SectionBecomeAnTeacher";
+import SectionBecomeAnStudent from "components/SectionBecomeAnStudent/SectionBecomeAnStudent";
+import SectionBecomeAnSeller from "components/SectionBecomeAnSeller/SectionBecomeAnSeller";
 
 //
 const POSTS: PostDataType[] = DEMO_POSTS;
@@ -43,11 +51,13 @@ const PageHome: React.FC = () => {
   const [token, setToken] = useState(null);
   const dispatch = useDispatch();
   const search = useLocation().search;
-
+  const isAuth = useSelector(isAuthenticated);
+  const roles = useSelector(userRoles);
   useEffect(() => {
     setToken(new URLSearchParams(search).get("token"));
     if (token !== null) {
-      dispatch(login(token.substring(7)));
+      dispatch(login(token));
+      dispatch(getCurrentSeller());
     }
   }, [token]);
 
@@ -79,6 +89,19 @@ const PageHome: React.FC = () => {
               authors={DEMO_AUTHORS.filter((_, i) => i < 10)}
             />
           </div>
+
+          <div className="relative py-16">
+            <BackgroundSection />
+            <SectionBecomeAnTeacher />
+          </div>
+
+          <SectionBecomeAnStudent className="pt-16 lg:pt-28" />
+          {isAuth && !roles.includes("seller") && (
+            <div className="relative py-16">
+              <BackgroundSection />
+              <SectionBecomeAnSeller />
+            </div>
+          )}
 
           {/* === SECTION 5 === */}
           <SectionSliderNewCategories
@@ -155,10 +178,6 @@ const PageHome: React.FC = () => {
           />
 
           {/* === SECTION 8 === */}
-          <div className="relative py-16">
-            <BackgroundSection />
-            <SectionBecomeAnAuthor />
-          </div>
 
           {/* === SECTION 11 === */}
           <SectionMagazine4
@@ -181,9 +200,6 @@ const PageHome: React.FC = () => {
               sliderStype="style2"
             />
           </div>
-
-          {/* === SECTION 14 === */}
-          <SectionSubscribe2 className="pt-16 lg:pt-28" />
 
           {/* === SECTION 15 === */}
           <SectionVideos className="py-16 lg:py-28" />

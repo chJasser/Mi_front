@@ -2,7 +2,7 @@ import { isAuthenticated } from "app/slices/userSlice";
 import { useSelector } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 
-const LoginRoute = ({ component: Component, ...rest }) => {
+const AuthRoute = ({ component: Component, ...rest }) => {
   const isAuth = useSelector(isAuthenticated);
   return (
     <div>
@@ -20,4 +20,4 @@ const LoginRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-export default LoginRoute;
+export default AuthRoute;

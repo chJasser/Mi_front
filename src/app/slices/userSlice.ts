@@ -1,10 +1,14 @@
 import jwt_decode from "jwt-decode";
 import { setAuthToken } from "axiosInstance";
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "../../axiosInstance";
 
 const isEmpty = require("is-empty");
 let initialState = {
   currentUser: null,
+  currentTeacher: null,
+  currentSeller: null,
+  currentStudent: null,
   isAuthenticated: false,
 };
 
@@ -26,17 +30,40 @@ const userSlice = createSlice({
       state.currentUser = action.payload;
       state.isAuthenticated = !isEmpty(action.payload);
     },
+    setCurrentSeller(state, action) {
+      state.currentSeller = action.payload;
+    },
     logoutUser(state) {
       localStorage.removeItem("token");
       state.currentUser = null;
       state.isAuthenticated = false;
       setAuthToken(false);
+      window.location.href = "/";
     },
   },
 });
+export const userRoles = (state) => {
+  if (state.user.currentUser == null) {
+    return [];
+  }
+  return state.user.currentUser.user_role;
+};
+
 export const isAuthenticated = (state) => {
   return state.user.isAuthenticated;
 };
 
-export const { login, setCurrentUser, logoutUser } = userSlice.actions;
+export const getCurrentSeller = () => (dispatch) => {
+  axios
+    .get("/sellers/getcurrentseller")
+    .then((response) => {
+      dispatch(setCurrentSeller(response.data.seller));
+    })
+    .catch((error) => {
+      dispatch(setCurrentSeller(error.response.data.selle));
+    });
+};
+
+export const { login, setCurrentUser, logoutUser, setCurrentSeller } =
+  userSlice.actions;
 export default userSlice.reducer;
