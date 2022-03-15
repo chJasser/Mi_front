@@ -8,17 +8,10 @@ import DarkModeContainer from "containers/DarkModeContainer/DarkModeContainer";
 import NcImage from "components/NcImage/NcImage";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { isAuthenticated, logoutUser } from "app/slices/userSlice";
-import { useAppDispatch } from "app/hooks";
 
-export interface MainNav1Props {
-  isTop: boolean;
-}
-
-const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
-  const isAuth = useSelector(isAuthenticated);
-  const dispatch = useAppDispatch();
-  const cart = useSelector((state) => state);
+const MaiNnavprod = ({ isTop }) => {
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.carteslics.cartItems);
   console.log(cart);
   return (
     <div
@@ -35,33 +28,22 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
           <div className="hidden items-center xl:flex space-x-1">
             <DarkModeContainer />
             <div className="">
-              <Link to="/dashboard/posts">
-                <img
-                  className="w-7 h-7"
-                  src="http://localhost:5050/uploads/R.png"
-                />
-              </Link>
+            <Link to="/dashboard/posts">
+           <img className="w-7 h-7" src="http://localhost:5050/uploads/R.png" />{cart.length > 0 && (<span className="badge w-7 h-7">
+                  {cart.length} 
+               </span>)}
+               
+            </Link>
+
             </div>
 
             <SearchDropdown />
 
             <div className="px-1" />
-            {isAuth ? (
-              <ButtonPrimary onClick={() => dispatch(logoutUser())}>
-                Logout
-              </ButtonPrimary>
-            ) : (
-              <ButtonPrimary href="/login">Sign up</ButtonPrimary>
-            )}
+            <ButtonPrimary href="/login">Sign up</ButtonPrimary>
           </div>
           <div className="flex items-center xl:hidden">
-            {isAuth ? (
-              <ButtonPrimary onClick={() => dispatch(logoutUser())}>
-                Logout
-              </ButtonPrimary>
-            ) : (
-              <ButtonPrimary href="/login">Sign up</ButtonPrimary>
-            )}
+            <ButtonPrimary href="/login">Sign up</ButtonPrimary>
             <div className="px-1" />
             <MenuBar />
           </div>
@@ -71,4 +53,4 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
   );
 };
 
-export default MainNav1;
+export default MaiNnavprod;

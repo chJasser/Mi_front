@@ -40,6 +40,7 @@ import isSafariBrowser from "utils/isSafariBrowser";
 import PageHomeDemo7 from "containers/PageHome/PageHomeDemo7";
 import RestPasswordComponent from "containers/PageForgotPass/ResetPasswordComponent.js";
 import PagePassword from "containers/PageSignUp/PagePassword";
+// import PageHomeDemo7 from "containers/PageHome/PageHomeDemo7";
 
 export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
@@ -119,8 +120,7 @@ const Routes = () => {
             <Route
               key={path}
               component={component}
-              exact
-              // exact={!!exact}
+              exact={!!exact}
               path={path}
             />
           );

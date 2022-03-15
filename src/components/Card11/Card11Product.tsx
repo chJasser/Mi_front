@@ -5,6 +5,8 @@ import ProductFeaturedMedia from "components/PostFeaturedMedia/ProductFeaturedMe
 import PostCardLikeAndComment from "components/PostCardLikeAndComment/PostCardLikeAndComment";
 import Badge from "components/Badge/Badge";
 import PostCardMeta from "components/PostCardMeta/PostCardMeta";
+import NcModalprod from "components/NcModal/NcModalprod";
+import { useDispatch } from "react-redux";
 export interface Card11Props {
   className?: string;
   product;
@@ -18,6 +20,8 @@ const Card11Product: FC<Card11Props> = ({
   hiddenAuthor = false,
   ratio = "aspect-w-4 aspect-h-3",
 }) => {
+  const dispatch=useDispatch();
+  
   const { label, createdAt, category, price, productImage } = product;
 
   const date = createdAt.substring(0, 10);
@@ -56,6 +60,16 @@ const Card11Product: FC<Card11Props> = ({
          {/*<PostCardLikeAndComment className="relative" postData={product} />
 
   <PostCardSaveAction className="relative" postData={product} />*/ } 
+     <NcModalprod
+        triggerText={
+          <span>
+            <span className="hidden sm:inline">More</span> Details
+          </span>
+        }
+        modalTitle="Product Detail"
+        /*renderContent={renderModalContent}*/
+      product={product}
+      />
         </div>
       </div>
     </div>

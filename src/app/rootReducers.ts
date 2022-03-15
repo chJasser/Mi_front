@@ -7,6 +7,8 @@ import mediaRunningReducer from "./mediaRunning/mediaRunning";
 import userSlice from "./slices/userSlice";
 import Productslice from "./productslice/Productslice";
 
+import carteslics from "./cartslice/carteslics";
+
 const rootReducers = {
   bookmark: bookmarkReducer,
   postLike: postLikesReducer,
@@ -16,6 +18,8 @@ const rootReducers = {
   mediaRunning: mediaRunningReducer,
   product:Productslice,
   user: userSlice,
+  
+  carteslics:carteslics,
   
 };
 
