@@ -20,6 +20,7 @@ import axios from "axiosInstance";
 import Card11Product from "components/Card11/Card11Product";
 import { useDispatch } from "react-redux";
 import { fetchProducts, populateProducts } from "app/productslice/Productslice";
+
 export interface PageArchiveProps {
   className?: string;
 }
@@ -28,11 +29,11 @@ export interface PageArchiveProps {
 const posts: PostDataType[] = DEMO_POSTS.filter((_, i) => i < 16);
 var prods = [];
 const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
   useEffect(() => {
     axios
-      .get("products/filter")
+      .get("products/all-products")
       .then((res) => {
         console.log(res.data.products);
         dispatch(populateProducts(res.data.products));
