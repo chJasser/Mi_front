@@ -1,10 +1,8 @@
 import React, { FC } from "react";
-import ButtonCircle from "components/Button/ButtonCircle";
 import rightImg from "images/SVG-subcribe2.png";
 import NcImage from "components/NcImage/NcImage";
-import Badge from "components/Badge/Badge";
-import Input from "components/Input/Input";
 import ButtonPrimary from "components/Button/ButtonPrimary";
+import { useHistory } from "react-router-dom";
 
 export interface SectionSubscribe2Props {
   className?: string;
@@ -13,6 +11,7 @@ export interface SectionSubscribe2Props {
 const SectionBecomeAnStudent: FC<SectionSubscribe2Props> = ({
   className = "",
 }) => {
+  const history = useHistory();
   return (
     <div
       className={`nc-SectionSubscribe2 relative flex flex-col lg:flex-row items-center ${className}`}
@@ -26,7 +25,7 @@ const SectionBecomeAnStudent: FC<SectionSubscribe2Props> = ({
           Become a student you can earn extra income by adding courses. Read and
           share new perspectives on just about any topic. Everyone’s welcome.
         </span>
-        <ButtonPrimary className="mt-8">Become a student</ButtonPrimary>
+        <ButtonPrimary onClick={()=>history.push("become-student")} className="mt-8">Become a student</ButtonPrimary>
       </div>
       <div className="flex-grow">
         <NcImage src={rightImg} />

@@ -6,6 +6,7 @@ import pagesReducer from "./pages/pages";
 import mediaRunningReducer from "./mediaRunning/mediaRunning";
 import userSlice from "./slices/userSlice";
 
+
 const rootReducers = {
   bookmark: bookmarkReducer,
   postLike: postLikesReducer,
@@ -14,6 +15,7 @@ const rootReducers = {
   pages: pagesReducer,
   mediaRunning: mediaRunningReducer,
   user: userSlice,
+
 };
 
 export default rootReducers;

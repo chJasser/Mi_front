@@ -1,5 +1,6 @@
 import {
   getCurrentSeller,
+  getCurrentStudent,
   logoutUser,
   setCurrentUser,
 } from "app/slices/userSlice";
@@ -37,6 +38,7 @@ export default function App() {
   useEffect(() => {
     if (localStorage.token) {
       dispatch(getCurrentSeller());
+      dispatch(getCurrentStudent());
     }
   }, [token]);
 

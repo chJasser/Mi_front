@@ -44,6 +44,8 @@ import AuthRoute from "./AuthRoute";
 import PageBecomeAnTeacher from "components/SectionBecomeAnTeacher/BecomeAnTeacher";
 import PageSeller from "components/SectionBecomeAnSeller/BecomeAnSeller";
 import BecomeTeacherRoute from "./BecomeSellerRoute";
+import PageBecomeStudent from "components/SectionBecomeAnStudent/PageBecomeStudent";
+import BecomeStudentRoute from "./BecomeStudentRoute";
 
 export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
@@ -135,6 +137,13 @@ export const pages: Page[] = [
     component: PageSeller,
   },
 
+  {
+    path: "/become-student",
+    exact: true,
+    typeRoute: "student",
+    component: PageBecomeStudent,
+  },
+
   //
 ];
 
@@ -157,6 +166,15 @@ const Routes = () => {
           } else if (typeRoute === "seller") {
             return (
               <BecomeTeacherRoute
+                key={path}
+                component={component}
+                exact={!!exact}
+                path={path}
+              />
+            );
+          } else if (typeRoute === "student") {
+            return (
+              <BecomeStudentRoute
                 key={path}
                 component={component}
                 exact={!!exact}

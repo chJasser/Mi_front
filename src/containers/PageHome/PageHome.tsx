@@ -6,7 +6,6 @@ import SectionVideos from "./SectionVideos";
 import SectionLargeSlider from "./SectionLargeSlider";
 import { Helmet } from "react-helmet";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
-import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import SectionGridAuthorBox from "components/SectionGridAuthorBox/SectionGridAuthorBox";
 import { PostDataType } from "data/types";
 import {
@@ -17,7 +16,6 @@ import {
 } from "data/posts";
 import { DEMO_CATEGORIES } from "data/taxonomies";
 import { DEMO_AUTHORS } from "data/authors";
-import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
 import SectionSliderNewCategories from "components/SectionSliderNewCategories/SectionSliderNewCategories";
 import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
 import SectionMagazine4 from "./SectionMagazine4";
@@ -95,7 +93,10 @@ const PageHome: React.FC = () => {
             <SectionBecomeAnTeacher />
           </div>
 
-          <SectionBecomeAnStudent className="pt-16 lg:pt-28" />
+          {isAuth && !roles.includes("student") && (
+            <SectionBecomeAnStudent className="pt-16 lg:pt-28" />
+          )}
+
           {isAuth && !roles.includes("seller") && (
             <div className="relative py-16">
               <BackgroundSection />

@@ -18,7 +18,6 @@ const userSlice = createSlice({
   reducers: {
     login(state, action) {
       localStorage.setItem("token", action.payload);
-
       // Set token to Auth header
       setAuthToken(action.payload);
       // Decode token to get user data
@@ -32,6 +31,9 @@ const userSlice = createSlice({
     },
     setCurrentSeller(state, action) {
       state.currentSeller = action.payload;
+    },
+    setCurrentStudent(state, action) {
+      state.currentStudent = action.payload;
     },
     logoutUser(state) {
       localStorage.removeItem("token");
@@ -60,10 +62,20 @@ export const getCurrentSeller = () => (dispatch) => {
       dispatch(setCurrentSeller(response.data.seller));
     })
     .catch((error) => {
-      dispatch(setCurrentSeller(error.response.data.selle));
+      dispatch(setCurrentSeller(error.response.data.seller));
+    });
+};
+export const getCurrentStudent = () => (dispatch) => {
+  axios
+    .get("/students/getcurrentstudent")
+    .then((response) => {
+      dispatch(setCurrentStudent(response.data.student));
+    })
+    .catch((error) => {
+      dispatch(setCurrentStudent(error.response.data.student));
     });
 };
 
-export const { login, setCurrentUser, logoutUser, setCurrentSeller } =
+export const { login, setCurrentUser, logoutUser, setCurrentSeller ,setCurrentStudent} =
   userSlice.actions;
 export default userSlice.reducer;

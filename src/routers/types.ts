@@ -57,6 +57,8 @@ export interface LocationStates {
   "/passport/register"?: {};
   "/become-teacher"?: {};
   "/become-seller"?: {};
+  "/become-student"?: {};
+ 
 }
 
 export type PathName = keyof LocationStates;
