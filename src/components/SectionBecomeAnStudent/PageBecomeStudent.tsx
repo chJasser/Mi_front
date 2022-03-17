@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 
 import Label from "components/Label/Label";
@@ -41,6 +41,9 @@ const info = [
 
 const tagsStudent = STUDENT_TAGS.filter((_, i) => i > 5);
 const PageBecomeStudent = ({ className = "", tags = tagsStudent }) => {
+  const history = useHistory();
+  const [errors, setErrors] = useState(null);
+  const [success, setSuccess] = useState(null);
   const [studentTags, setTags] = useState([]);
   const dispatch = useDispatch();
   const WidgetStudentTags: FC<WidgetTagsProps> = ({
@@ -80,12 +83,7 @@ const PageBecomeStudent = ({ className = "", tags = tagsStudent }) => {
     );
   };
 
-  // var jasser = useSelector(getStudentTags);
-
   const StudentForm = () => {
-    const history = useHistory();
-    const [errors, setErrors] = useState(null);
-    const [success, setSuccess] = useState(null);
     const validationSchema = Yup.object({
       interestedIn: Yup.array().min(3, "You must choose at least 3 options"),
       about: Yup.string()
@@ -94,7 +92,6 @@ const PageBecomeStudent = ({ className = "", tags = tagsStudent }) => {
         .max(300, "Password must contain at most 300 characters"),
     });
     const onSubmit = async (values) => {
-      console.log(values);
       const response = await axios
         .post("/students/register", values)
         .catch((err) => {
@@ -109,7 +106,7 @@ const PageBecomeStudent = ({ className = "", tags = tagsStudent }) => {
         dispatch(login(response.data.token));
         dispatch(getCurrentStudent());
         history.push("/dashboard");
-        formik.resetForm();
+        
       }
     };
 

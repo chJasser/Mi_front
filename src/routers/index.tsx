@@ -41,11 +41,12 @@ import PageHomeDemo7 from "containers/PageHome/PageHomeDemo7";
 import RestPasswordComponent from "containers/PageForgotPass/ResetPasswordComponent.js";
 import PagePassword from "containers/PageSignUp/PagePassword";
 import AuthRoute from "./AuthRoute";
-import PageBecomeAnTeacher from "components/SectionBecomeAnTeacher/BecomeAnTeacher";
 import PageSeller from "components/SectionBecomeAnSeller/BecomeAnSeller";
-import BecomeTeacherRoute from "./BecomeSellerRoute";
 import PageBecomeStudent from "components/SectionBecomeAnStudent/PageBecomeStudent";
+import PageTeacher from "components/SectionBecomeAnTeacher/BecomeAnTeacher.js";
+import BecomeSellerRoute from "./BecomeSellerRoute";
 import BecomeStudentRoute from "./BecomeStudentRoute";
+import BecomeTeacherRoute from "./BecomeTeacherRoute";
 
 export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
@@ -128,7 +129,8 @@ export const pages: Page[] = [
   {
     path: "/become-teacher",
     exact: true,
-    component: PageBecomeAnTeacher,
+    typeRoute: "teacher",
+    component: PageTeacher,
   },
   {
     path: "/become-seller",
@@ -165,7 +167,7 @@ const Routes = () => {
             );
           } else if (typeRoute === "seller") {
             return (
-              <BecomeTeacherRoute
+              <BecomeSellerRoute
                 key={path}
                 component={component}
                 exact={!!exact}
@@ -175,6 +177,15 @@ const Routes = () => {
           } else if (typeRoute === "student") {
             return (
               <BecomeStudentRoute
+                key={path}
+                component={component}
+                exact={!!exact}
+                path={path}
+              />
+            );
+          } else if (typeRoute === "teacher") {
+            return (
+              <BecomeTeacherRoute
                 key={path}
                 component={component}
                 exact={!!exact}

@@ -62,7 +62,7 @@ const PageSeller: FC<PageContactProps> = ({ className = "" }) => {
         dispatch(login(response.data.token));
         dispatch(getCurrentSeller());
         history.push("/dashboard");
-        formik.resetForm();
+      
       }
     };
 

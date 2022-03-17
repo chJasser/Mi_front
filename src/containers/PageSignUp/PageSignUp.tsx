@@ -98,7 +98,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
               First Name
             </span>
             <Input
-              id="text"
+              id="firstName"
               name="firstName"
               type="text"
               className="mt-1"
@@ -115,7 +115,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
               Last Name
             </span>
             <Input
-              id="text"
+              id="lastName"
               name="lastName"
               type="text"
               className="mt-1"

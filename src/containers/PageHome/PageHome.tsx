@@ -28,7 +28,6 @@ import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import {
-  getCurrentSeller,
   isAuthenticated,
   login,
   userRoles,
@@ -55,7 +54,6 @@ const PageHome: React.FC = () => {
     setToken(new URLSearchParams(search).get("token"));
     if (token !== null) {
       dispatch(login(token));
-      dispatch(getCurrentSeller());
     }
   }, [token]);
 
@@ -88,10 +86,12 @@ const PageHome: React.FC = () => {
             />
           </div>
 
-          <div className="relative py-16">
-            <BackgroundSection />
-            <SectionBecomeAnTeacher />
-          </div>
+          {isAuth && !roles.includes("teacher") && (
+            <div className="relative py-16">
+              <BackgroundSection />
+              <SectionBecomeAnTeacher />
+            </div>
+          )}
 
           {isAuth && !roles.includes("student") && (
             <SectionBecomeAnStudent className="pt-16 lg:pt-28" />

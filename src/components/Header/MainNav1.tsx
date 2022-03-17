@@ -33,7 +33,7 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
             <SearchDropdown />
             <div className="px-1" />
             {isAuth ? (
-              <ButtonPrimary onClick={()=>dispatch(logoutUser())}>
+              <ButtonPrimary onClick={() => dispatch(logoutUser())}>
                 Logout
               </ButtonPrimary>
             ) : (
@@ -42,11 +42,13 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
           </div>
           <div className="flex items-center xl:hidden">
             {isAuth ? (
-              <ButtonPrimary onClick={()=>dispatch(logoutUser())}>
+              <ButtonPrimary onClick={() => dispatch(logoutUser())}>
                 Logout
               </ButtonPrimary>
             ) : (
-              <ButtonPrimary href="/login">Sign up</ButtonPrimary>
+              <ButtonPrimary href="/login">
+                Sign up
+              </ButtonPrimary>
             )}
             <div className="px-1" />
             <MenuBar />

@@ -1,6 +1,7 @@
 import {
   getCurrentSeller,
   getCurrentStudent,
+  getCurrentTeacher,
   logoutUser,
   setCurrentUser,
 } from "app/slices/userSlice";
@@ -10,7 +11,6 @@ import MyRouter from "routers/index";
 import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-
 if (localStorage.token) {
   // Set auth token header auth
   var token = localStorage.token;
@@ -39,8 +39,9 @@ export default function App() {
     if (localStorage.token) {
       dispatch(getCurrentSeller());
       dispatch(getCurrentStudent());
+      dispatch(getCurrentTeacher());
     }
-  }, [token]);
+  }, [localStorage.token]);
 
   return (
     <div className="bg-white text-base dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">

@@ -24,6 +24,7 @@ const userSlice = createSlice({
       const decoded = jwt_decode(action.payload);
       state.currentUser = decoded;
       state.isAuthenticated = !isEmpty(decoded);
+      // window.location.reload();
     },
     setCurrentUser(state, action) {
       state.currentUser = action.payload;
@@ -34,6 +35,9 @@ const userSlice = createSlice({
     },
     setCurrentStudent(state, action) {
       state.currentStudent = action.payload;
+    },
+    setCurrentTeacher(state, action) {
+      state.currentTeacher = action.payload;
     },
     logoutUser(state) {
       localStorage.removeItem("token");
@@ -62,7 +66,7 @@ export const getCurrentSeller = () => (dispatch) => {
       dispatch(setCurrentSeller(response.data.seller));
     })
     .catch((error) => {
-      dispatch(setCurrentSeller(error.response.data.seller));
+      dispatch(setCurrentSeller(null));
     });
 };
 export const getCurrentStudent = () => (dispatch) => {
@@ -72,10 +76,27 @@ export const getCurrentStudent = () => (dispatch) => {
       dispatch(setCurrentStudent(response.data.student));
     })
     .catch((error) => {
-      dispatch(setCurrentStudent(error.response.data.student));
+      dispatch(setCurrentStudent(null));
     });
 };
 
-export const { login, setCurrentUser, logoutUser, setCurrentSeller ,setCurrentStudent} =
-  userSlice.actions;
+export const getCurrentTeacher = () => (dispatch) => {
+  axios
+    .get("/teachers/getcurrentteacher")
+    .then((response) => {
+      dispatch(setCurrentTeacher(response.data.teacher));
+    })
+    .catch((error) => {
+      dispatch(setCurrentTeacher(null));
+    });
+};
+
+export const {
+  login,
+  setCurrentUser,
+  logoutUser,
+  setCurrentSeller,
+  setCurrentStudent,
+  setCurrentTeacher,
+} = userSlice.actions;
 export default userSlice.reducer;
