@@ -87,12 +87,179 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       .catch((error) => {
         console.error(error);
       });
-
+      switch(window.location.href){
+        case path + "?category=guitars":
+          axios
+          .get("products/fiter?category=guitars")
+          .then((res) => {
+            executeScroll();
+            setProducts(res.data);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+          break;
+        case path + "?category=strings":
+          axios
+          .get("products/fiter?category=strings")
+          .then((res) => {
+            executeScroll();
+            setProducts(res.data);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+          break;
+        case path + "?category=keyboards":
+          axios
+          .get("products/fiter?category=keyboards")
+          .then((res) => {
+            executeScroll();
+            setProducts(res.data);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+          break;
+        case path + "?category=brass":
+          axios
+          .get("products/fiter?category=brass")
+          .then((res) => {
+            executeScroll();
+            setProducts(res.data);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+          break;
+        case path + "?category=percussions":
+          axios
+          .get("products/fiter?category=percussions")
+          .then((res) => {
+            executeScroll();
+            setProducts(res.data);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+          break;
+        case path + "?category=woodwind":
+          axios
+          .get("products/fiter?category=woodwind")
+          .then((res) => {
+            executeScroll();
+            setProducts(res.data);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+          break;
+        case path + "?category=others":
+          axios
+          .get("products/filter")
+          .then((res) => {
+            executeScroll();
+            dispatch(populateProducts(res.data.products));
+            setProducts(res.data.products);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+          break;
+        case path + "?marque=yamaha":
+          axios
+            .get("products/marque?marque=yamaha")
+            .then((res) => {
+              executeScroll();
+              setProducts(res.data);
+            })
+            .catch((err) => {
+              console.log(err.message);
+            });
+            break;
+        case path + "?marque=shure":
+          axios
+            .get("products/marque?marque=shure")
+            .then((res) => {
+              executeScroll();
+              setProducts(res.data);
+            })
+            .catch((err) => {
+              console.log(err.message);
+            });
+            break;
+        case path + "?marque=gibson":
+          axios
+            .get("products/marque?marque=gibson")
+            .then((res) => {
+              executeScroll();
+              setProducts(res.data);
+            })
+            .catch((err) => {
+              console.log(err.message);
+            });
+            break;
+        case path + "?marque=harman":
+          axios
+            .get("products/marque?marque=harman")
+            .then((res) => {
+              executeScroll();
+              setProducts(res.data);
+            })
+            .catch((err) => {
+              console.log(err.message);
+            });
+            break;
+        case path + "?marque=fender":
+          axios
+            .get("products/marque?marque=fender")
+            .then((res) => {
+              executeScroll();
+              setProducts(res.data);
+            })
+            .catch((err) => {
+              console.log(err.message);
+            });
+            break;
+        case path + "?marque=steinway":
+          axios
+            .get("products/marque?marque=steinway")
+            .then((res) => {
+              executeScroll();
+              setProducts(res.data);
+            })
+            .catch((err) => {
+              console.log(err.message);
+            });
+            break;
+        case path + "?marque=roland":
+          axios
+            .get("products/marque?marque=roland")
+            .then((res) => {
+              executeScroll();
+              setProducts(res.data);
+            })
+            .catch((err) => {
+              console.log(err.message);
+            });
+            break;
+        default:
+          axios
+          .get("products/filter")
+          .then((res) => {
+            dispatch(populateProducts(res.data.products));
+            setProducts(res.data.products);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+          break; 
+      }
     /**
      *
      */
     axios
-      .get("products/all-products")
+      .get("products/filter")
       .then((res) => {
         dispatch(populateProducts(res.data.products));
         setProducts(res.data.products);
