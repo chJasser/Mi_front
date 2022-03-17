@@ -67,12 +67,10 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     }
   };
 
-
   useEffect(() => {
     axios
       .get("products/liked-products")
       .then((response) => {
-        
         dispatch(getLikedProducts(response.data));
       })
       .catch((error) => {
@@ -81,15 +79,14 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     axios
       .get("products/bookmarked-products")
       .then((response) => {
-        
         dispatch(getBookmarkedProducts(response.data));
       })
       .catch((error) => {
         console.error(error);
       });
-      switch(window.location.href){
-        case path + "?category=guitars":
-          axios
+    switch (window.location.href) {
+      case path + "?category=guitars":
+        axios
           .get("products/fiter?category=guitars")
           .then((res) => {
             executeScroll();
@@ -98,9 +95,9 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
           .catch((err) => {
             console.log(err.message);
           });
-          break;
-        case path + "?category=strings":
-          axios
+        break;
+      case path + "?category=strings":
+        axios
           .get("products/fiter?category=strings")
           .then((res) => {
             executeScroll();
@@ -109,9 +106,9 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
           .catch((err) => {
             console.log(err.message);
           });
-          break;
-        case path + "?category=keyboards":
-          axios
+        break;
+      case path + "?category=keyboards":
+        axios
           .get("products/fiter?category=keyboards")
           .then((res) => {
             executeScroll();
@@ -120,9 +117,9 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
           .catch((err) => {
             console.log(err.message);
           });
-          break;
-        case path + "?category=brass":
-          axios
+        break;
+      case path + "?category=brass":
+        axios
           .get("products/fiter?category=brass")
           .then((res) => {
             executeScroll();
@@ -131,9 +128,9 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
           .catch((err) => {
             console.log(err.message);
           });
-          break;
-        case path + "?category=percussions":
-          axios
+        break;
+      case path + "?category=percussions":
+        axios
           .get("products/fiter?category=percussions")
           .then((res) => {
             executeScroll();
@@ -142,9 +139,9 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
           .catch((err) => {
             console.log(err.message);
           });
-          break;
-        case path + "?category=woodwind":
-          axios
+        break;
+      case path + "?category=woodwind":
+        axios
           .get("products/fiter?category=woodwind")
           .then((res) => {
             executeScroll();
@@ -153,9 +150,9 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
           .catch((err) => {
             console.log(err.message);
           });
-          break;
-        case path + "?category=others":
-          axios
+        break;
+      case path + "?category=others":
+        axios
           .get("products/filter")
           .then((res) => {
             executeScroll();
@@ -165,86 +162,86 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
           .catch((err) => {
             console.log(err.message);
           });
-          break;
-        case path + "?marque=yamaha":
-          axios
-            .get("products/marque?marque=yamaha")
-            .then((res) => {
-              executeScroll();
-              setProducts(res.data);
-            })
-            .catch((err) => {
-              console.log(err.message);
-            });
-            break;
-        case path + "?marque=shure":
-          axios
-            .get("products/marque?marque=shure")
-            .then((res) => {
-              executeScroll();
-              setProducts(res.data);
-            })
-            .catch((err) => {
-              console.log(err.message);
-            });
-            break;
-        case path + "?marque=gibson":
-          axios
-            .get("products/marque?marque=gibson")
-            .then((res) => {
-              executeScroll();
-              setProducts(res.data);
-            })
-            .catch((err) => {
-              console.log(err.message);
-            });
-            break;
-        case path + "?marque=harman":
-          axios
-            .get("products/marque?marque=harman")
-            .then((res) => {
-              executeScroll();
-              setProducts(res.data);
-            })
-            .catch((err) => {
-              console.log(err.message);
-            });
-            break;
-        case path + "?marque=fender":
-          axios
-            .get("products/marque?marque=fender")
-            .then((res) => {
-              executeScroll();
-              setProducts(res.data);
-            })
-            .catch((err) => {
-              console.log(err.message);
-            });
-            break;
-        case path + "?marque=steinway":
-          axios
-            .get("products/marque?marque=steinway")
-            .then((res) => {
-              executeScroll();
-              setProducts(res.data);
-            })
-            .catch((err) => {
-              console.log(err.message);
-            });
-            break;
-        case path + "?marque=roland":
-          axios
-            .get("products/marque?marque=roland")
-            .then((res) => {
-              executeScroll();
-              setProducts(res.data);
-            })
-            .catch((err) => {
-              console.log(err.message);
-            });
-            break;
-        default:
-          axios
+        break;
+      case path + "?marque=yamaha":
+        axios
+          .get("products/marque?marque=yamaha")
+          .then((res) => {
+            executeScroll();
+            setProducts(res.data);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+        break;
+      case path + "?marque=shure":
+        axios
+          .get("products/marque?marque=shure")
+          .then((res) => {
+            executeScroll();
+            setProducts(res.data);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+        break;
+      case path + "?marque=gibson":
+        axios
+          .get("products/marque?marque=gibson")
+          .then((res) => {
+            executeScroll();
+            setProducts(res.data);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+        break;
+      case path + "?marque=harman":
+        axios
+          .get("products/marque?marque=harman")
+          .then((res) => {
+            executeScroll();
+            setProducts(res.data);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+        break;
+      case path + "?marque=fender":
+        axios
+          .get("products/marque?marque=fender")
+          .then((res) => {
+            executeScroll();
+            setProducts(res.data);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+        break;
+      case path + "?marque=steinway":
+        axios
+          .get("products/marque?marque=steinway")
+          .then((res) => {
+            executeScroll();
+            setProducts(res.data);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+        break;
+      case path + "?marque=roland":
+        axios
+          .get("products/marque?marque=roland")
+          .then((res) => {
+            executeScroll();
+            setProducts(res.data);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+        break;
+      default:
+        axios
           .get("products/filter")
           .then((res) => {
             dispatch(populateProducts(res.data.products));
@@ -253,21 +250,12 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
           .catch((err) => {
             console.log(err.message);
           });
-          break; 
-      }
+        break;
+    }
     /**
      *
      */
-    axios
-      .get("products/filter")
-      .then((res) => {
-        dispatch(populateProducts(res.data.products));
-        setProducts(res.data.products);
-      });
   }, [dispatch]);
-
-  
-
 
   const PAGE_DATA: TaxonomyType = DEMO_CATEGORIES[0];
 
@@ -353,7 +341,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               onChange={rangeSelector}
               valueLabelDisplay="auto"
             />
-            Your range of Price is between {min}$ and {max}$ 
+            Your range of Price is between {min}$ and {max}$
           </div>
 
           <React.Fragment>
