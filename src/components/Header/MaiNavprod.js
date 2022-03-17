@@ -8,6 +8,8 @@ import DarkModeContainer from "containers/DarkModeContainer/DarkModeContainer";
 import NcImage from "components/NcImage/NcImage";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import Badge from "@material-ui/core/Badge";
 
 const MaiNnavprod = ({ isTop }) => {
   const dispatch = useDispatch();
@@ -27,14 +29,12 @@ const MaiNnavprod = ({ isTop }) => {
         <div className="flex-shrink-0 flex items-center justify-end text-neutral-700 dark:text-neutral-100 space-x-1">
           <div className="hidden items-center xl:flex space-x-1">
             <DarkModeContainer />
-            <div className="">
-            <Link to="/dashboard/posts">
-           <img className="w-7 h-7" src="http://localhost:5050/uploads/R.png" />{cart.length > 0 && (<span className="badge w-7 h-7">
-                  {cart.length} 
-               </span>)}
-               
-            </Link>
-
+            <div className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
+              <Link to="/dashboard/posts">
+                <Badge color="secondary" badgeContent={cart.length}>
+                  <ShoppingCartIcon/>{" "}
+                </Badge>
+              </Link>
             </div>
 
             <SearchDropdown />

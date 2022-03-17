@@ -4,7 +4,7 @@ import NcDropDown from "components/NcDropDown/NcDropDown";
 import ModalReportItem from "components/ModalReportItem/ModalReportItem";
 import { PostDataType } from "data/types";
 import ModalHideAuthor from "./ModalHideAuthor";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 
 export interface PostActionDropdownProps {
   containerClassName?: string;

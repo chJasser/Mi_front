@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import NcImage from "components/NcImage/NcImage";
 import Pagination from "components/Pagination/Pagination";
 import { useDispatch, useSelector } from "react-redux";
+import ButtonPrimary from "components/Button/ButtonPrimary";
 import {
   additem,
   removeitem,
@@ -94,6 +95,7 @@ const Cartproducts = () => {
                       <div className="ml-4 flex-grow">
                         <input
                           type="number"
+                          
                           placeholder={item.qte}
                           onChange={(e) => {
                             setProductToChange(item);
@@ -132,8 +134,8 @@ const Cartproducts = () => {
           </div>
         </div>
       </div>
-
-      <Pagination />
+      <ButtonPrimary href="/archive/the-demo-archive-slug">Shop More</ButtonPrimary>
+      {/* <Pagination /> */}
     </div>
   );
 };

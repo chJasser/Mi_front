@@ -1,6 +1,6 @@
 import LayoutPage from "components/LayoutPage/LayoutPage";
 import React, { ComponentType, FC } from "react";
-import { Redirect, Route, Switch, useRouteMatch } from "react-router";
+import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import DashboardBillingAddress from "./DashboardBillingAddress";
 import DashboardEditProfile from "./DashboardEditProfile";

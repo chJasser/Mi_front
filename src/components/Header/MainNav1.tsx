@@ -11,13 +11,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { isAuthenticated, logoutUser } from "app/slices/userSlice";
 import { useAppDispatch } from "app/hooks";
 
+
 export interface MainNav1Props {
   isTop: boolean;
 }
 
 const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
   const isAuth = useSelector(isAuthenticated);
-  const dispatch = useAppDispatch();
+  
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state);
   console.log(cart);
   return (
