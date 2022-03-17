@@ -29,11 +29,10 @@ const MaiNnavprod = ({ isTop }) => {
         <div className="flex-shrink-0 flex items-center justify-end text-neutral-700 dark:text-neutral-100 space-x-1">
           <div className="hidden items-center xl:flex space-x-1">
             <DarkModeContainer />
-            <div>
+            <div className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
               <Link to="/dashboard/posts">
                 <Badge color="secondary" badgeContent={cart.length}>
-                  {/* {cart.length} */}
-                  <ShoppingCartIcon />{" "}
+                  <ShoppingCartIcon/>{" "}
                 </Badge>
               </Link>
             </div>

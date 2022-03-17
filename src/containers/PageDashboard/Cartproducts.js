@@ -95,6 +95,7 @@ const Cartproducts = () => {
                       <div className="ml-4 flex-grow">
                         <input
                           type="number"
+                          
                           placeholder={item.qte}
                           onChange={(e) => {
                             setProductToChange(item);
@@ -134,8 +135,6 @@ const Cartproducts = () => {
         </div>
       </div>
       <ButtonPrimary href="/archive/the-demo-archive-slug">Shop More</ButtonPrimary>
-      <h3>Total Price : </h3>
-      {/* {`${total}$`} */}
       {/* <Pagination /> */}
     </div>
   );
