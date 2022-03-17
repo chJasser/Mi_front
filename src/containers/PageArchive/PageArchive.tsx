@@ -38,7 +38,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     axios
       .get("products/liked-products")
       .then((response) => {
-        console.log(response);
+        
         dispatch(getLikedProducts(response.data));
       })
       .catch((error) => {
@@ -47,7 +47,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     axios
       .get("products/bookmarked-products")
       .then((response) => {
-        console.log(response);
+        
         dispatch(getBookmarkedProducts(response.data));
       })
       .catch((error) => {
@@ -58,7 +58,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
      *
      */
     axios
-      .get("products/all-products")
+      .get("products/filter")
       .then((res) => {
         dispatch(populateProducts(res.data.products));
         setProducts(res.data.products);
@@ -78,7 +78,6 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   ];
 
   return (
-    
     <div
       className={`nc-PageArchive overflow-hidden ${className}`}
       data-nc-id="PageArchive"
@@ -86,7 +85,6 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       <Helmet>
         <title>Our Products || MI Universe</title>
       </Helmet>
-
 
       {/* HEADER */}
       <div className="w-full px-2 xl:max-w-screen-2xl mx-auto">

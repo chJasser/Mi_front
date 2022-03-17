@@ -151,10 +151,10 @@ const Header: FC<HeaderProps> = ({ mainNavStyle = "style1", currentPage }) => {
   const renderMainNav = () => {
     switch (mainNavStyle) {
       case "style1":
-        return <MaiNnavprod isTop={isTop} />;
+        return <MainNav1 isTop={isTop} />;
 
       default:
-        return <MaiNnavprod isTop={isTop} />;
+        return <MainNav1 isTop={isTop} />;
     }
   };
 

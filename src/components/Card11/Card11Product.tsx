@@ -6,7 +6,6 @@ import PostCardLikeAndComment from "components/PostCardLikeAndComment/PostCardLi
 import Badge from "components/Badge/Badge";
 import PostCardMeta from "components/PostCardMeta/PostCardMeta";
 import NcModalprod from "components/NcModal/NcModalprod";
-import StarRatingComponent from 'react-star-rating-component';
 import { useDispatch } from "react-redux";
 import axios from "axiosInstance";
 
@@ -26,18 +25,15 @@ const Card11Product: FC<Card11Props> = ({
   hiddenAuthor = false,
   ratio = "aspect-w-4 aspect-h-3",
 }) => {
-  const dispatch=useDispatch();
-  
-  const { label, createdAt, category, price, productImage,_id } = product;
- const [rate ,setrating ]=useState(0);
-  const rating =()=>{
-  axios.get(`products/getrating/${_id}`).then((res)=>{
-   console.log(res.data[0].rating);
-  setrating(res.data[0].rating); 
+  const dispatch = useDispatch();
 
-  })
-
-  }
+  const { label, createdAt, category, price, productImage, _id } = product;
+  const [rate, setrating] = useState(0);
+  const rating = () => {
+    axios.get(`products/getrating/${_id}`).then((res) => {
+      setrating(res.data[0].rating);
+    });
+  };
   rating();
   const date = createdAt.substring(0, 10);
 
