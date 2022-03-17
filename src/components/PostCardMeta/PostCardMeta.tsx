@@ -28,8 +28,6 @@ const PostCardMeta: FC<PostCardMetaProps> = ({
     axios
       .get(`users/${meta.seller}`)
       .then((result) => {
-        //console.log(meta);
-        console.log(result);
         setUser(result.data);
       })
       .catch((err) => {

@@ -18,30 +18,55 @@ import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSl
 import { DEMO_AUTHORS } from "data/authors";
 import axios from "axiosInstance";
 import Card11Product from "components/Card11/Card11Product";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts, populateProducts } from "app/productslice/Productslice";
+import {
+  getLikedProducts,
+  getBookmarkedProducts,
+} from "app/productLikes/productLikes";
 export interface PageArchiveProps {
   className?: string;
 }
 
 // Tag and category have same data type - we will use one demo data
 const posts: PostDataType[] = DEMO_POSTS.filter((_, i) => i < 16);
-var prods = [];
+
 const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
   useEffect(() => {
     axios
+      .get("products/liked-products")
+      .then((response) => {
+        console.log(response);
+        dispatch(getLikedProducts(response.data));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    axios
+      .get("products/bookmarked-products")
+      .then((response) => {
+        console.log(response);
+        dispatch(getBookmarkedProducts(response.data));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    /**
+     *
+     */
+    axios
       .get("products/all-products")
       .then((res) => {
-        console.log(res.data.products);
         dispatch(populateProducts(res.data.products));
         setProducts(res.data.products);
       })
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
+  }, [dispatch]);
   const PAGE_DATA: TaxonomyType = DEMO_CATEGORIES[0];
 
   const FILTERS = [
@@ -53,6 +78,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   ];
 
   return (
+    
     <div
       className={`nc-PageArchive overflow-hidden ${className}`}
       data-nc-id="PageArchive"
@@ -60,6 +86,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       <Helmet>
         <title>Our Products || MI Universe</title>
       </Helmet>
+
 
       {/* HEADER */}
       <div className="w-full px-2 xl:max-w-screen-2xl mx-auto">
@@ -100,6 +127,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               <Card11Product key={product._id} product={product} />
             ))}
           </div>
+
           {/* PAGINATIONS */}
           <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
             <Pagination />

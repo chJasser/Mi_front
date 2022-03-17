@@ -7,6 +7,9 @@ import Badge from "components/Badge/Badge";
 import PostCardMeta from "components/PostCardMeta/PostCardMeta";
 import NcModalprod from "components/NcModal/NcModalprod";
 import { useDispatch } from "react-redux";
+import ProductCardLikeAndComment from "components/PostCardLikeAndComment/ProductCardLikeAndComment";
+import ProductCardSaveAction from "components/PostCardSaveAction/ProductCardSaveAction";
+import ModalProduct from "components/ModalProduct/ModalProduct";
 export interface Card11Props {
   className?: string;
   product;
@@ -20,13 +23,14 @@ const Card11Product: FC<Card11Props> = ({
   hiddenAuthor = false,
   ratio = "aspect-w-4 aspect-h-3",
 }) => {
-  const dispatch=useDispatch();
-  
+  const dispatch = useDispatch();
+
   const { label, createdAt, category, price, productImage } = product;
 
   const date = createdAt.substring(0, 10);
 
   const [isHover, setIsHover] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div
@@ -57,19 +61,10 @@ const Card11Product: FC<Card11Props> = ({
           {label + " " + price + " $"}
         </h2>
         <div className="flex items-end justify-between mt-auto">
-         {/*<PostCardLikeAndComment className="relative" postData={product} />
+          <ProductCardLikeAndComment className="relative" postData={product} />
+          <ProductCardSaveAction className="relative" postData={product} />
 
-  <PostCardSaveAction className="relative" postData={product} />*/ } 
-     <NcModalprod
-        triggerText={
-          <span>
-            <span className="hidden sm:inline">More</span> Details
-          </span>
-        }
-        modalTitle="Product Detail"
-        /*renderContent={renderModalContent}*/
-      product={product}
-      />
+          <ModalProduct product={product} open={isOpen} />
         </div>
       </div>
     </div>
