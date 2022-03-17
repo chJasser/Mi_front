@@ -15,6 +15,7 @@ const CardCategory2: FC<CardCategory2Props> = ({
   taxonomy,
   index,
 }) => {
+  // const { count, name, href = "/", thumbnail, color } = taxonomy;
   const { count, name, href = "/", thumbnail, color } = taxonomy;
   return (
     <Link
@@ -29,10 +30,10 @@ const CardCategory2: FC<CardCategory2Props> = ({
           className="absolute -top-2 sm:top-3 left-3"
         />
       )}
-      <NcImage
+      {/* <NcImage
         containerClassName={`flex-shrink-0 w-20 h-20 rounded-full overflow-hidden`}
         src={thumbnail}
-      />
+      /> */}
       <div className="mt-3 ">
         <h2 className={`text-base sm:text-lg font-semibold `}>
           <span className="line-clamp-1">{name}</span>
