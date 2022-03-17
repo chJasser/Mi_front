@@ -37,6 +37,9 @@ import PageArchiveAudio from "containers/PageArchive/PageArchiveAudio";
 // import PageHomeDemo6 from "containers/PageHome/PageHomeDemo6";
 import MediaRunningContainerForSafari from "containers/MediaRunningContainer/MediaRunningContainerForSafari";
 import isSafariBrowser from "utils/isSafariBrowser";
+import PageHomeDemo7 from "containers/PageHome/PageHomeDemo7";
+import RestPasswordComponent from "containers/PageForgotPass/ResetPasswordComponent.js";
+import PagePassword from "containers/PageSignUp/PagePassword";
 // import PageHomeDemo7 from "containers/PageHome/PageHomeDemo7";
 
 export const pages: Page[] = [
@@ -100,16 +103,15 @@ export const pages: Page[] = [
   // { path: "/home-demo-5", component: PageHomeDemo5 },
   // { path: "/home-demo-6", component: PageHomeDemo6 },
   // { path: "/home-demo-7", component: PageHomeDemo7 },
+  { path: "/forgot-pass/:email", component: RestPasswordComponent },
+  { path: "/passport/register", component: PagePassword },
+
   //
 ];
 
 const Routes = () => {
   return (
-    <BrowserRouter
-      basename={
-        process.env.REACT_APP_LRT_OR_RTL 
-      }
-    >
+    <BrowserRouter basename={process.env.REACT_APP_LRT_OR_RTL}>
       <ScrollToTop />
       <HeaderContainer />
       <Switch>

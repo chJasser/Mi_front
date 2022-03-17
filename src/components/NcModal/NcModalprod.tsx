@@ -7,8 +7,8 @@ import { selectProduct, unselectProduct } from "app/productslice/Productslice";
 import ProductScreen from "./ProductScreen";
 
 export interface NcModalPropsprod {
- // renderContent: () => ReactNode;
- product;
+  // renderContent: () => ReactNode;
+  product;
   renderTrigger?: (openModal: Function) => ReactNode;
   contentExtraClass?: string;
   contentPaddingClass?: string;
@@ -19,10 +19,9 @@ export interface NcModalPropsprod {
 }
 
 const NcModalprod: FC<NcModalPropsprod> = ({
-  
   renderTrigger,
- // renderContent,
- product,
+  // renderContent,
+  product,
   contentExtraClass = "max-w-screen-xl",
   contentPaddingClass = "py-4 px-6 md:py-5",
   triggerText = "Open Modal",
@@ -32,7 +31,7 @@ const NcModalprod: FC<NcModalPropsprod> = ({
 }) => {
   let [isOpen, setIsOpen] = useState(!!isOpenProp);
   const { label, createdAt, category, price, productImage } = product;
-  const disptach=useDispatch();
+  const dispatch = useDispatch();
   function closeModal() {
     if (typeof isOpenProp !== "boolean") {
       setIsOpen(false);
@@ -48,7 +47,7 @@ const NcModalprod: FC<NcModalPropsprod> = ({
 
   useEffect(() => {
     setIsOpen(!!isOpenProp);
-    disptach(selectProduct(product));
+    dispatch(selectProduct(product));
   }, [isOpenProp]);
 
   return (
@@ -56,21 +55,23 @@ const NcModalprod: FC<NcModalPropsprod> = ({
       {renderTrigger ? (
         renderTrigger(openModal)
       ) : (
-        <ButtonDropdown onClick={()=>{openModal()
-          disptach(selectProduct(product));
-        }
-      
-      
-      }> {triggerText} </ButtonDropdown>
+        <ButtonDropdown
+          onClick={() => {
+            openModal();
+            dispatch(selectProduct(product));
+          }}
+        >
+          {" "}
+          {triggerText}{" "}
+        </ButtonDropdown>
       )}
 
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
           className="fixed inset-0 z-50 overflow-y-auto"
-          onClose={()=>{closeModal()
-          
-            
+          onClose={() => {
+            closeModal();
           }}
         >
           <div className="min-h-screen px-1 text-center md:px-4">
@@ -107,9 +108,8 @@ const NcModalprod: FC<NcModalPropsprod> = ({
               >
                 <div className="py-4 px-6 text-center relative border-b border-neutral-100 dark:border-neutral-700 md:py-5">
                   <ButtonClose
-                    onClick={()=>{closeModal();
-                        
-                    
+                    onClick={() => {
+                      closeModal();
                     }}
                     className="absolute left-2 top-1/2 transform -translate-y-1/2 sm:left-4"
                   />
@@ -122,10 +122,7 @@ const NcModalprod: FC<NcModalPropsprod> = ({
                     </Dialog.Title>
                   )}
                 </div>
-                <div className={contentPaddingClass}>
-                   {<ProductScreen />} 
-
-                </div>
+                <div className={contentPaddingClass}>{<ProductScreen />}</div>
               </div>
             </Transition.Child>
           </div>

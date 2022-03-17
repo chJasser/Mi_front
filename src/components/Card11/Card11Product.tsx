@@ -10,6 +10,9 @@ import StarRatingComponent from 'react-star-rating-component';
 import { useDispatch } from "react-redux";
 import axios from "axiosInstance";
 
+import ProductCardLikeAndComment from "components/PostCardLikeAndComment/ProductCardLikeAndComment";
+import ProductCardSaveAction from "components/PostCardSaveAction/ProductCardSaveAction";
+import ModalProduct from "components/ModalProduct/ModalProduct";
 export interface Card11Props {
   className?: string;
   product;
@@ -39,6 +42,7 @@ const Card11Product: FC<Card11Props> = ({
   const date = createdAt.substring(0, 10);
 
   const [isHover, setIsHover] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div
@@ -69,26 +73,10 @@ const Card11Product: FC<Card11Props> = ({
           {label + " " + price + " $"}
         </h2>
         <div className="flex items-end justify-between mt-auto">
-        <StarRatingComponent 
-          name="rate2" 
-          editing={true}
-          
-          starCount={5}
-          value={rate}
-        />
-         {/*<PostCardLikeAndComment className="relative" postData={product} />
+          <ProductCardLikeAndComment className="relative" postData={product} />
+          <ProductCardSaveAction className="relative" postData={product} />
 
-  <PostCardSaveAction className="relative" postData={product} />*/ } 
-     <NcModalprod
-        triggerText={
-          <span>
-            <span className="hidden sm:inline">More</span> Details
-          </span>
-        }
-        modalTitle="Product Detail"
-        /*renderContent={renderModalContent}*/
-      product={product}
-      />
+          <ModalProduct product={product} open={isOpen} />
         </div>
       </div>
     </div>

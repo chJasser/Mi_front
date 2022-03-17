@@ -1,8 +1,11 @@
+import jwt_decode from "jwt-decode";
+import { setAuthToken } from "axiosInstance";
 import { createSlice } from "@reduxjs/toolkit";
 
+const isEmpty = require("is-empty");
 let initialState = {
-  token: "",
-  errors: [],
+  currentUser: null,
+  isAuthenticated: false,
 };
 
 const userSlice = createSlice({
@@ -10,14 +13,30 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     login(state, action) {
-      console.log(action.payload);
-      state.token = action.payload;
+      localStorage.setItem("token", action.payload);
+
+      // Set token to Auth header
+      setAuthToken(action.payload);
+      // Decode token to get user data
+      const decoded = jwt_decode(action.payload);
+      state.currentUser = decoded;
+      state.isAuthenticated = !isEmpty(decoded);
     },
-    setErrors(state, action) {
-      state.errors = action.payload;
+    setCurrentUser(state, action) {
+      state.currentUser = action.payload;
+      state.isAuthenticated = !isEmpty(action.payload);
+    },
+    logoutUser(state) {
+      localStorage.removeItem("token");
+      state.currentUser = null;
+      state.isAuthenticated = false;
+      setAuthToken(false);
     },
   },
 });
+export const isAuthenticated = (state) => {
+  return state.user.isAuthenticated;
+};
 
-export const { setErrors, login } = userSlice.actions;
+export const { login, setCurrentUser, logoutUser } = userSlice.actions;
 export default userSlice.reducer;
