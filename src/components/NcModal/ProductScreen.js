@@ -3,6 +3,8 @@ import { RootState } from "app/store";
 import React, { useState } from 'react';
 import { additem } from "app/cartslice/carteslics";
 import { Link } from "react-router-dom";
+import {StarRatingComponent} from "react-star-rating-component";
+
 export default function ProductScreen(props) {
    // const product = data.products.find((x) => x._id === props.match.params.id);
    // if (!product) {
@@ -59,7 +61,7 @@ export default function ProductScreen(props) {
                 Description:
                 <p>{reference}</p>
               </li>
-
+          
             </ul>
           </div>
           <div className="col-2">

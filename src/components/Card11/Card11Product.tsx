@@ -6,7 +6,10 @@ import PostCardLikeAndComment from "components/PostCardLikeAndComment/PostCardLi
 import Badge from "components/Badge/Badge";
 import PostCardMeta from "components/PostCardMeta/PostCardMeta";
 import NcModalprod from "components/NcModal/NcModalprod";
+import StarRatingComponent from 'react-star-rating-component';
 import { useDispatch } from "react-redux";
+import axios from "axiosInstance";
+
 export interface Card11Props {
   className?: string;
   product;
@@ -22,8 +25,17 @@ const Card11Product: FC<Card11Props> = ({
 }) => {
   const dispatch=useDispatch();
   
-  const { label, createdAt, category, price, productImage } = product;
+  const { label, createdAt, category, price, productImage,_id } = product;
+ const [rate ,setrating ]=useState(0);
+  const rating =()=>{
+  axios.get(`products/getrating/${_id}`).then((res)=>{
+   console.log(res.data[0].rating);
+  setrating(res.data[0].rating); 
 
+  })
+
+  }
+  rating();
   const date = createdAt.substring(0, 10);
 
   const [isHover, setIsHover] = useState(false);
@@ -57,6 +69,13 @@ const Card11Product: FC<Card11Props> = ({
           {label + " " + price + " $"}
         </h2>
         <div className="flex items-end justify-between mt-auto">
+        <StarRatingComponent 
+          name="rate2" 
+          editing={true}
+          
+          starCount={5}
+          value={rate}
+        />
          {/*<PostCardLikeAndComment className="relative" postData={product} />
 
   <PostCardSaveAction className="relative" postData={product} />*/ } 
