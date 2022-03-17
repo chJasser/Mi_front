@@ -9,7 +9,7 @@ import NcLink from "components/NcLink/NcLink";
 import { Helmet } from "react-helmet";
 import axios from "../../axiosInstance";
 import { useDispatch } from "react-redux";
-import { login } from "app/slices/userSlice";
+import { getCurrentSeller, getCurrentStudent, getCurrentTeacher, login } from "app/slices/userSlice";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Alert } from "@mui/material";
@@ -39,7 +39,6 @@ const loginSocials = [
 const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
   const [errors, setErrors] = useState(null);
   const dispatch = useDispatch();
-
   const SigninForm = () => {
     const validationSchema = Yup.object({
       email: Yup.string()
@@ -61,7 +60,10 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
       if (response && response.data) {
         setErrors(null);
         dispatch(login(response.data.token));
-        formik.resetForm();
+        dispatch(getCurrentSeller());
+        dispatch(getCurrentStudent());
+        dispatch(getCurrentTeacher());
+       
       }
     };
 

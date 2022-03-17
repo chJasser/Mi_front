@@ -55,6 +55,10 @@ export interface LocationStates {
   "/home-demo-7"?: {};
   "/forgot-pass/:email"?: {};
   "/passport/register"?: {};
+  "/become-teacher"?: {};
+  "/become-seller"?: {};
+  "/become-student"?: {};
+ 
 }
 
 export type PathName = keyof LocationStates;
@@ -62,5 +66,6 @@ export type PathName = keyof LocationStates;
 export interface Page {
   path: PathName;
   exact?: boolean;
+  typeRoute?: string;
   component: ComponentType<Object>;
 }

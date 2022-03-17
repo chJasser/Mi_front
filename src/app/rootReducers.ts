@@ -10,6 +10,7 @@ import Productslice from "./productslice/Productslice";
 import carteslics from "./cartslice/carteslics";
 import productLikeSlice from "./productLikes/productLikes";
 
+
 const rootReducers = {
   bookmark: bookmarkReducer,
   postLike: postLikesReducer,

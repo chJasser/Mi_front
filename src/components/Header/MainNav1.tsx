@@ -60,7 +60,9 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
                 Logout
               </ButtonPrimary>
             ) : (
-              <ButtonPrimary href="/login">Sign up</ButtonPrimary>
+              <ButtonPrimary href="/login">
+                Sign up
+              </ButtonPrimary>
             )}
             <div className="px-1" />
             <MenuBar />

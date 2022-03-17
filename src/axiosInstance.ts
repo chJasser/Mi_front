@@ -8,7 +8,6 @@ const instance = axios.create({
 
 export const setAuthToken = (token) => {
   if (token) {
-    console.log(token);
     // Apply authorization token to every request if logged in
     instance.defaults.headers.common["Authorization"] = token;
   } else {
