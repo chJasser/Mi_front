@@ -55,6 +55,20 @@ export const userRoles = (state) => {
   return state.user.currentUser.user_role;
 };
 
+export const userId = (state) => {
+  if (state.user.currentUser == null) {
+    return null;
+  }
+  return state.user.currentUser._id;
+};
+
+export const currentUser = (state) => {
+  if (state.user.currentUser == null) {
+    return null;
+  }
+  return state.user.currentUser;
+};
+
 export const isAuthenticated = (state) => {
   return state.user.isAuthenticated;
 };

@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Badge from "@material-ui/core/Badge";
 import { isAuthenticated, logoutUser } from "app/slices/userSlice";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
 const MaiNnavprod = ({ isTop }) => {
   const isAuth = useSelector(isAuthenticated);
@@ -37,7 +38,14 @@ const MaiNnavprod = ({ isTop }) => {
               </Link>
             </div>
 
-            <SearchDropdown />
+            <div className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
+              <Link to="/dashboard">
+                <Badge color="secondary" >
+                  <ManageAccountsIcon />
+                </Badge>
+              </Link>
+            </div>
+
 
 
             <div className="px-1" />

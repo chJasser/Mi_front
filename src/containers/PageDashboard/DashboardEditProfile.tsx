@@ -1,11 +1,29 @@
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Input from "components/Input/Input";
 import Label from "components/Label/Label";
-import React from "react";
-
+import React, { useState } from "react";
+import Image from "react-bootstrap/Image";
+import img from "../../images/logo.png";
+import UploadImage from "./UploadImage";
 const DashboardEditProfile = () => {
+  const [image, setImage] = useState("");
+  const updateImage = (image) => {
+    setImage(image);
+  };
   return (
     <div className="rounded-xl md:border md:border-neutral-100 dark:border-neutral-800 md:p-6">
+      <div style={{ textAlign: "center" }}>
+        <Image
+          style={{
+            height: 200,
+            width: 200,
+          }}
+          src={img}
+          roundedCircle
+          className="mx-auto mb-5"
+        />
+        <UploadImage refrechFunction={updateImage} />
+      </div>
       <form className="grid md:grid-cols-2 gap-6" action="#" method="post">
         <label className="block">
           <Label>First name</Label>
