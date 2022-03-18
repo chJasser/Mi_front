@@ -37,9 +37,16 @@ export default function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     if (localStorage.token) {
-      dispatch(getCurrentSeller());
-      dispatch(getCurrentStudent());
-      dispatch(getCurrentTeacher());
+      const decoded: any = jwt_decode(localStorage.token);
+      if (decoded.user_role.includes("seller")) {
+        dispatch(getCurrentSeller());
+      }
+      if (decoded.user_role.includes("student")) {
+        dispatch(getCurrentStudent());
+      }
+      if (decoded.user_role.includes("teacher")) {
+        dispatch(getCurrentTeacher());
+      }
     }
   }, [localStorage.token]);
 

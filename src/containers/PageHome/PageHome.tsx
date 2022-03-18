@@ -8,6 +8,7 @@ import { Helmet } from "react-helmet";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import SectionGridAuthorBox from "components/SectionGridAuthorBox/SectionGridAuthorBox";
 import { PostDataType } from "data/types";
+import jwt_decode from "jwt-decode";
 import {
   DEMO_POSTS,
   DEMO_POSTS_AUDIO,
@@ -27,11 +28,7 @@ import SectionMagazine9 from "./SectionMagazine9";
 import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import {
-  isAuthenticated,
-  login,
-  userRoles,
-} from "app/slices/userSlice";
+import { getCurrentSeller, getCurrentStudent, getCurrentTeacher, isAuthenticated, login, userRoles } from "app/slices/userSlice";
 import SectionBecomeAnTeacher from "components/SectionBecomeAnTeacher/SectionBecomeAnTeacher";
 import SectionBecomeAnStudent from "components/SectionBecomeAnStudent/SectionBecomeAnStudent";
 import SectionBecomeAnSeller from "components/SectionBecomeAnSeller/SectionBecomeAnSeller";
@@ -54,6 +51,17 @@ const PageHome: React.FC = () => {
     setToken(new URLSearchParams(search).get("token"));
     if (token !== null) {
       dispatch(login(token));
+
+      const decoded: any = jwt_decode(token);
+      if (decoded.user_role.includes("seller")) {
+        dispatch(getCurrentSeller());
+      }
+      if (decoded.user_role.includes("student")) {
+        dispatch(getCurrentStudent());
+      }
+      if (decoded.user_role.includes("teacher")) {
+        dispatch(getCurrentTeacher());
+      }
     }
   }, [token]);
 
@@ -92,17 +100,16 @@ const PageHome: React.FC = () => {
               <SectionBecomeAnTeacher />
             </div>
           )}
+           {isAuth && !roles.includes("seller") && <SectionBecomeAnSeller />} 
 
           {isAuth && !roles.includes("student") && (
-            <SectionBecomeAnStudent className="pt-16 lg:pt-28" />
-          )}
-
-          {isAuth && !roles.includes("seller") && (
             <div className="relative py-16">
               <BackgroundSection />
-              <SectionBecomeAnSeller />
+              <SectionBecomeAnStudent className="pt-16 lg:pt-28" />
             </div>
           )}
+
+         
 
           {/* === SECTION 5 === */}
           <SectionSliderNewCategories

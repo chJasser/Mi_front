@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import NcImage from "components/NcImage/NcImage";
-import rightImgDemo from "images/BecomeAnAuthorImg.png";
+
+import rightImgDemo from "images/sellerI.jpg";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import { useHistory } from "react-router-dom";
 

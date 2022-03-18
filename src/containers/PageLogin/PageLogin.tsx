@@ -2,6 +2,7 @@ import LayoutPage from "components/LayoutPage/LayoutPage";
 import React, { FC, useState } from "react";
 import facebookSvg from "images/Facebook.svg";
 import twitterSvg from "images/Twitter.svg";
+import jwt_decode from "jwt-decode";
 import googleSvg from "images/Google.svg";
 import Input from "components/Input/Input";
 import ButtonPrimary from "components/Button/ButtonPrimary";
@@ -9,7 +10,13 @@ import NcLink from "components/NcLink/NcLink";
 import { Helmet } from "react-helmet";
 import axios from "../../axiosInstance";
 import { useDispatch } from "react-redux";
-import { getCurrentSeller, getCurrentStudent, getCurrentTeacher, login } from "app/slices/userSlice";
+import {
+  getCurrentSeller,
+  getCurrentStudent,
+  getCurrentTeacher,
+  login,
+
+} from "app/slices/userSlice";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Alert } from "@mui/material";
@@ -39,6 +46,7 @@ const loginSocials = [
 const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
   const [errors, setErrors] = useState(null);
   const dispatch = useDispatch();
+
   const SigninForm = () => {
     const validationSchema = Yup.object({
       email: Yup.string()
@@ -60,10 +68,17 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
       if (response && response.data) {
         setErrors(null);
         dispatch(login(response.data.token));
-        dispatch(getCurrentSeller());
-        dispatch(getCurrentStudent());
-        dispatch(getCurrentTeacher());
-       
+        const decoded: any = await jwt_decode(response.data.token);
+
+        if (decoded.user_role.includes("seller")) {
+          dispatch(getCurrentSeller());
+        }
+        if (decoded.user_role.includes("student")) {
+          dispatch(getCurrentStudent());
+        }
+        if (decoded.user_role.includes("teacher")) {
+          dispatch(getCurrentTeacher());
+        }
       }
     };
 
