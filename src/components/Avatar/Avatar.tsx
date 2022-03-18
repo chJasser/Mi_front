@@ -16,7 +16,7 @@ const Avatar: FC<AvatarProps> = ({
   imgUrl,
   userName,
 }) => {
-  const url = imgUrl || "";
+  const url = imgUrl;
   const name = userName || "John Doe";
   const _setBgColor = (name: string) => {
     const backgroundIndex = Math.floor(

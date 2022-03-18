@@ -5,6 +5,10 @@ import darkmodeReducer from "./darkmode/darkmode";
 import pagesReducer from "./pages/pages";
 import mediaRunningReducer from "./mediaRunning/mediaRunning";
 import userSlice from "./slices/userSlice";
+import Productslice from "./productslice/Productslice";
+
+import carteslics from "./cartslice/carteslics";
+import productLikeSlice from "./productLikes/productLikes";
 
 
 const rootReducers = {
@@ -14,8 +18,10 @@ const rootReducers = {
   commentLikes: commentLikesReducer,
   pages: pagesReducer,
   mediaRunning: mediaRunningReducer,
+  product: Productslice,
   user: userSlice,
-
+  productLikes: productLikeSlice,
+  carteslics: carteslics,
 };
 
 export default rootReducers;

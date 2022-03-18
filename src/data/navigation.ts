@@ -5,70 +5,70 @@ import {
 import ncNanoId from "utils/ncNanoId";
 import __megamenu from "./jsons/__megamenu.json";
 
-const megaMenuDemo: MegamenuItem[] = [
-  {
-    id: ncNanoId(),
-    image:
-      "https://images.unsplash.com/photo-1497215842964-222b430dc094?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGNvbXBhbnl8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60",
-    title: "Company",
-    items: __megamenu.map((i) => ({
-      id: ncNanoId(),
-      href: "#",
-      name: i.Company,
-    })),
-  },
-  {
-    id: ncNanoId(),
-    image:
-      "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTl8fGFwcHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60",
-    title: "App Name",
-    items: __megamenu.map((i) => ({
-      id: ncNanoId(),
-      href: "#",
-      name: i.AppName,
-    })),
-  },
-  {
-    id: ncNanoId(),
-    image:
-      "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y2l0eXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60",
-    title: "City",
-    items: __megamenu.map((i) => ({
-      id: ncNanoId(),
-      href: "#",
-      name: i.City,
-    })),
-  },
-  {
-    id: ncNanoId(),
-    image:
-      "https://images.unsplash.com/photo-1575328630189-440449ed8cd1?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mjd8fGNvbnRydWN0aW9ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60",
-    title: "Contruction",
-    items: __megamenu.map((i) => ({
-      id: ncNanoId(),
-      href: "#",
-      name: i.Contruction,
-    })),
-  },
-  {
-    id: ncNanoId(),
-    image:
-      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y291bnRyeXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60",
-    title: "Country",
-    items: __megamenu.map((i) => ({
-      id: ncNanoId(),
-      href: "#",
-      name: i.Country,
-    })),
-  },
-];
+// const megaMenuDemo: MegamenuItem[] = [
+//   {
+//     id: ncNanoId(),
+//     image:
+//       "https://images.unsplash.com/photo-1497215842964-222b430dc094?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGNvbXBhbnl8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60",
+//     title: "Company",
+//     items: __megamenu.map((i) => ({
+//       id: ncNanoId(),
+//       href: "#",
+//       name: i.Company,
+//     })),
+//   },
+//   {
+//     id: ncNanoId(),
+//     image:
+//       "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTl8fGFwcHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60",
+//     title: "App Name",
+//     items: __megamenu.map((i) => ({
+//       id: ncNanoId(),
+//       href: "#",
+//       name: i.AppName,
+//     })),
+//   },
+//   {
+//     id: ncNanoId(),
+//     image:
+//       "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y2l0eXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60",
+//     title: "City",
+//     items: __megamenu.map((i) => ({
+//       id: ncNanoId(),
+//       href: "#",
+//       name: i.City,
+//     })),
+//   },
+//   {
+//     id: ncNanoId(),
+//     image:
+//       "https://images.unsplash.com/photo-1575328630189-440449ed8cd1?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mjd8fGNvbnRydWN0aW9ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60",
+//     title: "Contruction",
+//     items: __megamenu.map((i) => ({
+//       id: ncNanoId(),
+//       href: "#",
+//       name: i.Contruction,
+//     })),
+//   },
+//   {
+//     id: ncNanoId(),
+//     image:
+//       "https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y291bnRyeXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60",
+//     title: "Country",
+//     items: __megamenu.map((i) => ({
+//       id: ncNanoId(),
+//       href: "#",
+//       name: i.Country,
+//     })),
+//   },
+// ];
 
 const megaMenu3ItemDemo: MegamenuItem[] = [
   {
     id: ncNanoId(),
     image:
-      "http://images.unsplash.com/photo-1525130413817-d45c1d127c42?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y29ycG9yYXRlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60",
-    title: "Corporate",
+      "https://images.pexels.com/photos/1751731/pexels-photo-1751731.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    title: "Strings",
     items: __megamenu.map((i) => ({
       id: ncNanoId(),
       href: "#",
@@ -78,8 +78,8 @@ const megaMenu3ItemDemo: MegamenuItem[] = [
   {
     id: ncNanoId(),
     image:
-      "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y2FyfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60",
-    title: "Car Model",
+      "https://images.pexels.com/photos/2876659/pexels-photo-2876659.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    title: "Keyboards",
     items: __megamenu.map((i) => ({
       id: ncNanoId(),
       href: "#",
@@ -89,8 +89,44 @@ const megaMenu3ItemDemo: MegamenuItem[] = [
   {
     id: ncNanoId(),
     image:
-      "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cmV0YWlsfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60",
-    title: "Department",
+      "https://images.pexels.com/photos/5809453/pexels-photo-5809453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    title: "Percussion",
+    items: __megamenu.map((i) => ({
+      id: ncNanoId(),
+      href: "#",
+      name: i.Department,
+    })),
+  },
+];
+
+const megaMenu3ItemDemo2: MegamenuItem[] = [
+  {
+    id: ncNanoId(),
+    image:
+      "https://images.pexels.com/photos/1824998/pexels-photo-1824998.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    title: "Flamenco",
+    items: __megamenu.map((i) => ({
+      id: ncNanoId(),
+      href: "#",
+      name: i.Corporate,
+    })),
+  },
+  {
+    id: ncNanoId(),
+    image:
+      "https://images.pexels.com/photos/359995/pexels-photo-359995.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    title: "Jazz",
+    items: __megamenu.map((i) => ({
+      id: ncNanoId(),
+      href: "#",
+      name: i.CarModel,
+    })),
+  },
+  {
+    id: ncNanoId(),
+    image:
+      "https://images.pexels.com/photos/243988/pexels-photo-243988.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    title: "Blues",
     items: __megamenu.map((i) => ({
       id: ncNanoId(),
       href: "#",
@@ -100,26 +136,26 @@ const megaMenu3ItemDemo: MegamenuItem[] = [
 ];
 
 const dashboardChildMenus: NavItemType[] = [
-  {
-    id: ncNanoId(),
-    href: "/dashboard",
-    name: "Dashboard",
-  },
-  {
-    id: ncNanoId(),
-    href: "/dashboard/posts",
-    name: "Posts",
-  },
+  // {
+  //   id: ncNanoId(),
+  //   href: "/dashboard",
+  //   name: "Dashboard",
+  // },
+  // {
+  //   id: ncNanoId(),
+  //   href: "/dashboard/posts",
+  //   name: "Posts",
+  // },
   {
     id: ncNanoId(),
     href: "/dashboard/edit-profile",
     name: "Edit profile",
   },
-  {
-    id: ncNanoId(),
-    href: "/dashboard/billing-address",
-    name: "Billing address",
-  },
+  // {
+  //   id: ncNanoId(),
+  //   href: "/dashboard/billing-address",
+  //   name: "Billing address",
+  // },
   {
     id: ncNanoId(),
     href: "/dashboard/subscription",
@@ -158,13 +194,13 @@ const otherPageChildMenus: NavItemType[] = [
     href: "/forgot-pass",
     name: "Forgot Password",
   },
-  {
-    id: ncNanoId(),
-    href: "/dashboard",
-    name: "Dashboard",
-    type: "dropdown",
-    children: dashboardChildMenus,
-  },
+  // {
+  //   id: ncNanoId(),
+  //   href: "/dashboard",
+  //   name: "Dashboard",
+  //   type: "dropdown",
+  //   children: dashboardChildMenus,
+  // },
   {
     id: ncNanoId(),
     href: "/subscription",
@@ -265,52 +301,52 @@ const singleChildrenMenus: NavItemType = {
   ],
 };
 
-const demoChildMenus: NavItemType[] = [
-  {
-    id: ncNanoId(),
-    name:
-      process.env.REACT_APP_LRT_OR_RTL === "rtl"
-        ? "Default Demo - LTR"
-        : "Default Demo",
-    targetBlank: process.env.REACT_APP_LRT_OR_RTL === "rtl",
-    href:
-      process.env.REACT_APP_LRT_OR_RTL === "rtl"
-        ? "https://chisnghiax.com/ncmaz/"
-        : "/",
-  },
-  {
-    id: ncNanoId(),
-    href:
-      process.env.REACT_APP_LRT_OR_RTL !== "rtl"
-        ? "https://chisnghiax.com/ncmaz-rtl/"
-        : "/",
-    name: "Home Demo - RTL",
-    targetBlank: process.env.REACT_APP_LRT_OR_RTL !== "rtl",
-    isNew: true,
-  },
-  {
-    id: ncNanoId(),
-    href: "/home-demo-2",
-    name: "Home Demo 2",
-  },
-  {
-    id: ncNanoId(),
-    href: "/home-demo-3",
-    name: "Home Demo 3",
-  },
-  {
-    id: ncNanoId(),
-    href: "/home-demo-4",
-    name: "Home Demo 4",
-  },
+// const demoChildMenus: NavItemType[] = [
+//   {
+//     id: ncNanoId(),
+//     name:
+//       process.env.REACT_APP_LRT_OR_RTL === "rtl"
+//         ? "Default Demo - LTR"
+//         : "Default Demo",
+//     targetBlank: process.env.REACT_APP_LRT_OR_RTL === "rtl",
+//     href:
+//       process.env.REACT_APP_LRT_OR_RTL === "rtl"
+//         ? "https://chisnghiax.com/ncmaz/"
+//         : "/",
+//   },
+//   {
+//     id: ncNanoId(),
+//     href:
+//       process.env.REACT_APP_LRT_OR_RTL !== "rtl"
+//         ? "https://chisnghiax.com/ncmaz-rtl/"
+//         : "/",
+//     name: "Home Demo - RTL",
+//     targetBlank: process.env.REACT_APP_LRT_OR_RTL !== "rtl",
+//     isNew: true,
+//   },
+//   {
+//     id: ncNanoId(),
+//     href: "/home-demo-2",
+//     name: "Home Demo 2",
+//   },
+//   {
+//     id: ncNanoId(),
+//     href: "/home-demo-3",
+//     name: "Home Demo 3",
+//   },
+//   {
+//     id: ncNanoId(),
+//     href: "/home-demo-4",
+//     name: "Home Demo 4",
+//   },
 
-  {
-    id: ncNanoId(),
-    href: "/home-demo-6",
-    name: "Home Demo - News",
-    isNew: true,
-  },
-];
+//   {
+//     id: ncNanoId(),
+//     href: "/home-demo-6",
+//     name: "Home Demo - News",
+//     isNew: true,
+//   },
+// ];
 
 const templateChilds: NavItemType[] = [
   ...archviePageChildrenMenus,
@@ -337,35 +373,34 @@ export const NAVIGATION_DEMO: NavItemType[] = [
     id: ncNanoId(),
     href: "/",
     name: "Home",
-    type: "dropdown",
-    children: demoChildMenus,
-  },
-  {
-    id: ncNanoId(),
-    href: "#",
-    name: "Five cols",
-    type: "megaMenu",
-    megaMenu: megaMenuDemo,
+    type: "none",
   },
 
   {
     id: ncNanoId(),
     href: "#",
-    name: "Fewer cols",
+    name: "Instruments",
     type: "megaMenu",
     megaMenu: megaMenu3ItemDemo,
   },
   {
     id: ncNanoId(),
     href: "#",
-    name: "Templates",
+    name: "Courses",
+    type: "megaMenu",
+    megaMenu: megaMenu3ItemDemo2,
+  },
+  {
+    id: ncNanoId(),
+    href: "#",
+    name: "Karaoke",
     type: "dropdown",
     children: templateChilds,
   },
   {
     id: ncNanoId(),
     href: "#",
-    name: "Other pages",
+    name: "Others",
     type: "dropdown",
     children: otherPageChildMenus,
   },

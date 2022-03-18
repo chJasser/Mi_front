@@ -91,7 +91,7 @@ const PostFeaturedMedia: FC<PostFeaturedMediaProps> = ({
       ref={videoRef}
     >
       <NcImage containerClassName="absolute inset-0" src={featuredImage} />
-      {renderContent()}
+      {/* {renderContent()} */}
     </div>
   );
 };

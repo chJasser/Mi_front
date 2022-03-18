@@ -45,11 +45,12 @@ const Card11: FC<Card11Props> = ({
       </span>
 
       <div className="p-4 flex flex-col flex-grow space-y-3">
-        {!hiddenAuthor ? (
+        <PostCardMeta meta={post} />
+        {/* {!hiddenAuthor ? (
           <PostCardMeta meta={post} />
         ) : (
           <span className="text-xs text-neutral-500">{date}</span>
-        )}
+        )} */}
         <h2 className="nc-card-title block text-base font-semibold text-neutral-900 dark:text-neutral-100 ">
           <Link to={href} className="line-clamp-2" title={title}>
             {title}
