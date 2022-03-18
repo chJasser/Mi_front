@@ -21,7 +21,6 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
   
   const dispatch = useDispatch();
   const cart = useSelector((state) => state);
-  console.log(cart);
   return (
     <div
       className={`nc-MainNav1 relative z-10 ${
@@ -41,6 +40,7 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
                 <img
                   className="w-7 h-7"
                   src="http://localhost:5050/uploads/R.png"
+                  alt=""
                 />
               </Link>
             </div>
