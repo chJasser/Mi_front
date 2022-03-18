@@ -258,12 +258,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     /**
      *
      */
-    axios
-      .get("products/filter")
-      .then((res) => {
-        dispatch(populateProducts(res.data.products));
-        setProducts(res.data.products);
-      });
+    
   }, [dispatch]);
 
   

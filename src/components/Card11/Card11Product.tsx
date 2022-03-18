@@ -73,9 +73,10 @@ const Card11Product: FC<Card11Props> = ({
           {label + " " + price + " $"}
         </h2>
         <div className="flex items-end justify-between mt-auto">
+       
           <ProductCardLikeAndComment className="relative" postData={product} />
           <ProductCardSaveAction className="relative" postData={product} />
-
+         
           <ModalProduct product={product} open={isOpen} />
         </div>
       </div>
