@@ -1,6 +1,6 @@
 import { CustomLink } from "data/types";
 import React, { FC } from "react";
-import { Link } from "react-router-dom";
+
 
 export interface WidgetHeading1Props {
   className?: string;
@@ -21,7 +21,7 @@ const WidgetHeading1: FC<WidgetHeading1Props> = ({
       <h2 className="text-lg text-neutral-900 dark:text-neutral-100 font-semibold flex-grow">
         {title}
       </h2>
-      {!!viewAll.href && (
+      {/* {!!viewAll.href && (
         <Link
           className="flex-shrink-0 block text-primary-700 dark:text-primary-500 font-semibold text-sm"
           target={viewAll.targetBlank ? "_blank" : undefined}
@@ -30,7 +30,7 @@ const WidgetHeading1: FC<WidgetHeading1Props> = ({
         >
           {viewAll.label}
         </Link>
-      )}
+      )} */}
     </div>
   );
 };

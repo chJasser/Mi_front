@@ -18,8 +18,8 @@ const WidgetTags: FC<WidgetTagsProps> = ({
       data-nc-id="WidgetTags"
     >
       <WidgetHeading1
-        title="🏷 Discover more tags"
-        viewAll={{ label: "View all", href: "/#" }}
+        title="🏷 Interested In"
+         viewAll={{ label: "View all", href: "/#" }}
       />
       <div className="flex flex-wrap p-4 xl:p-5">
         {tags.map((tag) => (
