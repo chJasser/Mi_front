@@ -407,11 +407,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
             ))}
           </div>
 
-          {/* <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
-            {products.map((product) => (
-              <Card11Product key={product._id} product={product} />
-            ))}
-          </div> */}
+          
           {/* PAGINATIONS */}
           <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
             <Pagination />

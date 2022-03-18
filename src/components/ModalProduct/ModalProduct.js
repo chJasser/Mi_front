@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 import { StarIcon } from "@heroicons/react/solid";
@@ -31,7 +31,15 @@ export default function Example(props) {
     qte:qty,
 
   }
-  ratings();
+  useEffect(()=>{
+
+    ratings();
+  }
+   
+
+
+  ,[])
+ 
 
   return (
     <>
@@ -159,7 +167,7 @@ export default function Example(props) {
                         </div>
                         <div>
                           <h4 className="text-sm text-gray-900 font-medium"> Quantity</h4>
-                          <input type="number" value={qty} onChange={(e)=>{setQty(e.target.value)}} className="text-sm text-gray-900 font-medium">
+                          <input type="number" min={1} value={qty} onChange={(e)=>{setQty(e.target.value)}} className="text-sm text-gray-900 font-medium">
                             
                           </input>
                         </div>

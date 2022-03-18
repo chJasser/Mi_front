@@ -10,18 +10,20 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { isAuthenticated, logoutUser } from "app/slices/userSlice";
 import { useAppDispatch } from "app/hooks";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import Badge from "@material-ui/core/Badge";
 
-
-export interface MainNav1Props {
+/*export interface MainNav1Props {
   isTop: boolean;
-}
+}*/
 
-const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
+const MainNav1 = ({ isTop }) => {
   const isAuth = useSelector(isAuthenticated);
   
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state);
-  console.log(cart);
+ 
+  const cart = useSelector((state) => state.carteslics.cartItems);
+  
   return (
     <div
       className={`nc-MainNav1 relative z-10 ${
@@ -36,12 +38,11 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
         <div className="flex-shrink-0 flex items-center justify-end text-neutral-700 dark:text-neutral-100 space-x-1">
           <div className="hidden items-center xl:flex space-x-1">
             <DarkModeContainer />
-            <div className="">
+            <div className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
               <Link to="/dashboard/posts">
-                <img
-                  className="w-7 h-7"
-                  src="http://localhost:5050/uploads/R.png"
-                />
+                <Badge color="secondary" badgeContent={cart.length}>
+                  <ShoppingCartIcon/>{" "}
+                </Badge>
               </Link>
             </div>
 

@@ -95,7 +95,7 @@ const Cartproducts = () => {
                       <div className="ml-4 flex-grow">
                         <input
                           type="number"
-                          
+                          min={1}
                           placeholder={item.qte}
                           onChange={(e) => {
                             setProductToChange(item);
