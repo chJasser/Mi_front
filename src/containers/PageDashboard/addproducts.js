@@ -104,21 +104,16 @@ const onSubmit = async (values) => {
   formData.append("price", values.price);
   
     formData.append("category", selectedOptioncategory.value);
-  
+    formData.append("marque", selectedOptionmarque.value);
+    formData.append("type",selectedOptiontype.value);
+    formData.append("state",selectedOptionstate.value);
     for (const key of Object.keys(productImage)) {
       formData.append("files", productImage[key]);
     }
-  console.log(formData);
-  /*for (let state of selectedOptionstate) {
-    formData.append("state", state.value);
-  }
-  for (let type of selectedOptiontype) {
-    formData.append("type", type.value);
-  }
-  for (let marque of selectedOptionmarque) {
-    formData.append("marque", marque.value);
-  }*/
-  /*const response = await axios.post("/products/add-product", formData).catch((err) => {
+  console.log(values);
+  console.log(selectedOptioncategory.value);
+  console.log(selectedOptionstate.value);
+  const response = await axios.post("/products/add-product", formData).catch((err) => {
     if (err && err.response) {
       setErrors(err.response.data.message);
       setSuccess(null);
@@ -129,7 +124,7 @@ const onSubmit = async (values) => {
     setSuccess(response.data.message);
     
     history.push("/dashboard");
-  }*/
+  }
   }
   
 
@@ -146,17 +141,17 @@ const onSubmit = async (values) => {
                 productImage:[],
 
               }}
-              validationSchema={validationSchema}
-              onSubmit={onSubmit}>
+              
+              onSubmit={onSubmit} >
             {
            ({ handleSubmit,
-            handleChange,
+             handleChange,
                 handleBlur,
                 setFieldValue,
                 values,
                 touched,
                 errors,
-
+            
 
 
             })=>(<form className="grid md:grid-cols-2 gap-6"  onSubmit={handleSubmit} >
@@ -216,6 +211,47 @@ const onSubmit = async (values) => {
             {touched.category && errors.category ? (
                     <Alert severity="error">{errors.category}</Alert>
                   ) : null}
+
+       <label className="block md:col-span-2">
+              <Label> Marque</Label>
+              <Select
+                name="marque" id="marque"
+                value={selectedOptionmarque}
+                      onChange={handleInputChangemarque}
+                      components={animatedComponents}
+                       options={optionsmarque}
+              />
+            </label>
+            {touched.marque && errors.marque ? (
+                    <Alert severity="error">{errors.marque}</Alert>
+                  ) : null}
+       <label className="block md:col-span-2">
+              <Label> Type</Label>
+              <Select
+                name="type" id="type"
+                value={selectedOptiontype}
+                      onChange={handleInputChangetype}
+                      components={animatedComponents}
+                       options={optionstype}
+              />
+            </label>
+            {touched.type && errors.type ? (
+                    <Alert severity="error">{errors.marque}</Alert>
+                  ) : null}
+                    <label className="block md:col-span-2">
+              <Label> State</Label>
+              <Select
+                name="state" id="state"
+                value={selectedOptionstate}
+                      onChange={handleInputChangestate}
+                      components={animatedComponents}
+                       options={optionsstate}
+              />
+            </label>
+            {touched.state && errors.state ? (
+                    <Alert severity="error">{errors.state}</Alert>
+                  ) : null}
+
 
                     <Input
                       id="productImage"
