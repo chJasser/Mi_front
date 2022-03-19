@@ -28,7 +28,7 @@ const SectionBecomeAnTeacher: FC<SectionBecomeAnAuthorProps> = ({
           share new perspectives on just about any topic. Everyone’s welcome.
         </span>
         <ButtonPrimary
-          onClick={() => history.push("become-teacher")}
+          onClick={() => history.push("mi/become-teacher")}
           className="mt-8"
         >
           Become a teacher

@@ -29,7 +29,7 @@ const SectionBecomeAnSeller: FC<SectionBecomeAnAuthorProps> = ({
           share new perspectives on just about any topic. Everyone’s welcome.
         </span>
         <ButtonPrimary
-          onClick={() => history.push("become-seller")}
+          onClick={() => history.push("mi/become-seller")}
           className="mt-8"
         >
           Become a seller
