@@ -30,7 +30,9 @@ import { Popover, Transition } from "@headlessui/react";
 import Input from "components/Input/Input";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
-//import ModalCategoriesprod from "./Modalcategoriesprod";
+import {RootState} from "../../app/store"
+import {filterByMarque, filterByCategory} from "../../app/filterSlice/filterSlice"
+
 export interface PageArchiveProps {
   className?: string;
 }
@@ -40,6 +42,8 @@ const posts: PostDataType[] = DEMO_POSTS.filter((_, i) => i < 16);
 const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
+  const filter = useSelector((state: RootState) => state.filterSlice)
+  console.log(filter)
   const path = "http://localhost:3000/archive/the-demo-archive-slug";
   const myRef = useRef(null);
   const inputRef = React.createRef<HTMLInputElement>();
@@ -67,10 +71,52 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     }
   };
 
+  //filter by category
+  const filterCategory = () => {
+    // dispatch(filterByMarque(null))
+    axios
+      .get(`products/fiter?category=${filter.category}`)
+      .then((res) => {
+        executeScroll();
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
+
+ // setInterval(() => {filterCategory()}, 10000);
+
+  //filter by marque
+  const filterMarque = () => {
+    axios
+      .get(`products/marque?marque=${filter.marque}`)
+      .then((res) => {
+        executeScroll();
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
+
+  const getAllProduct = () => {
+    axios
+      .get("products/filter")
+      .then((res) => {
+        console.log(res.data.products)
+        dispatch(populateProducts(res.data.products))
+        setProducts(res.data.products);
+      })
+      .catch(err => console.log(err.message))
+  }
+
+
   useEffect(() => {
     axios
       .get("products/liked-products")
       .then((response) => {
+        console.log(response);
         dispatch(getLikedProducts(response.data));
       })
       .catch((error) => {
@@ -79,184 +125,19 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     axios
       .get("products/bookmarked-products")
       .then((response) => {
+        console.log(response);
         dispatch(getBookmarkedProducts(response.data));
       })
       .catch((error) => {
         console.error(error);
       });
-    switch (window.location.href) {
-      case path + "?category=guitars":
-        axios
-          .get("products/fiter?category=guitars")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?category=strings":
-        axios
-          .get("products/fiter?category=strings")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?category=keyboards":
-        axios
-          .get("products/fiter?category=keyboards")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?category=brass":
-        axios
-          .get("products/fiter?category=brass")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?category=percussions":
-        axios
-          .get("products/fiter?category=percussions")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?category=woodwind":
-        axios
-          .get("products/fiter?category=woodwind")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?category=others":
-        axios
-          .get("products/filter")
-          .then((res) => {
-            executeScroll();
-            dispatch(populateProducts(res.data.products));
-            setProducts(res.data.products);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?marque=yamaha":
-        axios
-          .get("products/marque?marque=yamaha")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?marque=shure":
-        axios
-          .get("products/marque?marque=shure")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?marque=gibson":
-        axios
-          .get("products/marque?marque=gibson")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?marque=harman":
-        axios
-          .get("products/marque?marque=harman")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?marque=fender":
-        axios
-          .get("products/marque?marque=fender")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?marque=steinway":
-        axios
-          .get("products/marque?marque=steinway")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?marque=roland":
-        axios
-          .get("products/marque?marque=roland")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      default:
-        axios
-          .get("products/filter")
-          .then((res) => {
-            dispatch(populateProducts(res.data.products));
-            setProducts(res.data.products);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-    }
-    /**
-     *
-     */
+      getAllProduct();
+    
   }, [dispatch]);
 
+  
+
+  
   const PAGE_DATA: TaxonomyType = DEMO_CATEGORIES[0];
 
   const FILTERS = [
@@ -268,6 +149,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   ];
 
   return (
+    
     <div
       className={`nc-PageArchive overflow-hidden ${className}`}
       data-nc-id="PageArchive"
@@ -275,6 +157,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       <Helmet>
         <title>Our Products || MI Universe</title>
       </Helmet>
+
 
       {/* HEADER */}
       <div className="w-full px-2 xl:max-w-screen-2xl mx-auto">
@@ -297,7 +180,9 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       {/* ====================== END HEADER ====================== */}
       <div className="relative py-5 container">
         <BackgroundSection />
-        <SectionGridCategory />
+        <a onClick={() => {
+          //dispatch(filterByCategory(filter.category))
+          filterCategory()}}><SectionGridCategory /></a>
       </div>
       <div
         ref={myRef}
@@ -308,7 +193,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
             <div className="flex space-x-2.5">
               {/*<ModalCategories categories={DEMO_CATEGORIES} />*/}
               {/*<ModalCategoriesprod/>*/}
-              <ModalMarque />
+              <a onClick={() => filterMarque()}><ModalMarque /></a>
             </div>
             <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>
             <div className="flex justify-end">
@@ -341,8 +226,10 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               onChange={rangeSelector}
               valueLabelDisplay="auto"
             />
-            Your range of Price is between {min}$ and {max}$
+            Your range of Price is between {min}$ and {max}$ 
           </div>
+
+          
 
           <React.Fragment>
             <Popover className="relative">
@@ -392,7 +279,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               }}
             </Popover>
           </React.Fragment>
-
+          <ButtonPrimary onClick={() => getAllProduct()}>Get All Porduct</ButtonPrimary>
           {/* <div className="search">
         <input
           id="outlined-basic"
@@ -407,7 +294,11 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
             ))}
           </div>
 
-          
+          {/* <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
+            {products.map((product) => (
+              <Card11Product key={product._id} product={product} />
+            ))}
+          </div> */}
           {/* PAGINATIONS */}
           <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
             <Pagination />

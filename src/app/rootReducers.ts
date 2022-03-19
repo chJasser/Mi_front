@@ -9,6 +9,7 @@ import Productslice from "./productslice/Productslice";
 
 import carteslics from "./cartslice/carteslics";
 import productLikeSlice from "./productLikes/productLikes";
+import filterSlice from "./filterSlice/filterSlice"
 
 
 const rootReducers = {
@@ -22,6 +23,7 @@ const rootReducers = {
   user: userSlice,
   productLikes: productLikeSlice,
   carteslics: carteslics,
+  filterSlice: filterSlice
 };
 
 export default rootReducers;

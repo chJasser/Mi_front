@@ -10,11 +10,13 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Badge from "@material-ui/core/Badge";
+import { isAuthenticated, logoutUser } from "app/slices/userSlice";
 
 const MaiNnavprod = ({ isTop }) => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.carteslics.cartItems);
   console.log(cart);
+  const isAuth = useSelector(isAuthenticated);
   return (
     <div
       className={`nc-MainNav1 relative z-10 ${
@@ -40,10 +42,22 @@ const MaiNnavprod = ({ isTop }) => {
             <SearchDropdown />
 
             <div className="px-1" />
-            <ButtonPrimary href="/login">Sign up</ButtonPrimary>
+            {isAuth ? (
+              <ButtonPrimary onClick={() => dispatch(logoutUser())}>
+                Logout
+              </ButtonPrimary>
+            ) : (
+              <ButtonPrimary href="/login">Sign up</ButtonPrimary>
+            )}
           </div>
           <div className="flex items-center xl:hidden">
-            <ButtonPrimary href="/login">Sign up</ButtonPrimary>
+            {isAuth ? (
+              <ButtonPrimary onClick={() => dispatch(logoutUser())}>
+                Logout
+              </ButtonPrimary>
+            ) : (
+              <ButtonPrimary href="/login">Sign up</ButtonPrimary>
+            )}
             <div className="px-1" />
             <MenuBar />
           </div>
