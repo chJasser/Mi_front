@@ -30,6 +30,7 @@ import { Popover, Transition } from "@headlessui/react";
 import Input from "components/Input/Input";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
+import Modalcart from "./Modalcart";
 //import ModalCategoriesprod from "./Modalcategoriesprod";
 export interface PageArchiveProps {
   className?: string;
@@ -308,6 +309,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
             <div className="flex space-x-2.5">
               {/*<ModalCategories categories={DEMO_CATEGORIES} />*/}
               {/*<ModalCategoriesprod/>*/}
+              <Modalcart/>
               <ModalMarque />
             </div>
             <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>

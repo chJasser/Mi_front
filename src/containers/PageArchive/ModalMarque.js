@@ -16,6 +16,7 @@ const marques = [
 ];
 
 const ModalMarque = () => {
+  
   const renderModalContent = () => {
     return (
       <div className="flex flex-wrap dark:text-neutral-200">

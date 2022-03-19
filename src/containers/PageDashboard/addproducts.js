@@ -16,40 +16,238 @@ import { useDispatch } from "react-redux";
 import { getCurrentTeacher, login } from "app/slices/userSlice";
 import { useHistory } from "react-router-dom";
 
-const addproducts = () => {
+const Addproducts = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [errors, setErrors] = useState(null);
+  const [success, setSuccess] = useState(null);
+  const [productImage, setimagesfiles] = useState("");
+  const validationSchema = Yup.object({
+    label: Yup.string()
+      .required("label is required")
+      .min(4,"label contain 4 charachters at least").max(15,"label contain 15 charachters at most"),
+    category: Yup.string()
+      .required("Category is required"),
+    description: Yup.string()
+      .required("Description is required")
+      .min(30, "Description must contain at least 30 characters")
+      .max(300, "Description must contain at most 300 characters"),
+      marque: Yup.string()
+      .required("Marque is required"),
+      price: Yup.number("Price contains just number ")
+      .required("Price is required"),
+      reference: Yup.string()
+      .required("Reference is required"),
+      state: Yup.string()
+      .required("Degrees are required"),
+      type: Yup.string()
+      .required("Type are required"),
+  });
+
+const[selectedOptiontype,setSelectedOptiontype]=useState([]);
+const[selectedOptioncategory,setSelectedOptincategory]=useState([]);
+const[selectedOptionmarque,setSelectedOptionmarque]=useState([]);
+const[selectedOptionstate,setSelectedOptionstate]=useState([]);
+const animatedComponents = makeAnimated();
+const handleInputChangetype = (selectedOptiontype) => {
+  setSelectedOptiontype(selectedOptiontype);
+};
+const handleInputChangecategory = (selectedOptioncategory) => {
+  setSelectedOptincategory(selectedOptioncategory);
+};
+
+const handleInputChangestate = (selectedOptionstate) => {
+  setSelectedOptionstate(selectedOptionstate);
+};
+
+const handleInputChangemarque = (selectedOptionmarque) => {
+  setSelectedOptionmarque(selectedOptionmarque);
+};
+
+
+const optionscategory = [
+  { value: 'guitars', label: 'guitars' },
+  { value: 'keyboards', label: 'keyboards' },
+  { value: 'strings', label: 'strings' },
+  { value: 'brass', label: 'brass' },
+  { value: 'percussions', label: 'percussions' },
+  { value: 'woodwind', label: 'woodwind' },
+  {value:'others',label:'others'}
+]
+const optionstype = [
+  { value: 'instrument', label: 'instrument' },
+  { value: 'gear', label: 'gear' }
+ 
+]
+const optionsmarque = [
+  { value: 'yamaha', label: 'yamaha' },
+  { value: 'shure', label: 'shure' },
+  { value: 'gibson', label: 'gibson' },
+  { value: 'harman', label: 'harman' },
+  { value: 'fender', label: 'fender' },
+  { value: 'steinway', label: 'steinway' },
+  { value: 'roland', label: 'roland' },
+  { value: 'others', label: 'others' }
+
+]
+const optionsstate = [
+  { value: 'new', label: 'new' },
+  { value: 'used', label: 'used' }
+]
+   
+const onSubmit = async (values) => {
+
+  var formData = new FormData();
+  formData.append("label", values.label);
+  formData.append("description", values.description);
+  formData.append("reference", values.reference);
+  formData.append("price", values.price);
+  
+    formData.append("category", selectedOptioncategory.value);
+  
+    for (const key of Object.keys(productImage)) {
+      formData.append("files", productImage[key]);
+    }
+  console.log(formData);
+  /*for (let state of selectedOptionstate) {
+    formData.append("state", state.value);
+  }
+  for (let type of selectedOptiontype) {
+    formData.append("type", type.value);
+  }
+  for (let marque of selectedOptionmarque) {
+    formData.append("marque", marque.value);
+  }*/
+  /*const response = await axios.post("/products/add-product", formData).catch((err) => {
+    if (err && err.response) {
+      setErrors(err.response.data.message);
+      setSuccess(null);
+    }
+  });
+  if (response && response.data) {
+    setErrors(null);
+    setSuccess(response.data.message);
+    
+    history.push("/dashboard");
+  }*/
+  }
+  
+
+
+
   return (
     <div className="rounded-xl md:border md:border-neutral-100 dark:border-neutral-800 md:p-6">
-      <form className="grid md:grid-cols-2 gap-6" action="#" method="post">
-        <label className="block">
-          <Label>First name</Label>
-          <Input placeholder="Example Doe" type="text" className="mt-1" />
-        </label>
-        <label className="block">
-          <Label>Last name</Label>
-          <Input placeholder="Doe" type="text" className="mt-1" />
-        </label>
-        <label className="block">
-          <Label>Current password</Label>
-          <Input placeholder="***" type="password" className="mt-1" />
-        </label>
-        <label className="block">
-          <Label>New password</Label>
-          <Input type="password" className="mt-1" />
-        </label>
-        <label className="block md:col-span-2">
-          <Label> Email address</Label>
-          <Input
-            type="email"
-            placeholder="example@example.com"
-            className="mt-1"
-          />
-        </label>
-        <ButtonPrimary className="md:col-span-2" type="submit">
-          Update profile
-        </ButtonPrimary>
-      </form>
+
+      <Formik initialValues={{
+                label: "",
+                price:"",
+                reference:"",
+                description: "",
+                productImage:[],
+
+              }}
+              validationSchema={validationSchema}
+              onSubmit={onSubmit}>
+            {
+           ({ handleSubmit,
+            handleChange,
+                handleBlur,
+                setFieldValue,
+                values,
+                touched,
+                errors,
+
+
+
+            })=>(<form className="grid md:grid-cols-2 gap-6"  onSubmit={handleSubmit} >
+            <label className="block">
+              <Label>Label</Label>
+              <Input id="label" name="label"  onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.label} placeholder="Example Doe" type="text" className="mt-1" />
+            </label>{touched.label && errors.label ? (
+                    <Alert severity="error">{errors.label}</Alert>
+                  ) : null}
+
+
+            <label className="block">
+              <Label>Price</Label>
+              <Input id="price" name="price" type="text" onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.price} className="mt-1" />
+            </label>
+            {touched.price && errors.price ? (
+                    <Alert severity="error">{errors.price}</Alert>
+                  ) : null}
+            <label className="block">
+              <Label>Reference</Label>
+              <Input type="text" id="reference" name="reference" className="mt-1" onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.reference} />
+            </label>
+            {touched.reference && errors.reference ? (
+                    <Alert severity="error">{errors.reference}</Alert>
+                  ) : null}
+            <label className="block">
+              <Label>Description</Label>
+              <Textarea
+                      id="description"
+                      name="description"
+                      className="mt-1"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.description}
+                      rows={6}
+                    />
+            </label>
+            {touched.description && errors.description ? (
+                    <Alert severity="error">{errors.description}</Alert>
+                  ) : null}
+            <label className="block md:col-span-2">
+              <Label> Category</Label>
+              <Select
+                name="category" id="category"
+                value={selectedOptioncategory}
+                      onChange={handleInputChangecategory}
+                      components={animatedComponents}
+                       options={optionscategory}
+              />
+            </label>
+            {touched.category && errors.category ? (
+                    <Alert severity="error">{errors.category}</Alert>
+                  ) : null}
+
+                    <Input
+                      id="productImage"
+                      name="productImage"
+                      type="file"
+                      className="mt-1 form-control form-control-sm"
+                      style={{ border: "1px solid #D1D1D1" }}
+    
+                      onChange={(event) => {
+                        setFieldValue("productImage", event.currentTarget.files);
+                        setimagesfiles(event.target.files);
+                      }}
+                      multiple
+                    />
+                    {touched.productImage && errors.productImage ? (
+                    <Alert severity="error">{errors.productImage}</Alert>
+                  ) : null}
+
+
+            <ButtonPrimary className="md:col-span-2" type="submit">
+              Add product
+            </ButtonPrimary>
+          </form>)
+
+            }
+
+
+
+              </Formik>
+      
     </div>
   );
 };
 
-export default addproducts;
+export default Addproducts;

@@ -10,7 +10,7 @@ import DashboardSubcription from "./DashboardSubcription";
 import DashboardSubmitPost from "./DashboardSubmitPost";
 import { Helmet } from "react-helmet";
 import Cartproducts from "./Cartproducts";
-import addproducts from "./addproducts";
+import Addproducts from "./addproducts";
 export interface PageDashboardProps {
   className?: string;
 }
@@ -42,16 +42,16 @@ const subPages = [
     pageName: "Dash board",
   },
   {
-    sPath: "/posts/:id?",
+    sPath: "/posts",
     component: Cartproducts,
     emoij: "📕",
     pageName: "Posts",
   },
   {
     sPath: "/addproducts",
-    component: addproducts,
+    component: Addproducts,
     emoij: "📕",
-    pageName: "Posts",
+    pageName: "Addproducts",
   },
   {
     sPath: "/edit-profile",
