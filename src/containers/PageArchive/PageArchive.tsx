@@ -14,13 +14,14 @@ import Card11 from "components/Card11/Card11";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import SectionGridCategoryBox from "components/SectionGridCategoryBox/SectionGridCategoryBox";
 import SectionGridCategory from "components/SectionGridCategoryBox/SectionGridCategory";
-import ButtonSecondary from "components/Button/ButtonSecondary";
 import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
 import { DEMO_AUTHORS } from "data/authors";
 import axios from "axiosInstance";
 import Card11Product from "components/Card11/Card11Product";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts, populateProducts } from "app/productslice/Productslice";
+
+
 import {
   getLikedProducts,
   getBookmarkedProducts,
@@ -306,8 +307,6 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
         <div>
           <div className="flex flex-col sm:items-center sm:justify-between sm:flex-row">
             <div className="flex space-x-2.5">
-              {/*<ModalCategories categories={DEMO_CATEGORIES} />*/}
-              {/*<ModalCategoriesprod/>*/}
               <ModalMarque />
             </div>
             <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>
@@ -315,18 +314,6 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               <ArchiveFilterListBox lists={FILTERS} />
             </div>
           </div>
-          {/* LOOP ITEMS */}
-
-          {/* <div>
-            <h1>Marque : </h1>
-            yamaha: <input type="checkbox" />
-            shure: <input type="checkbox" />
-            gibson: <input type="checkbox" />
-            harman: <input type="checkbox" />
-            fender: <input type="checkbox" />
-            steinway: <input type="checkbox" />
-            roland: <input type="checkbox" />
-          </div> */}
 
           <div
             style={{
@@ -393,21 +380,12 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
             </Popover>
           </React.Fragment>
 
-          {/* <div className="search">
-        <input
-          id="outlined-basic"
-          type="search"
-          onChange={inputHandler}
-          placeholder="Search By Label"
-        />
-        </div> */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
             {products.map((product) => (
               <Card11Product key={product._id} product={product} />
             ))}
           </div>
 
-          
           {/* PAGINATIONS */}
           <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
             <Pagination />
