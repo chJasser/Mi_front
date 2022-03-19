@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from "react";
 import Avatar from "components/Avatar/Avatar";
-
+import { PostDataType } from "data/types";
 import { Link } from "react-router-dom";
 import axios from "axiosInstance";
 export interface PostCardMetaProps {
@@ -11,7 +11,7 @@ export interface PostCardMetaProps {
 }
 const base_url = "http://localhost:5050/";
 
-const PostCardMeta: FC<PostCardMetaProps> = ({
+const PostMetaProduct: FC<PostCardMetaProps> = ({
   className = "leading-none",
   meta,
   hiddenAvatar = false,
@@ -25,16 +25,15 @@ const PostCardMeta: FC<PostCardMetaProps> = ({
 
   const { userName, phoneNumber, profilePicture } = creator;
   useEffect(() => {
-    if (meta.seller) {
-      axios
-        .get(`users/${meta.seller}`)
-        .then((result) => {
-          setUser(result.data);
-        })
-        .catch((err) => {
-          console.log(err.response.data);
-        });
-    }
+    console.log(meta);
+    axios
+      .get(`users/${meta.seller}`)
+      .then((result) => {
+        setUser(result.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   }, []);
 
   return (
@@ -48,7 +47,9 @@ const PostCardMeta: FC<PostCardMetaProps> = ({
         {!hiddenAvatar && (
           <Avatar
             radius="rounded-full"
-            sizeClass="h-7 w-7 text-sm"
+            sizeClass={
+              size === "normal" ? "h-7 w-7 text-sm" : "h-10 w-10 text-xl"
+            }
             imgUrl={base_url + profilePicture}
             userName={userName}
           />
@@ -66,4 +67,4 @@ const PostCardMeta: FC<PostCardMetaProps> = ({
   );
 };
 
-export default PostCardMeta;
+export default PostMetaProduct;

@@ -5,16 +5,6 @@ import {Link} from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import {filterByCategory} from "../../app/filterSlice/filterSlice"
 
-// export interface SectionGridCategoryBoxProps {
-//   categories?: TaxonomyType[];
-//   headingCenter?: boolean;
-//   categoryCardType?: "card1" | "card2" | "card3" | "card4" | "card5";
-//   className?: string;
-// }
-
-//const DATA = DEMO_CATEGORIES.filter((_, i) => i < 10);
-
-
 const SectionGridCategory = () => {
   let categories = [
     "guitars",
@@ -49,9 +39,7 @@ const SectionGridCategory = () => {
   const dispatch = useDispatch();
   return (
     <div className={`nc-SectionGridCategoryBox relative `}>
-      <Heading desc="Discover over 100 Articles" >
-        Instruments
-      </Heading>
+      <Heading desc="Discover over 100 Articles">Instruments</Heading>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6 md:gap-8">
         {categories.map((item, i) => (
           <button 

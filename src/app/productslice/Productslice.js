@@ -8,7 +8,7 @@ let initialState = {
 };
 
 const ProductsSlice = createSlice({
-  name: "products",
+  name: "product",
   initialState,
   reducers: {
     populateProducts(state, action) {

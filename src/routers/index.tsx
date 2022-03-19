@@ -29,6 +29,7 @@ import PageHome from "containers/PageHome/PageHome";
 import PageSearchV2 from "containers/PageSearch/PageSearchV2";
 import MediaRunningContainer from "containers/MediaRunningContainer/MediaRunningContainer";
 import PageSingleGallery from "containers/PageSingleGallery/PageSingleGallery";
+import PageSingleProduct from "containers/PageSingleGallery/PageSingleProduct";
 import PageSingleAudio from "containers/PageSingleAudio/PageSingleAudio";
 import PageSingleVideo from "containers/PageSingleVideo/PageSingleVideo";
 import PageArchiveVideo from "containers/PageArchive/PageArchiveVideo";
@@ -38,15 +39,16 @@ import PageArchiveAudio from "containers/PageArchive/PageArchiveAudio";
 import MediaRunningContainerForSafari from "containers/MediaRunningContainer/MediaRunningContainerForSafari";
 import isSafariBrowser from "utils/isSafariBrowser";
 import PageHomeDemo7 from "containers/PageHome/PageHomeDemo7";
-import RestPasswordComponent from "containers/PageForgotPass/ResetPasswordComponent.js";
+
+import RestPasswordComponent from "../containers/PageForgotPass/ResetPasswordComponent.js";
 import PagePassword from "containers/PageSignUp/PagePassword";
-import AuthRoute from "./AuthRoute";
-import PageSeller from "components/SectionBecomeAnSeller/BecomeAnSeller";
-import PageBecomeStudent from "components/SectionBecomeAnStudent/PageBecomeStudent";
-import PageTeacher from "components/SectionBecomeAnTeacher/BecomeAnTeacher.js";
-import BecomeSellerRoute from "./BecomeSellerRoute";
-import BecomeStudentRoute from "./BecomeStudentRoute";
-import BecomeTeacherRoute from "./BecomeTeacherRoute";
+import AuthRoute from "../routers/AuthRoute";
+import PageSeller from "../components/SectionBecomeAnSeller/BecomeAnSeller";
+import PageBecomeStudent from "../components/SectionBecomeAnStudent/PageBecomeStudent";
+import PageTeacher from "../components/SectionBecomeAnTeacher/BecomeAnTeacher.js";
+import BecomeSellerRoute from "../routers/BecomeSellerRoute";
+import BecomeStudentRoute from "../routers/BecomeStudentRoute";
+import BecomeTeacherRoute from "../routers/BecomeTeacherRoute";
 
 export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
@@ -79,9 +81,13 @@ export const pages: Page[] = [
     path: "/single-3-sidebar/:slug",
     component: PageSingleHasSidebar,
   },
+  // {
+  //   path: "/single-gallery/",
+  //   component: PageSingleGallery,
+  // },
   {
     path: "/single-gallery/:slug",
-    component: PageSingleGallery,
+    component: PageSingleProduct,
   },
   {
     path: "/single-audio/:slug",
@@ -107,16 +113,10 @@ export const pages: Page[] = [
   },
   { path: "/dashboard", component: PageDashboard },
   { path: "/subscription", component: PageSubcription },
-  //
-  // { path: "/home-demo-2", component: PageHomeDemo2 },
-  // { path: "/home-demo-3", component: PageHomeDemo3 },
-  // { path: "/home-demo-4", component: PageHomeDemo4 },
-  // { path: "/home-demo-5", component: PageHomeDemo5 },
-  // { path: "/home-demo-6", component: PageHomeDemo6 },
-  // { path: "/home-demo-7", component: PageHomeDemo7 },
+
   { path: "/forgot-pass/:email", component: RestPasswordComponent },
   { path: "/passport/register", component: PagePassword },
-  
+
   { path: "/home-demo-7", component: PageHomeDemo7 },
   {
     path: "/forgot-pass/:email",

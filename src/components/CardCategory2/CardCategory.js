@@ -51,16 +51,16 @@ const CardCategory = ({ category }) => {
         {/* <h2 className={`text-base sm:text-lg font-semibold `}>
           <span className="line-clamp-1">{name}</span>
         </h2> */}
-        
-          <span>{name}</span>
-          <span
-            className={`block mt-[2px] text-sm text-neutral-500 dark:text-neutral-400`}
-          >
-            {nbr} Articles
-          </span>
-        </div>
+
+        <span>{name}</span>
+        <span
+          className={`block mt-[2px] text-sm text-neutral-500 dark:text-neutral-400`}
+        >
+          {nbr} Articles
+        </span>
       </div>
-    
+    </div>
+
     // </Link>
   );
 };
