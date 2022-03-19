@@ -1,36 +1,31 @@
 import React, { FC, useEffect, useState, Fragment, useRef } from "react";
-import ModalCategories from "./ModalCategories";
 import ModalMarque from "./ModalMarque";
 import { DEMO_POSTS } from "data/posts";
 import { PostDataType, TaxonomyType } from "data/types";
-import { DEMO_CATEGORIES, DEMO_TAGS } from "data/taxonomies";
+import { DEMO_CATEGORIES } from "data/taxonomies";
 import Pagination from "components/Pagination/Pagination";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import ArchiveFilterListBox from "components/ArchiveFilterListBox/ArchiveFilterListBox";
 import { Helmet } from "react-helmet";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import NcImage from "components/NcImage/NcImage";
-import Card11 from "components/Card11/Card11";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
-import SectionGridCategoryBox from "components/SectionGridCategoryBox/SectionGridCategoryBox";
 import SectionGridCategory from "components/SectionGridCategoryBox/SectionGridCategory";
 import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
 import { DEMO_AUTHORS } from "data/authors";
 import axios from "axiosInstance";
-import Card11Product from "components/Card11/Card11Product";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts, populateProducts } from "app/productslice/Productslice";
 
+import { useDispatch } from "react-redux";
+import { populateProducts } from "app/productslice/Productslice";
 
 import {
   getLikedProducts,
   getBookmarkedProducts,
 } from "app/productLikes/productLikes";
-import SearchDropdown from "../../components/Header/SearchDropdown";
 import { Popover, Transition } from "@headlessui/react";
 import Input from "components/Input/Input";
-import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
+import Card11Product from "components/Card11/Card11Product";
 //import ModalCategoriesprod from "./Modalcategoriesprod";
 export interface PageArchiveProps {
   className?: string;
@@ -290,7 +285,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               {PAGE_DATA.name}
             </h2>
             <span className="block mt-4 text-neutral-300">
-              {PAGE_DATA.count} Articles
+              {products.length} Articles
             </span>
           </div>
         </div>

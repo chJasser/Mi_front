@@ -1,11 +1,7 @@
-import React, { FC, useState } from "react";
-import PostCardSaveAction from "components/PostCardSaveAction/PostCardSaveAction";
-import { ProductDataType } from "data/types";
+import React, { FC, useState, lazy } from "react";
 import ProductFeaturedMedia from "components/PostFeaturedMedia/ProductFeaturedMedia";
-import PostCardLikeAndComment from "components/PostCardLikeAndComment/PostCardLikeAndComment";
 import Badge from "components/Badge/Badge";
 import PostCardMeta from "components/PostCardMeta/PostCardMeta";
-import NcModalprod from "components/NcModal/NcModalprod";
 import { useDispatch } from "react-redux";
 import axios from "axiosInstance";
 import { Link } from "react-router-dom";

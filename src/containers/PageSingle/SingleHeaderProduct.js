@@ -1,14 +1,13 @@
 import CategoryBadgeList from "components/CategoryBadgeList/CategoryBadgeList";
 import React, { FC, useEffect } from "react";
 import SingleTitle from "./SingleTitle";
-import { SinglePageType } from "./PageSingleTemp3Sidebar";
-import PostMeta2 from "components/PostMeta2/PostMeta2";
-import SingleMetaAction2 from "./SingleMetaAction2";
+
 import { Helmet } from "react-helmet";
 import Badge from "components/Badge/Badge";
 import ProductCardLikeAndComment from "components/PostCardLikeAndComment/ProductCardLikeAndComment";
 import ProductCardSaveAction from "components/PostCardSaveAction/ProductCardSaveAction";
 import PostCardMeta from "components/PostCardMeta/PostCardMeta";
+import NcImage from "components/NcImage/NcImage";
 
 function SingleHeaderProduct(props) {
   const product = props.product;
@@ -22,6 +21,23 @@ function SingleHeaderProduct(props) {
       <Helmet>
         <title>product || MI Universe</title>
       </Helmet>
+      <div className="w-full px-2 xl:max-w-screen-2xl mx-auto">
+        <div className="rounded-3xl relative aspect-w-16 aspect-h-16 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-6 overflow-hidden ">
+          <NcImage
+            containerClassName="absolute inset-0"
+            src="https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            className="object-cover w-full h-full"
+          />
+          <div className="absolute inset-0 bg-black text-white bg-opacity-30 flex flex-col items-center justify-center">
+            <h2 className="inline-block align-middle text-5xl font-semibold md:text-7xl ">
+              {PAGE_DATA.name}
+            </h2>
+            <span className="block mt-4 text-neutral-300">
+              {products.length} Articles
+            </span>
+          </div>
+        </div>
+      </div>
       <div className={`nc-SingleHeader `}>
         <div className="space-y-5">
           <Badge className="" name={category} />

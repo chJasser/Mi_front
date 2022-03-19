@@ -1,33 +1,30 @@
-import React, { FC, ReactNode, useEffect, useState, Suspense } from "react";
+import { useEffect, useState, Suspense, useRef } from "react";
 import { useParams } from "react-router-dom";
-import NcImage from "components/NcImage/NcImage";
-import { CommentType } from "components/CommentCard/CommentCard";
 import axios from "axiosInstance";
 import { useDispatch, useSelector } from "react-redux";
-import SingleHeaderProduct from "containers/PageSingle/SingleHeaderProduct";
-import ModalPhotos from "./ModalPhotos";
-import { changeCurrentPage } from "app/pages/pages";
 import { Helmet } from "react-helmet";
 import Badge from "components/Badge/Badge";
 import SingleTitle from "../PageSingle/SingleTitle";
-import ProductCardLikeAndComment from "components/PostCardLikeAndComment/ProductCardLikeAndComment";
-import ProductCardSaveAction from "components/PostCardSaveAction/ProductCardSaveAction";
-import PostCardMeta from "components/PostCardMeta/PostCardMeta";
 import { Link } from "react-router-dom";
 import Avatar from "components/Avatar/Avatar";
 import convertNumbThousand from "utils/convertNumbThousand";
 import twFocusClass from "utils/twFocusClass";
-import ProductCardLikeContainer from "containers/PostCardLikeContainer/ProductCardLikeContainer";
-import ProductCardCommentBtn from "components/PostCardCommentBtn/ProductCardCommentBtn";
 import { removeLike, addNewLike } from "app/productLikes/productLikes";
-import ProductCardLikeAction from "components/PostCardLikeAction/ProductCardLikeAction";
 import ProductComment from "components/CommentCard/ProductComment";
+import ButtonPrimary from "components/Button/ButtonPrimary";
+import ButtonSecondary from "components/Button/ButtonSecondary";
+import { useFormik } from "formik";
+import { Alert } from "@mui/material";
+import * as Yup from "yup";
 /**
  *
  *
  */
 function PageSingleProduct() {
   const dispatch = useDispatch();
+  const [errors, setErrors] = useState(null);
+  const [success, setSuccess] = useState(null);
+  const [comment, setComment] = useState("");
   const [reviews, setReviews] = useState([]);
   const [user, setUser] = useState({});
   const [product, setProduct] = useState({});
@@ -35,19 +32,17 @@ function PageSingleProduct() {
   const [isOpen, setIsOpen] = useState(false);
   const [openFocusIndex, setOpenFocusIndex] = useState(0);
   const { slug } = useParams();
-  const { category, reference, label, productImage, likesCount, marque } =
-    product;
+  const { category, reference, label, marque } = product;
   const { userName, phoneNumber, profilePicture } = user;
   const base_url = "http://localhost:5050/";
   const likedProducts = useSelector(
     (state) => state.productLikes.likedProducts
   );
   const className = "";
-  const itemClass = "px-3 h-8 text-xs";
-  const hiddenCommentOnMobile = true;
+  const myRef = useRef(null);
   const size = "large";
   const hiddenAvatar = false;
-  const onClickLike = () => {};
+  const textArea = document.querySelector("#comment_content");
   const addLikeDB = async () => {
     await axios
       .put(`/products/add-like/${product._id}`)
@@ -106,7 +101,6 @@ function PageSingleProduct() {
           .get("product_reviews/get-prod-reviews/" + slug)
           .then((response) => {
             setReviews(response.data.reviews);
-            console.log(response.data.reviews);
           })
           .catch((error) => {
             console.error(error);
@@ -128,9 +122,35 @@ function PageSingleProduct() {
     setIsOpen(true);
     setOpenFocusIndex(index);
   };
+
   const handleCloseModal = () => setIsOpen(false);
   const photos = product.productImage;
-
+  const [disabled, setDisabled] = useState(false);
+  const onClickSubmit = (e) => {
+    e.preventDefault();
+    if (textArea.value === "") {
+      setDisabled(true);
+      textArea.placeholder = "provide us with a valid comment first ";
+      setDisabled(false);
+    } else {
+      axios
+        .put(`product_reviews/add-review/${product._id}`, {
+          content: comment,
+        })
+        .then((response) => {
+          setErrors(null);
+          setSuccess(response.data);
+          setDisabled(false);
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    }
+  };
+  const onClickCancel = (e) => {
+    textArea.value = "";
+  };
   return (
     <>
       <div
@@ -268,14 +288,39 @@ function PageSingleProduct() {
             </div>
           </div>
         </header>
-        <div className=""></div>
-        <div className="container">
-          {reviews.map((review) => (
-            <div className=" gap-2 my-10">
-              <ProductComment key={review._id} review={review} />
-            </div>
-          ))}
-        </div>
+        <div></div>
+        <Suspense fallback="loading ...">
+          <div className={"container"}>
+            {reviews.map((review) => (
+              <div className="gap-2 my-10">
+                <ProductComment key={review._id} review={review} />
+              </div>
+            ))}
+          </div>
+        </Suspense>
+        <div className="gap-2 my-10"></div>
+        <form className={`nc-SingleCommentForm mt-5`}>
+          <textarea
+            placeholder="Add to review or give us a feedBack ..."
+            id="comment_content"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            className={`block w-full text-md rounded-xl border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 ${className}`}
+            rows={4}
+          ></textarea>
+          <div className="mt-2 space-x-3">
+            <ButtonPrimary
+              onClick={(e) => onClickSubmit(e)}
+              disabled={disabled}
+              type="submit"
+            >
+              Submit
+            </ButtonPrimary>
+            <ButtonSecondary type="button" onClick={(e) => onClickCancel(e)}>
+              Cancel
+            </ButtonSecondary>
+          </div>
+        </form>
       </div>
     </>
   );

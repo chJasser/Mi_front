@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from "react";
 import Avatar from "components/Avatar/Avatar";
-import { PostDataType } from "data/types";
+
 import { Link } from "react-router-dom";
 import axios from "axiosInstance";
 export interface PostCardMetaProps {
@@ -25,14 +25,16 @@ const PostCardMeta: FC<PostCardMetaProps> = ({
 
   const { userName, phoneNumber, profilePicture } = creator;
   useEffect(() => {
-    axios
-      .get(`users/${meta.seller}`)
-      .then((result) => {
-        setUser(result.data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+    if (meta.seller) {
+      axios
+        .get(`users/${meta.seller}`)
+        .then((result) => {
+          setUser(result.data);
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+        });
+    }
   }, []);
 
   return (
