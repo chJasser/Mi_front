@@ -2,7 +2,7 @@
   "name": "nc-maz",
   "version": "0.1.2",
   "private": true,
-  "homepage": ".",
+  "homepage": "",
   "dependencies": {
     "@craco/craco": "^6.1.2",
     "@emotion/react": "^11.8.2",

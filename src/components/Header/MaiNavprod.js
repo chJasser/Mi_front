@@ -31,7 +31,7 @@ const MaiNnavprod = ({ isTop }) => {
           <div className="hidden items-center xl:flex space-x-1">
             <DarkModeContainer />
             <div className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
-              <Link to="/dashboard/posts">
+              <Link to="/mi/dashboard/posts">
                 <Badge color="secondary" badgeContent={cart.length}>
                   <ShoppingCartIcon />{" "}
                 </Badge>
@@ -39,7 +39,7 @@ const MaiNnavprod = ({ isTop }) => {
             </div>
 
             <div className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
-              <Link to="/dashboard">
+              <Link to="/back-office/dashboard">
                 <Badge color="secondary" >
                   <ManageAccountsIcon />
                 </Badge>
@@ -54,7 +54,7 @@ const MaiNnavprod = ({ isTop }) => {
                 Logout
               </ButtonPrimary>
             ) : (
-              <ButtonPrimary href="/login">Sign up</ButtonPrimary>
+              <ButtonPrimary href="/mi/login">Sign up</ButtonPrimary>
             )}
           </div>
           <div className="flex items-center xl:hidden">
@@ -63,7 +63,7 @@ const MaiNnavprod = ({ isTop }) => {
                 Logout
               </ButtonPrimary>
             ) : (
-              <ButtonPrimary href="/login">
+              <ButtonPrimary href="/mi/login">
                 Sign up
               </ButtonPrimary>
             )}

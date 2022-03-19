@@ -43,8 +43,10 @@ const userSlice = createSlice({
       localStorage.removeItem("token");
       state.currentUser = null;
       state.isAuthenticated = false;
+      state.currentTeacher = null;
+      state.currentSeller = null;
+      state.currentStudent = null;
       setAuthToken(false);
-      window.location.href = "/";
     },
   },
 });

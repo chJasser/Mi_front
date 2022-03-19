@@ -13,7 +13,7 @@ interface PagesState {
 
 const initialState: PagesState = {
   currentPage: {
-    type: "/",
+    type: "/mi",
     data: {},
   },
 };

@@ -20,7 +20,7 @@ const Header: FC<HeaderProps> = ({ mainNavStyle = "style1", currentPage }) => {
   //
   let prevScrollpos = window.pageYOffset;
   //
-  const showSingleMenu = currentPage.type === "/single/:slug";
+  const showSingleMenu = currentPage.type === "/mi/single/:slug";
   //
   const [isSingleHeaderShowing, setIsSingleHeaderShowing] = useState(false);
   const [isTop, setIsTop] = useState(true);

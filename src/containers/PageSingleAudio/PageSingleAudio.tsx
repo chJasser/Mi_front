@@ -30,9 +30,9 @@ const PageSingleAudio: FC<PageSingleAudioProps> = ({ className = "" }) => {
 
   useEffect(() => {
     // UPDATE CURRENTPAGE DATA IN PAGE-REDUCERS
-    dispatch(changeCurrentPage({ type: "/single/:slug", data: SINGLE_AUDIO }));
+    dispatch(changeCurrentPage({ type: "/mi/single/:slug", data: SINGLE_AUDIO }));
     return () => {
-      dispatch(changeCurrentPage({ type: "/", data: {} }));
+      dispatch(changeCurrentPage({ type: "/mi", data: {} }));
     };
   }, []);
 

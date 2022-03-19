@@ -27,8 +27,15 @@ import SectionMagazine8 from "./SectionMagazine8";
 import SectionMagazine9 from "./SectionMagazine9";
 import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { getCurrentSeller, getCurrentStudent, getCurrentTeacher, isAuthenticated, login, userRoles } from "app/slices/userSlice";
+import { useHistory, useLocation } from "react-router-dom";
+import {
+  getCurrentSeller,
+  getCurrentStudent,
+  getCurrentTeacher,
+  isAuthenticated,
+  login,
+  userRoles,
+} from "app/slices/userSlice";
 import SectionBecomeAnTeacher from "components/SectionBecomeAnTeacher/SectionBecomeAnTeacher";
 import SectionBecomeAnStudent from "components/SectionBecomeAnStudent/SectionBecomeAnStudent";
 import SectionBecomeAnSeller from "components/SectionBecomeAnSeller/SectionBecomeAnSeller";
@@ -47,6 +54,7 @@ const PageHome: React.FC = () => {
   const search = useLocation().search;
   const isAuth = useSelector(isAuthenticated);
   const roles = useSelector(userRoles);
+  const history = useHistory();
   useEffect(() => {
     setToken(new URLSearchParams(search).get("token"));
     if (token !== null) {
@@ -63,6 +71,10 @@ const PageHome: React.FC = () => {
         dispatch(getCurrentTeacher());
       }
     }
+    const timer = setTimeout(() => {
+      history.push("/mi");
+    }, 1000);
+    return () => clearTimeout(timer);
   }, [token]);
 
   return (
@@ -100,7 +112,7 @@ const PageHome: React.FC = () => {
               <SectionBecomeAnTeacher />
             </div>
           )}
-           {isAuth && !roles.includes("seller") && <SectionBecomeAnSeller />} 
+          {isAuth && !roles.includes("seller") && <SectionBecomeAnSeller />}
 
           {isAuth && !roles.includes("student") && (
             <div className="relative py-16">
@@ -108,8 +120,6 @@ const PageHome: React.FC = () => {
               <SectionBecomeAnStudent className="pt-16 lg:pt-28" />
             </div>
           )}
-
-         
 
           {/* === SECTION 5 === */}
           <SectionSliderNewCategories

@@ -15,11 +15,11 @@ import {
   getCurrentStudent,
   getCurrentTeacher,
   login,
-
 } from "app/slices/userSlice";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Alert } from "@mui/material";
+import { useHistory } from "react-router-dom";
 
 export interface PageLoginProps {
   className?: string;
@@ -45,6 +45,7 @@ const loginSocials = [
 
 const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
   const [errors, setErrors] = useState(null);
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const SigninForm = () => {
@@ -79,6 +80,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
         if (decoded.user_role.includes("teacher")) {
           dispatch(getCurrentTeacher());
         }
+        history.push("/mi");
       }
     };
 
@@ -116,7 +118,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
           <label className="block">
             <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
               Password
-              <NcLink to="/forgot-pass" className="text-sm">
+              <NcLink to="/mi/forgot-pass" className="text-sm">
                 Forgot password?
               </NcLink>
             </span>
@@ -215,7 +217,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
           {/* ==== */}
           <span className="block text-center text-neutral-700 dark:text-neutral-300">
             New user? {` `}
-            <NcLink to="/signup">Create an account</NcLink>
+            <NcLink to="/mi/signup">Create an account</NcLink>
           </span>
         </div>
       </LayoutPage>
