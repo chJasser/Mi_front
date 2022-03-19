@@ -44,7 +44,7 @@ const userSlice = createSlice({
       state.currentUser = null;
       state.isAuthenticated = false;
       setAuthToken(false);
-      window.location.href = "/";
+    //  window.location.href = "/";
     },
   },
 });

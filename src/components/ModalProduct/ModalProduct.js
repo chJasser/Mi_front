@@ -171,7 +171,7 @@ export default function Example(props) {
                             
                           </input>
                         </div>
-                        <Link to={`/dashboard/posts/${product._id}?qty=${qty}`}>
+                        
                         <button
                           onClick={() => {
                             dispatch(additem(item));
@@ -182,7 +182,7 @@ export default function Example(props) {
                         >
                           Add to Cart
                         </button>
-                        </Link>
+                        
                       </section>
                     </div>
                   </div>

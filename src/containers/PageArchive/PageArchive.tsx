@@ -30,9 +30,14 @@ import { Popover, Transition } from "@headlessui/react";
 import Input from "components/Input/Input";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
-import {RootState} from "../../app/store"
-import {filterByMarque, filterByCategory} from "../../app/filterSlice/filterSlice"
+import { RootState } from "../../app/store";
+import {
+  filterByMarque,
+  filterByCategory,
+} from "../../app/filterSlice/filterSlice";
 
+import Modalcart from "./Modalcart";
+//import ModalCategoriesprod from "./Modalcategoriesprod";
 export interface PageArchiveProps {
   className?: string;
 }
@@ -42,14 +47,17 @@ const posts: PostDataType[] = DEMO_POSTS.filter((_, i) => i < 16);
 const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
-  const filter = useSelector((state: RootState) => state.filterSlice)
-  console.log(filter)
+  const filter = useSelector((state: RootState) => state.filterSlice);
+  console.log(filter);
+  const [category, setCategory] = useState("");
+  const [marque, setMarque] = useState("");
   const path = "http://localhost:3000/archive/the-demo-archive-slug";
   const myRef = useRef(null);
   const inputRef = React.createRef<HTMLInputElement>();
   const [value, setValue] = React.useState([0, 100]);
   let min = value[0] * 100;
   let max = value[1] * 100;
+
   const rangeSelector = (event, newValue) => {
     setValue(newValue);
     axios.get(`products/price?min=${min}&max=${max}`).then((res) => {
@@ -71,9 +79,8 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     }
   };
 
-  //filter by category
   const filterCategory = () => {
-    // dispatch(filterByMarque(null))
+    //setCategory(filter.category)
     axios
       .get(`products/fiter?category=${filter.category}`)
       .then((res) => {
@@ -83,12 +90,12 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       .catch((err) => {
         console.log(err.message);
       });
-  }
+  };
 
- // setInterval(() => {filterCategory()}, 10000);
+  // setInterval(() => {filterCategory()}, 10000);
 
-  //filter by marque
   const filterMarque = () => {
+    //setMarque(filter.marque)
     axios
       .get(`products/marque?marque=${filter.marque}`)
       .then((res) => {
@@ -98,19 +105,18 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       .catch((err) => {
         console.log(err.message);
       });
-  }
+  };
 
   const getAllProduct = () => {
     axios
       .get("products/filter")
       .then((res) => {
-        console.log(res.data.products)
-        dispatch(populateProducts(res.data.products))
+        console.log(res.data.products);
+        dispatch(populateProducts(res.data.products));
         setProducts(res.data.products);
       })
-      .catch(err => console.log(err.message))
-  }
-
+      .catch((err) => console.log(err.message));
+  };
 
   useEffect(() => {
     axios
@@ -131,13 +137,9 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       .catch((error) => {
         console.error(error);
       });
-      getAllProduct();
-    
+    getAllProduct();
   }, [dispatch]);
 
-  
-
-  
   const PAGE_DATA: TaxonomyType = DEMO_CATEGORIES[0];
 
   const FILTERS = [
@@ -149,7 +151,6 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   ];
 
   return (
-    
     <div
       className={`nc-PageArchive overflow-hidden ${className}`}
       data-nc-id="PageArchive"
@@ -157,7 +158,6 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       <Helmet>
         <title>Our Products || MI Universe</title>
       </Helmet>
-
 
       {/* HEADER */}
       <div className="w-full px-2 xl:max-w-screen-2xl mx-auto">
@@ -180,9 +180,14 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       {/* ====================== END HEADER ====================== */}
       <div className="relative py-5 container">
         <BackgroundSection />
-        <a onClick={() => {
-          //dispatch(filterByCategory(filter.category))
-          filterCategory()}}><SectionGridCategory /></a>
+        <a
+          onClick={() => {
+            //dispatch(filterByCategory(filter.category))
+            filterCategory();
+          }}
+        >
+          <SectionGridCategory />
+        </a>
       </div>
       <div
         ref={myRef}
@@ -193,7 +198,10 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
             <div className="flex space-x-2.5">
               {/*<ModalCategories categories={DEMO_CATEGORIES} />*/}
               {/*<ModalCategoriesprod/>*/}
-              <a onClick={() => filterMarque()}><ModalMarque /></a>
+              <a onClick={() => filterMarque()}>
+                <ModalMarque />
+              </a>
+              <Modalcart />
             </div>
             <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>
             <div className="flex justify-end">
@@ -226,10 +234,8 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               onChange={rangeSelector}
               valueLabelDisplay="auto"
             />
-            Your range of Price is between {min}$ and {max}$ 
+            Your range of Price is between {min}$ and {max}$
           </div>
-
-          
 
           <React.Fragment>
             <Popover className="relative">
@@ -279,7 +285,9 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               }}
             </Popover>
           </React.Fragment>
-          <ButtonPrimary onClick={() => getAllProduct()}>Get All Porduct</ButtonPrimary>
+          <ButtonPrimary onClick={() => getAllProduct()}>
+            Get All Porduct
+          </ButtonPrimary>
           {/* <div className="search">
         <input
           id="outlined-basic"
