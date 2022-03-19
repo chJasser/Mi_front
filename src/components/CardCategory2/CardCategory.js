@@ -15,8 +15,6 @@ const CardCategory = ({ category }) => {
     axios
       .get(`products/fiter?category=${category}`)
       .then((res) => {
-        console.log(res);
-        console.log(res.data.length);
         if (res.data.length !== 0) {
           setImage(base_url + res.data[0].productImage[0]);
         }
@@ -51,16 +49,16 @@ const CardCategory = ({ category }) => {
         {/* <h2 className={`text-base sm:text-lg font-semibold `}>
           <span className="line-clamp-1">{name}</span>
         </h2> */}
-        
-          <span>{name}</span>
-          <span
-            className={`block mt-[2px] text-sm text-neutral-500 dark:text-neutral-400`}
-          >
-            {nbr} Articles
-          </span>
-        </div>
+
+        <span>{name}</span>
+        <span
+          className={`block mt-[2px] text-sm text-neutral-500 dark:text-neutral-400`}
+        >
+          {nbr} Articles
+        </span>
       </div>
-    
+    </div>
+
     // </Link>
   );
 };

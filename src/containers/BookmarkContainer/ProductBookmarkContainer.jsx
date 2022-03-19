@@ -22,11 +22,7 @@ const ProductBookmarkContainer = (props) => {
         console.log(err.response.data.success);
       });
     dispatch(addBookmark(product));
-    // setProduct({
-    //   ...product,
-    //   likesCount: product.likesCount + 1,
-    //   isLiked: true,
-    // });
+    
   };
   const removeBookMarkDB = async () => {
     await axios

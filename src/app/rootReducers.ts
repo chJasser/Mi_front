@@ -7,9 +7,8 @@ import mediaRunningReducer from "./mediaRunning/mediaRunning";
 import userSlice from "./slices/userSlice";
 import Productslice from "./productslice/Productslice";
 
-import carteslics from "./cartslice/carteslics";
-import productLikeSlice from "./productLikes/productLikes";
-
+import carteslics from "../app/cartslice/carteslics";
+import productLikeSlice from "../app/productLikes/productLikes";
 
 const rootReducers = {
   bookmark: bookmarkReducer,

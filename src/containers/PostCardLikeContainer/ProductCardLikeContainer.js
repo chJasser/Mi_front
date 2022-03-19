@@ -2,7 +2,7 @@ import { removeLike, addNewLike } from "app/productLikes/productLikes";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCardLikeAction from "components/PostCardLikeAction/ProductCardLikeAction";
 import axios from "../../axiosInstance";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 const ProductCardLikeContainer = (props) => {
   const { productId, onClickLike, ...args } = props;
   const [product, setProduct] = useState(props.product);
@@ -10,7 +10,7 @@ const ProductCardLikeContainer = (props) => {
   const likedProducts = useSelector(
     (state) => state.productLikes.likedProducts
   );
-
+  
   const addLikeDB = async () => {
     await axios
       .put(`/products/add-like/${productId}`)

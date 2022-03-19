@@ -1,14 +1,11 @@
-import React, { FC, useState } from "react";
-import PostCardSaveAction from "components/PostCardSaveAction/PostCardSaveAction";
-import { ProductDataType } from "data/types";
+import React, { FC, useState, lazy } from "react";
 import ProductFeaturedMedia from "components/PostFeaturedMedia/ProductFeaturedMedia";
-import PostCardLikeAndComment from "components/PostCardLikeAndComment/PostCardLikeAndComment";
 import Badge from "components/Badge/Badge";
 import PostCardMeta from "components/PostCardMeta/PostCardMeta";
-import NcModalprod from "components/NcModal/NcModalprod";
 import { useDispatch } from "react-redux";
 import axios from "axiosInstance";
-
+import { Link } from "react-router-dom";
+import { selectProduct } from "app/productslice/Productslice";
 import ProductCardLikeAndComment from "components/PostCardLikeAndComment/ProductCardLikeAndComment";
 import ProductCardSaveAction from "components/PostCardSaveAction/ProductCardSaveAction";
 import ModalProduct from "components/ModalProduct/ModalProduct";
@@ -55,7 +52,13 @@ const Card11Product: FC<Card11Props> = ({
           <ProductFeaturedMedia product={product} isHover={isHover} />
         </div>
       </div>
-      {/* <Link to={href} className="absolute inset-0"></Link> */}
+      <Link
+        onClick={() => {
+          dispatch(selectProduct(product));
+        }}
+        to={`/single-gallery/${product._id}`}
+        className="absolute inset-0"
+      ></Link>
       <span className="absolute top-3 inset-x-3">
         <Badge name={category} />
       </span>
@@ -69,10 +72,9 @@ const Card11Product: FC<Card11Props> = ({
           {label + " " + price + " $"}
         </h2>
         <div className="flex items-end justify-between mt-auto">
-       
           <ProductCardLikeAndComment className="relative" postData={product} />
           <ProductCardSaveAction className="relative" postData={product} />
-         
+
           <ModalProduct product={product} open={isOpen} />
         </div>
       </div>
