@@ -48,6 +48,8 @@ import BecomeSellerRoute from "./BecomeSellerRoute";
 import BecomeStudentRoute from "./BecomeStudentRoute";
 import BecomeTeacherRoute from "./BecomeTeacherRoute";
 
+
+
 export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
   { path: "/#", exact: true, component: PageHome },
@@ -94,7 +96,7 @@ export const pages: Page[] = [
 
   { path: "/search", component: PageSearch },
   { path: "/search-v2", component: PageSearchV2 },
-  { path: "/about", component: PageAbout },
+  { path: "/about", exact: true, component: PageAbout },
   { path: "/contact", component: PageContact },
   { path: "/page404", component: Page404 },
   { path: "/login", typeRoute: "auth", component: PageLogin },
@@ -116,7 +118,7 @@ export const pages: Page[] = [
   // { path: "/home-demo-7", component: PageHomeDemo7 },
   { path: "/forgot-pass/:email", component: RestPasswordComponent },
   { path: "/passport/register", component: PagePassword },
-  
+
   { path: "/home-demo-7", component: PageHomeDemo7 },
   {
     path: "/forgot-pass/:email",
@@ -149,6 +151,11 @@ export const pages: Page[] = [
     typeRoute: "student",
     component: PageBecomeStudent,
   },
+
+
+
+
+  //back-office
 
   //
 ];

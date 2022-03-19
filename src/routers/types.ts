@@ -58,8 +58,11 @@ export interface LocationStates {
   "/become-teacher"?: {};
   "/become-seller"?: {};
   "/become-student"?: {};
- 
+
+  // back-office
+  "/headerback"?: {};
 }
+
 
 export type PathName = keyof LocationStates;
 

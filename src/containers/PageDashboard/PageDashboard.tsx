@@ -10,7 +10,7 @@ import DashboardSubcription from "./DashboardSubcription";
 import DashboardSubmitPost from "./DashboardSubmitPost";
 import { Helmet } from "react-helmet";
 import Cartproducts from "./Cartproducts";
-
+import addproducts from "./addproducts";
 export interface PageDashboardProps {
   className?: string;
 }
@@ -44,6 +44,12 @@ const subPages = [
   {
     sPath: "/posts/:id?",
     component: Cartproducts,
+    emoij: "📕",
+    pageName: "Posts",
+  },
+  {
+    sPath: "/addproducts",
+    component: addproducts,
     emoij: "📕",
     pageName: "Posts",
   },
@@ -82,7 +88,7 @@ const PageDashboard: FC<PageDashboardProps> = ({ className = "" }) => {
         <title>Dashboard || Blog Magazine React Template</title>
       </Helmet>
       <LayoutPage
-        subHeading="View your dashboard, manage your Posts, Subscription, edit password and profile"
+        subHeading="View your dashboard, manage your products, Subscription, edit password and profile"
         headingEmoji="⚙"
         heading="Dash board">
           {<div className="flex flex-col space-y-8 xl:space-y-0 xl:flex-row">

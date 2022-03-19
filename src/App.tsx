@@ -11,6 +11,11 @@ import MyRouter from "routers/index";
 import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+
+import FrontLayout from "routers/FronLayOut";
+import Page404 from "containers/Page404/Page404";
+
 if (localStorage.token) {
   // Set auth token header auth
   var token = localStorage.token;
@@ -51,8 +56,15 @@ export default function App() {
   }, [localStorage.token]);
 
   return (
-    <div className="bg-white text-base dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">
-      <MyRouter />
-    </div>
+    // <div className="bg-white text-base dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">
+    //   <MyRouter />
+    // </div>
+    <BrowserRouter>
+      <Switch>
+        {/* <Route path="/admin" render={(props) => <AdminLayout {...props} />} /> */}
+        <Route path="/" render={(props) => <FrontLayout {...props} />} />
+        <Route component={Page404} />
+      </Switch>
+    </BrowserRouter>
   );
 }

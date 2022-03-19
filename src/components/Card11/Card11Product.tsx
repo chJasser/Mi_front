@@ -11,7 +11,7 @@ import axios from "axiosInstance";
 
 import ProductCardLikeAndComment from "components/PostCardLikeAndComment/ProductCardLikeAndComment";
 import ProductCardSaveAction from "components/PostCardSaveAction/ProductCardSaveAction";
-import ModalProduct from "components/ModalProduct/ModalProduct";
+import ModalProduct from "components/ModalProduct/ModalProduct.js";
 export interface Card11Props {
   className?: string;
   product;
@@ -69,9 +69,10 @@ const Card11Product: FC<Card11Props> = ({
           {label + " " + price + " $"}
         </h2>
         <div className="flex items-end justify-between mt-auto">
+       
           <ProductCardLikeAndComment className="relative" postData={product} />
           <ProductCardSaveAction className="relative" postData={product} />
-
+         
           <ModalProduct product={product} open={isOpen} />
         </div>
       </div>
