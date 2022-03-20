@@ -9,7 +9,7 @@ import Productslice from "./productslice/Productslice";
 
 import carteslics from "../app/cartslice/carteslics";
 import productLikeSlice from "../app/productLikes/productLikes";
-
+import productReviewsSlice from "./productReviews/productReviews";
 const rootReducers = {
   bookmark: bookmarkReducer,
   postLike: postLikesReducer,
@@ -20,6 +20,7 @@ const rootReducers = {
   product: Productslice,
   user: userSlice,
   productLikes: productLikeSlice,
+  productReviews: productReviewsSlice,
   carteslics: carteslics,
 };
 
