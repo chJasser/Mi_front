@@ -29,10 +29,10 @@ const PageSingleGallery: FC<PageSingleGalleryProps> = ({ className = "" }) => {
   // UPDATE CURRENTPAGE DATA IN PAGEREDUCERS
   useEffect(() => {
     dispatch(
-      changeCurrentPage({ type: "/single/:slug", data: SINGLE_GALLERY })
+      changeCurrentPage({ type: "/mi/single/:slug", data: SINGLE_GALLERY })
     );
     return () => {
-      dispatch(changeCurrentPage({ type: "/", data: {} }));
+      dispatch(changeCurrentPage({ type: "/mi", data: {} }));
     };
   }, []);
 

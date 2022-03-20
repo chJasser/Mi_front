@@ -42,123 +42,123 @@ import PageHomeDemo7 from "containers/PageHome/PageHomeDemo7";
 
 import RestPasswordComponent from "../containers/PageForgotPass/ResetPasswordComponent.js";
 import PagePassword from "containers/PageSignUp/PagePassword";
-import AuthRoute from "../routers/AuthRoute";
 import PageSeller from "../components/SectionBecomeAnSeller/BecomeAnSeller";
 import PageBecomeStudent from "../components/SectionBecomeAnStudent/PageBecomeStudent";
 import PageTeacher from "../components/SectionBecomeAnTeacher/BecomeAnTeacher.js";
-import BecomeSellerRoute from "../routers/BecomeSellerRoute";
-import BecomeStudentRoute from "../routers/BecomeStudentRoute";
-import BecomeTeacherRoute from "../routers/BecomeTeacherRoute";
-import CustomProductsPage from "containers/customProduct/CustomProductsPage";
+
+import BecomeTeacherRoute from "./privateRoutes/BecomeTeacherRoute";
+import AuthRoute from "./privateRoutes/AuthRoute";
+import BecomeSellerRoute from "./privateRoutes/BecomeSellerRoute";
+import BecomeStudentRoute from "./privateRoutes/BecomeStudentRoute";
 
 export const pages: Page[] = [
-  { path: "/", exact: true, component: PageHome },
-  { path: "/#", exact: true, component: PageHome },
-  { path: "/archive/:slug", component: PageArchive },
-  { path: "/archive-video/:slug", component: PageArchiveVideo },
-  { path: "/archive-audio/:slug", component: PageArchiveAudio },
+  { path: "/mi", exact: true, component: PageHome },
+  { path: "/mi#", exact: true, component: PageHome },
+  { path: "/mi/archive/:slug", component: PageArchive },
+  { path: "/mi/archive-video/:slug", component: PageArchiveVideo },
+  { path: "/mi/archive-audio/:slug", component: PageArchiveAudio },
   //
-  { path: "/author/:slug", component: PageAuthor },
-  // { path: "/author-v2/:slug", component: PageAuthorV2 },
+  { path: "/mi/author/:slug", component: PageAuthor },
+  // { path: "/mi/author-v2/:slug", component: PageAuthorV2 },
   //
-  { path: "/single/:slug", component: PageSingleTemp3Sidebar },
+  { path: "/mi/single/:slug", component: PageSingleTemp3Sidebar },
   {
-    path: "/single-sidebar/:slug",
+    path: "/mi/single-sidebar/:slug",
     component: PageSingleTemplate3,
   },
   {
-    path: "/single-template-2/:slug",
+    path: "/mi/single-template-2/:slug",
     component: PageSingleTemplate2,
   },
   {
-    path: "/single-2-sidebar/:slug",
+    path: "/mi/single-2-sidebar/:slug",
     component: PageSingleTemp2Sidebar,
   },
   {
-    path: "/single-template-3/:slug",
+    path: "/mi/single-template-3/:slug",
     component: PageSingle,
   },
   {
-    path: "/single-3-sidebar/:slug",
+    path: "/mi/single-3-sidebar/:slug",
     component: PageSingleHasSidebar,
   },
   // {
-  //   path: "/single-gallery/",
+  //   path: "/mi/single-gallery/",
   //   component: PageSingleGallery,
   // },
   {
-    path: "/single-gallery/:slug",
+    path: "/mi/single-gallery/:slug",
     component: PageSingleProduct,
   },
   {
-    path: "/single-audio/:slug",
+    path: "/mi/single-audio/:slug",
     component: PageSingleAudio,
   },
   {
-    path: "/single-video/:slug",
+    path: "/mi/single-video/:slug",
     component: PageSingleVideo,
   },
 
-  { path: "/search", component: PageSearch },
-  { path: "/search-v2", component: PageSearchV2 },
-  { path: "/about", component: PageAbout },
-  { path: "/contact", component: PageContact },
-  // { path: "/custom", component: CustomProductsPage },
-
-  { path: "/page404", component: Page404 },
-  { path: "/login", typeRoute: "auth", component: PageLogin },
-  { path: "/signup", typeRoute: "auth", component: PageSignUp },
+  { path: "/mi/search", component: PageSearch },
+  { path: "/mi/search-v2", component: PageSearchV2 },
+  { path: "/mi/about", exact: true, component: PageAbout },
+  { path: "/mi/contact", component: PageContact },
+  { path: "/mi/page404", component: Page404 },
+  { path: "/mi/login", typeRoute: "auth", component: PageLogin },
+  { path: "/mi/signup", typeRoute: "auth", component: PageSignUp },
   {
-    path: "/forgot-pass",
+    path: "/mi/forgot-pass",
     exact: true,
     typeRoute: "auth",
     component: PageForgotPass,
   },
-  { path: "/dashboard", component: PageDashboard },
-  { path: "/subscription", component: PageSubcription },
+  { path: "/mi/dashboard", component: PageDashboard },
+  { path: "/mi/subscription", component: PageSubcription },
 
-  { path: "/forgot-pass/:email", component: RestPasswordComponent },
-  { path: "/passport/register", component: PagePassword },
+  { path: "/mi/forgot-pass/:email", component: RestPasswordComponent },
+  { path: "/mi/passport/register", component: PagePassword },
 
-  { path: "/home-demo-7", component: PageHomeDemo7 },
+  { path: "/mi/home-demo-7", component: PageHomeDemo7 },
   {
-    path: "/forgot-pass/:email",
+    path: "/mi/forgot-pass/:email",
 
     typeRoute: "auth",
     component: RestPasswordComponent,
   },
   {
-    path: "/passport/register",
+    path: "/mi/passport/register",
     typeRoute: "auth",
     exact: true,
     component: PagePassword,
   },
   {
-    path: "/become-teacher",
+    path: "/mi/become-teacher",
     exact: true,
     typeRoute: "teacher",
     component: PageTeacher,
   },
   {
-    path: "/become-seller",
+    path: "/mi/become-seller",
     exact: true,
     typeRoute: "seller",
     component: PageSeller,
   },
 
   {
-    path: "/become-student",
+    path: "/mi/become-student",
     exact: true,
     typeRoute: "student",
     component: PageBecomeStudent,
   },
 
+  //back-office
+
   //
 ];
 
-const Routes = () => {
+export default function FronOfficeRoutes() {
   return (
-    <BrowserRouter basename={process.env.REACT_APP_LRT_OR_RTL}>
+    <div className="bg-white text-base dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">
       <ScrollToTop />
       <HeaderContainer />
       <Switch>
@@ -221,8 +221,6 @@ const Routes = () => {
       ) : (
         <MediaRunningContainer />
       )}
-    </BrowserRouter>
+    </div>
   );
-};
-
-export default Routes;
+}

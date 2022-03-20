@@ -10,16 +10,17 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Badge from "@material-ui/core/Badge";
+import { isAuthenticated, logoutUser } from "app/slices/userSlice";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
 const MaiNnavprod = ({ isTop }) => {
+  const isAuth = useSelector(isAuthenticated);
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.carteslics.cartItems);
-  console.log(cart);
   return (
     <div
-      className={`nc-MainNav1 relative z-10 ${
-        isTop ? "onTop " : "notOnTop backdrop-filter"
-      }`}
+      className={`nc-MainNav1 relative z-10 ${isTop ? "onTop " : "notOnTop backdrop-filter"
+        }`}
     >
       <div className="container py-5 relative flex justify-between items-center space-x-4 xl:space-x-8">
         <div className="flex justify-start flex-grow items-center space-x-4 sm:space-x-10 2xl:space-x-14">
@@ -30,20 +31,42 @@ const MaiNnavprod = ({ isTop }) => {
           <div className="hidden items-center xl:flex space-x-1">
             <DarkModeContainer />
             <div className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
-              <Link to="/dashboard/posts">
+              <Link to="/mi/dashboard/posts">
                 <Badge color="secondary" badgeContent={cart.length}>
-                  <ShoppingCartIcon/>{" "}
+                  <ShoppingCartIcon />{" "}
                 </Badge>
               </Link>
             </div>
 
-            <SearchDropdown />
+            <div className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
+              <Link to="/back-office/dashboard">
+                <Badge color="secondary" >
+                  <ManageAccountsIcon />
+                </Badge>
+              </Link>
+            </div>
+
+
 
             <div className="px-1" />
-            <ButtonPrimary href="/login">Sign up</ButtonPrimary>
+            {isAuth ? (
+              <ButtonPrimary onClick={() => dispatch(logoutUser())}>
+                Logout
+              </ButtonPrimary>
+            ) : (
+              <ButtonPrimary href="/mi/login">Sign up</ButtonPrimary>
+            )}
           </div>
           <div className="flex items-center xl:hidden">
-            <ButtonPrimary href="/login">Sign up</ButtonPrimary>
+            {isAuth ? (
+              <ButtonPrimary onClick={() => dispatch(logoutUser())}>
+                Logout
+              </ButtonPrimary>
+            ) : (
+              <ButtonPrimary href="/mi/login">
+                Sign up
+              </ButtonPrimary>
+            )}
             <div className="px-1" />
             <MenuBar />
           </div>

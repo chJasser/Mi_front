@@ -1,19 +1,18 @@
-import { isAuthenticated, userRoles } from "app/slices/userSlice";
+import { isAuthenticated } from "app/slices/userSlice";
 import { useSelector } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 
-const BecomeStudentRoute = ({ component: Component, ...rest }) => {
+const IsAuthRoute = ({ component: Component, ...rest }) => {
   const isAuth = useSelector(isAuthenticated);
-  const roles = useSelector(userRoles);
   return (
     <div>
       <Route
         {...rest}
         render={(props) => {
-          return isAuth === true && !roles.includes("student") ? (
+          return isAuth === true ? (
             <Component {...props} />
           ) : (
-            <Redirect to="/" />
+            <Redirect to="/mi" />
           );
         }}
       />
@@ -21,4 +20,4 @@ const BecomeStudentRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-export default BecomeStudentRoute;
+export default IsAuthRoute;

@@ -13,7 +13,7 @@ import __megamenu from "./jsons/__megamenu.json";
 //     title: "Company",
 //     items: __megamenu.map((i) => ({
 //       id: ncNanoId(),
-//       href: "#",
+//       href: "/#",
 //       name: i.Company,
 //     })),
 //   },
@@ -148,22 +148,22 @@ const dashboardChildMenus: NavItemType[] = [
   // },
   {
     id: ncNanoId(),
-    href: "/dashboard/edit-profile",
+    href: "/mi/dashboard/edit-profile",
     name: "Edit profile",
   },
   // {
   //   id: ncNanoId(),
-  //   href: "/dashboard/billing-address",
+  //   href: "/mi/dashboard/billing-address",
   //   name: "Billing address",
   // },
   {
     id: ncNanoId(),
-    href: "/dashboard/subscription",
+    href: "/mi/dashboard/subscription",
     name: "Subscription",
   },
   {
     id: ncNanoId(),
-    href: "/dashboard/submit-post",
+    href: "/mi/dashboard/submit-post",
     name: "Submit post",
   },
 ];
@@ -171,39 +171,39 @@ const dashboardChildMenus: NavItemType[] = [
 const otherPageChildMenus: NavItemType[] = [
   {
     id: ncNanoId(),
-    href: "/about",
+    href: "/mi/about",
     name: "About",
   },
   {
     id: ncNanoId(),
-    href: "/contact",
+    href: "/mi/contact",
     name: "Contact us",
   },
   {
     id: ncNanoId(),
-    href: "/login",
+    href: "/mi/login",
     name: "Login",
   },
   {
     id: ncNanoId(),
-    href: "/signup",
+    href: "/mi/signup",
     name: "Signup",
   },
   {
     id: ncNanoId(),
-    href: "/forgot-pass",
+    href: "/mi/forgot-pass",
     name: "Forgot Password",
   },
   // {
   //   id: ncNanoId(),
-  //   href: "/dashboard",
+  //   href: "/mi/dashboard",
   //   name: "Dashboard",
   //   type: "dropdown",
   //   children: dashboardChildMenus,
   // },
   {
     id: ncNanoId(),
-    href: "/subscription",
+    href: "/mi/subscription",
     name: "Subscription",
   },
 ];
@@ -211,51 +211,51 @@ const otherPageChildMenus: NavItemType[] = [
 const archviePageChildrenMenus: NavItemType[] = [
   {
     id: ncNanoId(),
-    href: "/archive/the-demo-archive-slug",
+    href: "/mi/archive/the-demo-archive-slug",
     name: "Archive Page",
   },
   {
     id: ncNanoId(),
-    href: "/archive-audio/the-demo-archive-slug",
+    href: "/mi/archive-audio/the-demo-archive-slug",
     name: "Archive Audio",
   },
   {
     id: ncNanoId(),
-    href: "/archive-video/the-demo-archive-slug",
+    href: "/mi/archive-video/the-demo-archive-slug",
     name: "Archive Video",
   },
   {
     id: ncNanoId(),
-    href: "/author/the-demo-author-slug",
+    href: "/mi/author/the-demo-author-slug",
     name: "Author Page",
     type: "dropdown",
     children: [
       {
         id: ncNanoId(),
-        href: "/author/the-demo-author-slug",
+        href: "/mi/author/the-demo-author-slug",
         name: "Author Page 1",
       },
       {
         id: ncNanoId(),
-        href: "/author-v2/the-demo-author-slug",
+        href: "/mi/author-v2/the-demo-author-slug",
         name: "Author Page 2",
       },
     ],
   },
   {
     id: ncNanoId(),
-    href: "/search",
+    href: "/mi/search",
     name: "Search Page",
     type: "dropdown",
     children: [
       {
         id: ncNanoId(),
-        href: "/search",
+        href: "/mi/search",
         name: "Seach Page 1",
       },
       {
         id: ncNanoId(),
-        href: "/search-v2",
+        href: "/mi/search-v2",
         name: "Search Page 2",
       },
     ],
@@ -264,38 +264,38 @@ const archviePageChildrenMenus: NavItemType[] = [
 
 const singleChildrenMenus: NavItemType = {
   id: ncNanoId(),
-  href: "/single/this-is-single-slug",
+  href: "/mi/single/this-is-single-slug",
   name: "Single Template ",
   type: "dropdown",
   children: [
     {
       id: ncNanoId(),
-      href: "/single-sidebar/this-is-single-slug",
+      href: "/mi/single-sidebar/this-is-single-slug",
       name: "Single Template 1",
     },
     {
       id: ncNanoId(),
       name: "Template 1 sidebar",
-      href: "/single/this-is-single-slug-2",
+      href: "/mi/single/this-is-single-slug-2",
     },
     {
       id: ncNanoId(),
-      href: "/single-template-2/this-is-single-slug-2",
+      href: "/mi/single-template-2/this-is-single-slug-2",
       name: "Single Template 2",
     },
     {
       id: ncNanoId(),
-      href: "/single-2-sidebar/this-is-single-slug",
+      href: "/mi/single-2-sidebar/this-is-single-slug",
       name: "Template 2 sidebar",
     },
     {
       id: ncNanoId(),
-      href: "/single-template-3/this-is-single-slug-3",
+      href: "/mi/single-template-3/this-is-single-slug-3",
       name: "Single Template 3",
     },
     {
       id: ncNanoId(),
-      href: "/single-3-sidebar/this-is-single-slug",
+      href: "/mi/single-3-sidebar/this-is-single-slug",
       name: "Template 3 sidebar",
     },
   ],
@@ -353,17 +353,17 @@ const templateChilds: NavItemType[] = [
   singleChildrenMenus,
   {
     id: ncNanoId(),
-    href: "/single-gallery/this-is-single-slug",
+    href: "/mi/single-gallery/this-is-single-slug",
     name: "Single Gallery",
   },
   {
     id: ncNanoId(),
-    href: "/single-audio/this-is-single-slug",
+    href: "/mi/single-audio/this-is-single-slug",
     name: "Single Audio",
   },
   {
     id: ncNanoId(),
-    href: "/single-video/this-is-single-slug",
+    href: "/mi/single-video/this-is-single-slug",
     name: "Single Video",
   },
 ];
@@ -371,35 +371,35 @@ const templateChilds: NavItemType[] = [
 export const NAVIGATION_DEMO: NavItemType[] = [
   {
     id: ncNanoId(),
-    href: "/",
+    href: "/mi/",
     name: "Home",
     type: "none",
   },
 
   {
     id: ncNanoId(),
-    href: "#",
+    href: "/mi#",
     name: "Instruments",
     type: "megaMenu",
     megaMenu: megaMenu3ItemDemo,
   },
   {
     id: ncNanoId(),
-    href: "#",
+    href: "/mi#",
     name: "Courses",
     type: "megaMenu",
     megaMenu: megaMenu3ItemDemo2,
   },
   {
     id: ncNanoId(),
-    href: "#",
+    href: "/mi#",
     name: "Karaoke",
     type: "dropdown",
     children: templateChilds,
   },
   {
     id: ncNanoId(),
-    href: "#",
+    href: "/mi#",
     name: "Others",
     type: "dropdown",
     children: otherPageChildMenus,

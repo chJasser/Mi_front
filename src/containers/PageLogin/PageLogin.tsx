@@ -2,6 +2,7 @@ import LayoutPage from "components/LayoutPage/LayoutPage";
 import React, { FC, useState } from "react";
 import facebookSvg from "images/Facebook.svg";
 import twitterSvg from "images/Twitter.svg";
+import jwt_decode from "jwt-decode";
 import googleSvg from "images/Google.svg";
 import Input from "components/Input/Input";
 import ButtonPrimary from "components/Button/ButtonPrimary";
@@ -9,10 +10,17 @@ import NcLink from "components/NcLink/NcLink";
 import { Helmet } from "react-helmet";
 import axios from "../../axiosInstance";
 import { useDispatch } from "react-redux";
-import { getCurrentSeller, getCurrentStudent, getCurrentTeacher, login } from "app/slices/userSlice";
+import {
+  getCurrentSeller,
+  getCurrentStudent,
+  getCurrentTeacher,
+
+  login,
+} from "app/slices/userSlice";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Alert } from "@mui/material";
+import { useHistory } from "react-router-dom";
 
 export interface PageLoginProps {
   className?: string;
@@ -38,7 +46,9 @@ const loginSocials = [
 
 const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
   const [errors, setErrors] = useState(null);
+  const history = useHistory();
   const dispatch = useDispatch();
+
   const SigninForm = () => {
     const validationSchema = Yup.object({
       email: Yup.string()
@@ -60,10 +70,18 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
       if (response && response.data) {
         setErrors(null);
         dispatch(login(response.data.token));
-        dispatch(getCurrentSeller());
-        dispatch(getCurrentStudent());
-        dispatch(getCurrentTeacher());
-       
+        const decoded: any = await jwt_decode(response.data.token);
+
+        if (decoded.user_role.includes("seller")) {
+          dispatch(getCurrentSeller());
+        }
+        if (decoded.user_role.includes("student")) {
+          dispatch(getCurrentStudent());
+        }
+        if (decoded.user_role.includes("teacher")) {
+          dispatch(getCurrentTeacher());
+        }
+        history.push("/mi");
       }
     };
 
@@ -101,7 +119,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
           <label className="block">
             <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
               Password
-              <NcLink to="/forgot-pass" className="text-sm">
+              <NcLink to="/mi/forgot-pass" className="text-sm">
                 Forgot password?
               </NcLink>
             </span>
@@ -200,7 +218,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
           {/* ==== */}
           <span className="block text-center text-neutral-700 dark:text-neutral-300">
             New user? {` `}
-            <NcLink to="/signup">Create an account</NcLink>
+            <NcLink to="/mi/signup">Create an account</NcLink>
           </span>
         </div>
       </LayoutPage>
