@@ -34,12 +34,12 @@ import {
   getCurrentTeacher,
   isAuthenticated,
   login,
+  setUserLogedIn,
   userRoles,
 } from "app/slices/userSlice";
 import SectionBecomeAnTeacher from "components/SectionBecomeAnTeacher/SectionBecomeAnTeacher";
 import SectionBecomeAnStudent from "components/SectionBecomeAnStudent/SectionBecomeAnStudent";
 import SectionBecomeAnSeller from "components/SectionBecomeAnSeller/SectionBecomeAnSeller";
-import { reset } from "../../app/productLikes/productLikes";
 
 //
 const POSTS: PostDataType[] = DEMO_POSTS;
@@ -75,9 +75,10 @@ const PageHome: React.FC = () => {
     const timer = setTimeout(() => {
       history.push("/mi");
     }, 1000);
+    dispatch(setUserLogedIn());
     return () => clearTimeout(timer);
   }, [token]);
-  dispatch(reset());
+
   return (
     <div className="nc-PageHome relative">
       <Helmet>

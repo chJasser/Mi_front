@@ -41,10 +41,8 @@ const MainNav1 = ({ isTop }) => {
   const base_url = "http://localhost:5050/";
   const calculTot = (items) => {
     let total = 0;
-    items.map((item) => {
-      total += item.price * item.qte;
-    });
-    dispatch(addtotal(total));
+    items.map((item) => (total += item.price * item.qte));
+
     return total;
   };
   return (
@@ -62,18 +60,18 @@ const MainNav1 = ({ isTop }) => {
           <div className="hidden items-center xl:flex space-x-1">
             <DarkModeContainer />
             <div className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
-              {open == true ? (
-                <a onClick={() => setOpen(false)}>
+              {open === true ? (
+                <button onClick={() => setOpen(false)}>
                   <Badge color="secondary" badgeContent={cart.length}>
                     <ShoppingCartIcon />{" "}
                   </Badge>
-                </a>
+                </button>
               ) : (
-                <a onClick={() => setOpen(true)}>
+                <button onClick={() => setOpen(true)}>
                   <Badge color="secondary" badgeContent={cart.length}>
                     <ShoppingCartIcon />{" "}
                   </Badge>
-                </a>
+                </button>
               )}
             </div>
             <div className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">

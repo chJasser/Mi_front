@@ -50,6 +50,7 @@ import BecomeTeacherRoute from "./privateRoutes/BecomeTeacherRoute";
 import AuthRoute from "./privateRoutes/AuthRoute";
 import BecomeSellerRoute from "./privateRoutes/BecomeSellerRoute";
 import BecomeStudentRoute from "./privateRoutes/BecomeStudentRoute";
+import CustomProductsPage from "containers/customProduct/CustomProductsPage";
 
 export const pages: Page[] = [
   { path: "/mi", exact: true, component: PageHome },
@@ -119,6 +120,7 @@ export const pages: Page[] = [
   { path: "/mi/passport/register", component: PagePassword },
 
   { path: "/mi/home-demo-7", component: PageHomeDemo7 },
+  { path: "/mi/custom", component: CustomProductsPage },
   {
     path: "/mi/forgot-pass/:email",
 

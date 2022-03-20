@@ -50,6 +50,7 @@ const userSlice = createSlice({
       state.currentTeacher = null;
       state.currentSeller = null;
       state.currentStudent = null;
+      state.userLogedIn = null;
       setAuthToken(false);
     },
   },
@@ -101,7 +102,6 @@ export const setUserLogedIn = () => (dispatch) => {
       dispatch(setCurrentUserLogedIn(null));
     });
 };
-
 
 export const getCurrentStudent = () => (dispatch) => {
   axios

@@ -20,6 +20,7 @@ export interface LocationStates {
   "/mi/single-audio/:slug"?: {};
   "/mi/single-video/:slug"?: {};
   //
+  "/mi/custom"?: {};
   "/mi/search"?: {};
   "/mi/search-v2"?: {};
   "/mi/about"?: {};
@@ -62,7 +63,6 @@ export interface LocationStates {
   // back-office
   "/headerback"?: {};
 }
-
 
 export type PathName = keyof LocationStates;
 

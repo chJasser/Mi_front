@@ -27,10 +27,8 @@ const Cartproducts = () => {
   //   },[dispatch])
   const calculTot = (items) => {
     let total = 0;
-    items.map((item) => {
-      total += item.price * item.qte;
-    });
-    dispatch(addtotal(total));
+    items.map((item) => (total += item.price * item.qte));
+
     return total;
   };
 
