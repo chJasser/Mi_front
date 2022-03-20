@@ -1,23 +1,49 @@
-import React from "react";
-
+import { setUserLogedIn, userLogedIn } from "app/slices/userSlice";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import UploadImage from "views/admin/UploadImage";
+import img from "../../assets/img/team-2-800x800.jpg";
 // components
 
 export default function CardProfile() {
+  
+  const user = useSelector((state) => state.user.userLogedIn);
+
+  const [image, setImage] = useState(null);
+
+  const dipatch = useDispatch()
+  useEffect(() => {
+    console.log(user)
+    setImage(user.profilePicture)
+  }, [user])
+  const updateImage = (image) => {
+    setImage(image);
+    dipatch(setUserLogedIn())
+
+  };
   return (
     <>
-      <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-16">
+      {image != null && <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-16">
         <div className="px-6">
           <div className="flex flex-wrap justify-center">
             <div className="w-full px-4 flex justify-center">
-              <div className="relative">
-                <img
-                  alt="..."
-                  src={require("assets/img/team-2-800x800.jpg").default}
-                  className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
-                />
+              <img
+                alt="..."
+                style={{ width: "150px", height: "150px" }}
+                className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-180-px"
+                src={`http://localhost:5050/${image}`}
+
+              />
+            </div>
+            <div className="w-full px-4 z-10 text-center mt-2 ml-10">
+              <div className="flex justify-center  ml-10 lg:pt-4 pt-8">
+                <div className="mr-4 p-3  ml-10 text-center">
+                  <UploadImage refrechFunction={updateImage} />
+                </div>
               </div>
             </div>
-            <div className="w-full px-4 text-center mt-20">
+
+            <div className="w-full px-4 text-center">
               <div className="flex justify-center py-4 lg:pt-4 pt-8">
                 <div className="mr-4 p-3 text-center">
                   <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
@@ -79,6 +105,8 @@ export default function CardProfile() {
           </div>
         </div>
       </div>
+      }
+
     </>
   );
 }

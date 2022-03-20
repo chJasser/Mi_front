@@ -10,13 +10,12 @@ const UploadImage = (props) => {
     const id = useSelector(userId);
 
     const onDrop = (file) => {
-        console.log("jasser")
         let formData = new FormData();
         const config = {
             header: { "content-type": "multipart/form-data" },
         };
 
-        formData.append("file", file[0]);
+        formData.append("picture", file[0]);
         axios
             .put(`/users/updateimg/${id}`, formData, config)
             .then((response) => {
@@ -44,7 +43,6 @@ const UploadImage = (props) => {
                         style={{
                             display: "flex",
                             marginTop: 15,
-                            marginBottom: 5,
                             alignItmes: "center",
                             justifyContent: "center",
                             borderRadius: "50%",
@@ -57,7 +55,7 @@ const UploadImage = (props) => {
                     >
                         <input {...getInputProps()} />
                         <PhotoCamera
-                            style={{ outline: "none", fontSize: "2rem", color: "red" }}
+                            style={{ outline: "none", fontSize: "2rem", color: "#292b2c" }}
                         />
                     </div>
                 )}

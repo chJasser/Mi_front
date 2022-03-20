@@ -9,6 +9,7 @@ let initialState = {
   currentTeacher: null,
   currentSeller: null,
   currentStudent: null,
+  userLogedIn: null,
   isAuthenticated: false,
 };
 
@@ -29,6 +30,9 @@ const userSlice = createSlice({
     setCurrentUser(state, action) {
       state.currentUser = action.payload;
       state.isAuthenticated = !isEmpty(action.payload);
+    },
+    setCurrentUserLogedIn(state, action) {
+      state.userLogedIn = action.payload;
     },
     setCurrentSeller(state, action) {
       state.currentSeller = action.payload;
@@ -85,6 +89,20 @@ export const getCurrentSeller = () => (dispatch) => {
       dispatch(setCurrentSeller(null));
     });
 };
+export const setUserLogedIn = () => (dispatch) => {
+  axios
+    .get("/users/logedinuser")
+    .then((response) => {
+      if (response.data.success) {
+        dispatch(setCurrentUserLogedIn(response.data.user));
+      }
+    })
+    .catch((error) => {
+      dispatch(setCurrentUserLogedIn(null));
+    });
+};
+
+
 export const getCurrentStudent = () => (dispatch) => {
   axios
     .get("/students/getcurrentstudent")
@@ -113,6 +131,7 @@ export const {
   logoutUser,
   setCurrentSeller,
   setCurrentStudent,
+  setCurrentUserLogedIn,
   setCurrentTeacher,
 } = userSlice.actions;
 export default userSlice.reducer;

@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 // components
 
 import CardSettings from "components/Cards/CardSettings.js";
 import CardProfile from "components/Cards/CardProfile.js";
-
+import axios from "../../axiosInstance";
+import { useDispatch } from "react-redux";
+import { setUserLogedIn } from "app/slices/userSlice";
 export default function Settings() {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setUserLogedIn())
+  }, [])
+
+
   return (
     <>
       <div className="flex flex-wrap">

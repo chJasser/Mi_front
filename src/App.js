@@ -13,9 +13,9 @@ import { useEffect } from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import FronOfficeRoutes from "routers/FrontOfficeRoutes";
 import BackOfficeRoutes from "routers/BackOfficeRoutes";
-import Page404 from "containers/Page404/Page404";
 import IsAuthRoute from "routers/privateRoutes/IsAuthRoute";
-
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "./assets/styles/tailwind.css";
 // import MyRouter from "routers/MyRouter";
 
 if (localStorage.token) {
@@ -71,9 +71,6 @@ export default function App() {
         
       </Switch>
     </BrowserRouter>
-    // <BrowserRouter basename={process.env.REACT_APP_LRT_OR_RTL}>
-    //   {/* <Route path="/admin" render={(props) => <AdminLayout {...props} />} /> */}
-    //   <Route path="/" render={(props) => <FronEndLayoutRoutes {...props} />} />
-    // </BrowserRouter>
+
   );
 }

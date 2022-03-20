@@ -2,13 +2,15 @@ import React from "react";
 import ButtonClose from "components/ButtonClose/ButtonClose";
 import Logo from "components/Logo/Logo";
 import { Disclosure } from "@headlessui/react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import { NavItemType } from "./NavigationItem";
 import DarkModeContainer from "containers/DarkModeContainer/DarkModeContainer";
 import { NAVIGATION_DEMO } from "data/navigation";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import SocialsList from "components/SocialsList/SocialsList";
 import { ChevronDownIcon } from "@heroicons/react/solid";
+import { Badge } from "@material-ui/core";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
 export interface NavMobileProps {
   data?: NavItemType[];
@@ -148,7 +150,7 @@ const NavMobile: React.FC<NavMobileProps> = ({
       </Disclosure>
     );
   };
-
+  const history = useHistory();
   return (
     <div className="overflow-y-auto w-full max-w-sm h-screen py-2 transition transform shadow-lg ring-1 dark:ring-neutral-700 bg-white dark:bg-neutral-900 divide-y-2 divide-neutral-100 dark:divide-neutral-800">
       <div className="py-6 px-5">
@@ -161,9 +163,21 @@ const NavMobile: React.FC<NavMobileProps> = ({
 
           <div className="flex justify-between items-center mt-4">
             <SocialsList itemClass="w-9 h-9 flex items-center justify-center rounded-full bg-neutral-100 text-xl dark:bg-neutral-800 dark:text-neutral-300" />
-            <span className="block">
-              <DarkModeContainer className="bg-neutral-100 dark:bg-neutral-800" />
-            </span>
+
+            <div className="flex">
+              <div
+                onClick={() => history.push("/back-office/dashboard")}
+                style={{ marginRight: "7px" }}
+                className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800 focus:outline-none flex items-center justify-center"
+              >
+                <Badge color="secondary">
+                  <ManageAccountsIcon className="w-7 h-7" />
+                </Badge>
+              </div>
+              <span className="block">
+                <DarkModeContainer className="bg-neutral-100 dark:bg-neutral-800" />
+              </span>
+            </div>
           </div>
         </div>
         <span className="absolute right-2 top-2 p-1">

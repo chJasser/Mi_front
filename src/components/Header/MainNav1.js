@@ -201,7 +201,7 @@ const MainNav1 = ({ isTop }) => {
                       <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                       <div className="mt-6">
                         <a
-                          href="/dashboard/posts"
+                          href="/mi/dashboard/posts"
                           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                         >
                           Checkout
@@ -210,7 +210,7 @@ const MainNav1 = ({ isTop }) => {
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>
                           or{' '}
-                          {window.location.href == "http://localhost:3000/archive/the-demo-archive-slug" ? (<a
+                          {window.location.href == "http://localhost:3000/mi/archive/the-demo-archive-slug" ? (<a
                             type="button"
 
                             className="font-medium text-indigo-600 hover:text-indigo-500"
@@ -220,7 +220,7 @@ const MainNav1 = ({ isTop }) => {
                           </a>) : (
                             <a
                               type="button"
-                              href="/archive/the-demo-archive-slug"
+                              href="/mi/archive/the-demo-archive-slug"
                               className="font-medium text-indigo-600 hover:text-indigo-500"
                               onClick={() => {
                                 setOpen(false)
