@@ -35,7 +35,7 @@ import {
 import SectionBecomeAnTeacher from "components/SectionBecomeAnTeacher/SectionBecomeAnTeacher";
 import SectionBecomeAnStudent from "components/SectionBecomeAnStudent/SectionBecomeAnStudent";
 import SectionBecomeAnSeller from "components/SectionBecomeAnSeller/SectionBecomeAnSeller";
-import {reset} from "../../app/productLikes/productLikes" ;
+
 
 //
 const POSTS: PostDataType[] = DEMO_POSTS;
@@ -58,7 +58,7 @@ const PageHome: React.FC = () => {
       dispatch(login(token));
     }
   }, [token]);
-  dispatch(reset());
+  
   return (
     <div className="nc-PageHome relative">
       <Helmet>

@@ -22,10 +22,8 @@ const Cartproducts = () => {
     qte: 0,
   });
   const dispatch = useDispatch();
-  //   useEffect(()=>{
-  //  dispatch(getTotal());
-
-  //   },[dispatch])
+  
+  const[disablededit,setdisablededit]=useState(true);
   const calculTot = (items) => {
     let total = 0;
     items.map((item) => {
@@ -56,8 +54,13 @@ const Cartproducts = () => {
                     Product
                   </th>
                   <th scope="col" className="px-6 py-3">
+                    Label
+                  </th>
+
+                  <th scope="col" className="px-6 py-3">
                     Price
                   </th>
+                  
 
                   <th scope="col" className="px-6 py-3">
                     Quantity
@@ -82,6 +85,13 @@ const Cartproducts = () => {
                     <td>
                       <div className="ml-4 flex-grow">
                         <h2 className="inline-flex line-clamp-2 text-sm font-semibold  dark:text-neutral-300">
+                          {item.label}
+                        </h2>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="ml-4 flex-grow">
+                        <h2 className="inline-flex line-clamp-2 text-sm font-semibold  dark:text-neutral-300">
                           {item.price}
                         </h2>
                       </div>
@@ -101,12 +111,16 @@ const Cartproducts = () => {
                       <div className="ml-4 flex-grow">
                         <input
                           type="number"
+                          defaultValue={item.qte}
                           min={1}
+                         
                           placeholder={item.qte}
                           onChange={(e) => {
                             setProductToChange(item);
                             updateQte(e, item);
+                            setdisablededit(false);
                           }}
+
                           className="inline-flex line-clamp-2 text-sm font-semibold  dark:text-neutral-300"
                         >
                           {/*item.qte*/}
@@ -116,8 +130,9 @@ const Cartproducts = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-neutral-300">
                       <button
                         className="text-primary-800 dark:text-primary-500 hover:text-primary-900"
-                        onClick={() => {
+                        disabled={disablededit} onClick={() => {
                           dispatch(additem(productToChange));
+                          
                         }}
                       >
                         Edit
@@ -134,15 +149,21 @@ const Cartproducts = () => {
                     </td>
                   </tr>
                 ))}
-                <tr >Total {calculTot(carteitems)
                 
                 
-                }</tr>
+                
+                  
+            
               </tbody>
             </table>
+            
           </div>
         </div>
       </div>
+      <div className="h-auto relative inline-flex items-center justify-center">
+                Subtotal {  calculTot(carteitems)}
+                
+         </div>
       <ButtonPrimary href="/archive/the-demo-archive-slug">Shop More</ButtonPrimary>
       {/* <Pagination /> */}
     </div>
