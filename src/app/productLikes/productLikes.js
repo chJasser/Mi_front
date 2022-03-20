@@ -29,6 +29,9 @@ export const ProductLikeSlice = createSlice({
       };
       return state;
     },
+    reset: (state, action) => {
+      return (state = initialState);
+    },
     getBookmarkedProducts: (state, action) => {
       state.bookmarkedProducts = action.payload;
     },
@@ -58,6 +61,7 @@ export const {
   getBookmarkedProducts,
   addBookmark,
   removeBookmark,
+  reset,
 } = ProductLikeSlice.actions;
 
 export default ProductLikeSlice.reducer;
