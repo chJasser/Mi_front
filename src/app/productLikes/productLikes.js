@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState =({
+const initialState = {
   likedProducts: [],
   bookmarkedProducts: [],
-});
+};
 
 export const ProductLikeSlice = createSlice({
   name: "productLikes",
   initialState,
   reducers: {
     getLikedProducts: (state, action) => {
-      state.likedProducts =action.payload;
+      state.likedProducts = action.payload;
     },
     addNewLike: (state, action) => {
       state = {
@@ -42,8 +42,7 @@ export const ProductLikeSlice = createSlice({
       };
       return state;
     },
-     reset: () => initialState
-     ,
+    reset: () => initialState,
     removeBookmark: (state, action) => {
       const bookmarkedProducts = state.bookmarkedProducts.filter(
         (likedProd) => likedProd._id !== action.payload
@@ -62,7 +61,7 @@ export const {
   getLikedProducts,
   getBookmarkedProducts,
   addBookmark,
-  reset,
+
   removeBookmark,
   reset,
 } = ProductLikeSlice.actions;
