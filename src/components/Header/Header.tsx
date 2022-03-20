@@ -7,6 +7,7 @@ import PostCardLikeContainer from "containers/PostCardLikeContainer/PostCardLike
 
 import MaiNnavprod from "./MaiNavprod";
 import { PageItemType } from "app/pages/pages";
+import MainNav1 from "./MainNav1";
 
 export interface HeaderProps {
   mainNavStyle?: "style1" | "style2";
@@ -151,10 +152,10 @@ const Header: FC<HeaderProps> = ({ mainNavStyle = "style1", currentPage }) => {
   const renderMainNav = () => {
     switch (mainNavStyle) {
       case "style1":
-        return <MaiNnavprod isTop={isTop} />;
+        return <MainNav1 isTop={isTop} />;
 
       default:
-        return <MaiNnavprod isTop={isTop} />;
+        return <MainNav1 isTop={isTop} />;
     }
   };
 

@@ -8,15 +8,11 @@ import {
   removeitem,
   updateqte,
   getTotal,
+  addtotal
 } from "app/cartslice/carteslics";
 
-const calculTot = (items) => {
-  let total = 0;
-  items.map((item) => {
-    total += item.price * item.qte;
-  });
-  return total;
-};
+
+
 const Cartproducts = () => {
   const [productToChange, setProductToChange] = useState({
     label: "",
@@ -30,6 +26,16 @@ const Cartproducts = () => {
   //  dispatch(getTotal());
 
   //   },[dispatch])
+  const calculTot = (items) => {
+    let total = 0;
+    items.map((item) => {
+      total += item.price * item.qte;
+    });
+    dispatch(addtotal(total))
+    return total;
+  };
+
+
   const carteitems = useSelector((state) => state.carteslics.cartItems);
   const totale = useSelector((state) => state.carteslics.total);
   //const[qte,setQty]=useState[1];
@@ -128,7 +134,10 @@ const Cartproducts = () => {
                     </td>
                   </tr>
                 ))}
-                <tr >Total {calculTot(carteitems)}</tr>
+                <tr >Total {calculTot(carteitems)
+                
+                
+                }</tr>
               </tbody>
             </table>
           </div>
