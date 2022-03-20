@@ -49,6 +49,7 @@ import PageTeacher from "../components/SectionBecomeAnTeacher/BecomeAnTeacher.js
 import BecomeSellerRoute from "../routers/BecomeSellerRoute";
 import BecomeStudentRoute from "../routers/BecomeStudentRoute";
 import BecomeTeacherRoute from "../routers/BecomeTeacherRoute";
+import CustomProductsPage from "containers/customProduct/CustomProductsPage";
 
 export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
@@ -102,6 +103,8 @@ export const pages: Page[] = [
   { path: "/search-v2", component: PageSearchV2 },
   { path: "/about", component: PageAbout },
   { path: "/contact", component: PageContact },
+  // { path: "/custom", component: CustomProductsPage },
+
   { path: "/page404", component: Page404 },
   { path: "/login", typeRoute: "auth", component: PageLogin },
   { path: "/signup", typeRoute: "auth", component: PageSignUp },

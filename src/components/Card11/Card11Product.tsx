@@ -9,6 +9,8 @@ import { selectProduct } from "app/productslice/Productslice";
 import ProductCardLikeAndComment from "components/PostCardLikeAndComment/ProductCardLikeAndComment";
 import ProductCardSaveAction from "components/PostCardSaveAction/ProductCardSaveAction";
 import ModalProduct from "components/ModalProduct/ModalProduct";
+import { getProductUser } from "../../app/productReviews/productReviews";
+
 export interface Card11Props {
   className?: string;
   product;
@@ -31,6 +33,17 @@ const Card11Product: FC<Card11Props> = ({
       setrating(res.data[0].rating);
     });
   };
+  const getUser = (prod) => {
+    axios
+      .get(`users/${prod.seller}`)
+      .then((user) => {
+        dispatch(getProductUser(user.data));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   rating();
   const date = createdAt.substring(0, 10);
 
@@ -55,6 +68,7 @@ const Card11Product: FC<Card11Props> = ({
       <Link
         onClick={() => {
           dispatch(selectProduct(product));
+          getUser(product);
         }}
         to={`/single-gallery/${product._id}`}
         className="absolute inset-0"
