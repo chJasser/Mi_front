@@ -2,7 +2,7 @@ import NcBookmark from "components/NcBookmark/NcBookmark";
 import { addBookmark, removeBookmark } from "app/productLikes/productLikes";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "../../axiosInstance";
-
+import{getBookmarkedProducts} from"../../app/productLikes/productLikes"
 import { useEffect, useState } from "react";
 
 const ProductBookmarkContainer = (props) => {
@@ -45,6 +45,7 @@ const ProductBookmarkContainer = (props) => {
     var productsIds = [];
     if (!bookmarkedProducts) return false;
     else {
+    
       bookmarkedProducts.forEach((product) => {
         productsIds.push(product._id);
       });

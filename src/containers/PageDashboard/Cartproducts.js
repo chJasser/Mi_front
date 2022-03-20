@@ -8,15 +8,9 @@ import {
   removeitem,
   updateqte,
   getTotal,
+  addtotal,
 } from "app/cartslice/carteslics";
 
-const calculTot = (items) => {
-  let total = 0;
-  items.map((item) => {
-    total += item.price * item.qte;
-  });
-  return total;
-};
 const Cartproducts = () => {
   const [disabledEdit, setDisabledEdit] = useState(true);
   const [productToChange, setProductToChange] = useState({
@@ -31,6 +25,15 @@ const Cartproducts = () => {
   //  dispatch(getTotal());
 
   //   },[dispatch])
+  const calculTot = (items) => {
+    let total = 0;
+    items.map((item) => {
+      total += item.price * item.qte;
+    });
+    dispatch(addtotal(total));
+    return total;
+  };
+
   const carteitems = useSelector((state) => state.carteslics.cartItems);
   const totale = useSelector((state) => state.carteslics.total);
   //const[qte,setQty]=useState[1];
@@ -70,7 +73,7 @@ const Cartproducts = () => {
                       <div className="flex items-center w-96 lg:w-auto max-w-md overflow-hidden">
                         <NcImage
                           containerClassName="flex-shrink-0 h-12 w-12 rounded-lg overflow-hidden lg:h-14 lg:w-14"
-                          src={`${base_url}${item.productImage}`}
+                          src={`${base_url}${item.productImage[0]}`}
                         />
                       </div>
                     </td>

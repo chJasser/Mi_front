@@ -14,7 +14,7 @@ import SectionGridCategory from "components/SectionGridCategoryBox/SectionGridCa
 import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
 import { DEMO_AUTHORS } from "data/authors";
 import axios from "axiosInstance";
-
+import Card11Product from "components/Card11/Card11Product";
 import { useDispatch } from "react-redux";
 import { populateProducts } from "app/productslice/Productslice";
 
@@ -25,7 +25,7 @@ import {
 import { Popover, Transition } from "@headlessui/react";
 import Input from "components/Input/Input";
 import Slider from "@material-ui/core/Slider";
-import Card11Product from "components/Card11/Card11Product";
+import Modalcart from "./Modalcart";
 //import ModalCategoriesprod from "./Modalcategoriesprod";
 export interface PageArchiveProps {
   className?: string;
