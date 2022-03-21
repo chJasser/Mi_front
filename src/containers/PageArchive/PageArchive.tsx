@@ -11,12 +11,13 @@ import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import NcImage from "components/NcImage/NcImage";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import SectionGridCategory from "components/SectionGridCategoryBox/SectionGridCategory";
-import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
+import SellersSlider from "components/SectionSliderNewAthors/SellersSlider";
 import { DEMO_AUTHORS } from "data/authors";
 import axios from "axiosInstance";
 import Card11Product from "components/Card11/Card11Product";
 import { useDispatch, useSelector } from "react-redux";
 import { populateProducts } from "app/productslice/Productslice";
+import background from "../../images/shop5.jpg"
 
 import {
   getLikedProducts,
@@ -163,63 +164,47 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
         <div className="rounded-3xl relative aspect-w-16 aspect-h-16 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-6 overflow-hidden ">
           <NcImage
             containerClassName="absolute inset-0"
-            src="https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            //src="https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            src={background}
             className="object-cover w-full h-full"
           />
           <div className="absolute inset-0 bg-black text-white bg-opacity-30 flex flex-col items-center justify-center">
             <h2 className="inline-block align-middle text-5xl font-semibold md:text-7xl ">
-              {PAGE_DATA.name}
+              {/* {PAGE_DATA.name} */}
+              Welcome
             </h2>
             <span className="block mt-4 text-neutral-300">
-              {products.length} Articles
+              {/* {products.length} Articles */}
+              To Mi-Universe
             </span>
           </div>
         </div>
       </div>
       {/* ====================== END HEADER ====================== */}
-      <div className="relative py-5 container">
+      <div className="relative py-16 container">
+        <div className="category">
         <BackgroundSection />
-        <a onClick={() => {
+        <button onClick={() => {
           //dispatch(filterByCategory(filter.category))
-          filterCategory()}}><SectionGridCategory /></a>
+          filterCategory()}}><SectionGridCategory  /></button>
+        </div>
       </div>
       <div
         ref={myRef}
-        className="container py-16 lg:py-28 space-y-16 lg:space-y-28"
+        className="container py-16 lg:py-10 space-y-16 lg:space-y-28"
       >
         <div>
           <div className="flex flex-col sm:items-center sm:justify-between sm:flex-row">
             <div className="flex space-x-2.5">
               {/*<ModalCategories categories={DEMO_CATEGORIES} />*/}
               {/*<ModalCategoriesprod/>*/}
-              <a onClick={() => filterMarque()}><ModalMarque /></a>
+              <button onClick={() => filterMarque()}><ModalMarque /></button>
               <Modalcart/>
             </div>
             <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>
             <div className="flex justify-end">
-              <ArchiveFilterListBox lists={FILTERS} />
-            </div>
-          </div>
-
-          <div
-            style={{
-              margin: "auto",
-              display: "block",
-              width: "fit-content",
-            }}
-          >
-            <h3>What is your budget?</h3>
-            <Slider
-              value={value}
-              onChange={rangeSelector}
-              valueLabelDisplay="auto"
-            />
-            Your range of Price is between {min}$ and {max}$ 
-          </div>
-
-          
-
-          <React.Fragment>
+              {/* <ArchiveFilterListBox lists={FILTERS} /> */}
+              <React.Fragment>
             <Popover className="relative">
               {({ open }) => {
                 if (open) {
@@ -267,7 +252,29 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               }}
             </Popover>
           </React.Fragment>
-          <ButtonPrimary onClick={() => getAllProduct()}>Get All Porduct</ButtonPrimary>
+            </div>
+          </div>
+
+          <div
+            style={{
+              margin: "auto",
+              display: "block",
+              width: "fit-content",
+            }}
+          >
+            <h3>What is your budget?</h3>
+            <Slider
+              value={value}
+              onChange={rangeSelector}
+              valueLabelDisplay="auto"
+            />
+            Your range of Price is between {min}$ and {max}$ 
+          </div>
+
+          
+
+          
+          <ButtonPrimary onClick={() => getAllProduct()}>Show All Porducts</ButtonPrimary>
           {/* <div className="search">
         <input
           id="outlined-basic"
@@ -309,12 +316,14 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
         </div> */}
 
         {/* === SECTION 5 === */}
-        <SectionSliderNewAuthors
+        <hr/>
+        <SellersSlider
           heading="Top elite authors"
           subHeading="Discover our elite writers"
           authors={DEMO_AUTHORS.filter((_, i) => i < 10)}
+          //products={products}
         />
-
+        <hr/>
         {/* SUBCRIBES */}
         <SectionSubscribe2 />
       </div>
