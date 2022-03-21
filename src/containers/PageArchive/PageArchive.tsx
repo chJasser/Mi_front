@@ -11,12 +11,13 @@ import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import NcImage from "components/NcImage/NcImage";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import SectionGridCategory from "components/SectionGridCategoryBox/SectionGridCategory";
-import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
+import SellersSlider from "components/SectionSliderNewAthors/SellersSlider";
 import { DEMO_AUTHORS } from "data/authors";
 import axios from "axiosInstance";
 import Card11Product from "components/Card11/Card11Product";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { populateProducts } from "app/productslice/Productslice";
+import background from "../../images/shop5.jpg"
 
 import {
   getLikedProducts,
@@ -25,6 +26,9 @@ import {
 import { Popover, Transition } from "@headlessui/react";
 import Input from "components/Input/Input";
 import Slider from "@material-ui/core/Slider";
+import {RootState} from "../../app/store"
+import {filterByMarque, filterByCategory} from "../../app/filterSlice/filterSlice"
+
 import Modalcart from "./Modalcart";
 //import ModalCategoriesprod from "./Modalcategoriesprod";
 export interface PageArchiveProps {
@@ -36,12 +40,17 @@ const posts: PostDataType[] = DEMO_POSTS.filter((_, i) => i < 16);
 const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
+  const filter = useSelector((state: RootState) => state.filterSlice)
+  console.log(filter)
+  const [category, setCategory] = useState("");
+  const [marque, setMarque] = useState("");
   const path = "http://localhost:3000/archive/the-demo-archive-slug";
   const myRef = useRef(null);
   const inputRef = React.createRef<HTMLInputElement>();
   const [value, setValue] = React.useState([0, 100]);
   let min = value[0] * 100;
   let max = value[1] * 100;
+  
   const rangeSelector = (event, newValue) => {
     setValue(newValue);
     axios.get(`products/price?min=${min}&max=${max}`).then((res) => {
@@ -63,10 +72,51 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     }
   };
 
+  const filterCategory = () => {
+    //setCategory(filter.category)
+    axios
+      .get(`products/fiter?category=${filter.category}`)
+      .then((res) => {
+        executeScroll();
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
+
+ // setInterval(() => {filterCategory()}, 10000);
+
+  const filterMarque = () => {
+    //setMarque(filter.marque)
+    axios
+      .get(`products/marque?marque=${filter.marque}`)
+      .then((res) => {
+        executeScroll();
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
+
+  const getAllProduct = () => {
+    axios
+      .get("products/filter")
+      .then((res) => {
+        console.log(res.data.products)
+        dispatch(populateProducts(res.data.products))
+        setProducts(res.data.products);
+      })
+      .catch(err => console.log(err.message))
+  }
+
+
   useEffect(() => {
     axios
       .get("products/liked-products")
       .then((response) => {
+        console.log(response);
         dispatch(getLikedProducts(response.data));
       })
       .catch((error) => {
@@ -75,184 +125,19 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     axios
       .get("products/bookmarked-products")
       .then((response) => {
+        console.log(response);
         dispatch(getBookmarkedProducts(response.data));
       })
       .catch((error) => {
         console.error(error);
       });
-    switch (window.location.href) {
-      case path + "?category=guitars":
-        axios
-          .get("products/fiter?category=guitars")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?category=strings":
-        axios
-          .get("products/fiter?category=strings")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?category=keyboards":
-        axios
-          .get("products/fiter?category=keyboards")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?category=brass":
-        axios
-          .get("products/fiter?category=brass")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?category=percussions":
-        axios
-          .get("products/fiter?category=percussions")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?category=woodwind":
-        axios
-          .get("products/fiter?category=woodwind")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?category=others":
-        axios
-          .get("products/filter")
-          .then((res) => {
-            executeScroll();
-            dispatch(populateProducts(res.data.products));
-            setProducts(res.data.products);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?marque=yamaha":
-        axios
-          .get("products/marque?marque=yamaha")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?marque=shure":
-        axios
-          .get("products/marque?marque=shure")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?marque=gibson":
-        axios
-          .get("products/marque?marque=gibson")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?marque=harman":
-        axios
-          .get("products/marque?marque=harman")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?marque=fender":
-        axios
-          .get("products/marque?marque=fender")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?marque=steinway":
-        axios
-          .get("products/marque?marque=steinway")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?marque=roland":
-        axios
-          .get("products/marque?marque=roland")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      default:
-        axios
-          .get("products/filter")
-          .then((res) => {
-            dispatch(populateProducts(res.data.products));
-            setProducts(res.data.products);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-    }
-    /**
-     *
-     */
+      getAllProduct();
+    
   }, [dispatch]);
 
+  
+
+  
   const PAGE_DATA: TaxonomyType = DEMO_CATEGORIES[0];
 
   const FILTERS = [
@@ -264,6 +149,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   ];
 
   return (
+    
     <div
       className={`nc-PageArchive overflow-hidden ${className}`}
       data-nc-id="PageArchive"
@@ -272,61 +158,53 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
         <title>Our Products || MI Universe</title>
       </Helmet>
 
+
       {/* HEADER */}
       <div className="w-full px-2 xl:max-w-screen-2xl mx-auto">
         <div className="rounded-3xl relative aspect-w-16 aspect-h-16 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-6 overflow-hidden ">
           <NcImage
             containerClassName="absolute inset-0"
-            src="https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            //src="https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            src={background}
             className="object-cover w-full h-full"
           />
           <div className="absolute inset-0 bg-black text-white bg-opacity-30 flex flex-col items-center justify-center">
             <h2 className="inline-block align-middle text-5xl font-semibold md:text-7xl ">
-              {PAGE_DATA.name}
+              {/* {PAGE_DATA.name} */}
+              Welcome
             </h2>
             <span className="block mt-4 text-neutral-300">
-              {products.length} Articles
+              {/* {products.length} Articles */}
+              To Mi-Universe
             </span>
           </div>
         </div>
       </div>
       {/* ====================== END HEADER ====================== */}
-      <div className="relative py-5 container">
+      <div className="relative py-16 container">
+        <div className="category">
         <BackgroundSection />
-        <SectionGridCategory />
+        <button onClick={() => {
+          //dispatch(filterByCategory(filter.category))
+          filterCategory()}}><SectionGridCategory  /></button>
+        </div>
       </div>
       <div
         ref={myRef}
-        className="container py-16 lg:py-28 space-y-16 lg:space-y-28"
+        className="container py-16 lg:py-10 space-y-16 lg:space-y-28"
       >
         <div>
           <div className="flex flex-col sm:items-center sm:justify-between sm:flex-row">
             <div className="flex space-x-2.5">
-              <ModalMarque />
+              {/*<ModalCategories categories={DEMO_CATEGORIES} />*/}
+              {/*<ModalCategoriesprod/>*/}
+              <button onClick={() => filterMarque()}><ModalMarque /></button>
+              <Modalcart/>
             </div>
             <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>
             <div className="flex justify-end">
-              <ArchiveFilterListBox lists={FILTERS} />
-            </div>
-          </div>
-
-          <div
-            style={{
-              margin: "auto",
-              display: "block",
-              width: "fit-content",
-            }}
-          >
-            <h3>What is your budget?</h3>
-            <Slider
-              value={value}
-              onChange={rangeSelector}
-              valueLabelDisplay="auto"
-            />
-            Your range of Price is between {min}$ and {max}$
-          </div>
-
-          <React.Fragment>
+              {/* <ArchiveFilterListBox lists={FILTERS} /> */}
+              <React.Fragment>
             <Popover className="relative">
               {({ open }) => {
                 if (open) {
@@ -374,6 +252,37 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               }}
             </Popover>
           </React.Fragment>
+            </div>
+          </div>
+
+          <div
+            style={{
+              margin: "auto",
+              display: "block",
+              width: "fit-content",
+            }}
+          >
+            <h3>What is your budget?</h3>
+            <Slider
+              value={value}
+              onChange={rangeSelector}
+              valueLabelDisplay="auto"
+            />
+            Your range of Price is between {min}$ and {max}$ 
+          </div>
+
+          
+
+          
+          <ButtonPrimary onClick={() => getAllProduct()}>Show All Porducts</ButtonPrimary>
+          {/* <div className="search">
+        <input
+          id="outlined-basic"
+          type="search"
+          onChange={inputHandler}
+          placeholder="Search By Label"
+        />
+        </div> */}
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
             {products.map((product) => (
@@ -381,6 +290,11 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
             ))}
           </div>
 
+          {/* <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
+            {products.map((product) => (
+              <Card11Product key={product._id} product={product} />
+            ))}
+          </div> */}
           {/* PAGINATIONS */}
           <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
             <Pagination />
@@ -402,12 +316,14 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
         </div> */}
 
         {/* === SECTION 5 === */}
-        <SectionSliderNewAuthors
+        <hr/>
+        <SellersSlider
           heading="Top elite authors"
           subHeading="Discover our elite writers"
           authors={DEMO_AUTHORS.filter((_, i) => i < 10)}
+          //products={products}
         />
-
+        <hr/>
         {/* SUBCRIBES */}
         <SectionSubscribe2 />
       </div>

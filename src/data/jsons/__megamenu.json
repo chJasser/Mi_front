@@ -5,9 +5,9 @@
     "Contruction": "Plexiglass",
     "Country": "Czech Republic",
     "AppName": "Tresom",
-    "Department": "Clothing",
-    "CarModel": "Town & Country",
-    "Corporate": "Training"
+    "Department": "Marque",
+    "CarModel": "Marque",
+    "Corporate": "Marque"
   },
   {
     "Company": "Livefish",
@@ -15,9 +15,9 @@
     "Contruction": "Plexiglass",
     "Country": "tunisia",
     "AppName": "Hatity",
-    "Department": "Outdoors",
-    "CarModel": "RAV4",
-    "Corporate": "Services"
+    "Department": "Category",
+    "CarModel": "Category",
+    "Corporate": "Category"
   },
   {
     "Company": "Digitube",
@@ -25,9 +25,9 @@
     "Contruction": "Stone",
     "Country": "China",
     "AppName": "Otcom",
-    "Department": "Music",
-    "CarModel": "Lancer Evolution",
-    "Corporate": "Sales"
+    "Department": "State",
+    "CarModel": "State",
+    "Corporate": "State"
   },
   {
     "Company": "Midel",
@@ -35,9 +35,9 @@
     "Contruction": "Granite",
     "Country": "Japan",
     "AppName": "Daltfresh",
-    "Department": "Outdoors",
-    "CarModel": "Quest",
-    "Corporate": "Marketing"
+    "Department": "Type",
+    "CarModel": "Type",
+    "Corporate": "Type"
   },
   {
     "Company": "Rhyloo",

@@ -15,6 +15,8 @@ const CardCategory = ({ category }) => {
     axios
       .get(`products/fiter?category=${category}`)
       .then((res) => {
+        // console.log(res);
+        // console.log(res.data.length);
         if (res.data.length !== 0) {
           setImage(base_url + res.data[0].productImage[0]);
         }

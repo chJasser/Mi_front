@@ -17,6 +17,8 @@ const MaiNnavprod = ({ isTop }) => {
   const isAuth = useSelector(isAuthenticated);
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.carteslics.cartItems);
+  console.log(cart);
+  const isAuth = useSelector(isAuthenticated);
   return (
     <div
       className={`nc-MainNav1 relative z-10 ${isTop ? "onTop " : "notOnTop backdrop-filter"

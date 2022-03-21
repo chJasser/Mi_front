@@ -141,6 +141,15 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   margin-top: -1px;
 }
 .modal{
-
  margin-top: 5rem;
+}
+.category{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.headCategory{
+  margin-bottom: 3rem;
+  margin-left: 11rem;
 }

@@ -1,7 +1,9 @@
 import CardCategory from "components/CardCategory2/CardCategory";
 import Heading from "components/Heading/Heading";
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from 'react-router-dom'
+import { useDispatch, useSelector } from "react-redux";
+import {filterByCategory} from "../../app/filterSlice/filterSlice"
 
 const SectionGridCategory = () => {
   let categories = [
@@ -13,15 +15,42 @@ const SectionGridCategory = () => {
     "woodwind",
     "others",
   ];
+  //let CardComponentName = CardCategory;
+  // switch (categoryCardType) {
+  //   case "card1":
+  //     CardComponentName = CardCategory1;
+  //     break;
+  //   case "card2":
+  //     CardComponentName = CardCategory2;
+  //     break;
+  //   case "card3":
+  //     CardComponentName = CardCategory3;
+  //     break;
+  //   case "card4":
+  //     CardComponentName = CardCategory4;
+  //     break;
+  //   case "card5":
+  //     CardComponentName = CardCategory5;
+  //     break;
 
+  //   default:
+  //     CardComponentName = CardCategory1;
+  // }
+  const dispatch = useDispatch();
   return (
-    <div className={`nc-SectionGridCategoryBox relative `}>
-      <Heading desc="Discover over 100 Articles">Instruments</Heading>
+    <div className={`nc-SectionGridCategoryBox relative`}>
+      <Heading desc="Discover over 100 Articles" className="inline-flex items-center mb-10">Instruments</Heading>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6 md:gap-8">
         {categories.map((item, i) => (
-          <a href={`/archive/the-demo-archive-slug?category=${item}`}>
-            <CardCategory key={item} category={item} />
-          </a>
+          <button 
+          //href ={`/archive/the-demo-archive-slug?category=${item}`}
+          className="inline-flex items-center"
+          onClick={() => dispatch(filterByCategory(item))}>
+            <CardCategory
+            key={i}
+            category={item}
+          />
+          </button>
         ))}
       </div>
     </div>
