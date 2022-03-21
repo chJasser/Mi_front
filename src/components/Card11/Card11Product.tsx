@@ -70,7 +70,7 @@ const Card11Product: FC<Card11Props> = ({
           dispatch(selectProduct(product));
           getUser(product);
         }}
-        to={`/single-gallery/${product._id}`}
+        to={`/mi/single-gallery/${product._id}`}
         className="absolute inset-0"
       ></Link>
       <span className="absolute top-3 inset-x-3">

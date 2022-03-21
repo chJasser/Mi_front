@@ -23,13 +23,17 @@ import {
  *
  */
 function PageSingleProduct() {
+  const myRef = useRef(null);
+  const executeScroll = () => myRef.current.scrollIntoView();
+  /**
+   *
+   */
   const base_url = "http://localhost:5050/";
   const dispatch = useDispatch();
   /**
    *
    */
   const [comment, setComment] = useState("");
-
   const [reviews, setReviews] = useState([]);
 
   /***
@@ -147,6 +151,7 @@ function PageSingleProduct() {
           setTimeout(() => {
             window.location.reload();
           }, 100);
+          executeScroll();
         })
         .catch((error) => {
           console.log(error.response);
@@ -298,7 +303,7 @@ function PageSingleProduct() {
         <Suspense fallback="loading ...">
           <div className={"container"}>
             {reviews.map((review) => (
-              <div className="gap-2 my-10">
+              <div className="gap-2 my-10" ref={myRef}>
                 <ProductComment key={review._id} review={review} />
               </div>
             ))}
