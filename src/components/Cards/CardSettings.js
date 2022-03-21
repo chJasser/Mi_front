@@ -14,17 +14,17 @@ export default function CardSettings() {
 
   const [errors, setErrors] = useState(null);
   const [success, setSuccess] = useState(null);
-  const currentUser = useSelector((state) => state.user.userLogedIn);
+  var currentUser = useSelector((state) => state.user.userLogedIn);
   const dispatch = useDispatch();
   const UpdateProfile = () => {
     const validationSchema = Yup.object({
       firstName: Yup.string()
         .required("First name is required")
         .min(4, "First name must contain at least 6 characters")
-        .max(15, "Password must contain at most 15 characters"),
+        .max(15, "First name must contain at most 15 characters"),
       userName: Yup.string()
         .required("Username name is required")
-        .min(3, "First name must contain at least 3 characters"),
+        .min(3, "Username must contain at least 3 characters"),
 
       phoneNumber: Yup.number()
         .required("Phone number is required"),
@@ -32,9 +32,9 @@ export default function CardSettings() {
       birthDate: Yup.date().required("Required").nullable(),
 
       lastName: Yup.string()
-        .required("First name is required")
-        .min(4, "First name must contain at least 6 characters")
-        .max(15, "Password must contain at most 15 characters"),
+        .required("Last name is required")
+        .min(4, "Last name must contain at least 6 characters")
+        .max(15, "Last name must contain at most 15 characters"),
       email: Yup.string()
         .email("Invalid email address")
         .required("Email is required"),
@@ -44,9 +44,6 @@ export default function CardSettings() {
 
     });
     const onSubmit = async (values) => {
-
-
-
       let user = {
         userName: values.userName,
         firstName: values.firstName,
@@ -61,7 +58,7 @@ export default function CardSettings() {
       if (values.password !== "") {
         user.password = values.password
       }
-      
+
 
       const response = await axios
         .put(`/users/updateprofile/${currentUser._id}`, user)
@@ -72,14 +69,18 @@ export default function CardSettings() {
           }
         });
       if (response && response.data) {
+        dispatch(setUserLogedIn())
         setErrors(null);
         setSuccess(response.data.message);
-        dispatch()
-        dispatch(setUserLogedIn())
-        formik.resetForm();
+        currentUser = user;
+        const timer = setTimeout(() => {
+          setSuccess(null);
+        }, 2000);
+        return () => clearTimeout(timer);
+
       }
     };
-    let text = currentUser.address
+    let text = currentUser.address !== undefined ? currentUser.address : ""
     const myArray = text.split("-")
     const formik = useFormik({
 
@@ -89,7 +90,7 @@ export default function CardSettings() {
         userName: currentUser.userName,
         email: currentUser.email,
         password: "",
-        birthDate: currentUser.birthDate.slice(0, 10),
+        birthDate: currentUser.birthDate !== undefined ? currentUser.birthDate.slice(0, 10) : "",
         address: currentUser.address,
         phoneNumber: currentUser.phoneNumber,
         aboutMe: currentUser.aboutMe,
@@ -253,7 +254,7 @@ export default function CardSettings() {
               </div>
             </div>
 
-            <div className="w-full lg:w-12 px-4">
+            <div className="w-full lg:w-12/12 px-4">
               <div className="relative w-full mb-3">
                 <label
                   className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
