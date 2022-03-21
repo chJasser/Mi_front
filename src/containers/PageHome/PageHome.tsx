@@ -72,6 +72,7 @@ const PageHome: React.FC = () => {
         dispatch(getCurrentTeacher());
       }
     }
+    dispatch(setUserLogedIn());
     const timer = setTimeout(() => {
       history.push("/mi");
     }, 1000);

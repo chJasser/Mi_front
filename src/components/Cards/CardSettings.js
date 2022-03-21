@@ -54,7 +54,7 @@ export default function CardSettings() {
       if (values.password !== "") {
         user.password = values.password;
       }
-      console.log(user);
+      
 
       const response = await axios
         .put(`/users/updateprofile/${currentUser._id}`, user)
