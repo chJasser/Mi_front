@@ -9,13 +9,6 @@ import { useDispatch } from "react-redux";
 import { setUserLogedIn } from "app/slices/userSlice";
 export default function Settings() {
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(setUserLogedIn())
-  }, [])
-
-
   return (
     <>
       <div className="flex flex-wrap">

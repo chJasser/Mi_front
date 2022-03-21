@@ -34,6 +34,7 @@ import {
   getCurrentTeacher,
   isAuthenticated,
   login,
+  setUserLogedIn,
   userRoles,
 } from "app/slices/userSlice";
 import SectionBecomeAnTeacher from "components/SectionBecomeAnTeacher/SectionBecomeAnTeacher";
@@ -71,6 +72,7 @@ const PageHome: React.FC = () => {
         dispatch(getCurrentTeacher());
       }
     }
+    dispatch(setUserLogedIn());
     const timer = setTimeout(() => {
       history.push("/mi");
     }, 1000);
