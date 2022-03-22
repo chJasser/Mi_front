@@ -51,17 +51,20 @@ export const ProductLikeSlice = createSlice({
       };
       return state;
     },
+    resetState: (state) => {
+      return (state = initialState);
+    },
   },
 });
+
 export const {
   addNewLike,
   removeLike,
   getLikedProducts,
   getBookmarkedProducts,
   addBookmark,
-
   removeBookmark,
-  reset,
+  resetState,
 } = ProductLikeSlice.actions;
 
 export default ProductLikeSlice.reducer;

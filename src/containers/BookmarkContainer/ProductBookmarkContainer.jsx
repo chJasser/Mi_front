@@ -1,9 +1,9 @@
-import NcBookmark from "components/NcBookmark/NcBookmark";
+import BookmarkProduct from "components/NcBookmark/BookmarkProduct";
 import { addBookmark, removeBookmark } from "app/productLikes/productLikes";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "../../axiosInstance";
-import{getBookmarkedProducts} from"../../app/productLikes/productLikes"
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { isAuthenticated } from "app/slices/userSlice";
 
 const ProductBookmarkContainer = (props) => {
   const [product, setProduct] = useState(props.product);
@@ -11,6 +11,7 @@ const ProductBookmarkContainer = (props) => {
   const bookmarkedProducts = useSelector(
     (state) => state.productLikes.bookmarkedProducts
   );
+  const isAuth = useSelector(isAuthenticated);
 
   const addBookMarkDB = async () => {
     await axios
@@ -22,7 +23,6 @@ const ProductBookmarkContainer = (props) => {
         console.log(err.response.data.success);
       });
     dispatch(addBookmark(product));
-    
   };
   const removeBookMarkDB = async () => {
     await axios
@@ -45,7 +45,6 @@ const ProductBookmarkContainer = (props) => {
     var productsIds = [];
     if (!bookmarkedProducts) return false;
     else {
-    
       bookmarkedProducts.forEach((product) => {
         productsIds.push(product._id);
       });
@@ -55,14 +54,14 @@ const ProductBookmarkContainer = (props) => {
 
   const handleClickBookmark = () => {
     if (!isBookmarked()) {
-      addBookMarkDB()
+      addBookMarkDB();
     } else {
       removeBookMarkDB();
     }
   };
 
   return (
-    <NcBookmark
+    <BookmarkProduct
       onClick={handleClickBookmark}
       isBookmarked={isBookmarked()}
       {...props}

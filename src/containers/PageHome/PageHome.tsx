@@ -37,6 +37,7 @@ import {
   setUserLogedIn,
   userRoles,
 } from "app/slices/userSlice";
+import { resetState } from "app/productLikes/productLikes";
 import SectionBecomeAnTeacher from "components/SectionBecomeAnTeacher/SectionBecomeAnTeacher";
 import SectionBecomeAnStudent from "components/SectionBecomeAnStudent/SectionBecomeAnStudent";
 import SectionBecomeAnSeller from "components/SectionBecomeAnSeller/SectionBecomeAnSeller";
@@ -56,7 +57,9 @@ const PageHome: React.FC = () => {
   const isAuth = useSelector(isAuthenticated);
   const roles = useSelector(userRoles);
   const history = useHistory();
+
   useEffect(() => {
+    dispatch(resetState());
     setToken(new URLSearchParams(search).get("token"));
     if (token !== null) {
       dispatch(login(token));
