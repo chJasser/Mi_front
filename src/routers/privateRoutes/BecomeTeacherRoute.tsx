@@ -2,7 +2,7 @@ import { isAuthenticated, userRoles } from "app/slices/userSlice";
 import { useSelector } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 
-const BecomeSellerRoute = ({ component: Component, ...rest }) => {
+const BecomeTeacherRoute = ({ component: Component, ...rest }) => {
   const isAuth = useSelector(isAuthenticated);
   const roles = useSelector(userRoles);
   return (
@@ -10,10 +10,10 @@ const BecomeSellerRoute = ({ component: Component, ...rest }) => {
       <Route
         {...rest}
         render={(props) => {
-          return isAuth === true && !roles.includes("seller") ? (
+          return isAuth === true && !roles.includes("teacher") ? (
             <Component {...props} />
           ) : (
-            <Redirect to="/" />
+            <Redirect to="/mi" />
           );
         }}
       />
@@ -21,4 +21,4 @@ const BecomeSellerRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-export default BecomeSellerRoute;
+export default BecomeTeacherRoute;

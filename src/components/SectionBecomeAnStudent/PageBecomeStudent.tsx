@@ -105,7 +105,7 @@ const PageBecomeStudent = ({ className = "", tags = tagsStudent }) => {
         setSuccess(response.data.message);
         dispatch(login(response.data.token));
         dispatch(getCurrentStudent());
-        history.push("/dashboard");
+        history.push("/back-office/dashboard");
         
       }
     };

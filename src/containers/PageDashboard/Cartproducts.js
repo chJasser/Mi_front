@@ -8,12 +8,11 @@ import {
   removeitem,
   updateqte,
   getTotal,
-  addtotal
+  addtotal,
 } from "app/cartslice/carteslics";
 
-
-
 const Cartproducts = () => {
+  const [disabledEdit, setDisabledEdit] = useState(true);
   const [productToChange, setProductToChange] = useState({
     label: "",
     price: 0,
@@ -28,13 +27,10 @@ const Cartproducts = () => {
   //   },[dispatch])
   const calculTot = (items) => {
     let total = 0;
-    items.map((item) => {
-      total += item.price * item.qte;
-    });
-    dispatch(addtotal(total))
+    items.map((item) => (total += item.price * item.qte));
+
     return total;
   };
-
 
   const carteitems = useSelector((state) => state.carteslics.cartItems);
   const totale = useSelector((state) => state.carteslics.total);
@@ -75,7 +71,7 @@ const Cartproducts = () => {
                       <div className="flex items-center w-96 lg:w-auto max-w-md overflow-hidden">
                         <NcImage
                           containerClassName="flex-shrink-0 h-12 w-12 rounded-lg overflow-hidden lg:h-14 lg:w-14"
-                          src={`${base_url}${item.productImage}`}
+                          src={`${base_url}${item.productImage[0]}`}
                         />
                       </div>
                     </td>
@@ -102,8 +98,9 @@ const Cartproducts = () => {
                         <input
                           type="number"
                           min={1}
-                          placeholder={item.qte}
+                          defaultValue={1}
                           onChange={(e) => {
+                            setDisabledEdit(false);
                             setProductToChange(item);
                             updateQte(e, item);
                           }}
@@ -116,6 +113,7 @@ const Cartproducts = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-neutral-300">
                       <button
                         className="text-primary-800 dark:text-primary-500 hover:text-primary-900"
+                        disabled={disabledEdit}
                         onClick={() => {
                           dispatch(additem(productToChange));
                         }}
@@ -134,16 +132,17 @@ const Cartproducts = () => {
                     </td>
                   </tr>
                 ))}
-                <tr >Total {calculTot(carteitems)
-                
-                
-                }</tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
-      <ButtonPrimary href="/archive/the-demo-archive-slug">Shop More</ButtonPrimary>
+      <div className="relative h-auto inline-flex items-center justify-center">
+        Total {calculTot(carteitems)}
+      </div>
+      <ButtonPrimary href="/archive/the-demo-archive-slug">
+        Shop More
+      </ButtonPrimary>
       {/* <Pagination /> */}
     </div>
   );

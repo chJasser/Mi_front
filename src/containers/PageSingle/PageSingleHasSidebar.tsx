@@ -23,14 +23,14 @@ export interface SinglePageType extends PostDataType {
 const PageSingleHasSidebar: FC<PageSingleHasSidebarProps> = ({
   className = "",
 }) => {
-  // DEMO DATA
+  // DEMO DATAP
   const dispatch = useAppDispatch();
 
   // UPDATE CURRENTPAGE DATA IN PAGEREDUCERS
   useEffect(() => {
-    dispatch(changeCurrentPage({ type: "/single/:slug", data: SINGLE }));
+    dispatch(changeCurrentPage({ type: "/mi/single/:slug", data: SINGLE }));
     return () => {
-      dispatch(changeCurrentPage({ type: "/", data: {} }));
+      dispatch(changeCurrentPage({ type: "/mi", data: {} }));
     };
   }, []);
 

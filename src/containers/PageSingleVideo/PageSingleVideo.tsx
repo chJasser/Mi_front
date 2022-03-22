@@ -32,9 +32,9 @@ const PageSingleVideo: FC<PageSingleVideoProps> = ({ className = "" }) => {
 
   useEffect(() => {
     // UPDATE CURRENTPAGE DATA IN PAGE-REDUCERS
-    dispatch(changeCurrentPage({ type: "/single/:slug", data: SINGLE_VIDEO }));
+    dispatch(changeCurrentPage({ type: "/mi/single/:slug", data: SINGLE_VIDEO }));
     return () => {
-      dispatch(changeCurrentPage({ type: "/", data: {} }));
+      dispatch(changeCurrentPage({ type: "/mi", data: {} }));
     };
   }, []);
 

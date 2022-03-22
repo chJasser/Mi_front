@@ -9,6 +9,7 @@ let initialState = {
   currentTeacher: null,
   currentSeller: null,
   currentStudent: null,
+  userLogedIn: null,
   isAuthenticated: false,
 };
 
@@ -30,6 +31,9 @@ const userSlice = createSlice({
       state.currentUser = action.payload;
       state.isAuthenticated = !isEmpty(action.payload);
     },
+    setCurrentUserLogedIn(state, action) {
+      state.userLogedIn = action.payload;
+    },
     setCurrentSeller(state, action) {
       state.currentSeller = action.payload;
     },
@@ -43,8 +47,11 @@ const userSlice = createSlice({
       localStorage.removeItem("token");
       state.currentUser = null;
       state.isAuthenticated = false;
+      state.currentTeacher = null;
+      state.currentSeller = null;
+      state.currentStudent = null;
+      state.userLogedIn = null;
       setAuthToken(false);
-    //  window.location.href = "/";
     },
   },
 });
@@ -53,6 +60,20 @@ export const userRoles = (state) => {
     return [];
   }
   return state.user.currentUser.user_role;
+};
+
+export const userId = (state) => {
+  if (state.user.currentUser == null) {
+    return null;
+  }
+  return state.user.currentUser._id;
+};
+
+export const currentUser = (state) => {
+  if (state.user.currentUser == null) {
+    return null;
+  }
+  return state.user.currentUser;
 };
 
 export const isAuthenticated = (state) => {
@@ -69,6 +90,19 @@ export const getCurrentSeller = () => (dispatch) => {
       dispatch(setCurrentSeller(null));
     });
 };
+export const setUserLogedIn = () => (dispatch) => {
+  axios
+    .get("/users/logedinuser")
+    .then((response) => {
+      if (response.data.success) {
+        dispatch(setCurrentUserLogedIn(response.data.user));
+      }
+    })
+    .catch((error) => {
+      dispatch(setCurrentUserLogedIn(null));
+    });
+};
+
 export const getCurrentStudent = () => (dispatch) => {
   axios
     .get("/students/getcurrentstudent")
@@ -97,6 +131,7 @@ export const {
   logoutUser,
   setCurrentSeller,
   setCurrentStudent,
+  setCurrentUserLogedIn,
   setCurrentTeacher,
 } = userSlice.actions;
 export default userSlice.reducer;

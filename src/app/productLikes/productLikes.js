@@ -29,6 +29,7 @@ export const ProductLikeSlice = createSlice({
       };
       return state;
     },
+
     getBookmarkedProducts: (state, action) => {
       state.bookmarkedProducts = action.payload;
     },
@@ -39,6 +40,7 @@ export const ProductLikeSlice = createSlice({
       };
       return state;
     },
+
     removeBookmark: (state, action) => {
       const bookmarkedProducts = state.bookmarkedProducts.filter(
         (likedProd) => likedProd._id !== action.payload
@@ -57,7 +59,9 @@ export const {
   getLikedProducts,
   getBookmarkedProducts,
   addBookmark,
+
   removeBookmark,
+  reset,
 } = ProductLikeSlice.actions;
 
 export default ProductLikeSlice.reducer;

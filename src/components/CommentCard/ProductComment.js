@@ -1,11 +1,6 @@
-import React, { FC, useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Avatar from "components/Avatar/Avatar";
-import NcDropDown from "components/NcDropDown/NcDropDown";
-import CommentCardLikeReplyContainer from "containers/CommentCardLikeReplyContainer/CommentCardLikeReplyContainer";
-import { PostAuthorType } from "data/types";
 import { Link } from "react-router-dom";
-import twFocusClass from "utils/twFocusClass";
-import SingleCommentForm from "containers/PageSingle/SingleCommentForm";
 import axios from "axiosInstance";
 
 function ProductComment(props) {

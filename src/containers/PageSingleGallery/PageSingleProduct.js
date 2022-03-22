@@ -13,33 +13,52 @@ import { removeLike, addNewLike } from "app/productLikes/productLikes";
 import ProductComment from "components/CommentCard/ProductComment";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import ButtonSecondary from "components/Button/ButtonSecondary";
-import { useFormik } from "formik";
-import { Alert } from "@mui/material";
-import * as Yup from "yup";
+import {
+  getProductUser,
+  addReview,
+  getProductReviews,
+} from "../../app/productReviews/productReviews";
 /**
  *
  *
  */
 function PageSingleProduct() {
+  const myRef = useRef(null);
+  const executeScroll = () => myRef.current.scrollIntoView();
+  /**
+   *
+   */
+  const base_url = "http://localhost:5050/";
   const dispatch = useDispatch();
-  const [errors, setErrors] = useState(null);
-  const [success, setSuccess] = useState(null);
+  /**
+   *
+   */
   const [comment, setComment] = useState("");
   const [reviews, setReviews] = useState([]);
+
+  /***
+   *
+   */
   const [user, setUser] = useState({});
+  const seller = useSelector((state) => state.productReviews.user);
+  /**
+   *
+   */
   const [product, setProduct] = useState({});
-  const [imgs, setImgs] = useState([]);
+  const prod = useSelector((state) => state.product.selectedProduct);
+  /**
+   *
+   */
+
   const [isOpen, setIsOpen] = useState(false);
   const [openFocusIndex, setOpenFocusIndex] = useState(0);
-  const { slug } = useParams();
+
   const { category, reference, label, marque } = product;
   const { userName, phoneNumber, profilePicture } = user;
-  const base_url = "http://localhost:5050/";
   const likedProducts = useSelector(
     (state) => state.productLikes.likedProducts
   );
   const className = "";
-  const myRef = useRef(null);
   const size = "large";
   const hiddenAvatar = false;
   const textArea = document.querySelector("#comment_content");
@@ -91,40 +110,28 @@ function PageSingleProduct() {
     });
     return productsIds.includes(product._id);
   };
-  useEffect(() => {
+  const getProductReviewsFun = (prod) => {
     axios
-      .get("products/product/" + slug)
+      .get("product_reviews/get-prod-reviews/" + prod._id)
       .then((response) => {
-        setProduct(response.data);
-        setImgs(response.data.productImage);
-        axios
-          .get("product_reviews/get-prod-reviews/" + slug)
-          .then((response) => {
-            setReviews(response.data.reviews);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-        axios
-          .get(`users/${response.data.seller}`)
-          .then((user) => {
-            setUser(user.data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
+        dispatch(getProductReviews(response.data.reviews));
+        setReviews(response.data.reviews);
       })
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  };
+  useEffect(() => {
+    setProduct(prod);
+    getProductReviewsFun(prod);
+    setUser(seller);
+  }, [dispatch]);
   const handleOpenModal = (index) => {
     setIsOpen(true);
     setOpenFocusIndex(index);
   };
 
   const handleCloseModal = () => setIsOpen(false);
-  const photos = product.productImage;
   const [disabled, setDisabled] = useState(false);
   const onClickSubmit = (e) => {
     e.preventDefault();
@@ -138,10 +145,13 @@ function PageSingleProduct() {
           content: comment,
         })
         .then((response) => {
-          setErrors(null);
-          setSuccess(response.data);
+          dispatch(addReview(response.data.review));
+          textArea.value = "";
           setDisabled(false);
-          window.location.reload();
+          setTimeout(() => {
+            window.location.reload();
+          }, 100);
+          executeScroll();
         })
         .catch((error) => {
           console.log(error.response);
@@ -258,9 +268,10 @@ function PageSingleProduct() {
               onClick={() => handleOpenModal(0)}
             >
               <img
+                alt={prod.label}
                 containerClassName="absolute inset-30"
                 className="object-cover w-100 h-100 rounded-xl"
-                src={base_url + imgs[0]}
+                src={base_url + prod.productImage[0]}
               />
               <div className="absolute inset-0 bg-neutral-900 bg-opacity-20 opacity-0 hover:opacity-100 transition-opacity"></div>
             </div>
@@ -292,7 +303,7 @@ function PageSingleProduct() {
         <Suspense fallback="loading ...">
           <div className={"container"}>
             {reviews.map((review) => (
-              <div className="gap-2 my-10">
+              <div className="gap-2 my-10" ref={myRef}>
                 <ProductComment key={review._id} review={review} />
               </div>
             ))}

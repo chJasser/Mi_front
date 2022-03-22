@@ -228,7 +228,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
           {/* ==== */}
           <span className="block text-center text-neutral-700 dark:text-neutral-300">
             Already have an account? {` `}
-            <NcLink to="/login">Sign in</NcLink>
+            <NcLink to="/mi/login">Sign in</NcLink>
           </span>
         </div>
       </LayoutPage>

@@ -27,7 +27,7 @@ const PostCardMeta: FC<PostCardMetaProps> = ({
   useEffect(() => {
     if (meta.seller) {
       axios
-        .get(`users/${meta.seller}`)
+        .get(`/products/seller/${meta.seller}`)
         .then((result) => {
           setUser(result.data);
         })

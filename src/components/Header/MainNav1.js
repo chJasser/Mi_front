@@ -15,6 +15,7 @@ import Badge from "@material-ui/core/Badge";
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import {
   additem,
   removeitem,
@@ -40,10 +41,8 @@ const MainNav1 = ({ isTop }) => {
   const base_url = "http://localhost:5050/";
   const calculTot = (items) => {
     let total = 0;
-    items.map((item) => {
-      total += item.price * item.qte;
-    });
-    dispatch(addtotal(total));
+    items.map((item) => (total += item.price * item.qte));
+
     return total;
   };
   return (
@@ -72,7 +71,13 @@ const MainNav1 = ({ isTop }) => {
                 </Badge>
               </button>
             </div>
-
+            <div className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
+              <Link to="/back-office/dashboard">
+                <Badge color="secondary">
+                  <ManageAccountsIcon />
+                </Badge>
+              </Link>
+            </div>
             <SearchDropdown />
 
             <div className="px-1" />
@@ -81,7 +86,7 @@ const MainNav1 = ({ isTop }) => {
                 Logout
               </ButtonPrimary>
             ) : (
-              <ButtonPrimary href="/login">Sign up</ButtonPrimary>
+              <ButtonPrimary href="/mi/login">Sign up</ButtonPrimary>
             )}
           </div>
           <div className="flex items-center xl:hidden">
@@ -90,7 +95,7 @@ const MainNav1 = ({ isTop }) => {
                 Logout
               </ButtonPrimary>
             ) : (
-              <ButtonPrimary href="/login">Sign up</ButtonPrimary>
+              <ButtonPrimary href="/mi/login">Sign up</ButtonPrimary>
             )}
             <div className="px-1" />
             <MenuBar />
@@ -213,7 +218,7 @@ const MainNav1 = ({ isTop }) => {
                       </p>
                       <div className="mt-6">
                         <a
-                          href="/dashboard/posts"
+                          href="/mi/dashboard/posts"
                           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                         >
                           Checkout
@@ -223,19 +228,19 @@ const MainNav1 = ({ isTop }) => {
                         <p>
                           or{" "}
                           {window.location.href ==
-                          "http://localhost:3000/archive/the-demo-archive-slug" ? (
-                            <button
+                          "http://localhost:3000/mi/archive/the-demo-archive-slug" ? (
+                            <a
                               type="button"
                               className="font-medium text-indigo-600 hover:text-indigo-500"
                               onClick={() => setOpen(false)}
                             >
                               Continue Shopping
                               <span aria-hidden="true"> &rarr;</span>
-                            </button>
+                            </a>
                           ) : (
                             <button
                               type="button"
-                              href="/archive/the-demo-archive-slug"
+                              href="/mi/archive/the-demo-archive-slug"
                               className="font-medium text-indigo-600 hover:text-indigo-500"
                               onClick={() => {
                                 setOpen(false);
