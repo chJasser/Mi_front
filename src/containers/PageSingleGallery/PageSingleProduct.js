@@ -13,6 +13,7 @@ import { removeLike, addNewLike } from "app/productLikes/productLikes";
 import ProductComment from "components/CommentCard/ProductComment";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import ButtonSecondary from "components/Button/ButtonSecondary";
+import ModalPhotos from "./ModalPhotos";
 import {
   getProductUser,
   addReview,
@@ -173,8 +174,13 @@ function PageSingleProduct() {
           </Helmet>
           <div className={`nc-SingleHeader `}>
             <div className="space-y-5">
-              <Badge className="" name={category} />
-              <SingleTitle mainClass="" title={label} />
+              <div className="flex justify-between">
+                <Badge className="" name={category} />
+                <ButtonPrimary href="/mi/archive/the-demo-archive-slug">
+                  Exit
+                </ButtonPrimary>
+              </div>
+
               {!!reference && !false && (
                 <span className="block text-base text-neutral-600 md:text-lg dark:text-neutral-600 pb-1">
                   {reference}
@@ -293,11 +299,20 @@ function PageSingleProduct() {
                   d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
                 />
               </svg>
-              <span className="ml-2 text-neutral-800 text-sm font-medium">
-                Show all photos
-              </span>
+              <button onClick={() => setIsOpen(true)}>
+                <span className="ml-2 text-neutral-800 text-sm font-medium">
+                  Show all photos
+                </span>
+              </button>
             </div>
           </div>
+
+          <ModalPhotos
+            imgs={prod.productImage}
+            isOpen={isOpen}
+            onClose={handleCloseModal}
+            initFocus={openFocusIndex}
+          />
         </header>
         <div></div>
         <Suspense fallback="loading ...">

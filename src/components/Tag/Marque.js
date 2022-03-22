@@ -5,7 +5,7 @@ import axios from "axiosInstance";
 import { useDispatch } from "react-redux";
 import {filterByMarque} from "../../app/filterSlice/filterSlice"
 
-const Marque = ({ className = "", tag, hideCount = false, nbr }) => {
+const Marque = ({ className = "", tag, hideCount = false }) => {
     const [nbrr , setNbr] = useState(0)
     const dispatch = useDispatch();
     useEffect(() => {

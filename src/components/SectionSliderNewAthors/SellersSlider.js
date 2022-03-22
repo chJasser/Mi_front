@@ -54,12 +54,11 @@ const SellersSlider
     axios.get("/products/all-sellers")
     .then((sellers) => {
         setSellers(sellers.data);
-        //console.log(sellers);
     })
     .catch(err => console.log(err.message));
       
   }
-  setTimeout(() => {getSellers()}, 20000);
+  setTimeout(() => {getSellers()}, 15000);
 
   useEffect(() => {
     if (!MY_GLIDE) return;

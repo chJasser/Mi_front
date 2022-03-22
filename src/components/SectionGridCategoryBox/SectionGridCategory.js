@@ -15,42 +15,22 @@ const SectionGridCategory = () => {
     "woodwind",
     "others",
   ];
-  //let CardComponentName = CardCategory;
-  // switch (categoryCardType) {
-  //   case "card1":
-  //     CardComponentName = CardCategory1;
-  //     break;
-  //   case "card2":
-  //     CardComponentName = CardCategory2;
-  //     break;
-  //   case "card3":
-  //     CardComponentName = CardCategory3;
-  //     break;
-  //   case "card4":
-  //     CardComponentName = CardCategory4;
-  //     break;
-  //   case "card5":
-  //     CardComponentName = CardCategory5;
-  //     break;
-
-  //   default:
-  //     CardComponentName = CardCategory1;
-  // }
+ 
   const dispatch = useDispatch();
   return (
     <div className={`nc-SectionGridCategoryBox relative`}>
       <Heading desc="Discover over 100 Articles" className="inline-flex items-center mb-10">Instruments</Heading>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6 md:gap-8">
-        {categories.map((item, i) => (
-          <button 
-          //href ={`/archive/the-demo-archive-slug?category=${item}`}
+        {categories.map((item, index) => (
+          <Link 
+          to ={`/mi/archive/the-demo-archive-slug?category=${item}`}
           className="inline-flex items-center"
           onClick={() => dispatch(filterByCategory(item))}>
             <CardCategory
-            key={i}
+            key={index}
             category={item}
           />
-          </button>
+          </Link>
         ))}
       </div>
     </div>
