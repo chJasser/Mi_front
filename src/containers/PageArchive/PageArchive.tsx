@@ -46,7 +46,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
   const filter = useSelector((state: RootState) => state.filterSlice);
-  console.log(filter);
+  const p = useSelector((state: RootState) => state.product.products);
   const [category, setCategory] = useState("");
   const [marque, setMarque] = useState("");
   const myRef = useRef(null);
@@ -109,8 +109,6 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       });
   };
 
-  // setInterval(() => {filterCategory()}, 10000);
-
   const filterMarque = () => {
     //setMarque(filter.marque)
     axios
@@ -157,7 +155,13 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       .catch((error) => {
         console.error(error);
       });
-    getAllProduct();
+
+      // if(window.location.href === "http://localhost:3000/mi/archive/the-demo-archive-slug?seller"){
+      //   dispatch(populateProducts(p));
+      //   console.log(p)
+      //   setProducts(p);
+      // }
+     getAllProduct();
   }, [dispatch]);
 
   const renderModalContent = () => {
@@ -220,7 +224,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               filterCategory();
             }}
           >
-            <SectionGridCategory />
+            <SectionGridCategory key={Math.random()}/>
           </button>
         </div>
       </div>
@@ -234,6 +238,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               {/*<ModalCategories categories={DEMO_CATEGORIES} />*/}
               {/*<ModalCategoriesprod/>*/}
               <NcModal
+                key={Math.random()}
                isOpenProp={modalIsOpen}
                 contentExtraClass="max-w-screen-md"
                 triggerText={

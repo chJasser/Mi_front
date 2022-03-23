@@ -48,7 +48,6 @@ const SellersSlider = ({ heading, subHeading, className = "", authors }) => {
       .get("/products/all-sellers")
       .then((sellers) => {
         setSellers(sellers.data);
-        console.log(sellers);
       })
       .catch((err) => console.log(err.message));
   };
