@@ -33,7 +33,7 @@ export const getAllUsers = () => (dispatch) => {
       dispatch(getUsers(response.data));
     })
     .catch((err) => {
-      dispatch(console.log(err));
+      dispatch(getUsers([]));
     });
 };
 export const { getUsers, updateUsersList, removeUser, blockUser } =
