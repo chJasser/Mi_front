@@ -15,6 +15,7 @@ import ButtonPrimary from "components/Button/ButtonPrimary";
 import ButtonSecondary from "components/Button/ButtonSecondary";
 import NcImage from "components/NcImage/NcImage";
 import ModalPhotos from "./ModalPhotos";
+import { StarIcon } from "@heroicons/react/solid";
 
 import {
   getProductUser,
