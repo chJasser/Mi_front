@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { populateProducts } from "app/productslice/Productslice";
 import background from "../../images/shop5.jpg";
 
+import { isAuthenticated } from "app/slices/userSlice";
 import {
   getLikedProducts,
   getBookmarkedProducts,
@@ -40,8 +41,6 @@ import {Link} from 'react-router-dom'
 export interface PageArchiveProps {
   className?: string;
 }
-// Tag and category have same data type - we will use one demo data
-const posts: PostDataType[] = DEMO_POSTS.filter((_, i) => i < 16);
 
 const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   const dispatch = useDispatch();
@@ -50,7 +49,6 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   console.log(filter);
   const [category, setCategory] = useState("");
   const [marque, setMarque] = useState("");
-  const path = "http://localhost:3000/archive/the-demo-archive-slug";
   const myRef = useRef(null);
   const inputRef = React.createRef<HTMLInputElement>();
   const [value, setValue] = React.useState([0, 100]);
@@ -138,6 +136,8 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       .catch((err) => console.log(err.message));
   };
 
+  /* ---------------- Alaa ------------------------------ */
+  const isAuth = useSelector(isAuthenticated);
   useEffect(() => {
     axios
       .get("products/liked-products")
@@ -205,7 +205,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
             </h2>
             <span className="block mt-4 text-neutral-300">
               {/* {products.length} Articles */}
-              To Mi-Universe
+              To Mi-Shop
             </span>
           </div>
         </div>

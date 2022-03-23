@@ -6,16 +6,18 @@ import img from "../../assets/img/team-2-800x800.jpg";
 // components
 
 export default function CardProfile() {
-  
+
   const user = useSelector((state) => state.user.userLogedIn);
 
   const [image, setImage] = useState(null);
 
   const dipatch = useDispatch()
+
   useEffect(() => {
     console.log(user)
     setImage(user.profilePicture)
   }, [user])
+  
   const updateImage = (image) => {
     setImage(image);
     dipatch(setUserLogedIn())

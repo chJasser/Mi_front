@@ -229,14 +229,14 @@ const MainNav1 = ({ isTop }) => {
                           or{" "}
                           {window.location.href ==
                           "http://localhost:3000/mi/archive/the-demo-archive-slug" ? (
-                            <a
+                            <button
                               type="button"
                               className="font-medium text-indigo-600 hover:text-indigo-500"
                               onClick={() => setOpen(false)}
                             >
                               Continue Shopping
                               <span aria-hidden="true"> &rarr;</span>
-                            </a>
+                            </button>
                           ) : (
                             <button
                               type="button"

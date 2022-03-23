@@ -7,14 +7,7 @@ import CardSeller from "components/CardAuthorBox2/CardSeller";
 import NextPrev from "components/NextPrev/NextPrev";
 import axios from "../../../src/axiosInstance";
 
-
-const SellersSlider
- = ({
-  heading,
-  subHeading,
-  className = "",
-  authors
-}) => {
+const SellersSlider = ({ heading, subHeading, className = "", authors }) => {
   const UNIQUE_CLASS = ncNanoId("sliderNewAuthors_");
 
   const MY_GLIDE = new Glide(`.${UNIQUE_CLASS}`, {
@@ -51,19 +44,21 @@ const SellersSlider
   });
   const [sellers, setSellers] = useState([]);
   const getSellers = () => {
-    axios.get("/products/all-sellers")
-    .then((sellers) => {
+    axios
+      .get("/products/all-sellers")
+      .then((sellers) => {
         setSellers(sellers.data);
-    })
-    .catch(err => console.log(err.message));
-      
-  }
-  setTimeout(() => {getSellers()}, 15000);
+        console.log(sellers);
+      })
+      .catch((err) => console.log(err.message));
+  };
+  setTimeout(() => {
+    getSellers();
+  }, 20000);
 
   useEffect(() => {
     if (!MY_GLIDE) return;
     MY_GLIDE.mount();
-
   }, [MY_GLIDE]);
 
   return (
@@ -74,11 +69,12 @@ const SellersSlider
         </Heading>
         <div className="glide__track" data-glide-el="track">
           <ul className="glide__slides">
-            {sellers.map((item, index) => (
-              <li key={index} className="glide__slide pb-12 md:pb-16">
-                <CardSeller seller={item} id={item._id} />
-              </li>
-            ))}
+            {sellers.length > 0 &&
+              sellers.map((item, index) => (
+                <li key={index} className="glide__slide pb-12 md:pb-16">
+                  <CardSeller seller={item} id={item._id} />
+                </li>
+              ))}
           </ul>
         </div>
         <NextPrev
@@ -90,5 +86,4 @@ const SellersSlider
   );
 };
 
-export default SellersSlider
-;
+export default SellersSlider;

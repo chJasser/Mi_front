@@ -25,7 +25,7 @@ const rootReducers = {
   productLikes: productLikeSlice,
   productReviews: productReviewsSlice,
   carteslics: carteslics,
-  filterSlice: filterSlice
+  filterSlice: filterSlice,
 };
 
 export default rootReducers;
