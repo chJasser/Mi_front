@@ -43,7 +43,7 @@ const MainNav1 = ({ isTop }) => {
     items.map((item) => {
       total += item.price * item.qte;
     });
-    dispatch(addtotal(total))
+    
     return total;
   };
   return (
@@ -152,7 +152,7 @@ const MainNav1 = ({ isTop }) => {
                             <li key={product.productid} className="flex py-6">
                               <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                 <img
-                                  src={`${base_url}${product.productImage}`}
+                                  src={`${base_url}${product.productImage[0]}`}
                                   alt={product.label}
                                   className="h-full w-full object-cover object-center"
                                 />

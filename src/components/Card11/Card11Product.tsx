@@ -1,4 +1,4 @@
-import React, { FC, useState, lazy } from "react";
+import React, { FC, useState, lazy, useEffect } from "react";
 import ProductFeaturedMedia from "components/PostFeaturedMedia/ProductFeaturedMedia";
 import Badge from "components/Badge/Badge";
 import PostCardMeta from "components/PostCardMeta/PostCardMeta";
@@ -26,12 +26,14 @@ const Card11Product: FC<Card11Props> = ({
 
   const { label, createdAt, category, price, productImage, _id } = product;
   const [rate, setrating] = useState(0);
+ 
   const rating = () => {
-    axios.get(`products/getrating/${_id}`).then((res) => {
-      setrating(res.data[0].rating);
+    axios.get(`products/getratingbyuser/${_id}`).then((res) => {
+      setrating(res.data.rate);
+     // console.log(res.data.rate)
     });
   };
-  rating();
+  useEffect(()=>{rating();},[])
   const date = createdAt.substring(0, 10);
 
   const [isHover, setIsHover] = useState(false);
@@ -54,7 +56,7 @@ const Card11Product: FC<Card11Props> = ({
       </div>
       <Link
         onClick={() => {
-          dispatch(selectProduct(product));
+          dispatch(selectProduct({...product,rate}));
         }}
         to={`/single-gallery/${product._id}`}
         className="absolute inset-0"

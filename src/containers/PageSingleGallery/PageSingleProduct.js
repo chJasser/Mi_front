@@ -13,6 +13,7 @@ import { removeLike, addNewLike } from "app/productLikes/productLikes";
 import ProductComment from "components/CommentCard/ProductComment";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import ButtonSecondary from "components/Button/ButtonSecondary";
+import { StarIcon } from "@heroicons/react/solid";
 import { useFormik } from "formik";
 import { Alert } from "@mui/material";
 import * as Yup from "yup";
@@ -20,7 +21,11 @@ import * as Yup from "yup";
  *
  *
  */
+ function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 function PageSingleProduct() {
+ 
   const dispatch = useDispatch();
   const [errors, setErrors] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -30,6 +35,8 @@ function PageSingleProduct() {
   const [product, setProduct] = useState({});
   const [imgs, setImgs] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [rate, setrating] = useState(0);
+  const [hover,sethoverrating]=useState(null);
   const [openFocusIndex, setOpenFocusIndex] = useState(0);
   const { slug } = useParams();
   const { category, reference, label, marque } = product;
@@ -43,6 +50,29 @@ function PageSingleProduct() {
   const size = "large";
   const hiddenAvatar = false;
   const textArea = document.querySelector("#comment_content");
+   const rat =useSelector((state)=>state.product.selectedProduct.rate);
+  
+useEffect(()=>{setrating(rat-1)},[])
+  
+  const Onmouseenter=(index)=>{
+sethoverrating(index);
+  }
+  const onMouseLeave=()=>{
+    sethoverrating(0);
+  }
+  const onsaverating=(index)=>{
+    setrating(index);
+  }
+const addrate = (rate)=>{
+  
+var FormData={
+rate:rate+1
+}
+  
+axios.put(`/products/rating/${product._id}`,FormData).then((response)=>{
+  console.log(response.data);
+})
+}
   const addLikeDB = async () => {
     await axios
       .put(`/products/add-like/${product._id}`)
@@ -92,6 +122,8 @@ function PageSingleProduct() {
     return productsIds.includes(product._id);
   };
   useEffect(() => {
+  
+
     axios
       .get("products/product/" + slug)
       .then((response) => {
@@ -117,6 +149,7 @@ function PageSingleProduct() {
       .catch((error) => {
         console.error(error);
       });
+   
   }, []);
   const handleOpenModal = (index) => {
     setIsOpen(true);
@@ -163,7 +196,10 @@ function PageSingleProduct() {
           </Helmet>
           <div className={`nc-SingleHeader `}>
             <div className="space-y-5">
+              <div  className="flex flex-col sm:flex-row justify-between">
               <Badge className="" name={category} />
+              <ButtonPrimary onClick={()=>addrate(rate)} href="/archive/the-demo-archive-slug">Shop More</ButtonPrimary>
+              </div>
               <SingleTitle mainClass="" title={label} />
               {!!reference && !false && (
                 <span className="block text-base text-neutral-600 md:text-lg dark:text-neutral-600 pb-1">
@@ -206,6 +242,43 @@ function PageSingleProduct() {
                 <span className="block text-neutral-600 hover:text-teal dark:text-neutral-300 dark:hover:text-white font-medium">
                   {marque} {label} for just : {product.price}$
                 </span>
+                <div className="flex items-center">
+                
+                              { [0, 1, 2, 3, 4].map((rating) => (
+                               
+                                
+                                  <div   onMouseEnter={()=>{Onmouseenter(rating)}}
+                                  onMouseLeave={()=>{onMouseLeave()}}
+                                  onClick={()=>{onsaverating(rating)}}
+                                  >
+                               {rate>=rating?(<StarIcon
+                                  key={rating}
+                                  className={classNames(
+                                    rate >= rating 
+                                      ? "text-gray-900"
+                                      : "text-gray-200",
+                                    "h-5 w-5 flex-shrink-0"
+                                    
+                                  )  }
+                                  aria-hidden="true"
+
+                                />):(<StarIcon
+                                  key={rating}
+                                  className={classNames(
+                                    hover >= rating 
+                                      ? "text-gray-900"
+                                      : "text-gray-200",
+                                    "h-5 w-5 flex-shrink-0"
+                                    
+                                  )  }
+                                  aria-hidden="true"
+
+                                />)} 
+                                </div>
+                                    )) }
+                            </div>
+                            
+                            
 
                 <div
                   className={`nc-PostCardLikeAndComment flex items-center space-x-2 ${className}`}
@@ -321,6 +394,7 @@ function PageSingleProduct() {
             </ButtonSecondary>
           </div>
         </form>
+        
       </div>
     </>
   );

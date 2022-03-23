@@ -78,7 +78,7 @@ const Cartproducts = () => {
                       <div className="flex items-center w-96 lg:w-auto max-w-md overflow-hidden">
                         <NcImage
                           containerClassName="flex-shrink-0 h-12 w-12 rounded-lg overflow-hidden lg:h-14 lg:w-14"
-                          src={`${base_url}${item.productImage}`}
+                          src={`${base_url}${item.productImage[0]}`}
                         />
                       </div>
                     </td>
