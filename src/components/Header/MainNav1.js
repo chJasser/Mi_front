@@ -241,7 +241,7 @@ const MainNav1 = ({ isTop }) => {
                               <span aria-hidden="true"> &rarr;</span>
                             </a>
                           ) : (
-                            <a
+                            <button
                               type="button"
                               href="/mi/archive/the-demo-archive-slug"
                               className="font-medium text-indigo-600 hover:text-indigo-500"
@@ -252,7 +252,7 @@ const MainNav1 = ({ isTop }) => {
                             >
                               Continue Shopping
                               <span aria-hidden="true"> &rarr;</span>
-                            </a>
+                            </button>
                           )}
                         </p>
                       </div>

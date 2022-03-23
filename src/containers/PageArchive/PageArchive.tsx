@@ -33,6 +33,9 @@ import {
 } from "../../app/filterSlice/filterSlice";
 
 import Modalcart from "./Modalcart";
+import Marque from "../../components/Tag/Marque";
+import NcModal from "../../components/NcModal/NcModal";
+import {Link} from 'react-router-dom'
 //import ModalCategoriesprod from "./Modalcategoriesprod";
 export interface PageArchiveProps {
   className?: string;
@@ -50,6 +53,27 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   const [value, setValue] = React.useState([0, 100]);
   let min = value[0] * 100;
   let max = value[1] * 100;
+
+  const marques = [
+    "yamaha",
+    "shure",
+    "gibson",
+    "harman",
+    "fender",
+    "steinway",
+    "roland",
+    "others",
+  ];
+
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   const rangeSelector = (event, newValue) => {
     setValue(newValue);
@@ -73,7 +97,6 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   };
 
   const filterCategory = () => {
-    //setCategory(filter.category)
     axios
       .get(`products/fiter?category=${filter.category}`)
       .then((res) => {
@@ -114,29 +137,36 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   /* ---------------- Alaa ------------------------------ */
   const isAuth = useSelector(isAuthenticated);
   useEffect(() => {
-    if (isAuth) {
-      axios
-        .get("products/liked-products")
-        .then((response) => {
-          console.log(response);
-          dispatch(getLikedProducts(response.data));
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-      axios
-        .get("products/bookmarked-products")
-        .then((response) => {
-          console.log(response);
-          dispatch(getBookmarkedProducts(response.data));
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-
+    axios
+      .get("products/liked-products")
+      .then((response) => {
+        console.log(response);
+        dispatch(getLikedProducts(response.data));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    axios
+      .get("products/bookmarked-products")
+      .then((response) => {
+        console.log(response);
+        dispatch(getBookmarkedProducts(response.data));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     getAllProduct();
   }, [dispatch]);
+
+  const renderModalContent = () => {
+    return (
+      <div className="flex flex-wrap dark:text-neutral-200">
+        {marques.map((tag) => (
+          <button onClick={() => {filterMarque(); closeModal()}}><Marque key={tag} tag={tag} className="mr-2 mb-2" /></button>
+        ))}
+      </div>
+    );
+  };
 
   const PAGE_DATA: TaxonomyType = DEMO_CATEGORIES[0];
 
@@ -201,9 +231,18 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
             <div className="flex space-x-2.5">
               {/*<ModalCategories categories={DEMO_CATEGORIES} />*/}
               {/*<ModalCategoriesprod/>*/}
-              <button onClick={() => filterMarque()}>
-                <ModalMarque />
-              </button>
+              <NcModal
+               isOpenProp={modalIsOpen}
+                contentExtraClass="max-w-screen-md"
+                triggerText={
+                  <span className="hidden sm:inline">
+                    <button onClick={() => openModal()}>Marques</button>
+                  </span>
+                }
+                modalTitle="Discover other tags"
+                renderContent={renderModalContent}
+              />
+              {/* <button onClick={() => filterMarque()}><ModalMarque /></button> */}
               <Modalcart />
             </div>
             <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>

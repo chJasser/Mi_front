@@ -48,13 +48,11 @@ const SellersSlider = ({ heading, subHeading, className = "", authors }) => {
       .get("/products/all-sellers")
       .then((sellers) => {
         setSellers(sellers.data);
-        //console.log(sellers);
-      })
-      .catch((err) => console.log(err.message));
-  };
-  // setTimeout(() => {
-  //   getSellers();
-  // }, 20000);
+    })
+    .catch(err => console.log(err.message));
+      
+  }
+  setTimeout(() => {getSellers()}, 15000);
 
   useEffect(() => {
     if (!MY_GLIDE) return;
