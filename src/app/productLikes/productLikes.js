@@ -40,7 +40,6 @@ export const ProductLikeSlice = createSlice({
       };
       return state;
     },
-
     removeBookmark: (state, action) => {
       const bookmarkedProducts = state.bookmarkedProducts.filter(
         (likedProd) => likedProd._id !== action.payload

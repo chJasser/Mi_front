@@ -41,8 +41,10 @@ const MainNav1 = ({ isTop }) => {
   const base_url = "http://localhost:5050/";
   const calculTot = (items) => {
     let total = 0;
-    items.map((item) => (total += item.price * item.qte));
-
+    items.map((item) => {
+      total += item.price * item.qte;
+    });
+    
     return total;
   };
   return (
@@ -154,21 +156,18 @@ const MainNav1 = ({ isTop }) => {
                         </div>
                       </div>
 
-                      <div className="mt-8">
-                        <div className="flow-root">
-                          <ul
-                            role="list"
-                            className="-my-6 divide-y divide-gray-200"
-                          >
-                            {cart.map((product) => (
-                              <li key={product.productid} className="flex py-6">
-                                <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                  <img
-                                    src={`${base_url}${product.productImage}`}
-                                    alt={product.label}
-                                    className="h-full w-full object-cover object-center"
-                                  />
-                                </div>
+                    <div className="mt-8">
+                      <div className="flow-root">
+                        <ul role="list" className="-my-6 divide-y divide-gray-200">
+                          {cart.map((product) => (
+                            <li key={product.productid} className="flex py-6">
+                              <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                                <img
+                                  src={`${base_url}${product.productImage[0]}`}
+                                  alt={product.label}
+                                  className="h-full w-full object-cover object-center"
+                                />
+                              </div>
 
                                 <div className="ml-4 flex flex-1 flex-col">
                                   <div>

@@ -26,6 +26,9 @@ import ModalPhotosProd from "./ModalPhotosProd";
  *
  *
  */
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 function PageSingleProduct() {
   const myRef = useRef(null);
   const executeScroll = () => myRef.current.scrollIntoView();
@@ -56,6 +59,8 @@ function PageSingleProduct() {
    */
 
   const [isOpen, setIsOpen] = useState(false);
+  const [rate, setrating] = useState(0);
+  const [hover, sethoverrating] = useState(null);
   const [openFocusIndex, setOpenFocusIndex] = useState(0);
 
   const { category, reference, label, marque } = product;
@@ -67,6 +72,30 @@ function PageSingleProduct() {
   const size = "large";
   const hiddenAvatar = false;
   const textArea = document.querySelector("#comment_content");
+  const rat = useSelector((state) => state.product.selectedProduct.rate);
+
+  useEffect(() => {
+    setrating(rat - 1);
+  }, []);
+
+  const Onmouseenter = (index) => {
+    sethoverrating(index);
+  };
+  const onMouseLeave = () => {
+    sethoverrating(0);
+  };
+  const onsaverating = (index) => {
+    setrating(index);
+  };
+  const addrate = (rate) => {
+    var FormData = {
+      rate: rate + 1,
+    };
+
+    axios.put(`/products/rating/${product._id}`, FormData).then((response) => {
+      console.log(response.data);
+    });
+  };
   const addLikeDB = async () => {
     await axios
       .put(`/products/add-like/${product._id}`)
@@ -199,6 +228,13 @@ function PageSingleProduct() {
                 </div>
               </div>
             </div>
+            <ButtonPrimary
+              onClick={() => addrate(rate)}
+              href="/archive/the-demo-archive-slug"
+            >
+              Shop More
+            </ButtonPrimary>
+
             {/* ====================== END HEADER ====================== */}
 
             <div className="gap-2 my-10"></div>
@@ -227,117 +263,147 @@ function PageSingleProduct() {
                 <span className="text-neutral-500 dark:text-neutral-400 mx-[6px] font-medium">
                   {phoneNumber}
                 </span>
-              </div>
-              {/*  */}
-              <span className="block text-neutral-600 hover:text-teal dark:text-neutral-300 dark:hover:text-white font-medium">
-                {marque} {label} for just : {product.price}$
-              </span>
+                <div className="flex items-center">
+                  {[0, 1, 2, 3, 4].map((rating) => (
+                    <div
+                      onMouseEnter={() => {
+                        Onmouseenter(rating);
+                      }}
+                      onMouseLeave={() => {
+                        onMouseLeave();
+                      }}
+                      onClick={() => {
+                        onsaverating(rating);
+                      }}
+                    >
+                      {rate >= rating ? (
+                        <StarIcon
+                          key={rating}
+                          className={classNames(
+                            rate >= rating ? "text-gray-900" : "text-gray-200",
+                            "h-5 w-5 flex-shrink-0"
+                          )}
+                          aria-hidden="true"
+                        />
+                      ) : (
+                        <StarIcon
+                          key={rating}
+                          className={classNames(
+                            hover >= rating ? "text-gray-900" : "text-gray-200",
+                            "h-5 w-5 flex-shrink-0"
+                          )}
+                          aria-hidden="true"
+                        />
+                      )}
+                    </div>
+                  ))}
+                </div>
 
-              <div
-                className={`nc-PostCardLikeAndComment flex items-center space-x-2 ${className}`}
-                data-nc-id="PostCardLikeAndComment"
-              >
-                <button
-                  className={`nc-PostCardLikeAction relative min-w-[68px] flex items-center rounded-full leading-none group transition-colors ${className} ${twFocusClass()} ${
-                    isLiked()
-                      ? "text-rose-600 bg-rose-50 dark:bg-rose-100"
-                      : "text-neutral-700 bg-neutral-50 dark:text-neutral-200 dark:bg-neutral-800 hover:bg-rose-50 dark:hover:bg-rose-100 hover:text-rose-600 dark:hover:text-rose-500"
-                  }`}
-                  onClick={() => handleCLickLike()}
-                  title="Liked"
-                  data-nc-id="PostCardLikeAction"
+                <div
+                  className={`nc-PostCardLikeAndComment flex items-center space-x-2 ${className}`}
+                  data-nc-id="PostCardLikeAndComment"
                 >
-                  <svg
-                    width="24"
-                    height="24"
-                    fill={isLiked ? "currentColor" : "none"}
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1"
-                      d="M11.995 7.23319C10.5455 5.60999 8.12832 5.17335 6.31215 6.65972C4.49599 8.14609 4.2403 10.6312 5.66654 12.3892L11.995 18.25L18.3235 12.3892C19.7498 10.6312 19.5253 8.13046 17.6779 6.65972C15.8305 5.18899 13.4446 5.60999 11.995 7.23319Z"
-                      clipRule="evenodd"
-                    ></path>
-                  </svg>
-
-                  <span
-                    className={`ml-1 ${
+                  <button
+                    className={`nc-PostCardLikeAction relative min-w-[68px] flex items-center rounded-full leading-none group transition-colors ${className} ${twFocusClass()} ${
                       isLiked()
-                        ? "text-rose-600"
-                        : "text-neutral-900 dark:text-neutral-200"
+                        ? "text-rose-600 bg-rose-50 dark:bg-rose-100"
+                        : "text-neutral-700 bg-neutral-50 dark:text-neutral-200 dark:bg-neutral-800 hover:bg-rose-50 dark:hover:bg-rose-100 hover:text-rose-600 dark:hover:text-rose-500"
+                    }`}
+                    onClick={() => handleCLickLike()}
+                    title="Liked"
+                    data-nc-id="PostCardLikeAction"
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      fill={isLiked ? "currentColor" : "none"}
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1"
+                        d="M11.995 7.23319C10.5455 5.60999 8.12832 5.17335 6.31215 6.65972C4.49599 8.14609 4.2403 10.6312 5.66654 12.3892L11.995 18.25L18.3235 12.3892C19.7498 10.6312 19.5253 8.13046 17.6779 6.65972C15.8305 5.18899 13.4446 5.60999 11.995 7.23319Z"
+                        clipRule="evenodd"
+                      ></path>
+                    </svg>
+
+                    <span
+                      className={`ml-1 ${
+                        isLiked()
+                          ? "text-rose-600"
+                          : "text-neutral-900 dark:text-neutral-200"
+                      }`}
+                    >
+                      {convertNumbThousand(product.likesCount)}
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative grid grid-cols-3 sm:grid-cols-4 gap-2 my-10">
+              <div
+                className="col-span-2 row-span-2 relative rounded-xl overflow-hidden cursor-pointer"
+                onClick={() => handleOpenModal(0)}
+              >
+                <NcImage
+                  containerClassName="absolute inset-0"
+                  className="object-cover w-full h-full rounded-xl"
+                  src={base_url + prod.productImage[0]}
+                />
+                <div className="absolute inset-0 bg-neutral-900 bg-opacity-20 opacity-0 hover:opacity-100 transition-opacity"></div>
+              </div>
+              {prod.productImage
+                .filter((_, i) => i >= 1 && i < 5)
+                .map((item, index) => (
+                  <div
+                    key={index}
+                    className={`relative rounded-xl overflow-hidden ${
+                      index >= 2 ? "hidden sm:block" : ""
                     }`}
                   >
-                    {convertNumbThousand(product.likesCount)}
+                    <NcImage
+                      containerClassName="aspect-w-6 aspect-h-8"
+                      className="object-cover w-full h-full rounded-xl "
+                      src={base_url + item || ""}
+                    />
+
+                    {/* OVERLAY */}
+                    <div
+                      className="absolute inset-0 bg-neutral-900 bg-opacity-20 opacity-0 hover:opacity-100 transition-opacity cursor-pointer"
+                      onClick={() => handleOpenModal(index + 1)}
+                    />
+                  </div>
+                ))}
+              <div
+                className="absolute hidden md:flex md:items-center md:justify-center right-3 bottom-3 px-4 py-2 rounded-full bg-neutral-100 text-neutral-500 cursor-pointer hover:bg-neutral-200 z-10"
+                onClick={() => handleOpenModal(0)}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+                  />
+                </svg>
+                <button onClick={() => setIsOpen(true)}>
+                  <span className="ml-2 text-neutral-800 text-sm font-medium">
+                    Show all photos
                   </span>
                 </button>
               </div>
             </div>
           </div>
-
-          <div className="relative grid grid-cols-3 sm:grid-cols-4 gap-2 my-10">
-            <div
-              className="col-span-2 row-span-2 relative rounded-xl overflow-hidden cursor-pointer"
-              onClick={() => handleOpenModal(0)}
-            >
-              <NcImage
-                containerClassName="absolute inset-0"
-                className="object-cover w-full h-full rounded-xl"
-                src={base_url + prod.productImage[0]}
-              />
-              <div className="absolute inset-0 bg-neutral-900 bg-opacity-20 opacity-0 hover:opacity-100 transition-opacity"></div>
-            </div>
-            {prod.productImage
-              .filter((_, i) => i >= 1 && i < 5)
-              .map((item, index) => (
-                <div
-                  key={index}
-                  className={`relative rounded-xl overflow-hidden ${
-                    index >= 2 ? "hidden sm:block" : ""
-                  }`}
-                >
-                  <NcImage
-                    containerClassName="aspect-w-6 aspect-h-8"
-                    className="object-cover w-full h-full rounded-xl "
-                    src={base_url + item || ""}
-                  />
-
-                  {/* OVERLAY */}
-                  <div
-                    className="absolute inset-0 bg-neutral-900 bg-opacity-20 opacity-0 hover:opacity-100 transition-opacity cursor-pointer"
-                    onClick={() => handleOpenModal(index + 1)}
-                  />
-                </div>
-              ))}
-            <div
-              className="absolute hidden md:flex md:items-center md:justify-center right-3 bottom-3 px-4 py-2 rounded-full bg-neutral-100 text-neutral-500 cursor-pointer hover:bg-neutral-200 z-10"
-              onClick={() => handleOpenModal(0)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-                />
-              </svg>
-              <button onClick={() => setIsOpen(true)}>
-                <span className="ml-2 text-neutral-800 text-sm font-medium">
-                  Show all photos
-                </span>
-              </button>
-            </div>
-          </div>
-
           <ModalPhotos
             imgs={prod.productImage}
             isOpen={isOpen}
