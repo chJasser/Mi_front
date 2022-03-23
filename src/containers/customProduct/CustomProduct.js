@@ -64,12 +64,12 @@ function Shoe() {
     <group
       ref={ref}
       dispose={null}
-      onPointerOver={(e) => (e.stopPropagation(), set(e.object.material.name))}
+      onPointerOver={(e) => {e.stopPropagation(); set(e.object.material.name)}}
       onPointerOut={(e) => e.intersections.length === 0 && set(null)}
       onPointerMissed={() => (state.current = null)}
-      onClick={(e) => (
-        e.stopPropagation(), (state.current = e.object.material.name)
-      )}
+      onClick={(e) => {
+        e.stopPropagation(); state.current = e.object.material.name
+    }}
     >
       <mesh
         receiveShadow

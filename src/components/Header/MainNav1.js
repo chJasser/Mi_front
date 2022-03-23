@@ -154,7 +154,7 @@ const MainNav1 = ({ isTop }) => {
                       <div className="mt-8">
                         <div className="flow-root">
                           <ul
-                            role="list"
+                            
                             className="-my-6 divide-y divide-gray-200"
                           >
                             {cart.map((product) => (
@@ -171,7 +171,7 @@ const MainNav1 = ({ isTop }) => {
                                   <div>
                                     <div className="flex justify-between text-base font-medium text-gray-900">
                                       <h3>
-                                        <a href="#"> {product.label} </a>
+                                        {product.label}
                                       </h3>
                                       <p className="ml-4">{product.price}</p>
                                     </div>
@@ -227,7 +227,7 @@ const MainNav1 = ({ isTop }) => {
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>
                           or{" "}
-                          {window.location.href ==
+                          {window.location.href ===
                           "http://localhost:3000/mi/archive/the-demo-archive-slug" ? (
                             <button
                               type="button"

@@ -3,6 +3,7 @@ import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const products = [
   {
@@ -79,7 +80,7 @@ export default function Example() {
 
                     <div className="mt-8">
                       <div className="flow-root">
-                        <ul role="list" className="-my-6 divide-y divide-gray-200">
+                        <ul className="-my-6 divide-y divide-gray-200">
                           {carteitems.map((product) => (
                             <li key={product.productid} className="flex py-6">
                               <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
@@ -94,7 +95,7 @@ export default function Example() {
                                 <div>
                                   <div className="flex justify-between text-base font-medium text-gray-900">
                                     <h3>
-                                      <a href="#"> {product.label} </a>
+                                      {product.label}
                                     </h3>
                                     <p className="ml-4">{product.price}</p>
                                   </div>
@@ -124,23 +125,24 @@ export default function Example() {
                     </div>
                     <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                     <div className="mt-6">
-                      <a
+                      {/* <a
                         href="#"
                         className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                       >
                         Checkout
-                      </a>
+                      </a> */}
                     </div>
                     <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                       <p>
                         or{' '}
-                        <button
+                        <Link
+                          to = "http://localhost:3000/mi/archive/the-demo-archive-slug"
                           type="button"
                           className="font-medium text-indigo-600 hover:text-indigo-500"
                           onClick={() => setOpen(false)}
                         >
                           Continue Shopping<span aria-hidden="true"> &rarr;</span>
-                        </button>
+                        </Link>
                       </p>
                     </div>
                   </div>
