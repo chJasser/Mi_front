@@ -21,10 +21,8 @@ const Cartproducts = () => {
     qte: 0,
   });
   const dispatch = useDispatch();
-  //   useEffect(()=>{
-  //  dispatch(getTotal());
 
-  //   },[dispatch])
+  const [disablededit, setdisablededit] = useState(true);
   const calculTot = (items) => {
     let total = 0;
     items.map((item) => (total += item.price * item.qte));
@@ -52,6 +50,10 @@ const Cartproducts = () => {
                     Product
                   </th>
                   <th scope="col" className="px-6 py-3">
+                    Label
+                  </th>
+
+                  <th scope="col" className="px-6 py-3">
                     Price
                   </th>
 
@@ -78,6 +80,13 @@ const Cartproducts = () => {
                     <td>
                       <div className="ml-4 flex-grow">
                         <h2 className="inline-flex line-clamp-2 text-sm font-semibold  dark:text-neutral-300">
+                          {item.label}
+                        </h2>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="ml-4 flex-grow">
+                        <h2 className="inline-flex line-clamp-2 text-sm font-semibold  dark:text-neutral-300">
                           {item.price}
                         </h2>
                       </div>
@@ -97,12 +106,13 @@ const Cartproducts = () => {
                       <div className="ml-4 flex-grow">
                         <input
                           type="number"
+                          defaultValue={item.qte}
                           min={1}
-                          defaultValue={1}
                           onChange={(e) => {
                             setDisabledEdit(false);
                             setProductToChange(item);
                             updateQte(e, item);
+                            setdisablededit(false);
                           }}
                           className="inline-flex line-clamp-2 text-sm font-semibold  dark:text-neutral-300"
                         >
@@ -113,7 +123,7 @@ const Cartproducts = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-neutral-300">
                       <button
                         className="text-primary-800 dark:text-primary-500 hover:text-primary-900"
-                        disabled={disabledEdit}
+                        disabled={disablededit}
                         onClick={() => {
                           dispatch(additem(productToChange));
                         }}
