@@ -192,7 +192,6 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     { name: "Most Discussed" },
     { name: "Most Viewed" },
   ];
-
   return (
     <div
       className={`nc-PageArchive overflow-hidden ${className}`}
