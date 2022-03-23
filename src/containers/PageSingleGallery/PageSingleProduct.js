@@ -23,6 +23,7 @@ import {
   getProductReviews,
 } from "../../app/productReviews/productReviews";
 import ModalPhotosProd from "./ModalPhotosProd";
+import { StarIcon } from "@heroicons/react/solid";
 /**
  *
  *
@@ -48,8 +49,8 @@ function PageSingleProduct() {
    *
    */
   const userToComment = useSelector((state) => state.user.currentUser);
-  const [user, setUser] = useState({});
-  const seller = useSelector((state) => state.productReviews.user);
+  const [seller, setUser] = useState({});
+  // const seller = useSelector((state) => state.productReviews.user);
   /**
    *
    */
@@ -65,7 +66,7 @@ function PageSingleProduct() {
   const [openFocusIndex, setOpenFocusIndex] = useState(0);
 
   const { category, reference, label, marque } = product;
-  const { userName, phoneNumber, profilePicture } = user;
+  const { userName, phoneNumber, profilePicture } = seller;
   const likedProducts = useSelector(
     (state) => state.productLikes.likedProducts
   );
@@ -129,7 +130,16 @@ function PageSingleProduct() {
       isLiked: false,
     });
   };
-
+  const getSellerOfTheProduct = () => {
+    axios
+      .get(`/products/seller/${prod.seller}`)
+      .then((result) => {
+        setUser(result.data);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  };
   const handleCLickLike = () => {
     if (!isLiked(product._id)) {
       addLikeDB();
@@ -159,7 +169,7 @@ function PageSingleProduct() {
   useEffect(() => {
     setProduct(prod);
     getProductReviewsFun(prod);
-    setUser(seller);
+    getSellerOfTheProduct();
   }, [dispatch]);
   const handleOpenModal = (index) => {
     setIsOpen(true);
@@ -186,7 +196,6 @@ function PageSingleProduct() {
           setTimeout(() => {
             window.location.reload();
           }, 100);
-          executeScroll();
         })
         .catch((error) => {
           console.log(error.response);
@@ -229,12 +238,6 @@ function PageSingleProduct() {
                 </div>
               </div>
             </div>
-            <ButtonPrimary
-              onClick={() => addrate(rate)}
-              href="/archive/the-demo-archive-slug"
-            >
-              Shop More
-            </ButtonPrimary>
 
             {/* ====================== END HEADER ====================== */}
 
@@ -264,85 +267,91 @@ function PageSingleProduct() {
                 <span className="text-neutral-500 dark:text-neutral-400 mx-[6px] font-medium">
                   {phoneNumber}
                 </span>
-                <div className="flex items-center">
-                  {[0, 1, 2, 3, 4].map((rating) => (
-                    <div
-                      onMouseEnter={() => {
-                        Onmouseenter(rating);
-                      }}
-                      onMouseLeave={() => {
-                        onMouseLeave();
-                      }}
-                      onClick={() => {
-                        onsaverating(rating);
-                      }}
-                    >
-                      {rate >= rating ? (
-                        <StarIcon
-                          key={rating}
-                          className={classNames(
-                            rate >= rating ? "text-gray-900" : "text-gray-200",
-                            "h-5 w-5 flex-shrink-0"
-                          )}
-                          aria-hidden="true"
-                        />
-                      ) : (
-                        <StarIcon
-                          key={rating}
-                          className={classNames(
-                            hover >= rating ? "text-gray-900" : "text-gray-200",
-                            "h-5 w-5 flex-shrink-0"
-                          )}
-                          aria-hidden="true"
-                        />
-                      )}
-                    </div>
-                  ))}
-                </div>
-
-                <div
-                  className={`nc-PostCardLikeAndComment flex items-center space-x-2 ${className}`}
-                  data-nc-id="PostCardLikeAndComment"
-                >
-                  <button
-                    className={`nc-PostCardLikeAction relative min-w-[68px] flex items-center rounded-full leading-none group transition-colors ${className} ${twFocusClass()} ${
-                      isLiked()
-                        ? "text-rose-600 bg-rose-50 dark:bg-rose-100"
-                        : "text-neutral-700 bg-neutral-50 dark:text-neutral-200 dark:bg-neutral-800 hover:bg-rose-50 dark:hover:bg-rose-100 hover:text-rose-600 dark:hover:text-rose-500"
-                    }`}
-                    onClick={() => handleCLickLike()}
-                    title="Liked"
-                    data-nc-id="PostCardLikeAction"
-                  >
-                    <svg
-                      width="24"
-                      height="24"
-                      fill={isLiked ? "currentColor" : "none"}
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="1"
-                        d="M11.995 7.23319C10.5455 5.60999 8.12832 5.17335 6.31215 6.65972C4.49599 8.14609 4.2403 10.6312 5.66654 12.3892L11.995 18.25L18.3235 12.3892C19.7498 10.6312 19.5253 8.13046 17.6779 6.65972C15.8305 5.18899 13.4446 5.60999 11.995 7.23319Z"
-                        clipRule="evenodd"
-                      ></path>
-                    </svg>
-
-                    <span
-                      className={`ml-1 ${
-                        isLiked()
-                          ? "text-rose-600"
-                          : "text-neutral-900 dark:text-neutral-200"
-                      }`}
-                    >
-                      {convertNumbThousand(product.likesCount)}
-                    </span>
-                  </button>
-                </div>
               </div>
+              <div className="flex items-center">
+                {[0, 1, 2, 3, 4].map((rating) => (
+                  <div
+                    onMouseEnter={() => {
+                      Onmouseenter(rating);
+                    }}
+                    onMouseLeave={() => {
+                      onMouseLeave();
+                    }}
+                    onClick={() => {
+                      onsaverating(rating);
+                    }}
+                  >
+                    {rate >= rating ? (
+                      <StarIcon
+                        key={rating}
+                        className={classNames(
+                          rate >= rating ? "text-gray-900" : "text-gray-200",
+                          "h-7 w-7 flex-shrink-0"
+                        )}
+                        aria-hidden="true"
+                      />
+                    ) : (
+                      <StarIcon
+                        key={rating}
+                        className={classNames(
+                          hover >= rating ? "text-gray-900" : "text-gray-200",
+                          "h-7 w-7 flex-shrink-0"
+                        )}
+                        aria-hidden="true"
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              <div
+                className={`nc-PostCardLikeAndComment flex items-center space-x-2 ${className}`}
+                data-nc-id="PostCardLikeAndComment"
+              >
+                <button
+                  className={`nc-PostCardLikeAction relative min-w-[68px] flex items-center rounded-full leading-none group transition-colors ${className} ${twFocusClass()} ${
+                    isLiked()
+                      ? "text-rose-600 bg-rose-50 dark:bg-rose-100"
+                      : "text-neutral-700 bg-neutral-50 dark:text-neutral-200 dark:bg-neutral-800 hover:bg-rose-50 dark:hover:bg-rose-100 hover:text-rose-600 dark:hover:text-rose-500"
+                  }`}
+                  onClick={() => handleCLickLike()}
+                  title="Liked"
+                  data-nc-id="PostCardLikeAction"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    fill={isLiked ? "currentColor" : "none"}
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1"
+                      d="M11.995 7.23319C10.5455 5.60999 8.12832 5.17335 6.31215 6.65972C4.49599 8.14609 4.2403 10.6312 5.66654 12.3892L11.995 18.25L18.3235 12.3892C19.7498 10.6312 19.5253 8.13046 17.6779 6.65972C15.8305 5.18899 13.4446 5.60999 11.995 7.23319Z"
+                      clipRule="evenodd"
+                    ></path>
+                  </svg>
+
+                  <span
+                    className={`ml-1 ${
+                      isLiked()
+                        ? "text-rose-600"
+                        : "text-neutral-900 dark:text-neutral-200"
+                    }`}
+                  >
+                    {convertNumbThousand(product.likesCount)}
+                  </span>
+                </button>
+              </div>
+              <ButtonPrimary
+                onClick={() => addrate(rate)}
+                href="/archive/the-demo-archive-slug"
+              >
+                Shop More
+              </ButtonPrimary>
             </div>
 
             <div className="relative grid grid-cols-3 sm:grid-cols-4 gap-2 my-10">

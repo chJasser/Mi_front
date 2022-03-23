@@ -30,10 +30,15 @@ const Card11Product: FC<Card11Props> = ({
   const [rate, setrating] = useState(0);
 
   const rating = () => {
-    axios.get(`products/getratingbyuser/${_id}`).then((res) => {
-      setrating(res.data.rate);
-      // console.log(res.data.rate)
-    });
+    axios
+      .get(`products/getratingbyuser/${_id}`)
+      .then((res) => {
+        setrating(res.data.rate);
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   const getUser = (prod) => {
     axios
@@ -46,7 +51,6 @@ const Card11Product: FC<Card11Props> = ({
       });
   };
 
-  // rating();
   useEffect(() => {
     rating();
   }, []);
