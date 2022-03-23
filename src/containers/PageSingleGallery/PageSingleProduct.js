@@ -268,8 +268,9 @@ function PageSingleProduct() {
                 </span>
               </div>
               <div className="flex items-center">
-                {[0, 1, 2, 3, 4].map((rating) => (
+                {[0, 1, 2, 3, 4].map((rating, index) => (
                   <div
+                    key={index}
                     onMouseEnter={() => {
                       Onmouseenter(rating);
                     }}
@@ -413,12 +414,6 @@ function PageSingleProduct() {
               </div>
             </div>
           </div>
-          <ModalPhotos
-            imgs={prod.productImage}
-            isOpen={isOpen}
-            onClose={handleCloseModal}
-            initFocus={openFocusIndex}
-          />
         </header>
         {/* MODAL PHOTOS */}
         <ModalPhotosProd
@@ -430,7 +425,7 @@ function PageSingleProduct() {
 
         <div className={"container"}>
           {reviews.map((review) => (
-            <div className="gap-2 my-10" ref={myRef}>
+            <div className="gap-2 my-10" key={review._id} ref={myRef}>
               <ProductComment key={review._id} review={review} />
             </div>
           ))}

@@ -41,10 +41,8 @@ const MainNav1 = ({ isTop }) => {
   const base_url = "http://localhost:5050/";
   const calculTot = (items) => {
     let total = 0;
-    items.map((item) => {
-      total += item.price * item.qte;
-    });
-    
+    items.map((item) => (total += item.price * item.qte));
+
     return total;
   };
   return (
@@ -156,25 +154,23 @@ const MainNav1 = ({ isTop }) => {
                         </div>
                       </div>
 
-                    <div className="mt-8">
-                      <div className="flow-root">
-                        <ul role="list" className="-my-6 divide-y divide-gray-200">
-                          {cart.map((product) => (
-                            <li key={product.productid} className="flex py-6">
-                              <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                <img
-                                  src={`${base_url}${product.productImage[0]}`}
-                                  alt={product.label}
-                                  className="h-full w-full object-cover object-center"
-                                />
-                              </div>
+                      <div className="mt-8">
+                        <div className="flow-root">
+                          <ul className="-my-6 divide-y divide-gray-200">
+                            {cart.map((product) => (
+                              <li key={product.productid} className="flex py-6">
+                                <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                                  <img
+                                    src={`${base_url}${product.productImage[0]}`}
+                                    alt={product.label}
+                                    className="h-full w-full object-cover object-center"
+                                  />
+                                </div>
 
                                 <div className="ml-4 flex flex-1 flex-col">
                                   <div>
                                     <div className="flex justify-between text-base font-medium text-gray-900">
-                                      <h3>
-                                        <a href="#"> {product.label} </a>
-                                      </h3>
+                                      <h3>{product.label}</h3>
                                       <p className="ml-4">{product.price}</p>
                                     </div>
                                     {
@@ -229,16 +225,15 @@ const MainNav1 = ({ isTop }) => {
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>
                           or{" "}
-                          {window.location.href ==
+                          {window.location.href ===
                           "http://localhost:3000/mi/archive/the-demo-archive-slug" ? (
-                            <a
-                              type="button"
+                            <button
                               className="font-medium text-indigo-600 hover:text-indigo-500"
                               onClick={() => setOpen(false)}
                             >
                               Continue Shopping
                               <span aria-hidden="true"> &rarr;</span>
-                            </a>
+                            </button>
                           ) : (
                             <button
                               type="button"
