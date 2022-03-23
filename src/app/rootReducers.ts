@@ -10,7 +10,7 @@ import Productslice from "./productslice/Productslice";
 import carteslics from "../app/cartslice/carteslics";
 import productLikeSlice from "../app/productLikes/productLikes";
 import productReviewsSlice from "./productReviews/productReviews";
-
+import UsersSlice from "./usersSlice/adminSlice";
 import filterSlice from "./filterSlice/filterSlice";
 
 const rootReducers = {
@@ -24,6 +24,7 @@ const rootReducers = {
   user: userSlice,
   productLikes: productLikeSlice,
   productReviews: productReviewsSlice,
+  usersManagement: UsersSlice,
   carteslics: carteslics,
   filterSlice: filterSlice,
 };

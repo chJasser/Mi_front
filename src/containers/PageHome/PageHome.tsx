@@ -37,7 +37,9 @@ import {
   setUserLogedIn,
   userRoles,
 } from "app/slices/userSlice";
-import { resetState } from "app/productLikes/productLikes";
+import { resetStateLikes } from "app/productLikes/productLikes";
+import { resetStateReviews } from "app/productReviews/productReviews";
+import { getAllUsers } from "app/usersSlice/adminSlice";
 import SectionBecomeAnTeacher from "components/SectionBecomeAnTeacher/SectionBecomeAnTeacher";
 import SectionBecomeAnStudent from "components/SectionBecomeAnStudent/SectionBecomeAnStudent";
 import SectionBecomeAnSeller from "components/SectionBecomeAnSeller/SectionBecomeAnSeller";
@@ -59,7 +61,9 @@ const PageHome: React.FC = () => {
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(resetState());
+    dispatch(getAllUsers());
+    dispatch(resetStateLikes());
+    dispatch(resetStateReviews());
     setToken(new URLSearchParams(search).get("token"));
     if (token !== null) {
       dispatch(login(token));

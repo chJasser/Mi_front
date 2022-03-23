@@ -43,6 +43,7 @@ function PageSingleProduct() {
   /***
    *
    */
+  const userToComment = useSelector((state) => state.user.currentUser);
   const [user, setUser] = useState({});
   const seller = useSelector((state) => state.productReviews.user);
   /**

@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 let initialState = {
   productsReviews: [],
   user: {},
-  selectedProduct: {},
 };
 const ProductReviewsSlice = createSlice({
   name: "productsReviews",
@@ -17,8 +16,11 @@ const ProductReviewsSlice = createSlice({
     addReview(state, action) {
       state.productsReviews = [...state.productsReviews, action.payload];
     },
+    resetStateReviews: (state) => {
+      return (state = initialState);
+    },
   },
 });
-export const { getProductReviews, addReview, getProductUser } =
+export const { getProductReviews, addReview, getProductUser, resetStateReviews } =
   ProductReviewsSlice.actions;
 export default ProductReviewsSlice.reducer;

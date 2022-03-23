@@ -52,9 +52,9 @@ const SellersSlider = ({ heading, subHeading, className = "", authors }) => {
       })
       .catch((err) => console.log(err.message));
   };
-  setTimeout(() => {
-    getSellers();
-  }, 20000);
+  // setTimeout(() => {
+  //   getSellers();
+  // }, 20000);
 
   useEffect(() => {
     if (!MY_GLIDE) return;
