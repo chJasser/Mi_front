@@ -103,20 +103,23 @@ const onSubmit = async (values) => {
   formData.append("reference", values.reference);
   formData.append("price", values.price);
   
-    formData.append("category", selectedOptioncategory.value);
-    formData.append("marque", selectedOptionmarque.value);
-    formData.append("type",selectedOptiontype.value);
-    formData.append("state",selectedOptionstate.value);
+    formData.append("category", (selectedOptioncategory.value).toString());
+    formData.append("marque", (selectedOptionmarque.value).toString());
+    formData.append("type",(selectedOptiontype.value).toString());
+    formData.append("state",(selectedOptionstate.value).toString());
     for (const key of Object.keys(productImage)) {
       formData.append("files", productImage[key]);
     }
   console.log(values);
   console.log(selectedOptioncategory.value);
   console.log(selectedOptionstate.value);
+  console.log(selectedOptiontype.value);
+  console.log(selectedOptionmarque.value);
   const response = await axios.post("/products/add-product", formData).catch((err) => {
     if (err && err.response) {
       setErrors(err.response.data.message);
       setSuccess(null);
+      console.log(err);
     }
   });
   if (response && response.data) {
@@ -138,11 +141,16 @@ const onSubmit = async (values) => {
                 price:"",
                 reference:"",
                 description: "",
+                state:"new",
+                type:"gear",
+                marque:"yamaha",
+                category:"guitars",
+
                 productImage:[],
 
               }}
-              
-              onSubmit={onSubmit} >
+              validationSchema={validationSchema}
+              onSubmit={onSubmit } >
             {
            ({ handleSubmit,
              handleChange,

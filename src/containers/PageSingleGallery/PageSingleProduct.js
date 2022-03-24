@@ -15,7 +15,7 @@ import ButtonPrimary from "components/Button/ButtonPrimary";
 import ButtonSecondary from "components/Button/ButtonSecondary";
 import NcImage from "components/NcImage/NcImage";
 import ModalPhotos from "./ModalPhotos";
-import { StarIcon } from "@heroicons/react/solid";
+
 
 import {
   getProductUser,
@@ -414,12 +414,7 @@ function PageSingleProduct() {
               </div>
             </div>
           </div>
-          <ModalPhotos
-            imgs={prod.productImage}
-            isOpen={isOpen}
-            onClose={handleCloseModal}
-            initFocus={openFocusIndex}
-          />
+          
         </header>
         {/* MODAL PHOTOS */}
         <ModalPhotosProd
