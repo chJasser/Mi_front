@@ -1,37 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
-import { getAllUsers } from "app/usersSlice/adminSlice";
-import { useDispatch } from "react-redux";
-import PaginationSimple from "components/Pagination/PaginationSimple";
 
 // components
 
-import Users from "./Users";
-
-export default function CardTableOfUsers({ color }) {
-  const usersFromStore = useSelector((state) => state.usersManagement.users);
-
+import { useSelector } from "react-redux";
+import PaginationSimple from "components/Pagination/PaginationSimple";
+import Reclamations from "./Reclamations";
+export default function CardTableReclamations({ color }) {
+  const base_url = "http://localhost:5050/";
+  const recs = useSelector(
+    (state) => state.reclamationsManagement.reclamations
+  );
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
 
+  
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentUsers = usersFromStore.slice(indexOfFirstPost, indexOfLastPost);
-  const lastPage = Math.ceil(usersFromStore.length / postsPerPage);
-
+  const currentPosts = recs.slice(indexOfFirstPost, indexOfLastPost);
+  const lastPage = recs.length / postsPerPage;
   // Change page
   const paginateFront = () => setCurrentPage(currentPage + 1);
   const paginateBack = () => setCurrentPage(currentPage - 1);
-
   return (
     <>
-      <Users color={color} users={currentUsers}></Users>
+      <Reclamations reclamations={currentPosts} color={color}></Reclamations>
       <PaginationSimple
         lastPage={lastPage}
         postsPerPage={postsPerPage}
-        totalPosts={usersFromStore.length}
+        totalPosts={recs.length}
         paginateBack={paginateBack}
         paginateFront={paginateFront}
         currentPage={currentPage}
@@ -40,10 +38,10 @@ export default function CardTableOfUsers({ color }) {
   );
 }
 
-CardTableOfUsers.defaultProps = {
+CardTableReclamations.defaultProps = {
   color: "light",
 };
 
-CardTableOfUsers.propTypes = {
+CardTableReclamations.propTypes = {
   color: PropTypes.oneOf(["light", "dark"]),
 };
