@@ -12,13 +12,7 @@ const Marque = ({ className = "", tag, hideCount = false }) => {
         axios
           .get(`products/marque?marque=${tag}`)
           .then((res) => {
-            console.log(res);
-            console.log(res.data.length);
-            // if (res.data.length !== 0) {
-            //   setImage(base_url + res.data[0].productImage[0]);
-            // }
             setNbr(res.data.length);
-            //setNbrParCategory(res.data.length);
           })
           .catch((err) => {
             console.log(err.message);
