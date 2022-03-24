@@ -12,6 +12,7 @@ import productLikeSlice from "../app/productLikes/productLikes";
 import productReviewsSlice from "./productReviews/productReviews";
 import UsersSlice from "./usersSlice/adminSlice";
 import filterSlice from "./filterSlice/filterSlice";
+import RecSlice from "./reclamations/recSlice";
 
 const rootReducers = {
   bookmark: bookmarkReducer,
@@ -25,6 +26,7 @@ const rootReducers = {
   productLikes: productLikeSlice,
   productReviews: productReviewsSlice,
   usersManagement: UsersSlice,
+  reclamationsManagement: RecSlice,
   carteslics: carteslics,
   filterSlice: filterSlice,
 };

@@ -2,18 +2,13 @@ import React, { useState } from "react";
 import { createPopper } from "@popperjs/core";
 import axios from "axiosInstance";
 import { useDispatch } from "react-redux";
-import {
-  getAllUsers,
-  updateUsersList,
-  removeUser,
-  blockUser,
-} from "app/usersSlice/adminSlice";
+import { removeUser, blockUser, unblockUser } from "app/usersSlice/adminSlice";
 const UserManagementDropDown = (props) => {
   const [onDeleted, setOnDeleted] = useState(false);
   const { id, user } = props;
   const dispatch = useDispatch();
   // dropdown props
-  const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
+  const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);
   const btnDropdownRef = React.createRef();
   const popoverDropdownRef = React.createRef();
   const openDropdownPopover = () => {
@@ -25,6 +20,16 @@ const UserManagementDropDown = (props) => {
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
   };
+  const handleUnblock = () => {
+    dispatch(unblockUser(id));
+    closeDropdownPopover();
+    axios
+      .put(`users/unblock/${id}`)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
   const handleBlock = () => {
     dispatch(blockUser(id));
     closeDropdownPopover();
@@ -32,7 +37,6 @@ const UserManagementDropDown = (props) => {
       .put(`users/block/${id}`)
       .then((res) => {
         console.log(res.data);
-        closeDropdownPopover();
       })
       .catch((err) => console.log(err));
   };
@@ -66,17 +70,31 @@ const UserManagementDropDown = (props) => {
           "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
         }
       >
-        <button
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => {
-            e.preventDefault();
-            handleBlock();
-          }}
-        >
-          Block
-        </button>
+        {!user.isBlocked ? (
+          <button
+            className={
+              "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+            }
+            onClick={(e) => {
+              e.preventDefault();
+              handleBlock();
+            }}
+          >
+            Block
+          </button>
+        ) : (
+          <button
+            className={
+              "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+            }
+            onClick={(e) => {
+              e.preventDefault();
+              handleUnblock();
+            }}
+          >
+            Unblock
+          </button>
+        )}
         <button
           className={
             onDeleted
