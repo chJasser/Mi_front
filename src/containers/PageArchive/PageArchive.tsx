@@ -170,14 +170,14 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     return (
       <div className="flex flex-wrap dark:text-neutral-200">
         {marques.map((tag) => (
-          <button
+          <div
             onClick={() => {
               filterMarque(tag);
               closeModal();
             }}
           >
             <Marque key={tag} tag={tag} className="mr-2 mb-2" />
-          </button>
+          </div>
         ))}
       </div>
     );
