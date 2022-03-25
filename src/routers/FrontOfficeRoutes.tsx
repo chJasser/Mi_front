@@ -50,6 +50,7 @@ import BecomeTeacherRoute from "./privateRoutes/BecomeTeacherRoute";
 import AuthRoute from "./privateRoutes/AuthRoute";
 import BecomeSellerRoute from "./privateRoutes/BecomeSellerRoute";
 import BecomeStudentRoute from "./privateRoutes/BecomeStudentRoute";
+import PageAuthorV2 from "containers/PageAuthor/PageAuthorV2";
 
 export const pages: Page[] = [
   { path: "/mi", exact: true, component: PageHome },
@@ -59,7 +60,7 @@ export const pages: Page[] = [
   { path: "/mi/archive-audio/:slug", component: PageArchiveAudio },
   //
   { path: "/mi/author/:slug", component: PageAuthor },
-  // { path: "/mi/author-v2/:slug", component: PageAuthorV2 },
+  { path: "/mi/author-v2/:slug", component: PageAuthorV2 },
   //
   { path: "/mi/single/:slug", component: PageSingleTemp3Sidebar },
   {

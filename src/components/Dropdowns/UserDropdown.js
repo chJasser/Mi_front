@@ -1,7 +1,12 @@
 import React from "react";
 import { createPopper } from "@popperjs/core";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "app/slices/userSlice";
 
 const UserDropdown = () => {
+  const img = useSelector((state) => state.user.userLogedIn.profilePicture);
+  const dipatch = useDispatch()
+
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
@@ -27,13 +32,16 @@ const UserDropdown = () => {
         }}
       >
         <div className="items-center flex">
-          <span className="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
+          {img !== null ? (<span className="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
             <img
               alt="..."
+              style={{ height: "50px", width: "50px" }}
+
               className="w-full rounded-full align-middle border-none shadow-lg"
-              src={require("assets/img/team-1-800x800.jpg").default}
+              src={img !== null ? `http://localhost:5050/${img}` : ""}
             />
-          </span>
+          </span>) :
+            (<span className="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full"></span>)}
         </div>
       </a>
       <div
@@ -76,9 +84,9 @@ const UserDropdown = () => {
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }
-          onClick={(e) => e.preventDefault()}
+          onClick={() => dipatch(logoutUser())}
         >
-          Seprated link
+          Logout
         </a>
       </div>
     </>

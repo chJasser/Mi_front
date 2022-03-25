@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import axios from "../../axiosInstance";
+import TacherCardSettings from "./TacherCardSettings";
 // import { format } from 'date-fns';
 // components
 
@@ -73,6 +74,7 @@ export default function CardSettings() {
         setErrors(null);
         setSuccess(response.data.message);
         currentUser = user;
+        currentUser.password = ""
         const timer = setTimeout(() => {
           setSuccess(null);
         }, 2000);
@@ -149,6 +151,7 @@ export default function CardSettings() {
                   id="email"
                   name="email"
                   type="email"
+                  disabled={true}
                   placeholder="Email address"
                   className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   onChange={formik.handleChange}
@@ -400,7 +403,10 @@ export default function CardSettings() {
         <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
           <UpdateProfile />
         </div>
-      </div>}
+
+      </div>
+      }
+      <TacherCardSettings />
 
     </>
   );

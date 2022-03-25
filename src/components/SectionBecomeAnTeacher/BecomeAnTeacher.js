@@ -38,6 +38,7 @@ const PageTeacher = ({ className = "" }) => {
   const [errors, setErrors] = useState(null);
   const [success, setSuccess] = useState(null);
   const [pdfFiles, setPdfFiles] = useState("");
+  
   const validationSchema = Yup.object({
     rib: Yup.string()
       .required("rib is required")
@@ -172,7 +173,8 @@ const PageTeacher = ({ className = "" }) => {
                       id="specialties"
                       value={selectedOption}
                       onChange={handleInputChange}
-                      isMulti components={animatedComponents}
+                      isMulti 
+                      components={animatedComponents}
                       closeMenuOnSelect={false} options={options} />
                   </label>
                   {touched.specialties && errors.specialties ? (
@@ -200,7 +202,7 @@ const PageTeacher = ({ className = "" }) => {
                     <Alert severity="error">You must add certifications (you can add mulitiple files)</Alert>
                   ) : null}
                   <label className="block">
-                    <Label>Message</Label>
+                    <Label>About</Label>
 
                     <Textarea
                       id="about"
