@@ -17,6 +17,7 @@ import ButtonSecondary from "components/Button/ButtonSecondary";
 import NcImage from "components/NcImage/NcImage";
 import ModalPhotos from "./ModalPhotos";
 
+
 import {
   getProductUser,
   addReview,
@@ -420,6 +421,7 @@ function PageSingleProduct() {
               </div>
             </div>
           </div>
+          
         </header>
         {/* MODAL PHOTOS */}
         <ModalPhotosProd

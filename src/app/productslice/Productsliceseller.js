@@ -4,28 +4,27 @@ let initialState = {
   products: [],
   selectedProduct: {},
   loading: true,
-  open:true,
   errors: "",
 };
 
-const ProductsSlice = createSlice({
+const ProductsSliceseller = createSlice({
   name: "product",
   initialState,
   reducers: {
-    populateProducts(state, action) {
+    populatesellerProducts(state, action) {
       state.products = action.payload;
     },
+    deslecetsellerproducts(state){
+      state.products=[];
+    },
     //productdetail
-    selectProduct(state, action) {
+    selectsellerProduct(state, action) {
       state.selectedProduct = action.payload;
     },
     unselectProduct(state) {
       state.selectedProduct = null;
     },
-    selectopen(state,action){
-    state.open=action.payload;
-    },
-    deleteProduct: (state, action) => {
+    deletesellerProduct: (state, action) => {
       //payload :id
       const payload = action.payload;
       const index = state.products.findIndex((item) => item._id === payload);
@@ -33,7 +32,7 @@ const ProductsSlice = createSlice({
         state.products.splice(index, 1);
       }
     },
-    updateProduct: (state, action) => {
+    updatesellerProduct: (state, action) => {
       const payload = action.payload;
       const index = state.products.findIndex(
         (item) => item._id === payload._id
@@ -51,7 +50,7 @@ const ProductsSlice = createSlice({
     },
   },
 });
-export const fetchProducts = () => (dispatch) => {
+/*export const fetchProducts = () => (dispatch) => {
   //const [res, error] = await queryApi("products");
   axios
     .get("/products/filter")
@@ -66,8 +65,8 @@ dispatch(setErrors(error));
 } else {
 
 dispatch(populateProducts(data));
-}*/
-};
+}
+};*/
 export const selectProducts = (state) => {
   return [state.products.products, state.products.errors];
 };
@@ -75,13 +74,13 @@ export const selectSelectedProduct = (state) => {
   return state.products.selectedProduct;
 };
 export const {
-  populateProducts,
-  selectProduct,
+  populatesellerProducts,
+  selectsellerProduct,
   unselectProduct,
   setErrors,
-  deleteProduct,
-  selectopen,
-  updateProduct,
+  deslecetsellerproducts,
+  deletesellerProduct,
+  updatesellerProduct,
   addProduct,
-} = ProductsSlice.actions;
-export default ProductsSlice.reducer;
+} = ProductsSliceseller.actions;
+export default ProductsSliceseller.reducer;
