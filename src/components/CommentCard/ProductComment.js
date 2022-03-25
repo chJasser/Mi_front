@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Avatar from "components/Avatar/Avatar";
 import { Link } from "react-router-dom";
 import axios from "axiosInstance";
+import { useDispatch, useSelector } from "react-redux";
 
 function ProductComment(props) {
   const base_url = "http://localhost:5050/";

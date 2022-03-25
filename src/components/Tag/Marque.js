@@ -1,9 +1,7 @@
-import { TaxonomyType } from "data/types";
-import React, { FC, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import axios from "axiosInstance";
 import { useDispatch } from "react-redux";
-import {filterByMarque} from "../../app/filterSlice/filterSlice"
+import { filterByMarque } from "../../app/filterSlice/filterSlice";
 
 const Marque = ({ className = "", tag, hideCount = false }) => {
     const [nbrr , setNbr] = useState(0)
@@ -25,7 +23,6 @@ const Marque = ({ className = "", tag, hideCount = false }) => {
       //  href ={`/archive/the-demo-archive-slug?marque=${tag}`}
       onClick={() => dispatch(filterByMarque(tag))}
     >
-    
       {`${tag}`}
       {tag && (
         <span className="text-xs font-normal"> ({nbrr})</span>

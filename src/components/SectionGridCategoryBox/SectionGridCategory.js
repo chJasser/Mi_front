@@ -41,7 +41,12 @@ const SectionGridCategory = ({products}) => {
  
   return (
     <div className={`nc-SectionGridCategoryBox relative`}>
-      <Heading desc="Discover over 100 Articles" className="inline-flex items-center mb-10">Instruments</Heading>
+      <Heading
+        desc="Discover over 100 Articles"
+        className="inline-flex items-center mb-10"
+      >
+        Instruments
+      </Heading>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6 md:gap-8">
         {categories.map((item, index) => (
           <button 

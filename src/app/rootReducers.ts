@@ -7,10 +7,12 @@ import mediaRunningReducer from "./mediaRunning/mediaRunning";
 import userSlice from "./slices/userSlice";
 import Productslice from "./productslice/Productslice";
 
-import carteslics from "./cartslice/carteslics";
-import productLikeSlice from "./productLikes/productLikes";
-import filterSlice from "./filterSlice/filterSlice";
+import carteslics from "../app/cartslice/carteslics";
+import productLikeSlice from "../app/productLikes/productLikes";
 import productReviewsSlice from "./productReviews/productReviews";
+import UsersSlice from "./usersSlice/adminSlice";
+import filterSlice from "./filterSlice/filterSlice";
+import RecSlice from "./reclamations/recSlice";
 
 
 const rootReducers = {
@@ -24,6 +26,8 @@ const rootReducers = {
   user: userSlice,
   productLikes: productLikeSlice,
   productReviews: productReviewsSlice,
+  usersManagement: UsersSlice,
+  reclamationsManagement: RecSlice,
   carteslics: carteslics,
   filterSlice: filterSlice,
 };

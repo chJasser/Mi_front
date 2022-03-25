@@ -23,9 +23,9 @@ const carteslics = createSlice({
       };
     },
     updateqte: (state, action) => {},
-addtotal:(state,action)=>{
-state.total=action.payload;
-},
+    addtotal: (state, action) => {
+      state.total = action.payload;
+    },
     additem: (state, action) => {
       //state.quantity+=1;
       let item = {
@@ -60,5 +60,6 @@ state.total=action.payload;
   },
 });
 
-export const { additem, removeitem, getTotal, updateqte,addtotal } = carteslics.actions;
+export const { additem, removeitem, getTotal, updateqte, addtotal } =
+  carteslics.actions;
 export default carteslics.reducer;

@@ -52,6 +52,7 @@ import BecomeSellerRoute from "./privateRoutes/BecomeSellerRoute";
 import BecomeStudentRoute from "./privateRoutes/BecomeStudentRoute";
 import CustomProductsPage from "containers/customProduct/CustomProductsPage";
 import ProfileSeller from "containers/PageAuthor/ProfileSeller";
+import PageContactMi from "containers/PageContact/PageContactMi";
 
 export const pages: Page[] = [
   { path: "/mi", exact: true, component: PageHome },
@@ -107,6 +108,7 @@ export const pages: Page[] = [
   { path: "/mi/search-v2", component: PageSearchV2 },
   { path: "/mi/about", exact: true, component: PageAbout },
   { path: "/mi/contact", component: PageContact },
+  { path: "/mi/contactUs", component: PageContactMi },
   { path: "/mi/page404", component: Page404 },
   { path: "/mi/login", typeRoute: "auth", component: PageLogin },
   { path: "/mi/signup", typeRoute: "auth", component: PageSignUp },

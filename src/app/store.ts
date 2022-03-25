@@ -26,7 +26,9 @@ const persistConfig = {
     "carteslics",
     "productLikes",
     "productReviews",
-    "filterSlice"
+    "userManagement",
+    "reclamationsManagement",
+    "filterSlice",
   ],
 };
 

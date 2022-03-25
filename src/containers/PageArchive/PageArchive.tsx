@@ -204,7 +204,13 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       .catch((error) => {
         console.error(error);
       });
-    getAllProduct();
+
+      // if(window.location.href === "http://localhost:3000/mi/archive/the-demo-archive-slug?seller"){
+      //   dispatch(populateProducts(p));
+      //   console.log(p)
+      //   setProducts(p);
+      // }
+     getAllProduct();
   }, [dispatch]);
 
   const renderModalContent = () => {
