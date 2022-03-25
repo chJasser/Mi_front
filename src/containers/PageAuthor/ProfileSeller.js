@@ -140,14 +140,12 @@ const ProfileSeller = ({ className = "" }) => {
           </div>
 
           <Suspense fallback={<div>Loading..</div>}>
-          {/* LOOP ITEMS */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
-            {products.map((product) => (
-              
+            {/* LOOP ITEMS */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
+              {products.map((product) => (
                 <Card11Product key={product._id} product={product} />
-             
-            ))}
-          </div>
+              ))}
+            </div>
           </Suspense>
 
           {/* PAGINATION */}

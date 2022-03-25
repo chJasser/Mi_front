@@ -63,10 +63,11 @@ const SellersSlider = ({ heading, subHeading, className = "", authors }) => {
   let isMountedRef = useRef(null);
   useEffect(() => {
     isMountedRef.current = true;
-    if(isMountedRef.current )  {
-    getSellers();}
-    return () =>  isMountedRef.current = false ;
-  },[])
+    if (isMountedRef.current) {
+      getSellers();
+    }
+    return () => (isMountedRef.current = false);
+  }, []);
 
   return (
     <div className={`nc-SectionSliderNewAuthors ${className}`}>

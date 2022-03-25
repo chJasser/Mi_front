@@ -16,7 +16,6 @@ import ButtonSecondary from "components/Button/ButtonSecondary";
 
 import NcImage from "components/NcImage/NcImage";
 import ModalPhotos from "./ModalPhotos";
-import NcImage from "components/NcImage/NcImage";
 
 import {
   getProductUser,
@@ -226,12 +225,12 @@ function PageSingleProduct() {
                   className="object-cover w-full h-full"
                 />
                 <div className="absolute inset-0 bg-black text-white bg-opacity-30 flex flex-col items-center justify-center">
-                <div className="flex justify-between">
-                  <Badge className="" name={category} />
-                  <ButtonPrimary href="/mi/archive/the-demo-archive-slug">
-                  Exit
-                </ButtonPrimary>
-                </div>
+                  <div className="flex justify-between">
+                    <Badge className="" name={category} />
+                    <ButtonPrimary href="/mi/archive/the-demo-archive-slug">
+                      Exit
+                    </ButtonPrimary>
+                  </div>
                   <h2 className="inline-block align-middle ml-3 text-5xl font-semibold md:text-7xl ">
                     {product.label}
                   </h2>

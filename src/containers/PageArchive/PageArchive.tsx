@@ -109,21 +109,24 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
 
   const inputHandler = (e) => {
     if (e.target.value) {
-    axios
-      .get("products/filter")
-      .then((res) => {
-        setProducts(
-          res.data.products.filter((product) => product.label.toLowerCase().startsWith((e.target.value).toLowerCase()))
-        );
-      })
-      .catch((err) => console.log(err.message));
-    } 
-      else {
-            axios.get("products/filter").then((res) => {
-              setProducts(res.data.products);
-            });
+      axios
+        .get("products/filter")
+        .then((res) => {
+          setProducts(
+            res.data.products.filter((product) =>
+              product.label
+                .toLowerCase()
+                .startsWith(e.target.value.toLowerCase())
+            )
+          );
+        })
+        .catch((err) => console.log(err.message));
+    } else {
+      axios.get("products/filter").then((res) => {
+        setProducts(res.data.products);
+      });
+    }
   };
-}
 
   const filterMarque = (marque) => {
     axios
@@ -205,12 +208,12 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
         console.error(error);
       });
 
-      // if(window.location.href === "http://localhost:3000/mi/archive/the-demo-archive-slug?seller"){
-      //   dispatch(populateProducts(p));
-      //   console.log(p)
-      //   setProducts(p);
-      // }
-     getAllProduct();
+    // if(window.location.href === "http://localhost:3000/mi/archive/the-demo-archive-slug?seller"){
+    //   dispatch(populateProducts(p));
+    //   console.log(p)
+    //   setProducts(p);
+    // }
+    getAllProduct();
   }, [dispatch]);
 
   const renderModalContent = () => {
@@ -401,8 +404,6 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
             Your range of Price is between {min}$ and {max}$
           </div>
 
-          
-
           {/* <Link 
           to ={`/mi/archive/the-demo-archive-slug`}> */}
           <div className="flex justify-between">
@@ -410,23 +411,23 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               Show All Porducts
             </ButtonPrimary>
             <div className="radio-buttons">
-            New
-            <input
-              id="mac"
-              value="new"
-              name="platform"
-              type="radio"
-              onChange={() => getNewProducts()}
-            />
-            / Used
-            <input
-              id="linux"
-              value="used"
-              name="platform"
-              type="radio"
-              onChange={() => getUsedProducts()}
-            />
-          </div>
+              New
+              <input
+                id="mac"
+                value="new"
+                name="platform"
+                type="radio"
+                onChange={() => getNewProducts()}
+              />
+              / Used
+              <input
+                id="linux"
+                value="used"
+                name="platform"
+                type="radio"
+                onChange={() => getUsedProducts()}
+              />
+            </div>
             {/* <ButtonPrimary disabled={filter.valid}>Filter</ButtonPrimary> */}
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
