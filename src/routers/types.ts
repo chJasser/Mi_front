@@ -25,6 +25,7 @@ export interface LocationStates {
   "/mi/search-v2"?: {};
   "/mi/about"?: {};
   "/mi/contact"?: {};
+  "/mi/contactUs"?: {};
   "/mi/login"?: {};
   "/mi/signup"?: {};
   "/mi/forgot-pass"?: {};

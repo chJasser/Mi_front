@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { getAllUsers } from "app/usersSlice/adminSlice";
-import { useDispatch } from "react-redux";
+
 // components
 
 import CardLineChart from "components/Cards/CardLineChart.js";
@@ -9,11 +8,6 @@ import CardPageVisits from "components/Cards/CardPageVisits.js";
 import CardSocialTraffic from "components/Cards/CardSocialTraffic.js";
 
 export default function Dashboard() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getAllUsers());
-  }, []);
   return (
     <>
       <div className="flex flex-wrap">

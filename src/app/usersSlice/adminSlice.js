@@ -24,6 +24,13 @@ const UsersSlice = createSlice({
         }
       });
     },
+    unblockUser: (state, action) => {
+      state.users.forEach((user) => {
+        if (user._id === action.payload) {
+          user.isBlocked = false;
+        }
+      });
+    },
   },
 });
 export const getAllUsers = () => (dispatch) => {
@@ -36,6 +43,6 @@ export const getAllUsers = () => (dispatch) => {
       dispatch(getUsers([]));
     });
 };
-export const { getUsers, updateUsersList, removeUser, blockUser } =
+export const { getUsers, updateUsersList, removeUser, blockUser, unblockUser } =
   UsersSlice.actions;
 export default UsersSlice.reducer;

@@ -28,6 +28,7 @@ const persistConfig = {
     "productLikes",
     "productReviews",
     "userManagement",
+    "reclamationsManagement",
     "filterSlice",
   ],
 };

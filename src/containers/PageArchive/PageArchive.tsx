@@ -35,7 +35,7 @@ import {
 import Modalcart from "./Modalcart";
 import Marque from "../../components/Tag/Marque";
 import NcModal from "../../components/NcModal/NcModal";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 //import ModalCategoriesprod from "./Modalcategoriesprod";
 export interface PageArchiveProps {
   className?: string;
@@ -161,8 +161,17 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   const renderModalContent = () => {
     return (
       <div className="flex flex-wrap dark:text-neutral-200">
-        {marques.map((tag) => (
-          <button onClick={() => {filterMarque(); closeModal()}}><Marque key={tag} tag={tag} className="mr-2 mb-2" /></button>
+        {marques.map((tag, index) => (
+          <div key={index}>
+            <button
+              onClick={() => {
+                filterMarque();
+                closeModal();
+              }}
+            >
+              <Marque key={tag} tag={tag} className="mr-2 mb-2" />
+            </button>
+          </div>
         ))}
       </div>
     );
@@ -232,11 +241,15 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               {/*<ModalCategories categories={DEMO_CATEGORIES} />*/}
               {/*<ModalCategoriesprod/>*/}
               <NcModal
-               isOpenProp={modalIsOpen}
+                isOpenProp={modalIsOpen}
                 contentExtraClass="max-w-screen-md"
                 triggerText={
-                  <span className="hidden sm:inline">
-                    <button onClick={() => openModal()}>Marques</button>
+                  <span
+                    className="hidden sm:inline"
+                    onClick={() => openModal()}
+                  >
+                    Marques
+                    {/* <button onClick={() => openModal()}>Marques</button> */}
                   </span>
                 }
                 modalTitle="Discover other tags"
