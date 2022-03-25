@@ -38,6 +38,7 @@ import NcModal from "../../components/NcModal/NcModal";
 import { Link } from "react-router-dom";
 import Heading from "../../components/Heading/Heading";
 import CardCategory from "../../components/CardCategory2/CardCategory";
+// import Radio from "@material-tailwind/react/Radio";
 //import ModalCategoriesprod from "./Modalcategoriesprod";
 export interface PageArchiveProps {
   className?: string;
@@ -141,6 +142,25 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       })
       .catch((err) => console.log(err.message));
   };
+ 
+  const getNewProducts = () => {
+    axios
+      .get("products/filter")
+      .then((res) => {
+         setProducts(res.data.products.filter(product => product.state === "new"));
+        })
+         .catch((err) => console.log(err.message));
+  };
+
+  const getUsedProducts = () => {
+    axios
+      .get("products/filter")
+      .then((res) => {
+         setProducts(res.data.products.filter(product => product.state === "used"));
+        })
+         .catch((err) => console.log(err.message));
+  };
+  
 
   /* ---------------- Alaa ------------------------------ */
   const isAuth = useSelector(isAuthenticated);
@@ -230,7 +250,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
           <div className={`nc-SectionGridCategoryBox relative`}>
             <Heading
               desc="Discover over 100 Articles"
-              className="inline-flex items-center mb-10"
+              className="inline-flex items-center mb-10 headCategory"
             >
               Instruments
             </Heading>
@@ -252,8 +272,6 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               ))}
             </div>
           </div>
-                  {/*  */}
-
         </div>
       </div>
       {/* Marque */}
@@ -352,6 +370,29 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
             />
             Your range of Price is between {min}$ and {max}$
           </div>
+
+          
+          <div className="radio-buttons">
+        
+        New 
+        <input
+          id="mac"
+          value="new"
+          name="platform"
+          type="radio"
+          onChange={() => getNewProducts()}
+        />
+        / Used
+        <input
+          id="linux"
+          value="used"
+          name="platform"
+          type="radio"
+          onChange={() => getUsedProducts()}
+        />
+      </div>
+
+
           {/* <Link 
           to ={`/mi/archive/the-demo-archive-slug`}> */}
           <div className="flex justify-between">

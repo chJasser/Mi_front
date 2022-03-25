@@ -76,7 +76,9 @@ const SellersSlider = ({ heading, subHeading, className = "", authors }) => {
             {sellers.length > 0 &&
               sellers.map((item, index) => (
                 <li key={index} className="glide__slide pb-12 md:pb-16">
+                  {/* <a href={`/mi/author/the-demo-author-slug?seller=${item._id}`}> */}
                   <CardSeller seller={item} id={item._id} />
+                  {/* </a> */}
                 </li>
               ))}
           </ul>
