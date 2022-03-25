@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { PostAuthorType } from "data/types";
 import { ArrowRightIcon } from "@heroicons/react/solid";
 import { Link, NavLink } from "react-router-dom";
@@ -24,8 +24,9 @@ const CardSeller = ({
     "https://media.istockphoto.com/vectors/bright-colorful-abstract-blurry-background-vector-id1263930234?k=20&m=1263930234&s=612x612&w=0&h=GdYcs5rYd8XpoX0EpXNt9RVYx1rYwafbhVy8HSb5uUw="
   ];
 
-  const [nbr, setNbr] = useState(0)
-  const [sel, setSel] = useState({})
+  const [nbr, setNbr] = useState(0);
+  const [sel, setSel] = useState({});
+  const [s, sets] = useState({});
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
   const getNbrProducts = () => {
@@ -35,7 +36,15 @@ const CardSeller = ({
     })
     .catch(err => console.log(err.message)); 
   }
-  const getseller = () => {
+
+  const getSeller = () => {
+    axios
+    .get(`/products/sel/${seller._id}`)
+    .then((s) => sets(s.data))
+    .catch(err => console.log(err.message));
+  }
+
+  const getUser = () => {
     axios.get(`/users/${seller.user}`)
       .then((s) => setSel(s.data))
       .catch(err => console.log(err.message));
@@ -47,10 +56,14 @@ const CardSeller = ({
       .then((products) => setProducts(products.data))
       .catch(err => console.log(err.message));
   }
-
+  let isMountedRef = useRef(null);
   useEffect(() => {
+    isMountedRef.current = true;
+    if(isMountedRef.current )  {
     getNbrProducts();
-    getseller();
+    getUser();
+    getSeller();}
+    return () => { isMountedRef.current = false };
   }, [])
   
 
@@ -68,7 +81,7 @@ const CardSeller = ({
           />
         </div>
         <div className="absolute top-3 inset-x-3 flex">
-          <Link to="?seller"
+          <Link to={`/mi/author/the-demo-author-slug?seller=${s._id}`}
           onClick={() => {filterProductsBySeller(); dispatch(populateProducts(products))}} className=" py-1 px-4 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center leading-none text-xs font-medium">
             {nbr} Products <ArrowRightIcon className="w-5 h-5 text-yellow-600 ml-3" />
           </Link>

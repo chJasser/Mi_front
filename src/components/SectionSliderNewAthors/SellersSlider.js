@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import Heading from "components/Heading/Heading";
 import Glide from "@glidejs/glide";
 import { PostDataType } from "data/types";
@@ -48,7 +48,6 @@ const SellersSlider = ({ heading, subHeading, className = "", authors }) => {
       .get("/products/all-sellers")
       .then((sellers) => {
         setSellers(sellers.data);
-        console.log(sellers);
       })
       .catch((err) => console.log(err.message));
   };
@@ -61,8 +60,12 @@ const SellersSlider = ({ heading, subHeading, className = "", authors }) => {
     MY_GLIDE.mount();
   }, [MY_GLIDE]);
 
+  let isMountedRef = useRef(null);
   useEffect(() => {
-    getSellers();
+    isMountedRef.current = true;
+    if(isMountedRef.current )  {
+    getSellers();}
+    return () =>  isMountedRef.current = false ;
   },[])
 
   return (

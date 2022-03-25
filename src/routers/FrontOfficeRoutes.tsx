@@ -51,6 +51,7 @@ import AuthRoute from "./privateRoutes/AuthRoute";
 import BecomeSellerRoute from "./privateRoutes/BecomeSellerRoute";
 import BecomeStudentRoute from "./privateRoutes/BecomeStudentRoute";
 import CustomProductsPage from "containers/customProduct/CustomProductsPage";
+import ProfileSeller from "containers/PageAuthor/ProfileSeller";
 
 export const pages: Page[] = [
   { path: "/mi", exact: true, component: PageHome },
@@ -59,7 +60,9 @@ export const pages: Page[] = [
   { path: "/mi/archive-video/:slug", component: PageArchiveVideo },
   { path: "/mi/archive-audio/:slug", component: PageArchiveAudio },
   //
-  { path: "/mi/author/:slug", component: PageAuthor },
+  // { path: "/mi/author/:slug", component: PageAuthor },
+
+  { path: "/mi/author/:slug", component: ProfileSeller },
   // { path: "/mi/author-v2/:slug", component: PageAuthorV2 },
   //
   { path: "/mi/single/:slug", component: PageSingleTemp3Sidebar },

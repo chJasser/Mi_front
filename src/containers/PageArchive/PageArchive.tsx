@@ -29,7 +29,7 @@ import Slider from "@material-ui/core/Slider";
 import { RootState } from "../../app/store";
 import {
   filterByMarque,
-  filterByCategory
+  filterByCategory,
 } from "../../app/filterSlice/filterSlice";
 
 import Modalcart from "./Modalcart";
@@ -95,17 +95,35 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
 
   const executeScroll = () => myRef.current.scrollIntoView();
 
-  let inputHandler = (e) => {
+  // let inputHandler = (e) => {
+  //   if (e.target.value) {
+  //     axios.get(`products/search?label=${e.target.value}`).then((res) => {
+  //       setProducts(res.data);
+  //     });
+  //   } else {
+  //     axios.get("products/filter").then((res) => {
+  //       setProducts(res.data.products);
+  //     });
+  //   }
+  // };
+
+  const inputHandler = (e) => {
     if (e.target.value) {
-      axios.get(`products/search?label=${e.target.value}`).then((res) => {
-        setProducts(res.data);
-      });
-    } else {
-      axios.get("products/filter").then((res) => {
-        setProducts(res.data.products);
-      });
-    }
+    axios
+      .get("products/filter")
+      .then((res) => {
+        setProducts(
+          res.data.products.filter((product) => product.label.toLowerCase().startsWith((e.target.value).toLowerCase()))
+        );
+      })
+      .catch((err) => console.log(err.message));
+    } 
+      else {
+            axios.get("products/filter").then((res) => {
+              setProducts(res.data.products);
+            });
   };
+}
 
   const filterMarque = (marque) => {
     axios
@@ -142,25 +160,28 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       })
       .catch((err) => console.log(err.message));
   };
- 
+
   const getNewProducts = () => {
     axios
       .get("products/filter")
       .then((res) => {
-         setProducts(res.data.products.filter(product => product.state === "new"));
-        })
-         .catch((err) => console.log(err.message));
+        setProducts(
+          res.data.products.filter((product) => product.state === "new")
+        );
+      })
+      .catch((err) => console.log(err.message));
   };
 
   const getUsedProducts = () => {
     axios
       .get("products/filter")
       .then((res) => {
-         setProducts(res.data.products.filter(product => product.state === "used"));
-        })
-         .catch((err) => console.log(err.message));
+        setProducts(
+          res.data.products.filter((product) => product.state === "used")
+        );
+      })
+      .catch((err) => console.log(err.message));
   };
-  
 
   /* ---------------- Alaa ------------------------------ */
   const isAuth = useSelector(isAuthenticated);
@@ -246,7 +267,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       <div className="relative py-16 container">
         <div className="category">
           <BackgroundSection />
-            {/* Category */}
+          {/* Category */}
           <div className={`nc-SectionGridCategoryBox relative`}>
             <Heading
               desc="Discover over 100 Articles"
@@ -257,7 +278,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6 md:gap-8">
               {categories.map((item, index) => (
                 <Link
-                  to ={`/mi/archive/the-demo-archive-slug?category=${item}`}
+                  to={`/mi/archive/the-demo-archive-slug?category=${item}`}
                   className="inline-flex items-center"
                   onClick={() => {
                     filterCatgory(item);
@@ -288,7 +309,10 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
                 isOpenProp={modalIsOpen}
                 contentExtraClass="max-w-screen-md"
                 triggerText={
-                  <span onClick={() => openModal()} className="hidden sm:inline">
+                  <span
+                    onClick={() => openModal()}
+                    className="hidden sm:inline"
+                  >
                     Marques
                   </span>
                 }
@@ -372,26 +396,6 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
           </div>
 
           
-          <div className="radio-buttons">
-        
-        New 
-        <input
-          id="mac"
-          value="new"
-          name="platform"
-          type="radio"
-          onChange={() => getNewProducts()}
-        />
-        / Used
-        <input
-          id="linux"
-          value="used"
-          name="platform"
-          type="radio"
-          onChange={() => getUsedProducts()}
-        />
-      </div>
-
 
           {/* <Link 
           to ={`/mi/archive/the-demo-archive-slug`}> */}
@@ -399,6 +403,24 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
             <ButtonPrimary onClick={() => getAllProduct()}>
               Show All Porducts
             </ButtonPrimary>
+            <div className="radio-buttons">
+            New
+            <input
+              id="mac"
+              value="new"
+              name="platform"
+              type="radio"
+              onChange={() => getNewProducts()}
+            />
+            / Used
+            <input
+              id="linux"
+              value="used"
+              name="platform"
+              type="radio"
+              onChange={() => getUsedProducts()}
+            />
+          </div>
             {/* <ButtonPrimary disabled={filter.valid}>Filter</ButtonPrimary> */}
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
