@@ -13,7 +13,7 @@ import productReviewsSlice from "./productReviews/productReviews";
 import UsersSlice from "./usersSlice/adminSlice";
 import filterSlice from "./filterSlice/filterSlice";
 import RecSlice from "./reclamations/recSlice";
-
+import Productsliceseller from "./productslice/Productsliceseller";
 
 const rootReducers = {
   bookmark: bookmarkReducer,
@@ -23,6 +23,7 @@ const rootReducers = {
   pages: pagesReducer,
   mediaRunning: mediaRunningReducer,
   product: Productslice,
+  productseller:Productsliceseller,
   user: userSlice,
   productLikes: productLikeSlice,
   productReviews: productReviewsSlice,

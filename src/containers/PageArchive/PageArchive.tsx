@@ -18,7 +18,6 @@ import Card11Product from "components/Card11/Card11Product";
 import { useDispatch, useSelector } from "react-redux";
 import { populateProducts } from "app/productslice/Productslice";
 import background from "../../images/shop5.jpg";
-
 import { isAuthenticated } from "app/slices/userSlice";
 import {
   getLikedProducts,
@@ -37,6 +36,9 @@ import Modalcart from "./Modalcart";
 import Marque from "../../components/Tag/Marque";
 import NcModal from "../../components/NcModal/NcModal";
 import { Link } from "react-router-dom";
+import Heading from "../../components/Heading/Heading";
+import CardCategory from "../../components/CardCategory2/CardCategory";
+// import Radio from "@material-tailwind/react/Radio";
 //import ModalCategoriesprod from "./Modalcategoriesprod";
 export interface PageArchiveProps {
   className?: string;
@@ -46,9 +48,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
   const filter = useSelector((state: RootState) => state.filterSlice);
-  const p = useSelector((state: RootState) => state.product.products);
-  const [category, setCategory] = useState("");
-  const [marque, setMarque] = useState("");
+  const prod = useSelector((state: RootState) => state.product);
   const myRef = useRef(null);
   const inputRef = React.createRef<HTMLInputElement>();
   const [value, setValue] = React.useState([0, 100]);
@@ -63,6 +63,16 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     "fender",
     "steinway",
     "roland",
+    "others",
+  ];
+
+  let categories = [
+    "guitars",
+    "keyboards",
+    "strings",
+    "brass",
+    "percussions",
+    "woodwind",
     "others",
   ];
 
@@ -84,12 +94,33 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   };
 
   const executeScroll = () => myRef.current.scrollIntoView();
-  let inputHandler = (e) => {
+
+  // let inputHandler = (e) => {
+  //   if (e.target.value) {
+  //     axios.get(`products/search?label=${e.target.value}`).then((res) => {
+  //       setProducts(res.data);
+  //     });
+  //   } else {
+  //     axios.get("products/filter").then((res) => {
+  //       setProducts(res.data.products);
+  //     });
+  //   }
+  // };
+
+  const inputHandler = (e) => {
     if (e.target.value) {
-      axios.get(`products/search?label=${e.target.value}`).then((res) => {
-        console.log(res.data);
-        setProducts(res.data);
-      });
+      axios
+        .get("products/filter")
+        .then((res) => {
+          setProducts(
+            res.data.products.filter((product) =>
+              product.label
+                .toLowerCase()
+                .startsWith(e.target.value.toLowerCase())
+            )
+          );
+        })
+        .catch((err) => console.log(err.message));
     } else {
       axios.get("products/filter").then((res) => {
         setProducts(res.data.products);
@@ -97,9 +128,9 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     }
   };
 
-  const filterCategory = () => {
+  const filterMarque = (marque) => {
     axios
-      .get(`products/fiter?category=${filter.category}`)
+      .get(`products/marque?marque=${marque}`)
       .then((res) => {
         executeScroll();
         setProducts(res.data);
@@ -108,28 +139,49 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
         console.log(err.message);
       });
   };
-
-  const filterMarque = () => {
-    //setMarque(filter.marque)
+  const filterCatgory = (cat) => {
     axios
-      .get(`products/marque?marque=${filter.marque}`)
+      .get("products/filter")
       .then((res) => {
+        let p = res.data.products.filter((product) => {
+          return product.category === cat;
+        });
+        setProducts(p);
+        dispatch(populateProducts(p));
+        // dispatch(changeValid(false));
         executeScroll();
-        setProducts(res.data);
       })
-      .catch((err) => {
-        console.log(err.message);
-      });
+      .catch((err) => console.log(err.message));
   };
-
   const getAllProduct = () => {
     axios
       .get("products/filter")
       .then((res) => {
-        console.log(res.data.products);
-        //executeScroll();
         dispatch(populateProducts(res.data.products));
         setProducts(res.data.products);
+        //dispatch(changeValid(true));
+      })
+      .catch((err) => console.log(err.message));
+  };
+
+  const getNewProducts = () => {
+    axios
+      .get("products/filter")
+      .then((res) => {
+        setProducts(
+          res.data.products.filter((product) => product.state === "new")
+        );
+      })
+      .catch((err) => console.log(err.message));
+  };
+
+  const getUsedProducts = () => {
+    axios
+      .get("products/filter")
+      .then((res) => {
+        setProducts(
+          res.data.products.filter((product) => product.state === "used")
+        );
       })
       .catch((err) => console.log(err.message));
   };
@@ -156,27 +208,25 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
         console.error(error);
       });
 
-      // if(window.location.href === "http://localhost:3000/mi/archive/the-demo-archive-slug?seller"){
-      //   dispatch(populateProducts(p));
-      //   console.log(p)
-      //   setProducts(p);
-      // }
-     getAllProduct();
+    // if(window.location.href === "http://localhost:3000/mi/archive/the-demo-archive-slug?seller"){
+    //   dispatch(populateProducts(p));
+    //   console.log(p)
+    //   setProducts(p);
+    // }
+    getAllProduct();
   }, [dispatch]);
 
   const renderModalContent = () => {
     return (
       <div className="flex flex-wrap dark:text-neutral-200">
-        {marques.map((tag, index) => (
-          <div key={index}>
-            <button
-              onClick={() => {
-                filterMarque();
-                closeModal();
-              }}
-            >
-              <Marque key={tag} tag={tag} className="mr-2 mb-2" />
-            </button>
+        {marques.map((tag) => (
+          <div
+            onClick={() => {
+              filterMarque(tag);
+              closeModal();
+            }}
+          >
+            <Marque key={tag} tag={tag} className="mr-2 mb-2" />
           </div>
         ))}
       </div>
@@ -192,7 +242,6 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     { name: "Most Discussed" },
     { name: "Most Viewed" },
   ];
-
   return (
     <div
       className={`nc-PageArchive overflow-hidden ${className}`}
@@ -227,16 +276,35 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       <div className="relative py-16 container">
         <div className="category">
           <BackgroundSection />
-          <button
-            onClick={() => {
-              //dispatch(filterByCategory(filter.category))
-              filterCategory();
-            }}
-          >
-            <SectionGridCategory key={Math.random()}/>
-          </button>
+          {/* Category */}
+          <div className={`nc-SectionGridCategoryBox relative`}>
+            <Heading
+              desc="Discover over 100 Articles"
+              className="inline-flex items-center mb-10 headCategory"
+            >
+              Instruments
+            </Heading>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6 md:gap-8">
+              {categories.map((item, index) => (
+                <Link
+                  to={`/mi/archive/the-demo-archive-slug?category=${item}`}
+                  className="inline-flex items-center"
+                  onClick={() => {
+                    filterCatgory(item);
+                  }}
+                >
+                  <CardCategory
+                    key={index}
+                    category={item}
+                    products={products}
+                  />
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
+      {/* Marque */}
       <div
         ref={myRef}
         className="container py-16 lg:py-10 space-y-16 lg:space-y-28"
@@ -251,11 +319,10 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
                 contentExtraClass="max-w-screen-md"
                 triggerText={
                   <span
-                    className="hidden sm:inline"
                     onClick={() => openModal()}
+                    className="hidden sm:inline"
                   >
                     Marques
-                    {/* <button onClick={() => openModal()}>Marques</button> */}
                   </span>
                 }
                 modalTitle="Discover other tags"
@@ -264,6 +331,8 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               {/* <button onClick={() => filterMarque()}><ModalMarque /></button> */}
               <Modalcart />
             </div>
+            {/*  */}
+            {/* Label */}
             <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>
             <div className="flex justify-end">
               {/* <ArchiveFilterListBox lists={FILTERS} /> */}
@@ -317,7 +386,8 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               </React.Fragment>
             </div>
           </div>
-
+          {/*  */}
+          {/* Price */}
           <div
             style={{
               margin: "auto",
@@ -333,49 +403,44 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
             />
             Your range of Price is between {min}$ and {max}$
           </div>
-		<ButtonPrimary onClick={() => getAllProduct()}>
-            Show All Porducts
-          </ButtonPrimary>
-          {/* <div className="search">
-        <input
-          id="outlined-basic"
-          type="search"
-          onChange={inputHandler}
-          placeholder="Search By Label"
-        />
-        </div> */}
 
+          {/* <Link 
+          to ={`/mi/archive/the-demo-archive-slug`}> */}
+          <div className="flex justify-between">
+            <ButtonPrimary onClick={() => getAllProduct()}>
+              Show All Porducts
+            </ButtonPrimary>
+            <div className="radio-buttons">
+              New
+              <input
+                id="mac"
+                value="new"
+                name="platform"
+                type="radio"
+                onChange={() => getNewProducts()}
+              />
+              / Used
+              <input
+                id="linux"
+                value="used"
+                name="platform"
+                type="radio"
+                onChange={() => getUsedProducts()}
+              />
+            </div>
+            {/* <ButtonPrimary disabled={filter.valid}>Filter</ButtonPrimary> */}
+          </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
             {products.map((product) => (
               <Card11Product key={product._id} product={product} />
             ))}
           </div>
-
-          {/* <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
-            {products.map((product) => (
-              <Card11Product key={product._id} product={product} />
-            ))}
-          </div> */}
           {/* PAGINATIONS */}
           <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
             <Pagination />
             <ButtonPrimary>Show me more</ButtonPrimary>
           </div>
         </div>
-
-        {/* MORE SECTIONS */}
-        {/* === SECTION 5 === */}
-        {/* <div className="relative py-16">
-          <BackgroundSection /> */}
-        {/* <SectionGridCategoryBox
-            categories={DEMO_CATEGORIES.filter((_, i) => i < 10)}
-          /> */}
-        {/* <SectionGridCategory/>
-          <div className="text-center mx-auto mt-10 md:mt-16">
-            <ButtonSecondary>Show me more</ButtonSecondary>
-          </div>
-        </div> */}
-
         {/* === SECTION 5 === */}
         <hr />
         <SellersSlider

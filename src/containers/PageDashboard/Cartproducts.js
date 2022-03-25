@@ -150,7 +150,7 @@ const Cartproducts = () => {
       <div className="relative h-auto inline-flex items-center justify-center">
         Total {calculTot(carteitems)}
       </div>
-      <ButtonPrimary href="/archive/the-demo-archive-slug">
+      <ButtonPrimary href="/mi/archive/the-demo-archive-slug">
         Shop More
       </ButtonPrimary>
       {/* <Pagination /> */}

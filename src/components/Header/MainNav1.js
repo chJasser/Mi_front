@@ -9,6 +9,7 @@ import NcImage from "components/NcImage/NcImage";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { isAuthenticated, logoutUser } from "app/slices/userSlice";
+import {deslecetsellerproducts}from "app/productslice/Productsliceseller";
 import { useAppDispatch } from "app/hooks";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Badge from "@material-ui/core/Badge";
@@ -82,7 +83,12 @@ const MainNav1 = ({ isTop }) => {
 
             <div className="px-1" />
             {isAuth ? (
-              <ButtonPrimary onClick={() => dispatch(logoutUser())}>
+              <ButtonPrimary onClick={() =>{dispatch(logoutUser())
+
+                dispatch(deslecetsellerproducts());
+              }
+              
+              }>
                 Logout
               </ButtonPrimary>
             ) : (
