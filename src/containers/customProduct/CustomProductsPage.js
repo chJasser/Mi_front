@@ -1,27 +1,13 @@
-import ButtonPrimary from "components/Button/ButtonPrimary";
-import React from "react";
-import { Helmet } from "react-helmet";
-import CustomProduct from "./CustomProduct";
+import { useState, Suspense } from "react";
+import { ContactShadows, Environment, OrbitControls } from "@react-three/drei";
 
-const CustomProductsPage = () => (
-  <div className="nc-Page404">
-    <Helmet>
-      <title>Custom Product || MI Universe</title>
-    </Helmet>
-    <div className="container relative py-16 lg:py-20">
-      {/* HEADER */}
-      <header className="text-center max-w-2xl mx-auto space-y-7">
-        <h2 className="text-7xl md:text-8xl">🪔</h2>
-        <h1 className="text-8xl md:text-9xl font-semibold tracking-widest">
-          Our Custom products
-        </h1>
-        <CustomProduct></CustomProduct>
-        <ButtonPrimary href="/" className="mt-4">
-          Return Home Page
-        </ButtonPrimary>
-      </header>
+import "./styles.css";
+import Example from "./CustomProductContainer";
+const CustomProductsPage = () => {
+  return (
+    <div className="">
+      <Example></Example>
     </div>
-  </div>
-);
-
+  );
+};
 export default CustomProductsPage;
