@@ -13,6 +13,7 @@ import { removeLike, addNewLike } from "app/productLikes/productLikes";
 import ProductComment from "components/CommentCard/ProductComment";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import ButtonSecondary from "components/Button/ButtonSecondary";
+
 import NcImage from "components/NcImage/NcImage";
 import ModalPhotos from "./ModalPhotos";
 
@@ -225,7 +226,12 @@ function PageSingleProduct() {
                   className="object-cover w-full h-full"
                 />
                 <div className="absolute inset-0 bg-black text-white bg-opacity-30 flex flex-col items-center justify-center">
-                  <Badge className="" name={category} />
+                  <div className="flex justify-between">
+                    <Badge className="" name={category} />
+                    <ButtonPrimary href="/mi/archive/the-demo-archive-slug">
+                      Exit
+                    </ButtonPrimary>
+                  </div>
                   <h2 className="inline-block align-middle ml-3 text-5xl font-semibold md:text-7xl ">
                     {product.label}
                   </h2>
@@ -415,6 +421,7 @@ function PageSingleProduct() {
               </div>
             </div>
           </div>
+          
         </header>
         {/* MODAL PHOTOS */}
         <ModalPhotosProd

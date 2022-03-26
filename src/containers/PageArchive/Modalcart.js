@@ -1,8 +1,9 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { XIcon } from "@heroicons/react/outline";
-import { useSelector } from "react-redux";
+import { Fragment, useState } from 'react'
+import { Dialog, Transition } from '@headlessui/react'
+import { XIcon } from '@heroicons/react/outline'
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const products = [
   {
@@ -139,21 +140,24 @@ export default function Example() {
                       Shipping and taxes calculated at checkout.
                     </p>
                     <div className="mt-6">
-                      <button className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+                      {/* <a
+                        href="#"
+                        className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                      >
                         Checkout
-                      </button>
+                      </a> */}
                     </div>
                     <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                       <p>
-                        or{" "}
-                        <button
+                        or{' '}
+                        <Link
+                          to = "http://localhost:3000/mi/archive/the-demo-archive-slug"
                           type="button"
                           className="font-medium text-indigo-600 hover:text-indigo-500"
                           onClick={() => setOpen(false)}
                         >
-                          Continue Shopping
-                          <span aria-hidden="true"> &rarr;</span>
-                        </button>
+                          Continue Shopping<span aria-hidden="true"> &rarr;</span>
+                        </Link>
                       </p>
                     </div>
                   </div>

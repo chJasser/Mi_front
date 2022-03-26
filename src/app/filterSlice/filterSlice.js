@@ -19,7 +19,6 @@ export const filterSlice = createSlice({
     filterByCategory: (state, action) => {
       state.category = action.payload;
     },
-
   },
 });
 
