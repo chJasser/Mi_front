@@ -9,6 +9,7 @@ import NcImage from "components/NcImage/NcImage";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { isAuthenticated, logoutUser } from "app/slices/userSlice";
+import {deslecetsellerproducts}from "app/productslice/Productsliceseller";
 import { useAppDispatch } from "app/hooks";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Badge from "@material-ui/core/Badge";
@@ -60,19 +61,16 @@ const MainNav1 = ({ isTop }) => {
           <div className="hidden items-center xl:flex space-x-1">
             <DarkModeContainer />
             <div className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
-              {open === true ? (
-                <button onClick={() => setOpen(false)}>
-                  <Badge color="secondary" badgeContent={cart.length}>
-                    <ShoppingCartIcon />{" "}
-                  </Badge>
-                </button>
-              ) : (
-                <button onClick={() => setOpen(true)}>
-                  <Badge color="secondary" badgeContent={cart.length}>
-                    <ShoppingCartIcon />{" "}
-                  </Badge>
-                </button>
-              )}
+              <button
+                onClick={() => {
+                  if (!open) setOpen(true);
+                  else if (open) setOpen(false);
+                }}
+              >
+                <Badge color="secondary" badgeContent={cart.length}>
+                  <ShoppingCartIcon />{" "}
+                </Badge>
+              </button>
             </div>
             <div className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
               <Link to="/back-office/dashboard">
@@ -85,7 +83,12 @@ const MainNav1 = ({ isTop }) => {
 
             <div className="px-1" />
             {isAuth ? (
-              <ButtonPrimary onClick={() => dispatch(logoutUser())}>
+              <ButtonPrimary onClick={() =>{dispatch(logoutUser())
+
+                dispatch(deslecetsellerproducts());
+              }
+              
+              }>
                 Logout
               </ButtonPrimary>
             ) : (

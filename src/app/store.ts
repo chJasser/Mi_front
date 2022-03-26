@@ -23,6 +23,7 @@ const persistConfig = {
     "darkmode",
     "user",
     "product",
+    "productseller",
     "carteslics",
     "productLikes",
     "productReviews",

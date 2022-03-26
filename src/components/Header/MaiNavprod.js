@@ -17,6 +17,7 @@ const MaiNnavprod = ({ isTop }) => {
   const isAuth = useSelector(isAuthenticated);
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.carteslics.cartItems);
+
   console.log(cart);
   return (
     <div
