@@ -12,11 +12,11 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import makeAnimated from "react-select/animated";
 import Select from "react-select";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCurrentTeacher, login } from "app/slices/userSlice";
 import { useHistory } from "react-router-dom";
 
-const Addproducts = () => {
+const UpdateProduct = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState(null);
@@ -41,10 +41,14 @@ const Addproducts = () => {
     type: Yup.string().required("Type are required"),
   });
 
-  const [selectedOptiontype, setSelectedOptiontype] = useState([]);
-  const [selectedOptioncategory, setSelectedOptincategory] = useState([]);
-  const [selectedOptionmarque, setSelectedOptionmarque] = useState([]);
-  const [selectedOptionstate, setSelectedOptionstate] = useState([]);
+  const product = useSelector((state) => state.productseller.selectedProduct);
+  console.log(product)
+  console.log(productImage);
+
+  const [selectedOptiontype, setSelectedOptiontype] = useState(product.type);
+  const [selectedOptioncategory, setSelectedOptincategory] = useState(product.category);
+  const [selectedOptionmarque, setSelectedOptionmarque] = useState(product.marque);
+  const [selectedOptionstate, setSelectedOptionstate] = useState(product.state);
   const animatedComponents = makeAnimated();
   const handleInputChangetype = (selectedOptiontype) => {
     setSelectedOptiontype(selectedOptiontype);
@@ -96,22 +100,29 @@ const Addproducts = () => {
     formData.append("reference", values.reference);
     formData.append("price", values.price);
 
-    formData.append("category", selectedOptioncategory.value);
-    formData.append("marque", selectedOptionmarque.value);
-    formData.append("type", selectedOptiontype.value);
-    formData.append("state", selectedOptionstate.value);
-    for (const key of Object.keys(productImage)) {
-      formData.append("files", productImage[key]);
+    formData.append("category", (selectedOptioncategory.value)?selectedOptioncategory.value:product.category);
+    formData.append("marque", (selectedOptionmarque.value)?selectedOptionmarque.value:product.marque);
+    formData.append("type", (selectedOptiontype.value)?selectedOptiontype.value:product.type);
+    formData.append("state", (selectedOptionstate.value)?selectedOptionstate.value:product.state);
+    for (const key of Object.keys((productImage)?productImage:productImage.FileList.name = product.productImage)) {
+        console.log(productImage)
+        console.log(product.productImage)
+      formData.append("files", (productImage[key])?productImage[key]:product.productImage[key]);
+      console.log(productImage[key])
+      console.log(product.productImage[key])
     }
     console.log(values);
-    console.log(selectedOptioncategory.value);
-    console.log(selectedOptionstate.value);
+    console.log(selectedOptioncategory);
+    console.log(selectedOptionstate);
+    console.log(selectedOptiontype);
+    console.log(selectedOptionmarque);
     const response = await axios
-      .post("/products/add-product", formData)
+      .put(`/products/update-product/${product._id}`, formData)
       .catch((err) => {
         if (err && err.response) {
           setErrors(err.response.data.message);
           setSuccess(null);
+          console.log(err);
         }
       });
     if (response && response.data) {
@@ -126,12 +137,17 @@ const Addproducts = () => {
     <div className="rounded-xl md:border md:border-neutral-100 dark:border-neutral-800 md:p-6">
       <Formik
         initialValues={{
-          label: "",
-          price: "",
-          reference: "",
-          description: "",
-          productImage: [],
+          label: product.label,
+          price: product.price,
+          reference: product.reference,
+          description: product.description,
+          state: product.state,
+          type: product.type,
+          marque: product.marque,
+          category: product.category,
+          productImage: product.productImage[0],
         }}
+        validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
         {({
@@ -151,8 +167,8 @@ const Addproducts = () => {
                 name="label"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.label}
-                placeholder="Example Doe"
+                //value={product.label}
+                placeholder={product.label}
                 type="text"
                 className="mt-1"
               />
@@ -169,7 +185,8 @@ const Addproducts = () => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.price}
+                //value={product.price}
+                placeholder={product.price}
                 className="mt-1"
               />
             </label>
@@ -185,7 +202,8 @@ const Addproducts = () => {
                 className="mt-1"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.reference}
+                //value={product.reference}
+                placeholder={product.reference}
               />
             </label>
             {touched.reference && errors.reference ? (
@@ -199,7 +217,8 @@ const Addproducts = () => {
                 className="mt-1"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.description}
+                //value={product.description}
+                placeholder={product.description}
                 rows={6}
               />
             </label>
@@ -215,6 +234,7 @@ const Addproducts = () => {
                 onChange={handleInputChangecategory}
                 components={animatedComponents}
                 options={optionscategory}
+                placeholder={product.category}
               />
             </label>
             {touched.category && errors.category ? (
@@ -230,6 +250,7 @@ const Addproducts = () => {
                 onChange={handleInputChangemarque}
                 components={animatedComponents}
                 options={optionsmarque}
+                placeholder={product.marque}
               />
             </label>
             {touched.marque && errors.marque ? (
@@ -244,6 +265,7 @@ const Addproducts = () => {
                 onChange={handleInputChangetype}
                 components={animatedComponents}
                 options={optionstype}
+                placeholder={product.type}
               />
             </label>
             {touched.type && errors.type ? (
@@ -258,6 +280,7 @@ const Addproducts = () => {
                 onChange={handleInputChangestate}
                 components={animatedComponents}
                 options={optionsstate}
+                placeholder={product.state}
               />
             </label>
             {touched.state && errors.state ? (
@@ -271,17 +294,18 @@ const Addproducts = () => {
               className="mt-1 form-control form-control-sm"
               style={{ border: "1px solid #D1D1D1" }}
               onChange={(event) => {
-                setFieldValue("productImage", event.currentTarget.files);
-                setimagesfiles(event.target.files);
+                setFieldValue("productImage", (event.currentTarget.files)?event.currentTarget.files:product.productImage);
+                setimagesfiles((event.target.files)?event.target.files:product.productImage);
               }}
               multiple
+              //value={product.productImage}
             />
             {touched.productImage && errors.productImage ? (
               <Alert severity="error">{errors.productImage}</Alert>
             ) : null}
 
             <ButtonPrimary className="md:col-span-2" type="submit">
-              Add product
+              Update product
             </ButtonPrimary>
           </form>
         )}
@@ -290,4 +314,4 @@ const Addproducts = () => {
   );
 };
 
-export default Addproducts;
+export default UpdateProduct;

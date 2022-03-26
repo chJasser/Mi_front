@@ -1,4 +1,3 @@
-
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import ButtonSecondary from "components/Button/ButtonSecondary";
 import ButtonThird from "components/Button/ButtonThird";
@@ -6,22 +5,29 @@ import React, { useEffect, useState } from "react";
 import axios from "axiosInstance";
 import PropTypes from "prop-types";
 import ProductManagement from "components/Dropdowns/ProductMangement";
-import{deletesellerProduct,addProduct,selectsellerProduct,populatesellerProducts}from "app/productslice/Productsliceseller";
+import {
+  deletesellerProduct,
+  addProduct,
+  selectsellerProduct,
+  populatesellerProducts,
+} from "app/productslice/Productsliceseller";
 import { useDispatch, useSelector } from "react-redux";
 import Cardproducts from "./Cardproducts";
+import UpdateProduct from "containers/PageDashboard/UpdateProduct";
 function TableOfProducts({ color }) {
-  const  [products,setproducts]=useState([]);
-  const openn = useSelector((state)=>state.product.open);
-  const[open,setopen]=useState(openn);
-  const dispatch= useDispatch();
-const  products1= useSelector((state)=>state.productseller.products);
-    const base_url = "http://localhost:5050/";
-    useEffect(()=>{axios.get("/products/getproductsseller").then((res)=>{
-        // console.log(res.data);
-        dispatch(populatesellerProducts(res.data))
-         setproducts(res.data);
-     })}
-     ,[])
+  const [products, setproducts] = useState([]);
+  const openn = useSelector((state) => state.product.open);
+  const [open, setopen] = useState(openn);
+  const dispatch = useDispatch();
+  const products1 = useSelector((state) => state.productseller.products);
+  const base_url = "http://localhost:5050/";
+  useEffect(() => {
+    axios.get("/products/getproductsseller").then((res) => {
+      // console.log(res.data);
+      dispatch(populatesellerProducts(res.data));
+      setproducts(res.data);
+    });
+  }, []);
   return (
     <>
       <div
@@ -50,7 +56,7 @@ const  products1= useSelector((state)=>state.productseller.products);
             <thead>
               <tr>
                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Product
+                  Product
                 </th>
                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Category
@@ -61,10 +67,9 @@ const  products1= useSelector((state)=>state.productseller.products);
                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   state
                 </th>
-               {/*<th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                {/*<th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Status
-            </th>*/} 
-               
+            </th>*/}
               </tr>
             </thead>
             <tbody>
@@ -117,7 +122,7 @@ const  products1= useSelector((state)=>state.productseller.products);
                     )}
                     </td>*/}
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                  <ProductManagement product={product} id={product._id} />
+                    <ProductManagement product={product} id={product._id} />
                   </td>
                 </tr>
               ))}
@@ -125,22 +130,25 @@ const  products1= useSelector((state)=>state.productseller.products);
           </table>
         </div>
       </div>
-      <ButtonPrimary onClick={()=>{
-        if(open)
-        
-        setopen(false)
-        else
-        setopen(true)}}>AddProduct</ButtonPrimary>
-      {open&&(<Cardproducts open={open} />)}
-      
+      <ButtonPrimary
+        onClick={() => {
+          if (open) setopen(false);
+          else setopen(true);
+        }}
+      >
+        AddProduct
+      </ButtonPrimary>
+      {open && <Cardproducts open={open} />}
+
+      <UpdateProduct />
     </>
   );
 }
 TableOfProducts.defaultProps = {
-    color: "light",
-  };
-  
-  TableOfProducts.propTypes = {
-    color: PropTypes.oneOf(["light", "dark"]),
-  };
+  color: "light",
+};
+
+TableOfProducts.propTypes = {
+  color: PropTypes.oneOf(["light", "dark"]),
+};
 export default TableOfProducts;
