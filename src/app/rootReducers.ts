@@ -12,8 +12,8 @@ import productLikeSlice from "../app/productLikes/productLikes";
 import productReviewsSlice from "./productReviews/productReviews";
 import UsersSlice from "./usersSlice/adminSlice";
 import filterSlice from "./filterSlice/filterSlice";
-import RecSlice from "./reclamations/recSlice";
 import Productsliceseller from "./productslice/Productsliceseller";
+import RecSlice from "./reclamations/recSlice";
 
 const rootReducers = {
   bookmark: bookmarkReducer,
