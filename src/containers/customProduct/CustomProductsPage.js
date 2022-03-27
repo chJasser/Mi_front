@@ -6,7 +6,7 @@ import Example from "./CustomProductContainer";
 const CustomProductsPage = () => {
   return (
     <div className="">
-      <Example></Example>
+      <Example></Example> 
     </div>
   );
 };
