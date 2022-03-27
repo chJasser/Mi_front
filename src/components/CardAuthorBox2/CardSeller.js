@@ -42,7 +42,7 @@ const CardSeller = ({ className = "", seller, id, author }) => {
 
   const getUser = () => {
     axios
-      .get(`/users/${seller.user}`)
+      .get(`/users/get-by-id/${seller.user}`)
       .then((s) => setSel(s.data))
       .catch((err) => console.log(err.message));
   };

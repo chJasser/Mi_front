@@ -244,6 +244,16 @@ const archviePageChildrenMenus: NavItemType[] = [
   },
   {
     id: ncNanoId(),
+    href: "/mi/custom",
+    name: "Custom Products Page",
+  },
+  {
+    id: ncNanoId(),
+    href: "/mi/saved-products",
+    name: "Saved Products",
+  },
+  {
+    id: ncNanoId(),
     href: "/mi/search",
     name: "Search Page",
     type: "dropdown",

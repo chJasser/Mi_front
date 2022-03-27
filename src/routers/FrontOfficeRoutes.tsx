@@ -53,6 +53,7 @@ import BecomeStudentRoute from "./privateRoutes/BecomeStudentRoute";
 import CustomProductsPage from "containers/customProduct/CustomProductsPage";
 import ProfileSeller from "containers/PageAuthor/ProfileSeller";
 import PageContactMi from "containers/PageContact/PageContactMi";
+import PageFavorite from "containers/PageArchive/PageFavorite";
 
 export const pages: Page[] = [
   { path: "/mi", exact: true, component: PageHome },
@@ -60,6 +61,7 @@ export const pages: Page[] = [
   { path: "/mi/archive/:slug", component: PageArchive },
   { path: "/mi/archive-video/:slug", component: PageArchiveVideo },
   { path: "/mi/archive-audio/:slug", component: PageArchiveAudio },
+  { path: "/mi/saved-products", component: PageFavorite },
   //
   // { path: "/mi/author/:slug", component: PageAuthor },
 

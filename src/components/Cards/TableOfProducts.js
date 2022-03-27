@@ -13,7 +13,7 @@ import {
 } from "app/productslice/Productsliceseller";
 import { useDispatch, useSelector } from "react-redux";
 import Cardproducts from "./Cardproducts";
-import UpdateProduct from "containers/PageDashboard/UpdateProduct";
+import UpdateProduct from "../../containers/PageDashboard/updateProduct";
 function TableOfProducts({ color }) {
   const [products, setproducts] = useState([]);
   const openn = useSelector((state) => state.product.open);

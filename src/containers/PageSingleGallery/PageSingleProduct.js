@@ -13,10 +13,13 @@ import { removeLike, addNewLike } from "app/productLikes/productLikes";
 import ProductComment from "components/CommentCard/ProductComment";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import ButtonSecondary from "components/Button/ButtonSecondary";
-
+import ProductCardLikeAndComment from "components/PostCardLikeAndComment/ProductCardLikeAndComment";
+import {
+  getLikedProducts,
+  getBookmarkedProducts,
+} from "app/productLikes/productLikes";
 import NcImage from "components/NcImage/NcImage";
 import ModalPhotos from "./ModalPhotos";
-
 
 import {
   getProductUser,
@@ -57,6 +60,10 @@ function PageSingleProduct() {
    */
   const [product, setProduct] = useState({});
   const prod = useSelector((state) => state.product.selectedProduct);
+  const produ = useSelector((state) => state.product.selectedProduct);
+  const likedProd = useSelector(
+    (state) => state.productLikes.likedProducts
+  ).find((prod) => prod._id === produ._id);
   /**
    *
    */
@@ -79,6 +86,7 @@ function PageSingleProduct() {
 
   useEffect(() => {
     setrating(rat - 1);
+    console.log(likedProd);
   }, []);
 
   const Onmouseenter = (index) => {
@@ -171,6 +179,7 @@ function PageSingleProduct() {
     setProduct(prod);
     getProductReviewsFun(prod);
     getSellerOfTheProduct();
+    console.log(product);
   }, [dispatch]);
   const handleOpenModal = (index) => {
     setIsOpen(true);
@@ -228,10 +237,8 @@ function PageSingleProduct() {
                 <div className="absolute inset-0 bg-black text-white bg-opacity-30 flex flex-col items-center justify-center">
                   <div className="flex justify-between">
                     <Badge className="" name={category} />
-                    <ButtonPrimary href="/mi/archive/the-demo-archive-slug">
-                      Exit
-                    </ButtonPrimary>
                   </div>
+
                   <h2 className="inline-block align-middle ml-3 text-5xl font-semibold md:text-7xl ">
                     {product.label}
                   </h2>
@@ -242,6 +249,9 @@ function PageSingleProduct() {
                     </h4>
                   )}
                 </div>
+                <ButtonPrimary href="/mi/archive/the-demo-archive-slug">
+                  return
+                </ButtonPrimary>
               </div>
             </div>
 
@@ -310,8 +320,9 @@ function PageSingleProduct() {
                   </div>
                 ))}
               </div>
+              {/* <ProductCardLikeAndComment className="relative" postData={prod} /> */}
 
-              <div
+              {/* <div
                 className={`nc-PostCardLikeAndComment flex items-center space-x-2 ${className}`}
                 data-nc-id="PostCardLikeAndComment"
               >
@@ -349,10 +360,10 @@ function PageSingleProduct() {
                         : "text-neutral-900 dark:text-neutral-200"
                     }`}
                   >
-                    {convertNumbThousand(product.likesCount)}
+                    {product.likesCount}
                   </span>
                 </button>
-              </div>
+              </div> */}
               <ButtonPrimary
                 onClick={() => addrate(rate)}
                 href="/archive/the-demo-archive-slug"
@@ -367,7 +378,7 @@ function PageSingleProduct() {
                 onClick={() => handleOpenModal(0)}
               >
                 <NcImage
-                  containerClassName="absolute inset-0"
+                  containerClassName="aspect-w-6 aspect-h-8"
                   className="object-cover w-full h-full rounded-xl"
                   src={base_url + prod.productImage[0]}
                 />
@@ -421,7 +432,6 @@ function PageSingleProduct() {
               </div>
             </div>
           </div>
-          
         </header>
         {/* MODAL PHOTOS */}
         <ModalPhotosProd
