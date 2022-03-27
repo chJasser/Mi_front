@@ -15,6 +15,7 @@ import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentTeacher, login } from "app/slices/userSlice";
 import { useHistory } from "react-router-dom";
+import { showForm } from "app/productslice/Productsliceseller";
 
 const UpdateProduct = () => {
   const dispatch = useDispatch();
@@ -118,6 +119,7 @@ const UpdateProduct = () => {
     console.log(selectedOptionmarque);
     const response = await axios
       .put(`/products/update-product/${product._id}`, formData)
+      .then(() => dispatch(showForm(false)))
       .catch((err) => {
         if (err && err.response) {
           setErrors(err.response.data.message);
@@ -304,7 +306,8 @@ const UpdateProduct = () => {
               <Alert severity="error">{errors.productImage}</Alert>
             ) : null}
 
-            <ButtonPrimary className="md:col-span-2" type="submit">
+            <ButtonPrimary className="md:col-span-2" type="submit"
+            >
               Update product
             </ButtonPrimary>
           </form>

@@ -20,6 +20,8 @@ function TableOfProducts({ color }) {
   const [open, setopen] = useState(openn);
   const dispatch = useDispatch();
   const products1 = useSelector((state) => state.productseller.products);
+  const show = useSelector((state) => state.productseller.show);
+  console.log(show)
   const base_url = "http://localhost:5050/";
   useEffect(() => {
     axios.get("/products/getproductsseller").then((res) => {
@@ -140,7 +142,7 @@ function TableOfProducts({ color }) {
       </ButtonPrimary>
       {open && <Cardproducts open={open} />}
 
-      <UpdateProduct />
+      {(show) ? <UpdateProduct /> : ""}
     </>
   );
 }

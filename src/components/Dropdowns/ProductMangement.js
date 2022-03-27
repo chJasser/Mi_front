@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { createPopper } from "@popperjs/core";
 import axios from "axiosInstance";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import{deletesellerProduct,addProduct,selectsellerProduct,populatesellerProducts}from "app/productslice/Productsliceseller"
+import{deletesellerProduct,addProduct,selectsellerProduct,populatesellerProducts,showForm}from "app/productslice/Productsliceseller"
 
 const ProductManagement = (props) => {
   const [onDeleted, setOnDeleted] = useState(false);
@@ -34,7 +34,7 @@ const ProductManagement = (props) => {
   const handleupdateproduct=()=>{
       dispatch(selectsellerProduct(product));
       closeDropdownPopover();
-
+      dispatch(showForm(true));
   }
   
   return (
