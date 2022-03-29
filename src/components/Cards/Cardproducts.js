@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
 import { selectopen } from "app/productslice/Productslice";
+import { addProduct } from "app/productslice/Productsliceseller";
 // import { format } from 'date-fns';
 // components
 
@@ -93,7 +94,7 @@ export default function Cardproducts() {
     { value: 'used', label: 'used' }
   ]
      
-  const onSubmit = async (values) => {
+  const onSubmit = async (values,{resetForm}) => {
   
     var formData = new FormData();
     formData.append("label", values.label);
@@ -115,16 +116,21 @@ export default function Cardproducts() {
     console.log(selectedOptionmarque.value);
     const response = await axios.post("/products/add-product", formData).catch((err) => {
       if (err && err.response) {
+
         setErrors(err.response.data.message);
         setSuccess(null);
         console.log(err);
       }
     });
     if (response && response.data) {
+     // onSubmitProps.resetForm();
+     resetForm();
+      dispatch(addProduct(response.data.products));
+      dispatch(selectopen(false));
       setErrors(null);
       setSuccess(response.data.message);
+     
       
-      history.push("/back-office/productstable");
     }
     }
     
@@ -178,7 +184,7 @@ export default function Cardproducts() {
               name="label"
               onChange={handleChange}
                       onBlur={handleBlur}
-                      value={values.label} placeholder="Example Doe" type="text" 
+                      value={values.label} type="text" 
               className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
              
               
@@ -399,7 +405,7 @@ export default function Cardproducts() {
           </div>
         </div>
       </div>
-      <ButtonPrimary onClick={()=>{dispatch(selectopen(false))}} type="submit">Save</ButtonPrimary>
+      <ButtonPrimary  type="submit">Save</ButtonPrimary>
     </form>
 
 

@@ -13,8 +13,8 @@ import {
 } from "app/productslice/Productsliceseller";
 import { useDispatch, useSelector } from "react-redux";
 import Cardproducts from "./Cardproducts";
-import UpdateProduct from "containers/PageDashboard/UpdateProduct";
-function TableOfProducts({ color }) {
+import UpdateProduct from "../../containers/PageDashboard/updateProduct";
+function TableOfProducts({ color , prod }) {
   const [products, setproducts] = useState([]);
   const openn = useSelector((state) => state.product.open);
   const [open, setopen] = useState(openn);
@@ -24,7 +24,7 @@ function TableOfProducts({ color }) {
   useEffect(() => {
     axios.get("/products/getproductsseller").then((res) => {
       // console.log(res.data);
-      dispatch(populatesellerProducts(res.data));
+      //dispatch(populatesellerProducts(res.data));
       setproducts(res.data);
     });
   }, []);
@@ -67,13 +67,11 @@ function TableOfProducts({ color }) {
                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   state
                 </th>
-                {/*<th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                  Status
-            </th>*/}
+                
               </tr>
             </thead>
             <tbody>
-              {products1.map((product) => (
+              {prod.map((product) => (
                 <tr key={product._id}>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                     <div className="flex items-center">
@@ -106,21 +104,7 @@ function TableOfProducts({ color }) {
                       {product.state}
                     </p>
                   </td>
-                  {/*<td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    {!user.isBlocked ? (
-                      <div className="">
-                        <i className="fas fa-circle  mr-2"></i>
-                        <span className="text-blue-600 text-primary-500">
-                          active
-                        </span>
-                      </div>
-                    ) : (
-                      <div className="">
-                        <i className="fas fa-circle text-red-100 mr-2"></i>
-                        <span className="text-blue-600">blocked</span>
-                      </div>
-                    )}
-                    </td>*/}
+                  
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
                     <ProductManagement product={product} id={product._id} />
                   </td>
@@ -130,17 +114,7 @@ function TableOfProducts({ color }) {
           </table>
         </div>
       </div>
-      <ButtonPrimary
-        onClick={() => {
-          if (open) setopen(false);
-          else setopen(true);
-        }}
-      >
-        AddProduct
-      </ButtonPrimary>
-      {open && <Cardproducts open={open} />}
-
-      <UpdateProduct />
+     
     </>
   );
 }

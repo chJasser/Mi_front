@@ -4,7 +4,7 @@ let initialState = {
   products: [],
   selectedProduct: {},
   loading: true,
-  open:true,
+  open:false,
   errors: "",
 };
 
