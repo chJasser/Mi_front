@@ -7,32 +7,33 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import axios from "../../axiosInstance";
+import TacherCardSettings from "./TacherCardSettings";
 // import { format } from 'date-fns';
 // components
 
 export default function CardSettings() {
   const [errors, setErrors] = useState(null);
   const [success, setSuccess] = useState(null);
-  const currentUser = useSelector((state) => state.user.userLogedIn);
+  var currentUser = useSelector((state) => state.user.userLogedIn);
   const dispatch = useDispatch();
   const UpdateProfile = () => {
     const validationSchema = Yup.object({
       firstName: Yup.string()
         .required("First name is required")
         .min(4, "First name must contain at least 6 characters")
-        .max(15, "Password must contain at most 15 characters"),
+        .max(15, "First name must contain at most 15 characters"),
       userName: Yup.string()
         .required("Username name is required")
-        .min(3, "First name must contain at least 3 characters"),
+        .min(3, "Username must contain at least 3 characters"),
 
       phoneNumber: Yup.number().required("Phone number is required"),
 
       birthDate: Yup.date().required("Required").nullable(),
 
       lastName: Yup.string()
-        .required("First name is required")
-        .min(4, "First name must contain at least 6 characters")
-        .max(15, "Password must contain at most 15 characters"),
+        .required("Last name is required")
+        .min(4, "Last name must contain at least 6 characters")
+        .max(15, "Last name must contain at most 15 characters"),
       email: Yup.string()
         .email("Invalid email address")
         .required("Email is required"),
@@ -54,7 +55,7 @@ export default function CardSettings() {
       if (values.password !== "") {
         user.password = values.password;
       }
-      
+
 
       const response = await axios
         .put(`/users/updateprofile/${currentUser._id}`, user)
@@ -65,18 +66,20 @@ export default function CardSettings() {
           }
         });
       if (response && response.data) {
+        dispatch(setUserLogedIn())
         setErrors(null);
         setSuccess(response.data.message);
+        currentUser = user;
+        currentUser.password = ""
+        const timer = setTimeout(() => {
+          setSuccess(null);
+        }, 2000);
+        return () => clearTimeout(timer);
 
-        dispatch(setUserLogedIn());
-        formik.resetForm();
-        setTimeout(() => {
-          window.location.reload();
-        }, 100);
       }
     };
-    let text = currentUser.address;
-    const myArray = text.split("-");
+    let text = currentUser.address !== undefined ? currentUser.address : ""
+    const myArray = text.split("-")
     const formik = useFormik({
       initialValues: {
         firstName: currentUser.firstName,
@@ -84,7 +87,7 @@ export default function CardSettings() {
         userName: currentUser.userName,
         email: currentUser.email,
         password: "",
-        birthDate: currentUser.birthDate.slice(0, 10),
+        birthDate: currentUser.birthDate !== undefined ? currentUser.birthDate.slice(0, 10) : "",
         address: currentUser.address,
         phoneNumber: currentUser.phoneNumber,
         aboutMe: currentUser.aboutMe,
@@ -144,6 +147,7 @@ export default function CardSettings() {
                   id="email"
                   name="email"
                   type="email"
+                  disabled={true}
                   placeholder="Email address"
                   className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   onChange={formik.handleChange}
@@ -401,26 +405,27 @@ export default function CardSettings() {
 
   return (
     <>
-      {currentUser && (
-        <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
-          <div className="rounded-t bg-white mb-0 px-6 py-6">
-            <div className="text-center flex justify-between">
-              <h6 className="text-blueGray-700 text-xl font-bold">
-                My account
-              </h6>
-              <button
-                className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                type="button"
-              >
-                Settings
-              </button>
-            </div>
-          </div>
-          <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-            <UpdateProfile />
+      {currentUser &&
+       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
+        <div className="rounded-t bg-white mb-0 px-6 py-6">
+          <div className="text-center flex justify-between">
+            <h6 className="text-blueGray-700 text-xl font-bold">My account</h6>
+            <button
+              className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+              type="button"
+            >
+              Settings
+            </button>
           </div>
         </div>
-      )}
+        <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
+          <UpdateProfile />
+        </div>
+
+      </div>
+      }
+      {/* <TacherCardSettings /> */}
+
     </>
   );
 }

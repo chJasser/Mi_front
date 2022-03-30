@@ -26,13 +26,13 @@ const UploadImage = (props) => {
                 } else {
                     alert("Failed to save the image in server");
                 }
-            });
+            }).catch((err) => { alert("Only png ,jpeg or jpg images are allowed !"); });
     };
 
     return (
         <div>
             <Dropzone
-                accept="image/*"
+                accept=".png, .jpg, .jpeg"
                 image={image}
                 onDrop={onDrop}
                 multiple={false}
