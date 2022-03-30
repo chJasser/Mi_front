@@ -105,12 +105,12 @@ function PageFavorite() {
                     <td className="px-6 py-4">{prod.price}</td>
                     <td className="px-6 py-4">{prod.reference}</td>
                     <td class="px-6 py-4 text-right">
-                      <a
+                      <button
                         href="#"
                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                       >
                         Edit
-                      </a>
+                      </button>
                     </td>
                   </tr>
                 ))}

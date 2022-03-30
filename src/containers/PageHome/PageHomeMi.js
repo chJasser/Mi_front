@@ -167,16 +167,16 @@ const PageHomeMi = () => {
           )}
 
           {/* === SECTION 5 === */}
-          {/* <SectionSliderNewCategories
+          <SectionSliderNewCategories
             className="py-16 lg:py-28"
             heading="Top trending topics"
             subHeading="Discover 233 topics"
             categories={DEMO_CATEGORIES.filter((_, i) => i < 10)}
             categoryCardType="card4"
-          /> */}
+          />
 
           {/* === SECTION 6 === */}
-          {/* <div className="relative py-16">
+          <div className="relative py-16">
             <BackgroundSection />
             <SectionSliderPosts
               postCardName="card9"
@@ -185,14 +185,14 @@ const PageHomeMi = () => {
               sliderStype="style2"
               posts={DEMO_POSTS_AUDIO.filter((_, i) => i > 3 && i < 10)}
             />
-          </div> */}
+          </div>
 
           {/* === SECTION 4 === */}
-          {/* <SectionMagazine1
+          <SectionMagazine1
             className="py-16 lg:py-28"
             posts={MAGAZINE1_POSTS}
             tabs={MAGAZINE1_TABS}
-          /> */}
+          />
 
           {/* === SECTION 3 === */}
           {/* <SectionAds /> */}
