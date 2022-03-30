@@ -32,13 +32,14 @@ const UserDropdown = () => {
         }}
       >
         <div className="items-center flex">
-          {img !== null ? (<span className="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
+          {console.log(img)}
+          {img !== undefined ? (<span className="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
             <img
               alt="..."
               style={{ height: "50px", width: "50px" }}
 
               className="w-full rounded-full align-middle border-none shadow-lg"
-              src={img !== null ? `http://localhost:5050/${img}` : ""}
+              src={img !== undefined ? `http://localhost:5050/${img}` : ""}
             />
           </span>) :
             (<span className="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full"></span>)}

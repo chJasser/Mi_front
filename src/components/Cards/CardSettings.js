@@ -406,7 +406,7 @@ export default function CardSettings() {
 
       </div>
       }
-      <TacherCardSettings />
+      {/* <TacherCardSettings /> */}
 
     </>
   );
