@@ -4,6 +4,7 @@ import React from "react";
 
 import CardTable from "components/Cards/CardTable.js";
 import TableOfProducts from "components/Cards/TableOfProducts";
+import ProductsContainer from "components/Cards/ProductsContainer";
 
 
 export default function Tablesproducts() {
@@ -11,7 +12,7 @@ export default function Tablesproducts() {
     <>
       <div className="flex flex-wrap mt-4">
         <div className="w-full mb-12 px-4">
-          <TableOfProducts color="light" />
+          <ProductsContainer color="light" />
         </div>
       </div>
     </>
