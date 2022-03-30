@@ -54,13 +54,16 @@ import PageAuthorV2 from "containers/PageAuthor/PageAuthorV2";
 import ProfileSeller from "containers/PageAuthor/ProfileSeller";
 import PageContactMi from "containers/PageContact/PageContactMi";
 import CustomProductsPage from "containers/customProduct/CustomProductsPage";
+import PageFavorite from "containers/PageArchive/PageFavorite";
+import PageHomeMi from "containers/PageHome/PageHomeMi";
 
 export const pages: Page[] = [
-  { path: "/mi", exact: true, component: PageHome },
+  { path: "/mi", exact: true, component: PageHomeMi },
   { path: "/mi#", exact: true, component: PageHome },
   { path: "/mi/archive/:slug", component: PageArchive },
   { path: "/mi/archive-video/:slug", component: PageArchiveVideo },
   { path: "/mi/archive-audio/:slug", component: PageArchiveAudio },
+  { path: "/mi/saved-products", component: PageFavorite },
   //
   // { path: "/mi/author/:slug", component: PageAuthor },
 

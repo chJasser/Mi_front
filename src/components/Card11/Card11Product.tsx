@@ -34,7 +34,6 @@ const Card11Product: FC<Card11Props> = ({
       .get(`products/getratingbyuser/${_id}`)
       .then((res) => {
         setrating(res.data.rate);
-        console.log(res);
       })
       .catch((err) => {
         console.log(err);
