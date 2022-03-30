@@ -147,7 +147,6 @@ export default function CardSettings() {
                   id="email"
                   name="email"
                   type="email"
-                  disabled={true}
                   placeholder="Email address"
                   className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   onChange={formik.handleChange}

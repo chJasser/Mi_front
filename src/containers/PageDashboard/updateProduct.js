@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCurrentTeacher, login } from "app/slices/userSlice";
 import { useHistory } from "react-router-dom";
 import { showForm } from "app/productslice/Productsliceseller";
+import NcModal from "components/NcModal/NcModal";
 
 const UpdateProduct = () => {
   const dispatch = useDispatch();
@@ -309,6 +310,11 @@ const UpdateProduct = () => {
             <ButtonPrimary className="md:col-span-2" type="submit"
             >
               Update product
+            </ButtonPrimary>
+            <ButtonPrimary className="md:col-span-2"
+            onClick={() => dispatch(showForm(false))}
+            >
+              Cancel
             </ButtonPrimary>
           </form>
         )}

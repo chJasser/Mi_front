@@ -52,8 +52,8 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   const myRef = useRef(null);
   const inputRef = React.createRef<HTMLInputElement>();
   const [value, setValue] = React.useState([0, 100]);
-  let min = value[0] * 100;
-  let max = value[1] * 100;
+  let min = value[0];
+  let max = value[1];
 
   const marques = [
     "yamaha",
@@ -400,6 +400,8 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               value={value}
               onChange={rangeSelector}
               valueLabelDisplay="auto"
+              min={0}
+              max={10000}
             />
             Your range of Price is between {min}$ and {max}$
           </div>

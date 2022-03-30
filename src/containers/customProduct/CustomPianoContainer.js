@@ -85,7 +85,7 @@ export default function Example2() {
         <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
           {product.name}
         </h1>
-        <div className="product-canvas mt-5">
+        <div className="product-canvas">
           <Canvas
             shadows
             dpr={[1, 2]}
