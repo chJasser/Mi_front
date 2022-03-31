@@ -13,7 +13,7 @@ function ProductComment(props) {
   const { profilePicture, userName, email } = user;
   useEffect(() => {
     axios
-      .get(`users/${review.user}`)
+      .get(`users/get-by-id/${review.user}`)
       .then((user) => {
         setUser(user.data);
       })

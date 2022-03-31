@@ -5,8 +5,8 @@ import CardProfile from "components/Cards/CardProfile.js";
 import { useDispatch } from "react-redux";
 export default function Settings() {
   return (
-    <>
-      <div className="flex flex-wrap">
+    <div className="mt-10">
+      <div className="flex  flex-wrap">
         <div className="w-full lg:w-8/12 px-4">
           <CardSettings />
         </div>
@@ -14,6 +14,6 @@ export default function Settings() {
           <CardProfile />
         </div>
       </div>
-    </>
+    </div>
   );
 }

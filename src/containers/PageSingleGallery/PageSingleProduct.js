@@ -188,24 +188,22 @@ function PageSingleProduct() {
 
   const handleCloseModal = () => setIsOpen(false);
   const [disabled, setDisabled] = useState(false);
-  const onClickSubmit = (e) => {
+  const onClickSubmit = async (e) => {
     e.preventDefault();
     if (textArea.value === "") {
       setDisabled(true);
       textArea.placeholder = "provide us with a valid comment first ";
       setDisabled(false);
     } else {
-      axios
+      await axios
         .put(`product_reviews/add-review/${product._id}`, {
           content: comment,
         })
         .then((response) => {
+          setReviews([...reviews, response.data.review]);
           dispatch(addReview(response.data.review));
           textArea.value = "";
           setDisabled(false);
-          setTimeout(() => {
-            window.location.reload();
-          }, 100);
         })
         .catch((error) => {
           console.log(error.response);
@@ -300,6 +298,7 @@ function PageSingleProduct() {
                   >
                     {rate >= rating ? (
                       <StarIcon
+                        color="yellow"
                         key={rating}
                         className={classNames(
                           rate >= rating ? "text-gray-900" : "text-gray-200",
@@ -456,6 +455,11 @@ function PageSingleProduct() {
               onChange={(e) => setComment(e.target.value)}
               className={`block w-full text-md rounded-xl border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 ${className}`}
               rows={4}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  onClickSubmit(e);
+                }
+              }}
             ></textarea>
             <div className="mt-2 space-x-3">
               <ButtonPrimary

@@ -1,10 +1,11 @@
 /*eslint-disable*/
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "../../images/logo3.png";
 
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
-
+import LogoPng from "components/Logo/LogoPng";
 export default function Sidebar() {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   return (
@@ -21,10 +22,10 @@ export default function Sidebar() {
           </button>
           {/* Brand */}
           <Link
-            className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
+            className="md:block text-center md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
             to="/mi"
           >
-            Notus React
+            🛠️ MI Universe 🪛
           </Link>
           {/* User */}
           <ul className="md:hidden items-center flex flex-wrap list-none">
@@ -50,7 +51,7 @@ export default function Sidebar() {
                     className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
                     to="/mi"
                   >
-                    Notus React
+                    🛠️ MI Universe 🪛
                   </Link>
                 </div>
                 <div className="w-6/12 flex justify-end">
@@ -79,7 +80,7 @@ export default function Sidebar() {
             <hr className="my-4 md:min-w-full" />
             {/* Heading */}
             <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-              back-office Layout Pages
+              Admin Management
             </h6>
             {/* Navigation */}
 
@@ -88,7 +89,8 @@ export default function Sidebar() {
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/back-office/dashboard") !== -1
+                    (window.location.href.indexOf("/back-office/dashboard") !==
+                    -1
                       ? "text-lightBlue-500 hover:text-lightBlue-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
@@ -97,7 +99,9 @@ export default function Sidebar() {
                   <i
                     className={
                       "fas fa-tv mr-2 text-sm " +
-                      (window.location.href.indexOf("/back-office/dashboard") !== -1
+                      (window.location.href.indexOf(
+                        "/back-office/dashboard"
+                      ) !== -1
                         ? "opacity-75"
                         : "text-blueGray-300")
                     }
@@ -110,7 +114,8 @@ export default function Sidebar() {
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/back-office/settings") !== -1
+                    (window.location.href.indexOf("/back-office/settings") !==
+                    -1
                       ? "text-lightBlue-500 hover:text-lightBlue-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
@@ -119,12 +124,13 @@ export default function Sidebar() {
                   <i
                     className={
                       "fas fa-tools mr-2 text-sm " +
-                      (window.location.href.indexOf("/back-office/settings") !== -1
+                      (window.location.href.indexOf("/back-office/settings") !==
+                      -1
                         ? "opacity-75"
                         : "text-blueGray-300")
                     }
                   ></i>{" "}
-                  Settings
+                  Edit Profile
                 </Link>
               </li>
 
@@ -141,7 +147,8 @@ export default function Sidebar() {
                   <i
                     className={
                       "fas fa-table mr-2 text-sm " +
-                      (window.location.href.indexOf("/back-office/tables") !== -1
+                      (window.location.href.indexOf("/back-office/tables") !==
+                      -1
                         ? "opacity-75"
                         : "text-blueGray-300")
                     }
@@ -149,7 +156,6 @@ export default function Sidebar() {
                   Tables
                 </Link>
               </li>
-
             </ul>
 
             {/* Divider */}
@@ -232,8 +238,6 @@ export default function Sidebar() {
             </ul>
 
             {/* Divider */}
-
-
           </div>
         </div>
       </nav>

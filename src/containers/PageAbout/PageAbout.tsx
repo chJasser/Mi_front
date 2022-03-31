@@ -19,7 +19,7 @@ const PageAbout: FC<PageAboutProps> = ({ className = "" }) => {
       data-nc-id="PageAbout"
     >
       <Helmet>
-        <title>About || Blog Magazine React Template</title>
+        <title>About || MI Universe</title>
       </Helmet>
 
       {/* ======== BG GLASS ======== */}
@@ -39,8 +39,6 @@ const PageAbout: FC<PageAboutProps> = ({ className = "" }) => {
           <BackgroundSection />
           <SectionStatistic />
         </div>
-
-        <SectionSubscribe2 />
       </div>
     </div>
   );

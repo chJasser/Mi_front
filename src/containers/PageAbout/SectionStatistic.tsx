@@ -10,20 +10,20 @@ export interface Statistic {
 const FOUNDER_DEMO: Statistic[] = [
   {
     id: "1",
-    heading: "10 million",
+    heading: "800",
     subHeading:
-      "Articles have been public around the world (as of Sept. 30, 2021)",
+      "And even more articles have been posted on the MI Shop (as of Jun. 1, 2022)",
   },
   {
     id: "2",
-    heading: "100,000",
-    subHeading: "Registered users account (as of Sept. 30, 2021)",
+    heading: "1,500",
+    subHeading: "Registered users account (as of May. 25, 2022)",
   },
   {
     id: "3",
     heading: "220+",
     subHeading:
-      "Countries and regions have our presence (as of Sept. 30, 2021)",
+      "Courses and lessons published on MI Learn (as of Sept. 30, 2022)",
   },
 ];
 
@@ -34,10 +34,7 @@ export interface SectionStatisticProps {
 const SectionStatistic: FC<SectionStatisticProps> = ({ className = "" }) => {
   return (
     <div className={`nc-SectionStatistic relative ${className}`}>
-      <Heading
-        desc=" We’re impartial and independent, and every day we create distinctive,
-          world-class programmes and content"
-      >
+      <Heading desc=" Talent wins games, but teamwork and intelligence win championships.” – Michael Jordan">
         🚀 Fast Facts
       </Heading>
       <div className="grid md:grid-cols-2 gap-5 lg:grid-cols-3 xl:gap-8">
