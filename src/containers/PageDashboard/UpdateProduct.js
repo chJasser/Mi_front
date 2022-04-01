@@ -15,6 +15,8 @@ import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentTeacher, login } from "app/slices/userSlice";
 import { useHistory } from "react-router-dom";
+import { showForm } from "app/productslice/Productsliceseller";
+import NcModal from "components/NcModal/NcModal";
 
 const UpdateProduct = () => {
   const dispatch = useDispatch();
@@ -42,12 +44,16 @@ const UpdateProduct = () => {
   });
 
   const product = useSelector((state) => state.productseller.selectedProduct);
-  console.log(product)
+  console.log(product);
   console.log(productImage);
 
   const [selectedOptiontype, setSelectedOptiontype] = useState(product.type);
-  const [selectedOptioncategory, setSelectedOptincategory] = useState(product.category);
-  const [selectedOptionmarque, setSelectedOptionmarque] = useState(product.marque);
+  const [selectedOptioncategory, setSelectedOptincategory] = useState(
+    product.category
+  );
+  const [selectedOptionmarque, setSelectedOptionmarque] = useState(
+    product.marque
+  );
   const [selectedOptionstate, setSelectedOptionstate] = useState(product.state);
   const animatedComponents = makeAnimated();
   const handleInputChangetype = (selectedOptiontype) => {
@@ -100,16 +106,37 @@ const UpdateProduct = () => {
     formData.append("reference", values.reference);
     formData.append("price", values.price);
 
-    formData.append("category", (selectedOptioncategory.value)?selectedOptioncategory.value:product.category);
-    formData.append("marque", (selectedOptionmarque.value)?selectedOptionmarque.value:product.marque);
-    formData.append("type", (selectedOptiontype.value)?selectedOptiontype.value:product.type);
-    formData.append("state", (selectedOptionstate.value)?selectedOptionstate.value:product.state);
-    for (const key of Object.keys((productImage)?productImage:productImage.FileList.name = product.productImage)) {
-        console.log(productImage)
-        console.log(product.productImage)
-      formData.append("files", (productImage[key])?productImage[key]:product.productImage[key]);
-      console.log(productImage[key])
-      console.log(product.productImage[key])
+    formData.append(
+      "category",
+      selectedOptioncategory.value
+        ? selectedOptioncategory.value
+        : product.category
+    );
+    formData.append(
+      "marque",
+      selectedOptionmarque.value ? selectedOptionmarque.value : product.marque
+    );
+    formData.append(
+      "type",
+      selectedOptiontype.value ? selectedOptiontype.value : product.type
+    );
+    formData.append(
+      "state",
+      selectedOptionstate.value ? selectedOptionstate.value : product.state
+    );
+    for (const key of Object.keys(
+      productImage
+        ? productImage
+        : (productImage.FileList.name = product.productImage)
+    )) {
+      console.log(productImage);
+      console.log(product.productImage);
+      formData.append(
+        "files",
+        productImage[key] ? productImage[key] : product.productImage[key]
+      );
+      console.log(productImage[key]);
+      console.log(product.productImage[key]);
     }
     console.log(values);
     console.log(selectedOptioncategory);
@@ -118,6 +145,7 @@ const UpdateProduct = () => {
     console.log(selectedOptionmarque);
     const response = await axios
       .put(`/products/update-product/${product._id}`, formData)
+      .then(() => dispatch(showForm(false)))
       .catch((err) => {
         if (err && err.response) {
           setErrors(err.response.data.message);
@@ -145,7 +173,7 @@ const UpdateProduct = () => {
           type: product.type,
           marque: product.marque,
           category: product.category,
-          productImage: product.productImage[0],
+          // productImage: product.productImage[0],
         }}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
@@ -294,8 +322,15 @@ const UpdateProduct = () => {
               className="mt-1 form-control form-control-sm"
               style={{ border: "1px solid #D1D1D1" }}
               onChange={(event) => {
-                setFieldValue("productImage", (event.currentTarget.files)?event.currentTarget.files:product.productImage);
-                setimagesfiles((event.target.files)?event.target.files:product.productImage);
+                setFieldValue(
+                  "productImage",
+                  event.currentTarget.files
+                    ? event.currentTarget.files
+                    : product.productImage
+                );
+                setimagesfiles(
+                  event.target.files ? event.target.files : product.productImage
+                );
               }}
               multiple
               //value={product.productImage}
@@ -304,8 +339,14 @@ const UpdateProduct = () => {
               <Alert severity="error">{errors.productImage}</Alert>
             ) : null}
 
-            <ButtonPrimary className="md:col-span-2" type="submit">
+            <ButtonPrimary className="md:col-span-2" type="submit"
+            >
               Update product
+            </ButtonPrimary>
+            <ButtonPrimary className="md:col-span-2"
+            onClick={() => dispatch(showForm(false))}
+            >
+              Cancel
             </ButtonPrimary>
           </form>
         )}
