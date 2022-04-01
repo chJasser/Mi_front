@@ -1,8 +1,8 @@
 import React from "react";
-import logo from "../../images/logo3.png";
+import logo from "../../images/logo1.png";
 
 const LogoPng = () => {
-  return <img src={logo} alt="logo" width="130" height="130"></img>;
+  return <img src={logo} alt="logo" width="120" height="120"></img>;
 };
 
 export default LogoPng;

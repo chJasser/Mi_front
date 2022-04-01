@@ -10,7 +10,6 @@ const PaginationSimple = ({
   currentPage,
   lastPage,
 }) => {
-  console.log(lastPage);
   return (
     <div className="py-2">
       <div>

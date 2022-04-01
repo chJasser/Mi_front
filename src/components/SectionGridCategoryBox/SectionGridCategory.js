@@ -3,7 +3,10 @@ import Heading from "components/Heading/Heading";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { filterByCategory, changeValid } from "../../app/slices/filterSlice";
+import {
+  filterByCategory,
+  changeValid,
+} from "../../app/filterSlice/filterSlice";
 import { populateProducts } from "../../app/productslice/Productslice";
 import axios from "axiosInstance";
 

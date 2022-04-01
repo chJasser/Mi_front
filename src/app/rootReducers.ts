@@ -11,10 +11,10 @@ import carteslics from "../app/cartslice/carteslics";
 import productLikeSlice from "../app/productLikes/productLikes";
 import productReviewsSlice from "./productReviews/productReviews";
 import UsersSlice from "./usersSlice/adminSlice";
-import filterSlice from "./slices/filterSlice";
-import RecSlice from "./reclamations/recSlice";
+import filterSlice from "./filterSlice/filterSlice";
 import Productsliceseller from "./productslice/Productsliceseller";
-import CourrseSearchSlice from "./usersSlice/courseSearchSlice";
+import RecSlice from "./reclamations/recSlice";
+
 const rootReducers = {
   bookmark: bookmarkReducer,
   postLike: postLikesReducer,
@@ -31,7 +31,6 @@ const rootReducers = {
   reclamationsManagement: RecSlice,
   carteslics: carteslics,
   filterSlice: filterSlice,
-  CourrseSearchSlice: CourrseSearchSlice,
 };
 
 export default rootReducers;

@@ -37,38 +37,75 @@ import {
   setUserLogedIn,
   userRoles,
 } from "app/slices/userSlice";
+import {
+  getLikedProducts,
+  getBookmarkedProducts,
+} from "app/productLikes/productLikes";
 import { resetStateLikes } from "app/productLikes/productLikes";
 import { resetStateReviews } from "app/productReviews/productReviews";
 import { getAllUsers } from "app/usersSlice/adminSlice";
 import SectionBecomeAnTeacher from "components/SectionBecomeAnTeacher/SectionBecomeAnTeacher";
 import SectionBecomeAnStudent from "components/SectionBecomeAnStudent/SectionBecomeAnStudent";
 import SectionBecomeAnSeller from "components/SectionBecomeAnSeller/SectionBecomeAnSeller";
-
+import axios from "axiosInstance";
+import { selectProducts } from "app/productslice/Productslice";
+import SectionLargeSliderMi from "./SectionLargeSliderMi";
 //
-const POSTS: PostDataType[] = DEMO_POSTS;
+import SectionHero from "components/SectionHero/SectionHero";
+import rightImg from "images/hero-right.png";
 //
 const MAGAZINE1_TABS = ["all", "Garden", "Fitness", "Design"];
 const MAGAZINE1_POSTS = DEMO_POSTS.filter((_, i) => i >= 8 && i < 16);
 const MAGAZINE2_POSTS = DEMO_POSTS.filter((_, i) => i >= 0 && i < 7);
 //
 
-const PageHome: React.FC = () => {
+const PageHomeMi = () => {
   const [token, setToken] = useState(null);
+  const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
   const search = useLocation().search;
   const isAuth = useSelector(isAuthenticated);
   const roles = useSelector(userRoles);
   const history = useHistory();
-
+  const getProds = () => {
+    axios
+      .get("products/all-products")
+      .then((res) => {
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        console.log(err.data);
+      });
+  };
   useEffect(() => {
-    dispatch(getAllUsers());
+    getProds();
+
+    roles.includes("admin") && dispatch(getAllUsers());
     dispatch(resetStateLikes());
     dispatch(resetStateReviews());
+    axios
+      .get("products/liked-products")
+      .then((response) => {
+        console.log(response);
+        dispatch(getLikedProducts(response.data));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    axios
+      .get("products/bookmarked-products")
+      .then((response) => {
+        console.log(response);
+        dispatch(getBookmarkedProducts(response.data));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     setToken(new URLSearchParams(search).get("token"));
     if (token !== null) {
       dispatch(login(token));
 
-      const decoded: any = jwt_decode(token);
+      const decoded = jwt_decode(token);
       if (decoded.user_role.includes("seller")) {
         dispatch(getCurrentSeller());
       }
@@ -86,24 +123,32 @@ const PageHome: React.FC = () => {
     dispatch(setUserLogedIn());
     return () => clearTimeout(timer);
   }, [token]);
-  
+
   return (
     <div className="nc-PageHome relative">
       <Helmet>
-        <title>Home || Blog Magazine React Template</title>
+        <title>Home || MI Universe</title>
       </Helmet>
 
       {/* ======== ALL SECTIONS ======== */}
       <div className="relative overflow-hidden">
         {/* ======== BG GLASS ======== */}
+        <div className="container py-16 lg:py-28 space-y-16 lg:space-y-28">
+          <SectionHero
+            rightImg={rightImg}
+            heading="💃 Welcome To MI"
+            btnText=""
+            subHeading="Take a look you may find what you're looking for !"
+          />
+        </div>
         <BgGlassmorphism />
-
         {/* ======= START CONTAINER ============= */}
+
         <div className="container relative">
           {/* === SECTION  === */}
-          <SectionLargeSlider
+          <SectionLargeSliderMi
             className="pt-10 pb-16 md:py-16 lg:pb-28 lg:pt-24 "
-            posts={POSTS.filter((_, i) => i < 3)}
+            products={products && products.filter((_, i) => i < 5)}
           />
 
           {/* === SECTION  === */}
@@ -132,16 +177,16 @@ const PageHome: React.FC = () => {
           )}
 
           {/* === SECTION 5 === */}
-          {/* <SectionSliderNewCategories
+          <SectionSliderNewCategories
             className="py-16 lg:py-28"
             heading="Top trending topics"
             subHeading="Discover 233 topics"
             categories={DEMO_CATEGORIES.filter((_, i) => i < 10)}
             categoryCardType="card4"
-          /> */}
+          />
 
           {/* === SECTION 6 === */}
-          {/* <div className="relative py-16">
+          <div className="relative py-16">
             <BackgroundSection />
             <SectionSliderPosts
               postCardName="card9"
@@ -150,14 +195,14 @@ const PageHome: React.FC = () => {
               sliderStype="style2"
               posts={DEMO_POSTS_AUDIO.filter((_, i) => i > 3 && i < 10)}
             />
-          </div> */}
+          </div>
 
           {/* === SECTION 4 === */}
-          {/* <SectionMagazine1
+          <SectionMagazine1
             className="py-16 lg:py-28"
             posts={MAGAZINE1_POSTS}
             tabs={MAGAZINE1_TABS}
-          /> */}
+          />
 
           {/* === SECTION 3 === */}
           {/* <SectionAds /> */}
@@ -247,4 +292,4 @@ const PageHome: React.FC = () => {
   );
 };
 
-export default PageHome;
+export default PageHomeMi;

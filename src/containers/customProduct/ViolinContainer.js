@@ -4,8 +4,9 @@ import { useState, Suspense, useEffect } from "react";
 import { ContactShadows, Environment, OrbitControls } from "@react-three/drei";
 
 import { Canvas } from "@react-three/fiber";
+import Guitar from "./Guitar_model";
 import ButtonPrimary from "components/Button/ButtonPrimary";
-import Pianoo from "./Pianoo";
+import Violin from "./Vio";
 
 const reviews = { href: "#", average: 4, totalCount: 117 };
 
@@ -13,7 +14,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example2() {
+export default function ViolinContainer() {
   const sizes = [
     { name: "XXS", inStock: false },
     { name: "XS", inStock: true },
@@ -25,57 +26,77 @@ export default function Example2() {
     { name: "3XL", inStock: true },
   ];
   const [selectedSize, setSelectedSize] = useState();
-  const [Hinges, setHinges] = useState("#FFF36B");
-  const [Keys, setKeys] = useState("#FFFFFF");
-  const [Piano, setPiano] = useState("#000000");
-  const [HingesChanged, setHingesChanged] = useState(false);
-  const [KeysChanged, setKeysChanged] = useState(false);
-  const [PianoChanged, setPianoChanged] = useState(false);
+
+  /**
+   *
+   */
+  const [the_stick, setThe_stick] = useState("#E8B187");
+  const [rest, setRest] = useState("#E8B187");
+  const [chords, setChords] = useState("#B9B7BD");
+  const [body, setBody] = useState("#4C2C2E");
+
+  /**
+   *
+   */
+  const [the_stickChanged, setThe_stickChanged] = useState(false);
+  const [restChanged, setRestChanged] = useState(false);
+  const [bodyChanged, setBodyChanged] = useState(false);
+  const [chordsChanged, setChordsChanged] = useState(false);
   const [product, setProduct] = useState({
-    name: "Basic Keyboard",
-    price: 3000,
-    changedPiano: false,
-    changedKeys: false,
-    changedHinges: false,
+    name: "Basic Violin",
+    price: 700,
+    changedBody: false,
+    changedChords: false,
+    changedStick: false,
+    changedRest: false,
   });
   useEffect(() => {
-    const { changedHinges, changedKeys, changedPiano } = product;
-    changedHinges && setProduct({ ...product, price: product.price + 50 });
-    changedKeys && setProduct({ ...product, price: product.price + 50 });
-    changedPiano && setProduct({ ...product, price: product.price + 50 });
-  }, [HingesChanged, KeysChanged, PianoChanged]);
-  const handleKeysChanged = (e) => {
-    setKeys(e.target.value);
-    setKeysChanged(true);
-    setProduct({ ...product, changedKeys: true });
+    const { changedBody, changedChords, changedRest, changedStick } = product;
+    changedBody && setProduct({ ...product, price: product.price + 50 });
+    changedChords && setProduct({ ...product, price: product.price + 50 });
+    changedStick && setProduct({ ...product, price: product.price + 50 });
+    changedRest && setProduct({ ...product, price: product.price + 50 });
+  }, [bodyChanged, chordsChanged, restChanged, the_stickChanged]);
+  const handleChordsChanged = (e) => {
+    setChords(e.target.value);
+    setChordsChanged(true);
+    setProduct({ ...product, changedChords: true });
   };
-  const handlePianoChanged = (e) => {
-    setPiano(e.target.value);
-    setPianoChanged(true);
-    setProduct({ ...product, changedPiano: true });
+  const handleStickChanged = (e) => {
+    setThe_stick(e.target.value);
+    setThe_stickChanged(true);
+    setProduct({ ...product, changedStick: true });
   };
-  const handleHingesChanged = (e) => {
-    setHinges(e.target.value);
-    setHingesChanged(true);
-    setProduct({ ...product, changedHinges: true });
+  const handleBodyChanged = (e) => {
+    setBody(e.target.value);
+    setBodyChanged(true);
+    setProduct({ ...product, changedBody: true });
+  };
+  const handleRestChanged = (e) => {
+    setRest(e.target.value);
+    setRestChanged(true);
+    setProduct({ ...product, changedRest: true });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
   };
   const handleCancel = (e) => {
     e.preventDefault();
-    setHinges("#FFF36B");
-    setKeys("#FFFFFF");
-    setPiano("#000000");
-    setHingesChanged(false);
-    setPianoChanged(false);
-    setKeysChanged(false);
+    setBody("#E8B187");
+    setChords("#B9B7BD");
+    setRest("#4C2C2E");
+    setThe_stick("#4C2C2E");
+    setBodyChanged(false);
+    setRestChanged(false);
+    setChordsChanged(false);
+    setThe_stickChanged(false);
     setProduct({
       ...product,
-      changedHinges: false,
-      changedKeys: false,
-      changedPiano: false,
-      price: 3000,
+      changedBody: false,
+      changedRest: false,
+      changedStick: false,
+      changedChords: false,
+      price: 700,
     });
   };
   return (
@@ -89,8 +110,10 @@ export default function Example2() {
           <Canvas
             shadows
             dpr={[1, 2]}
-            camera={{ position: [0, 1, 2], fov: 50 }}
+            camera={{ position: [0, 0, 25], fov: 50 }}
           >
+            <directionalLight position={[10, 10, 5]} intensity={2} />
+            <directionalLight position={[-10, -10, -5]} intensity={1} />
             <ambientLight intensity={0.7} />
             <spotLight
               intensity={0.5}
@@ -100,11 +123,12 @@ export default function Example2() {
               castShadow
             />
             <Suspense fallback={null}>
-              <Pianoo
+              <Violin
                 customColors={{
-                  Hinges: Hinges,
-                  Keys: Keys,
-                  Piano: Piano,
+                  rest: rest,
+                  chords: chords,
+                  body: body,
+                  the_stick: the_stick,
                 }}
               />
               <Environment preset="city" />
@@ -172,33 +196,43 @@ export default function Example2() {
                 <div>
                   <input
                     type="color"
-                    id="Piano"
-                    name="Piano"
-                    value={Piano}
-                    onChange={(e) => handlePianoChanged(e)}
+                    id="face"
+                    name="face"
+                    value={the_stick}
+                    onChange={(e) => handleStickChanged(e)}
                   />
-                  <label>Piano</label>
+                  <label>the stick</label>
+                </div>
+                <div>
+                  <input
+                    type="color"
+                    id="face"
+                    name="face"
+                    value={rest}
+                    onChange={(e) => handleRestChanged(e)}
+                  />
+                  <label>rest</label>
                 </div>
 
                 <div>
                   <input
                     type="color"
-                    id="Keys"
-                    name="Keys"
-                    value={Keys}
-                    onChange={(e) => handleKeysChanged(e)}
+                    id="chords"
+                    name="chords"
+                    value={chords}
+                    onChange={(e) => handleChordsChanged(e)}
                   />
-                  <label>Keys</label>
+                  <label>chords</label>
                 </div>
                 <div>
                   <input
                     type="color"
-                    id="Hinges"
-                    name="Hinges"
-                    value={Hinges}
-                    onChange={(e) => handleHingesChanged(e)}
+                    id="support"
+                    name="support"
+                    value={body}
+                    onChange={(e) => handleBodyChanged(e)}
                   />
-                  <label>Hinges</label>
+                  <label>body</label>
                 </div>
               </div>
             </div>

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { getAllUsers } from "app/usersSlice/adminSlice";
-import { useDispatch } from "react-redux";
 import PaginationSimple from "components/Pagination/PaginationSimple";
 
 // components

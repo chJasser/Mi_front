@@ -29,7 +29,7 @@ const persistConfig = {
     "productReviews",
     "userManagement",
     "reclamationsManagement",
-    "filterCourseSlice",
+    "filterSlice",
   ],
 };
 

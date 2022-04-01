@@ -35,7 +35,7 @@ const UsersSlice = createSlice({
 });
 export const getAllUsers = () => (dispatch) => {
   axios
-    .get("/users")
+    .get("/users/get-all-users")
     .then((response) => {
       dispatch(getUsers(response.data));
     })

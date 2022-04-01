@@ -13,10 +13,13 @@ import { removeLike, addNewLike } from "app/productLikes/productLikes";
 import ProductComment from "components/CommentCard/ProductComment";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import ButtonSecondary from "components/Button/ButtonSecondary";
-
+import ProductCardLikeAndComment from "components/PostCardLikeAndComment/ProductCardLikeAndComment";
+import {
+  getLikedProducts,
+  getBookmarkedProducts,
+} from "app/productLikes/productLikes";
 import NcImage from "components/NcImage/NcImage";
 import ModalPhotos from "./ModalPhotos";
-
 
 import {
   getProductUser,
@@ -57,6 +60,10 @@ function PageSingleProduct() {
    */
   const [product, setProduct] = useState({});
   const prod = useSelector((state) => state.product.selectedProduct);
+  const produ = useSelector((state) => state.product.selectedProduct);
+  const likedProd = useSelector(
+    (state) => state.productLikes.likedProducts
+  ).find((prod) => prod._id === produ._id);
   /**
    *
    */
@@ -79,6 +86,7 @@ function PageSingleProduct() {
 
   useEffect(() => {
     setrating(rat - 1);
+    console.log(likedProd);
   }, []);
 
   const Onmouseenter = (index) => {
@@ -171,6 +179,7 @@ function PageSingleProduct() {
     setProduct(prod);
     getProductReviewsFun(prod);
     getSellerOfTheProduct();
+    console.log(product);
   }, [dispatch]);
   const handleOpenModal = (index) => {
     setIsOpen(true);
@@ -179,24 +188,22 @@ function PageSingleProduct() {
 
   const handleCloseModal = () => setIsOpen(false);
   const [disabled, setDisabled] = useState(false);
-  const onClickSubmit = (e) => {
+  const onClickSubmit = async (e) => {
     e.preventDefault();
     if (textArea.value === "") {
       setDisabled(true);
       textArea.placeholder = "provide us with a valid comment first ";
       setDisabled(false);
     } else {
-      axios
+      await axios
         .put(`product_reviews/add-review/${product._id}`, {
           content: comment,
         })
         .then((response) => {
+          setReviews([...reviews, response.data.review]);
           dispatch(addReview(response.data.review));
           textArea.value = "";
           setDisabled(false);
-          setTimeout(() => {
-            window.location.reload();
-          }, 100);
         })
         .catch((error) => {
           console.log(error.response);
@@ -228,10 +235,8 @@ function PageSingleProduct() {
                 <div className="absolute inset-0 bg-black text-white bg-opacity-30 flex flex-col items-center justify-center">
                   <div className="flex justify-between">
                     <Badge className="" name={category} />
-                    <ButtonPrimary href="/mi/archive/the-demo-archive-slug">
-                      Exit
-                    </ButtonPrimary>
                   </div>
+
                   <h2 className="inline-block align-middle ml-3 text-5xl font-semibold md:text-7xl ">
                     {product.label}
                   </h2>
@@ -242,6 +247,9 @@ function PageSingleProduct() {
                     </h4>
                   )}
                 </div>
+                <ButtonPrimary href="/mi/archive/the-demo-archive-slug">
+                  return
+                </ButtonPrimary>
               </div>
             </div>
 
@@ -290,6 +298,7 @@ function PageSingleProduct() {
                   >
                     {rate >= rating ? (
                       <StarIcon
+                        color="yellow"
                         key={rating}
                         className={classNames(
                           rate >= rating ? "text-gray-900" : "text-gray-200",
@@ -310,8 +319,9 @@ function PageSingleProduct() {
                   </div>
                 ))}
               </div>
+              {/* <ProductCardLikeAndComment className="relative" postData={prod} /> */}
 
-              <div
+              {/* <div
                 className={`nc-PostCardLikeAndComment flex items-center space-x-2 ${className}`}
                 data-nc-id="PostCardLikeAndComment"
               >
@@ -349,10 +359,10 @@ function PageSingleProduct() {
                         : "text-neutral-900 dark:text-neutral-200"
                     }`}
                   >
-                    {convertNumbThousand(product.likesCount)}
+                    {product.likesCount}
                   </span>
                 </button>
-              </div>
+              </div> */}
               <ButtonPrimary
                 onClick={() => addrate(rate)}
                 href="/archive/the-demo-archive-slug"
@@ -367,7 +377,7 @@ function PageSingleProduct() {
                 onClick={() => handleOpenModal(0)}
               >
                 <NcImage
-                  containerClassName="absolute inset-0"
+                  containerClassName="aspect-w-6 aspect-h-8"
                   className="object-cover w-full h-full rounded-xl"
                   src={base_url + prod.productImage[0]}
                 />
@@ -421,7 +431,6 @@ function PageSingleProduct() {
               </div>
             </div>
           </div>
-          
         </header>
         {/* MODAL PHOTOS */}
         <ModalPhotosProd
@@ -446,6 +455,11 @@ function PageSingleProduct() {
               onChange={(e) => setComment(e.target.value)}
               className={`block w-full text-md rounded-xl border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 ${className}`}
               rows={4}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  onClickSubmit(e);
+                }
+              }}
             ></textarea>
             <div className="mt-2 space-x-3">
               <ButtonPrimary

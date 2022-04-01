@@ -16,6 +16,9 @@ import BackOfficeRoutes from "routers/BackOfficeRoutes";
 import IsAuthRoute from "routers/privateRoutes/IsAuthRoute";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./assets/styles/tailwind.css";
+import IsAuthRouteAndAdmin from "routers/privateRoutes/isAuthAndAdminRoute";
+import Dashboard from "views/admin/Dashboard";
+import Tables from "views/admin/Tables";
 // import MyRouter from "routers/MyRouter";
 
 if (localStorage.token) {
@@ -67,10 +70,9 @@ export default function App() {
         <Route path="/mi" render={(props) => <FronOfficeRoutes {...props} />} />
 
         <IsAuthRoute path="/back-office" component={BackOfficeRoutes} />
+
         <Redirect from="*" to="/mi" />
-        
       </Switch>
     </BrowserRouter>
-
   );
 }

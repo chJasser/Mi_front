@@ -11,7 +11,6 @@ import DashboardSubmitPost from "./DashboardSubmitPost";
 import { Helmet } from "react-helmet";
 import Cartproducts from "./Cartproducts";
 import Addproducts from "./addproducts";
-import AddCours from "./addCours";
 export interface PageDashboardProps {
   className?: string;
 }
@@ -53,12 +52,6 @@ const subPages = [
     component: Addproducts,
     emoij: "📕",
     pageName: "Addproducts",
-  },
-  {
-    sPath: "/addCours",
-    component: AddCours,
-    emoij: "📕",
-    pageName: "AddCours",
   },
   {
     sPath: "/edit-profile",
@@ -103,40 +96,39 @@ const PageDashboard: FC<PageDashboardProps> = ({ className = "" }) => {
           <div className="flex flex-col space-y-8 xl:space-y-0 xl:flex-row">
             {}
 
-            <div className="flex-shrink-0 max-w-xl xl:w-80 xl:pr-8">
-              <ul className="text-base space-y-1 text-neutral-6000 dark:text-neutral-400">
-                {subPages.map(({ sPath, pageName, emoij }, index) => {
-                  return (
-                    <li key={index}>
-                      <NavLink
-                        className="flex px-6 py-2.5 font-medium rounded-lg hover:text-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
-                        to={`${url}${sPath}`}
-                        activeClassName="bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100"
-                      >
-                        <span className="w-8 mr-1">{emoij}</span>
-                        {pageName}
-                      </NavLink>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-            <div className="border border-neutral-100 dark:border-neutral-800 md:hidden"></div>
-            <div className="flex-grow">
-              <Switch>
-                {subPages.map(({ component, sPath, exact }, index) => {
-                  return (
-                    <Route
-                      key={index}
-                      exact={exact}
-                      component={component}
-                      path={!!sPath ? `${path}${sPath}` : path}
-                    />
-                  );
-                })}
-                <Redirect to={path + "/root"} />
-              </Switch>
-            </div>
+         <div className="flex-shrink-0 max-w-xl xl:w-80 xl:pr-8">
+            <ul className="text-base space-y-1 text-neutral-6000 dark:text-neutral-400">
+              {subPages.map(({ sPath, pageName, emoij }, index) => {
+                return (
+                  <li key={index}>
+                    <NavLink
+                      className="flex px-6 py-2.5 font-medium rounded-lg hover:text-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
+                      to={`${url}${sPath}`}
+                      activeClassName="bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100"
+                    >
+                      <span className="w-8 mr-1">{emoij}</span>
+                      {pageName}
+                    </NavLink>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <div className="border border-neutral-100 dark:border-neutral-800 md:hidden"></div>
+          <div className="flex-grow">
+            <Switch>
+              {subPages.map(({ component, sPath, exact }, index) => {
+                return (
+                  <Route
+                    key={index}
+                    exact={exact}
+                    component={component}
+                    path={!!sPath ? `${path}${sPath}` : path}
+                  />
+                );
+              })}
+              <Redirect to={path + "/root"} />
+            </Switch>
           </div>
         }
       </LayoutPage>

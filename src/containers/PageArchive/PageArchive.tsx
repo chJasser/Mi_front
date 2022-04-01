@@ -1,16 +1,10 @@
 import React, { FC, useEffect, useState, Fragment, useRef } from "react";
-import ModalMarque from "./ModalMarque";
-import { DEMO_POSTS } from "data/posts";
-import { PostDataType, TaxonomyType } from "data/types";
-import { DEMO_CATEGORIES } from "data/taxonomies";
 import Pagination from "components/Pagination/Pagination";
 import ButtonPrimary from "components/Button/ButtonPrimary";
-import ArchiveFilterListBox from "components/ArchiveFilterListBox/courseFilter";
 import { Helmet } from "react-helmet";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import NcImage from "components/NcImage/NcImage";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
-import SectionGridCategory from "components/SectionGridCategoryBox/SectionGridCategory";
 import SellersSlider from "components/SectionSliderNewAthors/SellersSlider";
 import { DEMO_AUTHORS } from "data/authors";
 import axios from "axiosInstance";
@@ -27,7 +21,6 @@ import { Popover, Transition } from "@headlessui/react";
 import Input from "components/Input/Input";
 import Slider from "@material-ui/core/Slider";
 import { RootState } from "../../app/store";
-import { filterByMarque, filterByCategory } from "../../app/slices/filterSlice";
 
 import Modalcart from "./Modalcart";
 import Marque from "../../components/Tag/Marque";
@@ -49,8 +42,8 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   const myRef = useRef(null);
   const inputRef = React.createRef<HTMLInputElement>();
   const [value, setValue] = React.useState([0, 100]);
-  let min = value[0] * 100;
-  let max = value[1] * 100;
+  let min = value[0];
+  let max = value[1];
 
   const marques = [
     "yamaha",
@@ -91,18 +84,6 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   };
 
   const executeScroll = () => myRef.current.scrollIntoView();
-
-  // let inputHandler = (e) => {
-  //   if (e.target.value) {
-  //     axios.get(`products/search?label=${e.target.value}`).then((res) => {
-  //       setProducts(res.data);
-  //     });
-  //   } else {
-  //     axios.get("products/filter").then((res) => {
-  //       setProducts(res.data.products);
-  //     });
-  //   }
-  // };
 
   const inputHandler = (e) => {
     if (e.target.value) {
@@ -216,29 +197,21 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   const renderModalContent = () => {
     return (
       <div className="flex flex-wrap dark:text-neutral-200">
-        {marques.map((tag) => (
+        {marques.map((tag, index) => (
           <div
+            key={index}
             onClick={() => {
               filterMarque(tag);
               closeModal();
             }}
           >
-            <Marque key={tag} tag={tag} className="mr-2 mb-2" />
+            <Marque key={index} tag={tag} className="mr-2 mb-2" />
           </div>
         ))}
       </div>
     );
   };
 
-  const PAGE_DATA: TaxonomyType = DEMO_CATEGORIES[0];
-
-  const FILTERS = [
-    { name: "Most Recent" },
-    { name: "Curated by Admin" },
-    { name: "Most Appreciated" },
-    { name: "Most Discussed" },
-    { name: "Most Viewed" },
-  ];
   return (
     <div
       className={`nc-PageArchive overflow-hidden ${className}`}
@@ -284,6 +257,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6 md:gap-8">
               {categories.map((item, index) => (
                 <Link
+                  key={index}
                   to={`/mi/archive/the-demo-archive-slug?category=${item}`}
                   className="inline-flex items-center"
                   onClick={() => {
@@ -397,6 +371,8 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               value={value}
               onChange={rangeSelector}
               valueLabelDisplay="auto"
+              min={0}
+              max={10000}
             />
             Your range of Price is between {min}$ and {max}$
           </div>

@@ -50,21 +50,28 @@ import BecomeTeacherRoute from "./privateRoutes/BecomeTeacherRoute";
 import AuthRoute from "./privateRoutes/AuthRoute";
 import BecomeSellerRoute from "./privateRoutes/BecomeSellerRoute";
 import BecomeStudentRoute from "./privateRoutes/BecomeStudentRoute";
-import CustomProductsPage from "containers/customProduct/CustomProductsPage";
+import PageAuthorV2 from "containers/PageAuthor/PageAuthorV2";
 import ProfileSeller from "containers/PageAuthor/ProfileSeller";
 import PageContactMi from "containers/PageContact/PageContactMi";
+import CustomProductsPage from "containers/customProduct/CustomProductsPage";
+import PageFavorite from "containers/PageArchive/PageFavorite";
+import PageHomeMi from "containers/PageHome/PageHomeMi";
+import DashboardEditProfile from "containers/PageDashboard/DashboardEditProfile";
 
 export const pages: Page[] = [
-  { path: "/mi", exact: true, component: PageHome },
+  { path: "/mi", exact: true, component: PageHomeMi },
   { path: "/mi#", exact: true, component: PageHome },
   { path: "/mi/archive/:slug", component: PageArchive },
   { path: "/mi/archive-video/:slug", component: PageArchiveVideo },
   { path: "/mi/archive-audio/:slug", component: PageArchiveAudio },
+  { path: "/mi/saved-products", component: PageFavorite },
   //
   // { path: "/mi/author/:slug", component: PageAuthor },
 
   { path: "/mi/author/:slug", component: ProfileSeller },
   // { path: "/mi/author-v2/:slug", component: PageAuthorV2 },
+  // { path: "/mi/author/:slug", component: PageAuthor },
+  { path: "/mi/author-v2/:slug", component: PageAuthorV2 },
   //
   { path: "/mi/single/:slug", component: PageSingleTemp3Sidebar },
   {
@@ -107,11 +114,14 @@ export const pages: Page[] = [
   { path: "/mi/search", component: PageSearch },
   { path: "/mi/search-v2", component: PageSearchV2 },
   { path: "/mi/about", exact: true, component: PageAbout },
-  { path: "/mi/contact", component: PageContact },
-  { path: "/mi/contactUs", component: PageContactMi },
+  { path: "/mi/contact", component: PageContactMi },
   { path: "/mi/page404", component: Page404 },
   { path: "/mi/login", typeRoute: "auth", component: PageLogin },
   { path: "/mi/signup", typeRoute: "auth", component: PageSignUp },
+  {
+    path: "/mi/edit-profile",
+    component: DashboardEditProfile,
+  },
   {
     path: "/mi/forgot-pass",
     exact: true,

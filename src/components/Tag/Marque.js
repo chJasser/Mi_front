@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axiosInstance";
 import { useDispatch } from "react-redux";
-import { filterByMarque } from "../../app/slices/filterSlice";
+import { filterByMarque } from "../../app/filterSlice/filterSlice";
 
 const Marque = ({ className = "", tag, hideCount = false }) => {
   const [nbrr, setNbr] = useState(0);
