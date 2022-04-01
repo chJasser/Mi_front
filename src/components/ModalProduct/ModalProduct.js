@@ -15,31 +15,23 @@ export default function Example(props) {
   const dispatch = useDispatch();
   const [product, setProduct] = useState(props.product);
   const [open, setOpen] = useState(false);
-  const [rate ,setrating ]=useState(0);
-  const ratings =()=>{
-  axios.get(`products/getrating/${product._id}`).then((res)=>{
-   console.log(res.data[0].rating);
-  setrating(res.data[0].rating); 
-
-  })}
+  const [rate, setrating] = useState(0);
+  const ratings = () => {
+    axios.get(`products/getrating/${product._id}`).then((res) => {
+      setrating(res.data[0].rating);
+    });
+  };
   const [qty, setQty] = useState(1);
-  const item={
+  const item = {
     label: product.label,
-    price:product.price,
-    productImage:product.productImage,
-    productid:product._id,
-    qte:qty,
-
-  }
-  useEffect(()=>{
-
+    price: product.price,
+    productImage: product.productImage,
+    productid: product._id,
+    qte: qty,
+  };
+  useEffect(() => {
     ratings();
-  }
-   
-
-
-  ,[])
- 
+  }, []);
 
   return (
     <>
@@ -135,7 +127,7 @@ export default function Example(props) {
                                 <StarIcon
                                   key={rating}
                                   className={classNames(
-                                    rate> rating
+                                    rate > rating
                                       ? "text-gray-900"
                                       : "text-gray-200",
                                     "h-5 w-5 flex-shrink-0"
@@ -144,15 +136,10 @@ export default function Example(props) {
                                 />
                               ))}
                             </div>
-                            <p className="sr-only">
-                              {rate} out of 5 stars
-                            </p>
-                            <a
-                              href="#"
-                              className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                            >
+                            <p className="sr-only">{rate} out of 5 stars</p>
+                            <button className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
                               {product.reviewsCount} reviews
-                            </a>
+                            </button>
                           </div>
                         </div>
                       </section>
@@ -166,12 +153,21 @@ export default function Example(props) {
                           </h4>
                         </div>
                         <div>
-                          <h4 className="text-sm text-gray-900 font-medium"> Quantity</h4>
-                          <input type="number" min={1} value={qty} onChange={(e)=>{setQty(e.target.value)}} className="text-sm text-gray-900 font-medium">
-                            
-                          </input>
+                          <h4 className="text-sm text-gray-900 font-medium">
+                            {" "}
+                            Quantity
+                          </h4>
+                          <input
+                            type="number"
+                            min={1}
+                            value={qty}
+                            onChange={(e) => {
+                              setQty(e.target.value);
+                            }}
+                            className="text-sm text-gray-900 font-medium"
+                          ></input>
                         </div>
-                        <Link to={`/dashboard/posts/${product._id}?qty=${qty}`}>
+                        
                         <button
                           onClick={() => {
                             dispatch(additem(item));
@@ -182,7 +178,7 @@ export default function Example(props) {
                         >
                           Add to Cart
                         </button>
-                        </Link>
+                        
                       </section>
                     </div>
                   </div>
@@ -195,4 +191,3 @@ export default function Example(props) {
     </>
   );
 }
-

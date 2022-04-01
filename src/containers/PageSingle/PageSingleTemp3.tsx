@@ -25,9 +25,9 @@ const PageSingleTemplate3: FC<PageSingleTemplate3Props> = ({
 
   // UPDATE CURRENTPAGE DATA IN PAGEREDUCERS
   useEffect(() => {
-    dispatch(changeCurrentPage({ type: "/single/:slug", data: SINGLE }));
+    dispatch(changeCurrentPage({ type: "/mi/single/:slug", data: SINGLE }));
     return () => {
-      dispatch(changeCurrentPage({ type: "/", data: {} }));
+      dispatch(changeCurrentPage({ type: "/mi", data: {} }));
     };
   }, []);
 

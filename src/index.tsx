@@ -1,11 +1,17 @@
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import App from "./App.js";
 import reportWebVitals from "./reportWebVitals";
 import { persistor, store } from "./app/store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-// STYLE
+
+// import "@fortawesome/fontawesome-free/css/all.min.css";
+// import "./back-office/assets/styles/tailwind.css";
+
+
+
+// STYLE front
 import "./styles/index.scss";
 import "./index.css";
 import "./fonts/line-awesome-1.3.0/css/line-awesome.css";

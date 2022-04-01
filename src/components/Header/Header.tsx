@@ -4,9 +4,10 @@ import Avatar from "components/Avatar/Avatar";
 import { SinglePageType } from "containers/PageSingle/PageSingle";
 import BookmarkContainer from "containers/BookmarkContainer/BookmarkContainer";
 import PostCardLikeContainer from "containers/PostCardLikeContainer/PostCardLikeContainer";
-import MainNav1 from "./MainNav1";
+
 import MaiNnavprod from "./MaiNavprod";
 import { PageItemType } from "app/pages/pages";
+import MainNav1 from "./MainNav1";
 
 export interface HeaderProps {
   mainNavStyle?: "style1" | "style2";
@@ -20,7 +21,7 @@ const Header: FC<HeaderProps> = ({ mainNavStyle = "style1", currentPage }) => {
   //
   let prevScrollpos = window.pageYOffset;
   //
-  const showSingleMenu = currentPage.type === "/single/:slug";
+  const showSingleMenu = currentPage.type === "/mi/single/:slug";
   //
   const [isSingleHeaderShowing, setIsSingleHeaderShowing] = useState(false);
   const [isTop, setIsTop] = useState(true);

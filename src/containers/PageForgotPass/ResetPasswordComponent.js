@@ -9,9 +9,13 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "../../axiosInstance";
 import { useHistory, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getCurrentSeller, getCurrentStudent, getCurrentTeacher, login } from "app/slices/userSlice";
+import jwt_decode from "jwt-decode";
 
 
 const RestPasswordComponent = ({ className = "" }) => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -41,8 +45,20 @@ const RestPasswordComponent = ({ className = "" }) => {
         .then((res) => {
           setErrors(null);
           setSuccess(res.data.message);
-          console.log(res.data);
-          setTimeout(() => { history.push("/") }, 1000)
+          dispatch(login(res.data.token));
+          const decoded = jwt_decode(res.data.token);
+
+          if (decoded.user_role.includes("seller")) {
+            dispatch(getCurrentSeller());
+          }
+          if (decoded.user_role.includes("student")) {
+            dispatch(getCurrentStudent());
+          }
+          if (decoded.user_role.includes("teacher")) {
+            dispatch(getCurrentTeacher());
+          }
+         
+          setTimeout(() => { history.push("/mi") }, 1000)
         })
         .catch((err) => {
           setErrors(err.response.data.message);

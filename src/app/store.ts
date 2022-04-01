@@ -19,7 +19,18 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  whitelist: ["darkmode", "user", "product", "carteslics", "productLikes"],
+  whitelist: [
+    "darkmode",
+    "user",
+    "product",
+    "productseller",
+    "carteslics",
+    "productLikes",
+    "productReviews",
+    "userManagement",
+    "reclamationsManagement",
+    "filterCourseSlice",
+  ],
 };
 
 const rootReducer = combineReducers(rootReducers);

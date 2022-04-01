@@ -61,7 +61,7 @@ const PageSeller: FC<PageContactProps> = ({ className = "" }) => {
         setSuccess(response.data.message);
         dispatch(login(response.data.token));
         dispatch(getCurrentSeller());
-        history.push("/dashboard");
+        history.push("/back-office/dashboard");
       
       }
     };

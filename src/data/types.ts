@@ -97,3 +97,26 @@ export interface ProductDataType {
   images: string;
   reference: string;
 }
+export interface CourseDataType {
+  id: string;
+  label: String;
+
+  description: String;
+
+  duration: Number;
+
+  price: Number;
+
+  level: String;
+
+  category: String;
+
+  languages: String;
+
+  date: Date;
+
+  CourseImage: String;
+  teacher: String;
+
+  students: String[];
+}

@@ -32,7 +32,7 @@ const ProductCardLikeAndComment: FC<PostCardLikeAndCommentProps> = ({
         product={postData}
       />
       <ProductCardCommentBtn
-        href={postData.href}
+        href={postData._id}
         commentCount={postData.reviewsCount}
         className={`${
           hiddenCommentOnMobile ? "hidden sm:flex" : "flex"

@@ -25,7 +25,7 @@ const SectionBecomeAnStudent: FC<SectionSubscribe2Props> = ({
           Become a student you can earn extra income by adding courses. Read and
           share new perspectives on just about any topic. Everyone’s welcome.
         </span>
-        <ButtonPrimary onClick={()=>history.push("become-student")} className="mt-8">Become a student</ButtonPrimary>
+        <ButtonPrimary onClick={()=>history.push("mi/become-student")} className="mt-8">Become a student</ButtonPrimary>
       </div>
       <div className="flex-grow">
         <NcImage src={rightImg} />

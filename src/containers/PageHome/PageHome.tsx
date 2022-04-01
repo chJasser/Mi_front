@@ -8,6 +8,7 @@ import { Helmet } from "react-helmet";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import SectionGridAuthorBox from "components/SectionGridAuthorBox/SectionGridAuthorBox";
 import { PostDataType } from "data/types";
+import jwt_decode from "jwt-decode";
 import {
   DEMO_POSTS,
   DEMO_POSTS_AUDIO,
@@ -26,12 +27,19 @@ import SectionMagazine8 from "./SectionMagazine8";
 import SectionMagazine9 from "./SectionMagazine9";
 import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {
+  getCurrentSeller,
+  getCurrentStudent,
+  getCurrentTeacher,
   isAuthenticated,
   login,
+  setUserLogedIn,
   userRoles,
 } from "app/slices/userSlice";
+import { resetStateLikes } from "app/productLikes/productLikes";
+import { resetStateReviews } from "app/productReviews/productReviews";
+import { getAllUsers } from "app/usersSlice/adminSlice";
 import SectionBecomeAnTeacher from "components/SectionBecomeAnTeacher/SectionBecomeAnTeacher";
 import SectionBecomeAnStudent from "components/SectionBecomeAnStudent/SectionBecomeAnStudent";
 import SectionBecomeAnSeller from "components/SectionBecomeAnSeller/SectionBecomeAnSeller";
@@ -50,13 +58,35 @@ const PageHome: React.FC = () => {
   const search = useLocation().search;
   const isAuth = useSelector(isAuthenticated);
   const roles = useSelector(userRoles);
+  const history = useHistory();
+
   useEffect(() => {
+    dispatch(getAllUsers());
+    dispatch(resetStateLikes());
+    dispatch(resetStateReviews());
     setToken(new URLSearchParams(search).get("token"));
     if (token !== null) {
       dispatch(login(token));
-    }
-  }, [token]);
 
+      const decoded: any = jwt_decode(token);
+      if (decoded.user_role.includes("seller")) {
+        dispatch(getCurrentSeller());
+      }
+      if (decoded.user_role.includes("student")) {
+        dispatch(getCurrentStudent());
+      }
+      if (decoded.user_role.includes("teacher")) {
+        dispatch(getCurrentTeacher());
+      }
+    }
+    dispatch(setUserLogedIn());
+    const timer = setTimeout(() => {
+      history.push("/mi");
+    }, 1000);
+    dispatch(setUserLogedIn());
+    return () => clearTimeout(timer);
+  }, [token]);
+  
   return (
     <div className="nc-PageHome relative">
       <Helmet>
@@ -92,15 +122,12 @@ const PageHome: React.FC = () => {
               <SectionBecomeAnTeacher />
             </div>
           )}
+          {isAuth && !roles.includes("seller") && <SectionBecomeAnSeller />}
 
           {isAuth && !roles.includes("student") && (
-            <SectionBecomeAnStudent className="pt-16 lg:pt-28" />
-          )}
-
-          {isAuth && !roles.includes("seller") && (
             <div className="relative py-16">
               <BackgroundSection />
-              <SectionBecomeAnSeller />
+              <SectionBecomeAnStudent className="pt-16 lg:pt-28" />
             </div>
           )}
 

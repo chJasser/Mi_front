@@ -31,6 +31,7 @@ const PageForgotPass: FC<PageForgotPassProps> = ({ className = "" }) => {
           }
         });
       if (response && response.data) {
+        console.log(response.data.email);
         history.push(`forgot-pass/${response.data.email}`);
         // formik.resetForm();
       }

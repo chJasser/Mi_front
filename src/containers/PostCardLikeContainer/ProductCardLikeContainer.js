@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import ProductCardLikeAction from "components/PostCardLikeAction/ProductCardLikeAction";
 import axios from "../../axiosInstance";
 import { useState } from "react";
+// import { isAuthenticated } from "app/slices/userSlice";
+// const isAuth = useSelector(isAuthenticated);
 const ProductCardLikeContainer = (props) => {
   const { productId, onClickLike, ...args } = props;
   const [product, setProduct] = useState(props.product);
@@ -54,6 +56,7 @@ const ProductCardLikeContainer = (props) => {
 
   const isLiked = () => {
     var productsIds = [];
+
     likedProducts.forEach((product) => {
       productsIds.push(product._id);
     });

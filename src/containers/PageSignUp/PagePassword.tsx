@@ -7,10 +7,11 @@ import { Helmet } from "react-helmet";
 import axios from "../../axiosInstance";
 import { useFormik } from "formik";
 import { Alert } from "@mui/material";
+import jwt_decode from "jwt-decode";
 import * as Yup from "yup";
 import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { login } from "app/slices/userSlice";
+import { getCurrentSeller, getCurrentStudent, getCurrentTeacher, login } from "app/slices/userSlice";
 
 const PagePassword = ({ className = "" }) => {
   const [errors, setErrors] = useState(null);
@@ -53,8 +54,19 @@ const PagePassword = ({ className = "" }) => {
         setErrors(null);
         setSuccess(response.data.message);
         dispatch(login(response.data.token));
+        const decoded: any = jwt_decode(response.data.token);
+
+        if (decoded.user_role.includes("seller")) {
+          dispatch(getCurrentSeller());
+        }
+        if (decoded.user_role.includes("student")) {
+          dispatch(getCurrentStudent());
+        }
+        if (decoded.user_role.includes("teacher")) {
+          dispatch(getCurrentTeacher());
+        }
         setTimeout(() => {
-          history.push("/");
+          history.push("/mi");
         }, 500);
         formik.resetForm();
       }
