@@ -117,12 +117,12 @@ const PageSingleVideo: FC<PageSingleVideoProps> = ({ className = "" }) => {
         </header>
 
         {/* SINGLE MAIN CONTENT */}
-        <div className="container mt-12">
+        {/* <div className="container mt-12">
           <SingleContent data={SINGLE_VIDEO} />
-        </div>
+        </div> */}
 
         {/* RELATED POSTS */}
-        <SingleRelatedPosts />
+        {/* <SingleRelatedPosts /> */}
       </div>
     </>
   );

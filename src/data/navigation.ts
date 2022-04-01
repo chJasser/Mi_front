@@ -381,6 +381,11 @@ const templateChilds: NavItemType[] = [
     href: "/mi/single-video/this-is-single-slug",
     name: "Single Video",
   },
+  {
+    id: ncNanoId(),
+    href: "/mi/Karaoke",
+    name: "Karaoke",
+  },
 ];
 
 export const NAVIGATION_DEMO: NavItemType[] = [
