@@ -56,6 +56,8 @@ import PageContactMi from "containers/PageContact/PageContactMi";
 import CustomProductsPage from "containers/customProduct/CustomProductsPage";
 import PageFavorite from "containers/PageArchive/PageFavorite";
 import PageHomeMi from "containers/PageHome/PageHomeMi";
+import DashboardEditProfile from "containers/PageDashboard/DashboardEditProfile";
+import Karaoke from "containers/Karaoke/Karaoke";
 
 export const pages: Page[] = [
   { path: "/mi", exact: true, component: PageHomeMi },
@@ -113,11 +115,18 @@ export const pages: Page[] = [
   { path: "/mi/search", component: PageSearch },
   { path: "/mi/search-v2", component: PageSearchV2 },
   { path: "/mi/about", exact: true, component: PageAbout },
-  { path: "/mi/contact", component: PageContact },
-  { path: "/mi/contactUs", component: PageContactMi },
+  { path: "/mi/contact", component: PageContactMi },
   { path: "/mi/page404", component: Page404 },
   { path: "/mi/login", typeRoute: "auth", component: PageLogin },
   { path: "/mi/signup", typeRoute: "auth", component: PageSignUp },
+  {
+    path: "/mi/edit-profile",
+    component: DashboardEditProfile,
+  },
+  {
+    path: "/mi/Karaoke",
+    component: Karaoke,
+  },
   {
     path: "/mi/forgot-pass",
     exact: true,

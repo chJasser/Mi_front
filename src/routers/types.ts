@@ -33,6 +33,8 @@ export interface LocationStates {
   "/mi/dashboard"?: {};
   "/mi/subscription"?: {};
   "/mi/saved-products"?: {};
+  "/mi/edit-profile"?: {};
+  "/mi/Karaoke"?: {};
   //
   "/mi/theme-cyan-blueGrey"?: {};
   "/mi/theme-blue-blueGrey"?: {};

@@ -191,6 +191,11 @@ const otherPageChildMenus: NavItemType[] = [
   },
   {
     id: ncNanoId(),
+    href: "/mi/edit-profile",
+    name: "Edit profile",
+  },
+  {
+    id: ncNanoId(),
     href: "/mi/forgot-pass",
     name: "Forgot Password",
   },
@@ -376,41 +381,39 @@ const templateChilds: NavItemType[] = [
     href: "/mi/single-video/this-is-single-slug",
     name: "Single Video",
   },
+  {
+    id: ncNanoId(),
+    href: "/mi/Karaoke",
+    name: "Karaoke",
+  },
 ];
 
 export const NAVIGATION_DEMO: NavItemType[] = [
   {
     id: ncNanoId(),
-    href: "/mi/",
-    name: "Home",
-    type: "none",
-  },
-
-  {
-    id: ncNanoId(),
     href: "/mi#",
-    name: "Instruments",
+    name: "MI Shop 🏪",
     type: "megaMenu",
     megaMenu: megaMenu3ItemDemo,
   },
   {
     id: ncNanoId(),
     href: "/mi#",
-    name: "Courses",
+    name: "MI Learn 📘",
     type: "megaMenu",
     megaMenu: megaMenu3ItemDemo2,
   },
   {
     id: ncNanoId(),
     href: "/mi#",
-    name: "Karaoke",
+    name: "MI Fun 🎷",
     type: "dropdown",
     children: templateChilds,
   },
   {
     id: ncNanoId(),
     href: "/mi#",
-    name: "Others",
+    name: "Profile ⚙️",
     type: "dropdown",
     children: otherPageChildMenus,
   },

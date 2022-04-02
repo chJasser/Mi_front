@@ -51,7 +51,8 @@ import axios from "axiosInstance";
 import { selectProducts } from "app/productslice/Productslice";
 import SectionLargeSliderMi from "./SectionLargeSliderMi";
 //
-
+import SectionHero from "components/SectionHero/SectionHero";
+import rightImg from "images/hero-right.png";
 //
 const MAGAZINE1_TABS = ["all", "Garden", "Fitness", "Design"];
 const MAGAZINE1_POSTS = DEMO_POSTS.filter((_, i) => i >= 8 && i < 16);
@@ -78,7 +79,8 @@ const PageHomeMi = () => {
   };
   useEffect(() => {
     getProds();
-    dispatch(getAllUsers());
+
+    roles.includes("admin") && dispatch(getAllUsers());
     dispatch(resetStateLikes());
     dispatch(resetStateReviews());
     axios
@@ -125,15 +127,23 @@ const PageHomeMi = () => {
   return (
     <div className="nc-PageHome relative">
       <Helmet>
-        <title>Home || Blog Magazine React Template</title>
+        <title>Home || MI Universe</title>
       </Helmet>
 
       {/* ======== ALL SECTIONS ======== */}
       <div className="relative overflow-hidden">
         {/* ======== BG GLASS ======== */}
+        <div className="container py-16 lg:py-28 space-y-16 lg:space-y-28">
+          <SectionHero
+            rightImg={rightImg}
+            heading="💃 Welcome To MI"
+            btnText=""
+            subHeading="Take a look you may find what you're looking for !"
+          />
+        </div>
         <BgGlassmorphism />
-
         {/* ======= START CONTAINER ============= */}
+
         <div className="container relative">
           {/* === SECTION  === */}
           <SectionLargeSliderMi

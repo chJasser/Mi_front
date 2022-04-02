@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 // components
 
-import CardTable from "components/Cards/CardTable.js";
 import CardTableReclamations from "components/Cards/CardTableReclamations";
 import CardTableOfUsers from "components/Cards/CardTableOfUsers";
 import { useDispatch } from "react-redux";

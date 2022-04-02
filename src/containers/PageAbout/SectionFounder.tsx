@@ -12,31 +12,38 @@ export interface People {
 const FOUNDER_DEMO: People[] = [
   {
     id: "1",
-    name: `Niamh O'Shea`,
+    name: `Alaa Ben Fradj`,
     job: "Co-founder and Chief Executive",
     avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+      "https://scontent.ftun18-1.fna.fbcdn.net/v/t1.6435-9/157922933_3500268416745988_6946512177276557800_n.jpg?_nc_cat=107&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=WstW-khzl-cAX-fbyOD&_nc_ht=scontent.ftun18-1.fna&oh=00_AT__n_LotXivlsTBYAJtWFD5v2P_R_gpQJT-jSWolyQfPA&oe=626C8F6F",
   },
   {
     id: "4",
-    name: `Danien Jame`,
+    name: `Jasser Chaieb`,
     job: "Co-founder and Chief Executive",
     avatar:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+      "https://scontent.ftun18-1.fna.fbcdn.net/v/t39.30808-6/277121967_4953264094768447_5687061202882065890_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=jZC7A6M5UMgAX-WjDsq&_nc_ht=scontent.ftun18-1.fna&oh=00_AT9G9L4jvoogOic50sPAf-sdHUH5LFWIySQVNaJJVyAB-Q&oe=624B7B0A",
   },
   {
     id: "3",
-    name: `Orla Dwyer`,
+    name: `Fakher Hasnaoui`,
     job: "Co-founder, Chairman",
     avatar:
-      "https://images.unsplash.com/photo-1560365163-3e8d64e762ef?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+      "https://scontent.ftun18-1.fna.fbcdn.net/v/t1.6435-9/110080857_3360028920714325_6214673110984339042_n.jpg?_nc_cat=105&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=TadmQwPWQOoAX8AIREL&_nc_ht=scontent.ftun18-1.fna&oh=00_AT_W4-CgXhVr-RrhskYcVqItBB47wJW1z8bfFg0X07GAWg&oe=626BB55C",
   },
   {
     id: "2",
-    name: `Dara Frazier`,
+    name: `Mohammed Oussema Braiek`,
     job: "Co-Founder, Chief Strategy Officer",
     avatar:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+      "https://scontent.ftun18-1.fna.fbcdn.net/v/t1.6435-9/116437937_1742088782598757_2331147029245238921_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=FfMc65vukn0AX_0hIZZ&_nc_ht=scontent.ftun18-1.fna&oh=00_AT_jKnheVAFCunDZ9-Q7OikSqqfz7sE5iZyWnFvtKNgTTA&oe=626B0CB9",
+  },
+  {
+    id: "5",
+    name: `Tayeb Gasmi`,
+    job: "Co-Founder, Chief Strategy Officer",
+    avatar:
+      "https://scontent.ftun18-1.fna.fbcdn.net/v/t1.6435-9/61500475_2222520311298629_8102480134893731840_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=174925&_nc_ohc=afZSMz0CHK8AX_XT4UI&_nc_ht=scontent.ftun18-1.fna&oh=00_AT-yX2EDAuNE9NH8-OhYiQJpKVxXtvNWZR8AOL7G6-NxFw&oe=626AD845",
   },
 ];
 
@@ -44,12 +51,11 @@ const SectionFounder = () => {
   return (
     <div className="nc-SectionFounder relative">
       <Heading
-        desc="We’re impartial and independent, and every day we create distinctive,
-          world-class programmes and content"
+        
       >
-        ⛱ Founder
+        ⛱ Founders
       </Heading>
-      <div className="grid sm:grid-cols-2 gap-x-5 gap-y-8 lg:grid-cols-4 xl:gap-x-8">
+      <div className="grid sm:grid-cols-2 gap-x-5 gap-y-8 lg:grid-cols-5 xl:gap-x-8">
         {FOUNDER_DEMO.map((item) => (
           <div key={item.id} className="max-w-sm">
             <NcImage
@@ -60,9 +66,9 @@ const SectionFounder = () => {
             <h3 className="text-lg font-semibold text-neutral-900 mt-4 md:text-xl dark:text-neutral-200">
               {item.name}
             </h3>
-            <span className="block text-sm text-neutral-500 sm:text-base dark:text-neutral-400">
+            {/* <span className="block text-sm text-neutral-500 sm:text-base dark:text-neutral-400">
               {item.job}
-            </span>
+            </span> */}
           </div>
         ))}
       </div>
