@@ -42,6 +42,9 @@ const ProductsSliceseller = createSlice({
         state.products[index] = payload;
       }
     },
+    showText: (state, action) =>{
+      state.text = action.payload;
+    },
     showForm: (state, action) => {
       state.show = action.payload;
     },
@@ -86,6 +89,7 @@ export const {
   deletesellerProduct,
   updatesellerProduct,
   addProduct,
-  showForm
+  showForm,
+  showText
 } = ProductsSliceseller.actions;
 export default ProductsSliceseller.reducer;

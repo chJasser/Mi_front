@@ -1,11 +1,15 @@
 import { StarIcon } from "@heroicons/react/solid";
 import { RadioGroup } from "@headlessui/react";
 import { useState, Suspense, useEffect } from "react";
-import { ContactShadows, Environment, OrbitControls } from "@react-three/drei";
+import { ContactShadows, Environment, OrbitControls, Stars, Text } from "@react-three/drei";
 
 import { Canvas } from "@react-three/fiber";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Pianoo from "./Pianoo";
+import Exemple1 from "./Exemple1"
+import {showText} from "../../app/productslice/Productsliceseller"
+import { useDispatch } from "react-redux";
+import { Input } from "@mui/material";
 
 const reviews = { href: "#", average: 4, totalCount: 117 };
 
@@ -27,10 +31,14 @@ export default function Example2() {
   const [selectedSize, setSelectedSize] = useState();
   const [Hinges, setHinges] = useState("#FFF36B");
   const [Keys, setKeys] = useState("#FFFFFF");
-  const [Piano, setPiano] = useState("#000000");
+  const [Piano, setPiano] = useState("#A8A8A8");
   const [HingesChanged, setHingesChanged] = useState(false);
   const [KeysChanged, setKeysChanged] = useState(false);
   const [PianoChanged, setPianoChanged] = useState(false);
+  const [show, setShow] = useState(false);
+  const [text, setText] = useState("");
+  const [color, setColor] = useState("#000000")
+  const dispatch = useDispatch();
   const [product, setProduct] = useState({
     name: "Basic Keyboard",
     price: 3000,
@@ -62,11 +70,14 @@ export default function Example2() {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+  const handleTextColor = (e) => {
+    setColor(e.target.value);
+  };
   const handleCancel = (e) => {
     e.preventDefault();
-    setHinges("#FFF36B");
-    setKeys("#FFFFFF");
-    setPiano("#000000");
+    setHinges("#E1FF00");
+    setKeys("#FAFAFA");
+    setPiano("#8F8F8F");
     setHingesChanged(false);
     setPianoChanged(false);
     setKeysChanged(false);
@@ -89,7 +100,7 @@ export default function Example2() {
           <Canvas
             shadows
             dpr={[1, 2]}
-            camera={{ position: [0, 1, 2], fov: 50 }}
+            camera={{ position: [-3, 0, 3], fov: 35 }} 
           >
             <ambientLight intensity={0.7} />
             <spotLight
@@ -100,15 +111,21 @@ export default function Example2() {
               castShadow
             />
             <Suspense fallback={null}>
-              <Pianoo
+              <Exemple1
                 customColors={{
                     Hinges: Hinges,
                     Keys: Keys,
                     Piano: Piano,
                 }}
               />
+              <Text
+                text={text}
+                color={color}
+                position={[0.02, 1, -0.02]}
+              >
+              </Text>
               <Environment preset="city" />
-              <ContactShadows
+              {/* <ContactShadows
                 rotation-x={Math.PI / 2}
                 position={[0, -0.8, 0]}
                 opacity={0.25}
@@ -116,6 +133,14 @@ export default function Example2() {
                 height={10}
                 blur={1.5}
                 far={0.8}
+              /> */}
+              <Stars
+                radius={100} // Radius of the inner sphere (default=100)
+                depth={50} // Depth of area where stars should fit (default=50)
+                count={5000} // Amount of stars (default=5000)
+                factor={4} // Size factor (default=4)
+                saturation={0} // Saturation 0-1 (default=0)
+                fade // Faded dots (default=false)
               />
             </Suspense>
             <OrbitControls
@@ -123,6 +148,7 @@ export default function Example2() {
               enableZoom={true}
               enableRotate={true}
             />
+            
           </Canvas>
         </div>
       </div>
@@ -210,6 +236,16 @@ export default function Example2() {
                   Custom pictures
                 </h3>
               </div>
+              <label>Text: </label>
+              <Input onChange={event => setText(event.target.value)} />
+              <label>Text Color</label>
+              <input
+                    type="color"
+                    id="text"
+                    name="text"
+                    value="black"
+                    onChange={(e) => handleTextColor(e)}
+                  />
 
               <RadioGroup
                 value={selectedSize}

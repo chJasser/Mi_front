@@ -92,7 +92,7 @@ const PageArchiveAudio: FC<PageArchiveAudioProps> = ({ className = "" }) => {
             </div>
             <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>
             <div className="flex justify-end">
-              <ArchiveFilterListBox lists={FILTERS} />
+              
             </div>
           </div>
 

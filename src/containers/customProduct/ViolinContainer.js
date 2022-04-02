@@ -4,9 +4,8 @@ import { useState, Suspense, useEffect } from "react";
 import { ContactShadows, Environment, OrbitControls } from "@react-three/drei";
 
 import { Canvas } from "@react-three/fiber";
-import Guitar from "./Guitar_model";
 import ButtonPrimary from "components/Button/ButtonPrimary";
-import Violin from "./Vio";
+import Violin from "./Violin";
 
 const reviews = { href: "#", average: 4, totalCount: 117 };
 
@@ -85,7 +84,7 @@ export default function ViolinContainer() {
     setBody("#E8B187");
     setChords("#B9B7BD");
     setRest("#4C2C2E");
-    setThe_stick("#4C2C2E");
+    setThe_stick("");
     setBodyChanged(false);
     setRestChanged(false);
     setChordsChanged(false);
@@ -110,7 +109,7 @@ export default function ViolinContainer() {
           <Canvas
             shadows
             dpr={[1, 2]}
-            camera={{ position: [0, 0, 25], fov: 50 }}
+            camera={{ position: [70, 25, 25], fov: 2 }}
           >
             <directionalLight position={[10, 10, 5]} intensity={2} />
             <directionalLight position={[-10, -10, -5]} intensity={1} />
