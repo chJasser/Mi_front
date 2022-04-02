@@ -1,32 +1,60 @@
 import { Helmet } from "react-helmet";
-import NcLink from "components/NcLink/NcLink";
 import Input from "components/Input/Input";
 import ButtonCircle from "components/Button/ButtonCircle";
 import { useState } from "react";
 import image from "images/dance.jpg";
 import { useDispatch } from "react-redux";
 import axios from "axiosInstance";
-import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
-import Autocomplete from "@mui/material/Autocomplete";
-import React, { FC, ReactNode, useEffect } from "react";
-import { PostDataType, TaxonomyType } from "data/types";
-import { SINGLE_VIDEO } from "data/single";
-import { CommentType } from "components/CommentCard/CommentCard";
-import { useAppDispatch } from "app/hooks";
-import { changeCurrentPage } from "app/pages/pages";
-import SingleContent from "containers/PageSingle/SingleContent";
-import SingleRelatedPosts from "containers/PageSingle/SingleRelatedPosts";
 import ReactPlayer from "react-player";
 import NcPlayIcon from "components/NcPlayIcon/NcPlayIcon";
-import SingleMetaAction2 from "containers/PageSingle/SingleMetaAction2";
-import CategoryBadgeList from "components/CategoryBadgeList/CategoryBadgeList";
 import SingleTitle from "containers/PageSingle/SingleTitle";
-import PostMeta2 from "components/PostMeta2/PostMeta2";
 import NcImage from "components/NcImage/NcImage";
 import isSafariBrowser from "utils/isSafariBrowser";
+/**
+ *
+ *
+ */
+import { Typography, AppBar } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
+import VideoPlayer from "./components/VideoPlayer";
+import Sidebar from "./components/SideBar";
+import Notifications from "./components/Notifications";
+import ButtonPrimary from "components/Button/ButtonPrimary";
+import Badge from "components/Badge/Badge";
+import ButtonSecondary from "components/Button/ButtonSecondary";
+const useStyles = makeStyles((theme) => ({
+  appBar: {
+    borderRadius: 15,
+    margin: "30px 100px",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "600px",
+    border: "2px solid black",
+
+    [theme.breakpoints.down("xs")]: {
+      width: "90%",
+    },
+  },
+  image: {
+    marginLeft: "15px",
+  },
+  wrapper: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    width: "100%",
+  },
+}));
+/**
+ *
+ *
+ *
+ */
 function Karaoke() {
+  const classes = useStyles();
   const dispatch = useDispatch();
   let className = "";
   const [search, setSearch] = useState("");
@@ -73,33 +101,6 @@ function Karaoke() {
           light={isSafariBrowser() ? false : chosenSong.Image}
           playIcon={<NcPlayIcon />}
         />
-      </div>
-    );
-  };
-
-  const renderHeader = () => {
-    const { Singer, Song } = chosenSong;
-    return (
-      <div className={`nc-SingleHeader ${className}`}>
-        <div className="space-y-5 dark text-neutral-100">
-          {/* <CategoryBadgeList itemClass="!px-3" categories={categories} /> */}
-          <SingleTitle
-            mainClass="text-neutral-900 font-semibold text-3xl md:!leading-[120%] dark:text-neutral-100"
-            title={Song.toUpperCase()}
-          />
-
-          {/* <div className="w-full border-b border-neutral-100 dark:border-neutral-800"></div>
-          <div className="flex flex-col space-y-5">
-            <PostMeta2
-              size="large"
-              className="leading-none flex-shrink-0"
-              meta={SINGLE_VIDEO}
-              hiddenCategories
-              avatarRounded="rounded-full shadow-inner"
-            />
-            <SingleMetaAction2 meta={SINGLE_VIDEO} />
-          </div> */}
-        </div>
       </div>
     );
   };
@@ -234,11 +235,6 @@ function Karaoke() {
                       </h2>
                     </div>
                   )}
-                  {/* <span className="mr-2.5">Related:</span>
-                  <h2 className="mr-2.5 inline-block font-normal" to="/#">
-                    Design
-                  </h2>
-                   */}
                 </div>
               </header>
             </div>
@@ -252,25 +248,50 @@ function Karaoke() {
       >
         {/* SINGLE HEADER */}
         <header className="container relative py-14 lg:py-20 flex flex-col lg:flex-row lg:items-center">
-          <div className="absolute inset-y-0 transform translate-x-1/2 right-1/2 w-screen lg:translate-x-0 lg:w-[calc(100vw/2)] bg-neutral-900 dark:bg-black dark:bg-opacity-50 lg:rounded-r-[40px]"></div>
-          <div className="pb-10 lg:pb-0 lg:pr-10 relative">
-            {renderHeader()}
-          </div>
-          <div className="relative lg:w-8/12 flex-shrink-0">
+          <div className="relative lg:w-6/12 flex-shrink-0">
             <div className="aspect-w-16 aspect-h-16 sm:aspect-h-9 ">
               {renderMainVideo()}
             </div>
           </div>
+          <div className={classes.wrapper}>
+            <Sidebar>
+              <Notifications />
+            </Sidebar>
+          </div>
         </header>
-
-        {/* SINGLE MAIN CONTENT */}
-        {/* <div className="container mt-12">
-        <SingleContent data={SINGLE_VIDEO} />
-      </div> */}
-
-        {/* RELATED POSTS */}
-        {/* <SingleRelatedPosts /> */}
+        <VideoPlayer />
       </div>
+      {/* Streaming !!! */}
+      <div className="gap-2 my-10"></div>
+      <header className="container rounded-xl">
+        <div className={`nc-SingleHeader`}>
+          <div className="w-full px-2 xl:max-w-screen-2xl mx-auto">
+            <div className="rounded-3xl relative aspect-w-16 aspect-h-12 sm:aspect-h-7 lg:aspect-h-6 xl:aspect-h-5 2xl:aspect-h-4 overflow-hidden ">
+              <NcImage
+                containerClassName="absolute inset-0"
+                src="https://images.pexels.com/photos/5967960/pexels-photo-5967960.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                className="object-cover w-full h-full"
+              />
+              <div className="absolute inset-0 bg-black text-white bg-opacity-30 flex flex-col items-center justify-center">
+                <div className="flex justify-between">
+                  <Badge className="" name="FREE" />
+                </div>
+
+                <h2 className="inline-block align-middle ml-3 text-5xl font-semibold md:text-7xl ">
+                  Enjoy yourself
+                </h2>
+
+                {/* {!!reference && !false && (
+                  <h4 className="inline-block align-middle ml-5 text-3xl md:text-2xl px-8 py- text-center">
+                    {reference}
+                  </h4>
+                )} */}
+              </div>
+            </div>
+            <ButtonSecondary href="/mi">Home</ButtonSecondary>
+          </div>
+        </div>
+      </header>
     </>
   );
 }
