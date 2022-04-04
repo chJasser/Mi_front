@@ -5,7 +5,7 @@ import Pagination from "components/Pagination/Pagination";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Nav from "components/Nav/Nav";
 import NavItem from "components/NavItem/NavItem";
-import ArchiveFilterListBox from "components/ArchiveFilterListBox/ArchiveFilterListBox";
+import ArchiveFilterListBox from "components/ArchiveFilterListBox/courseFilter";
 import Input from "components/Input/Input";
 import { Helmet } from "react-helmet";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";

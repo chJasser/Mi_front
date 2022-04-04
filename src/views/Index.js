@@ -18,7 +18,6 @@ export default function Index() {
                 MI Universe
               </h2>
               <p className="mt-4 text-lg leading-relaxed text-blueGray-500">
-                
                 <a
                   href="https://tailwindcss.com/?ref=creativetim"
                   className="text-blueGray-600"

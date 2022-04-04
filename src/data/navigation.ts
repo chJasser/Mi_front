@@ -387,7 +387,18 @@ const templateChilds: NavItemType[] = [
     name: "Karaoke",
   },
 ];
-
+const classroomChildren: NavItemType[] = [
+  {
+    id: ncNanoId(),
+    href: "/mi/classroom/student",
+    name: "student",
+  },
+  {
+    id: ncNanoId(),
+    name: "teacher",
+    href: "/mi/classroom/teacher",
+  },
+];
 export const NAVIGATION_DEMO: NavItemType[] = [
   {
     id: ncNanoId(),
@@ -398,10 +409,10 @@ export const NAVIGATION_DEMO: NavItemType[] = [
   },
   {
     id: ncNanoId(),
-    href: "/mi#",
+    href: "/mi/classroom",
     name: "MI Learn 📘",
-    type: "megaMenu",
-    megaMenu: megaMenu3ItemDemo2,
+    type: "dropdown",
+    children: classroomChildren,
   },
   {
     id: ncNanoId(),

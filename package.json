@@ -53,8 +53,6 @@
     "jwt-decode": "^3.1.2",
     "moment": "2.29.1",
     "moment-timezone": "^0.5.31",
-    "node-sass": "^4.14.1",
-    "node-sass-package-importer": "5.3.2",
     "nouislider": "15.2.0",
     "npm": "^8.5.5",
     "peerjs": "^1.3.2",
@@ -76,6 +74,7 @@
     "react-modal": "^3.14.4",
     "react-paginate": "^8.1.2",
     "react-player": "^2.9.0",
+    "react-rating-stars-component": "^2.2.0",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-router-hash-link": "^2.3.1",
@@ -141,6 +140,7 @@
     "postcss-cssjanus": "^1.0.5",
     "react-error-overlay": "^6.0.9",
     "redux-logger": "^3.0.6",
+    "sass": "^1.49.10",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
     "yarn": "^1.22.17"
   }

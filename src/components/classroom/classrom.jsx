@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Pagination from "components/Pagination/Pagination";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Nav from "components/Nav/Nav";
@@ -19,11 +19,12 @@ import CardCourse from "components/Card11/CardCourse";
 import axios from "axiosInstance";
 import CourseFilterCategory from "./../../components/ArchiveFilterListBox/courseCategoryFilter";
 import Slider from "@material-ui/core/Slider";
-import { useSelector, useDispatch } from "react-redux";
-
-export interface PageSearchV2Props {
-  className?: string;
-}
+import { useDispatch, useSelector } from "react-redux";
+import {
+  filterByPriceCourse,
+  filterByDurationCourse,
+  intialCourseSearch,
+} from "../../app/slices/courseFilter";
 const categories = [
   { name: "all" },
   { name: "voice" },
@@ -53,23 +54,11 @@ const TABS = [
   "Top courses for beginner",
   "Recommended",
 ];
-
-const courseSearch = {
-  label: null,
-  description: null,
-  level: null,
-  languages: null,
-  maxprice: null,
-  maxduration: null,
-  minprice: null,
-  minduration: null,
-  category: null,
-};
-
-const PageSearchV2: FC<PageSearchV2Props> = ({ className = "" }) => {
-  const category = useSelector((state) => state.filterCourseSlice.catrgory);
-  const [search, setSearch] = useState(courseSearch);
+const Classroom = ({ className = "" }) => {
+  const dispatch = useDispatch();
+  const [label, setLabel] = useState(null);
   const [list, setList] = useState([]);
+  const search = useSelector((state) => state.filterCourseSlice);
   const [details, setDetails] = useState({
     maxprice: 0,
     minprice: 0,
@@ -80,20 +69,15 @@ const PageSearchV2: FC<PageSearchV2Props> = ({ className = "" }) => {
     const nb = await axios.get(`rate-course/get-rate/${id}`);
     return nb.data.totalRate;
   };
-  const comparelike = async (u, v) => {
-    const likeU = await nbLike(u._id);
-    const likeV = await nbLike(v._id);
-    return likeU - likeV;
-  };
-  let s = "Ui Design";
+
   useEffect(() => {
     axios
-      .put("courses/searchCourse", { ...search })
+      .put("courses/searchCourse", { ...search, label })
       .then((course) => {
         setList(course.data);
       })
       .catch((err) => console.log(err));
-  }, [search]);
+  }, [search, label]);
   useEffect(() => {
     axios
       .get("courses/details")
@@ -101,12 +85,24 @@ const PageSearchV2: FC<PageSearchV2Props> = ({ className = "" }) => {
         setDetails(course.data);
       })
       .catch((err) => console.log(err));
-    console.log(category);
+    dispatch(
+      intialCourseSearch({
+        label: null,
+        description: null,
+        level: null,
+        languages: null,
+        maxprice: null,
+        maxduration: null,
+        minprice: null,
+        minduration: null,
+        category: null,
+      })
+    );
   }, []);
 
-  const [tabActive, setTabActive] = useState<string>(TABS[0]);
+  const [tabActive, setTabActive] = useState(TABS[0]);
 
-  const handleClickTab = (item: string) => {
+  const handleClickTab = (item) => {
     if (item === tabActive) {
       return;
     }
@@ -133,9 +129,8 @@ const PageSearchV2: FC<PageSearchV2Props> = ({ className = "" }) => {
                 className="shadow-lg rounded-xl border-opacity-0"
                 sizeClass="pl-14 py-5 pr-5 md:pl-16"
                 onChange={(e) => {
-                  if (e.target.value === "")
-                    setSearch({ ...search, label: null });
-                  else setSearch({ ...search, label: e.target.value });
+                  if (e.target.value === "") setLabel(null);
+                  else setLabel(e.target.value);
                 }}
               />
               <span className="absolute left-5 top-1/2 transform -translate-y-1/2 text-2xl md:left-6">
@@ -157,9 +152,7 @@ const PageSearchV2: FC<PageSearchV2Props> = ({ className = "" }) => {
               1135
             </strong>{" "}
             results articles for{" "}
-            <strong className="font-semibold text-neutral-800 dark:text-neutral-100">
-              "{s}"
-            </strong>
+            <strong className="font-semibold text-neutral-800 dark:text-neutral-100"></strong>
           </span>
         </header>
       </div>
@@ -175,13 +168,18 @@ const PageSearchV2: FC<PageSearchV2Props> = ({ className = "" }) => {
             >
               <h3>What is your budget?</h3>
               <Slider
-                onChange={(e, v) =>
-                  setSearch({ ...search, maxprice: v[1], minprice: v[0] })
-                }
+                key={"Priceslider" + details.minprice + "-" + details.maxprice}
+                onChange={(e, v) => {
+                  dispatch(filterByPriceCourse(v));
+                }}
                 valueLabelDisplay="auto"
                 defaultValue={[details.minprice, details.maxprice]}
                 max={details.maxprice}
                 min={details.minprice}
+                marks={[
+                  { label: details.minprice + "$", value: details.minprice },
+                  { label: details.maxprice + "$", value: details.maxprice },
+                ]}
               />
             </div>
             <div
@@ -193,13 +191,27 @@ const PageSearchV2: FC<PageSearchV2Props> = ({ className = "" }) => {
             >
               <h3>nomber of hours?</h3>
               <Slider
-                onChange={(e, v) =>
-                  setSearch({ ...search, maxduration: v[1], minduration: v[0] })
+                key={
+                  "Durationslider---" +
+                  details.minduration +
+                  "---" +
+                  details.maxduration
                 }
+                onChange={(e, v) => dispatch(filterByDurationCourse(v))}
                 valueLabelDisplay="auto"
                 defaultValue={[details.minduration, details.maxduration]}
                 max={details.maxduration}
                 min={details.minduration}
+                marks={[
+                  {
+                    label: details.minduration + "h",
+                    value: details.minduration,
+                  },
+                  {
+                    label: details.maxduration + "h",
+                    value: details.maxduration,
+                  },
+                ]}
               />
             </div>
           </div>
@@ -222,23 +234,14 @@ const PageSearchV2: FC<PageSearchV2Props> = ({ className = "" }) => {
             </Nav>
             <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>
             <div className="flex justify-end">
-              <CourseFilter
-                className="my-2"
-                lists={levels}
-                setSearch={setSearch}
-                search={search}
-              />
+              <CourseFilter className="my-2" lists={levels} />
               <CourseFilterLanguage
                 className="my-2"
                 lists={languages}
-                setSearch={setSearch}
-                search={search}
               ></CourseFilterLanguage>
               <CourseFilterCategory
                 className="my-2"
                 lists={categories}
-                setSearch={setSearch}
-                search={search}
               ></CourseFilterCategory>
             </div>
           </div>
@@ -294,4 +297,4 @@ const PageSearchV2: FC<PageSearchV2Props> = ({ className = "" }) => {
   );
 };
 
-export default PageSearchV2;
+export default Classroom;

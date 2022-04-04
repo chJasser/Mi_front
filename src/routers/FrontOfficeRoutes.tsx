@@ -58,6 +58,9 @@ import PageFavorite from "containers/PageArchive/PageFavorite";
 import PageHomeMi from "containers/PageHome/PageHomeMi";
 import DashboardEditProfile from "containers/PageDashboard/DashboardEditProfile";
 import Karaoke from "containers/Karaoke/Karaoke";
+import Classroom from "./../components/classroom/classrom";
+import StudentClassroom from "../components/classroom/StudentClassroom";
+import TeacherClassroom from "../components/classroom/TeacherClassroom";
 
 export const pages: Page[] = [
   { path: "/mi", exact: true, component: PageHomeMi },
@@ -171,6 +174,25 @@ export const pages: Page[] = [
     exact: true,
     typeRoute: "student",
     component: PageBecomeStudent,
+  },
+  {
+    path: "/mi/classroom",
+    exact: true,
+    typeRoute: "classroom",
+    component: Classroom,
+  },
+  {
+    path: "/mi/classroom/student",
+    exact: true,
+    typeRoute: "classroom",
+    component: StudentClassroom,
+  },
+
+  {
+    path: "/mi/classroom/teacher",
+    exact: true,
+    typeRoute: "classroom",
+    component: TeacherClassroom,
   },
 
   //back-office

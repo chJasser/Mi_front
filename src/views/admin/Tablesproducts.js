@@ -6,7 +6,6 @@ import CardTable from "components/Cards/CardTable.js";
 import TableOfProducts from "components/Cards/TableOfProducts";
 import ProductsContainer from "components/Cards/ProductsContainer";
 
-
 export default function Tablesproducts() {
   return (
     <>

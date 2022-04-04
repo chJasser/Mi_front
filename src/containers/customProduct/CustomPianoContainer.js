@@ -113,9 +113,9 @@ export default function Example2() {
             <Suspense fallback={null}>
               <Exemple1
                 customColors={{
-                    Hinges: Hinges,
-                    Keys: Keys,
-                    Piano: Piano,
+                  Hinges: Hinges,
+                  Keys: Keys,
+                  Piano: Piano,
                 }}
               />
               <Text

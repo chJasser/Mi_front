@@ -3,7 +3,13 @@ import { createPopper } from "@popperjs/core";
 import axios from "axiosInstance";
 import { useDispatch, useSelector } from "react-redux";
 
-import{deletesellerProduct,addProduct,selectsellerProduct,populatesellerProducts,showForm}from "app/productslice/Productsliceseller"
+import {
+  deletesellerProduct,
+  addProduct,
+  selectsellerProduct,
+  populatesellerProducts,
+  showForm,
+} from "app/productslice/Productsliceseller";
 
 const ProductManagement = (props) => {
   const [onDeleted, setOnDeleted] = useState(false);
@@ -22,21 +28,24 @@ const ProductManagement = (props) => {
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
   };
-  const handledeleteproduct=()=>{
-     dispatch(deletesellerProduct(id));
-      closeDropdownPopover();
-    axios.delete(`/products/delete-product/${id}`).then((res)=>{
-          console.log(res.data);
-      }).catch((err)=>{
-          console.log(err);
+  const handledeleteproduct = () => {
+    dispatch(deletesellerProduct(id));
+    closeDropdownPopover();
+    axios
+      .delete(`/products/delete-product/${id}`)
+      .then((res) => {
+        console.log(res.data);
       })
-  }
-  const handleupdateproduct=()=>{
-      dispatch(selectsellerProduct(product));
-      closeDropdownPopover();
-      dispatch(showForm(true));
-  }
-  
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const handleupdateproduct = () => {
+    dispatch(selectsellerProduct(product));
+    closeDropdownPopover();
+    dispatch(showForm(true));
+  };
+
   return (
     <>
       <button
