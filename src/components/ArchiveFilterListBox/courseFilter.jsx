@@ -1,12 +1,10 @@
-import React, { FC } from "react";
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/solid";
-import { ListBoxItemType } from "components/NcListBox/NcListBox";
 import ButtonDropdown from "components/ButtonDropdown/ButtonDropdown";
 import { useDispatch } from "react-redux";
-import { getfield } from "./../../app/usersSlice/courseSearchSlice.js";
-import UsersSlice from "./../../app/usersSlice/adminSlice";
+import { filterByLevelCourse } from "../../app/slices/courseFilter";
+
 function CourseFilter(props) {
   const dispatch = useDispatch();
   const [selected, setSelected] = useState(props.lists[0]);
@@ -18,10 +16,8 @@ function CourseFilter(props) {
       <Listbox
         value={selected}
         onChange={(e) => {
+          dispatch(filterByLevelCourse(e.name));
           setSelected(e);
-          if (e.name === "all")
-            props.setSearch({ ...props.search, level: null });
-          else props.setSearch({ ...props.search, level: e.name });
         }}
       >
         <div className="relative md:min-w-[200px]">

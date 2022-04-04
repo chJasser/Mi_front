@@ -1,12 +1,13 @@
-import React, { FC } from "react";
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/solid";
-import { ListBoxItemType } from "components/NcListBox/NcListBox";
 import ButtonDropdown from "components/ButtonDropdown/ButtonDropdown";
-
+import { useDispatch } from "react-redux";
+import { filterByLanguageCourse } from "../../app/slices/courseFilter";
 function CourseFilterLanguage(props) {
   const [selected, setSelected] = useState(props.lists[0]);
+  const dispatch = useDispatch();
+
   return (
     <div
       className={`nc-ArchiveFilterListBox ${props.className}`}
@@ -15,10 +16,8 @@ function CourseFilterLanguage(props) {
       <Listbox
         value={selected}
         onChange={(e) => {
+          dispatch(filterByLanguageCourse(e.name));
           setSelected(e);
-          if (e.name === "all")
-            props.setSearch({ ...props.search, languages: null });
-          else props.setSearch({ ...props.search, languages: e.name });
         }}
       >
         <div className="relative md:min-w-[200px]">

@@ -1,12 +1,14 @@
-import React, { FC } from "react";
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/solid";
-import { ListBoxItemType } from "components/NcListBox/NcListBox";
 import ButtonDropdown from "components/ButtonDropdown/ButtonDropdown";
+import { filterByCategoryCourse } from "../../app/slices/courseFilter";
+import { useDispatch, useSelector } from "react-redux";
 
 function CourseFilterCategory(props) {
   const [selected, setSelected] = useState(props.lists[0]);
+  const category = useSelector((state) => state.category);
+  const dispatch = useDispatch();
   return (
     <div
       className={`nc-ArchiveFilterListBox ${props.className}`}
@@ -16,9 +18,7 @@ function CourseFilterCategory(props) {
         value={selected}
         onChange={(e) => {
           setSelected(e);
-          if (e.name === "all")
-            props.setSearch({ ...props.search, category: null });
-          else props.setSearch({ ...props.search, category: e.name });
+          dispatch(filterByCategoryCourse(e.name));
         }}
       >
         <div className="relative md:min-w-[200px]">

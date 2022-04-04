@@ -62,6 +62,11 @@ export interface LocationStates {
   "/mi/become-teacher"?: {};
   "/mi/become-seller"?: {};
   "/mi/become-student"?: {};
+  "/mi/classroom"?: {};
+  "/mi/classroom/teacher"?: {};
+  "/mi/classroom/student"?: {};
+  "/mi/classroom/teacher/:id"?: {};
+  "/mi/classroom/student/:id"?: {};
 
   // back-office
   "/headerback"?: {};

@@ -8,13 +8,11 @@ import ButtonDropdown from "components/ButtonDropdown/ButtonDropdown";
 export interface ArchiveFilterListBoxProps {
   className?: string;
   lists: ListBoxItemType[];
- 
 }
 
 const ArchiveFilterListBox: FC<ArchiveFilterListBoxProps> = ({
   className = "",
-  lists
- 
+  lists,
 }) => {
   const [selected, setSelected] = useState(lists[0]);
   return (

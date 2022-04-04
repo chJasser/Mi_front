@@ -1,8 +1,11 @@
-import React, { FC, useState, lazy, useEffect } from "react";
+import { FC, useState, lazy, useEffect } from "react";
 import CourseFeaturedMedia from "components/PostFeaturedMedia/CourseFeaturedMedia";
 import Badge from "components/Badge/Badge";
 import axios from "axiosInstance";
 import ReactStars from "react-rating-stars-component";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "app/store";
+import { setSub } from "app/slices/sub";
 
 export interface Card11Props {
   className?: string;
@@ -18,6 +21,7 @@ const Card11Product: FC<Card11Props> = ({
   ratio = "aspect-w-4 aspect-h-3",
 }) => {
   const {
+    students,
     label,
     description,
     category,
@@ -29,34 +33,46 @@ const Card11Product: FC<Card11Props> = ({
     CourseImage,
     dateCreation,
     subscribers,
+    teacher,
   } = course;
-  const [rate, setrating] = useState(0);
-  const [myrate, setMyRate] = useState(0);
-  const [selectedCourse, SetSelectedCourse] = useState(null);
+  const dispatch = useDispatch();
+  const sub = useSelector((state: RootState) => state.sub.subscribe);
+  const [rate, setrate] = useState({ totalRate: 0, myrate: 0 });
+  const [change, setChange] = useState(0);
+  const currentteacher = useSelector(
+    (state: RootState) => state.user.currentTeacher
+  );
+  const student = useSelector((state: RootState) => state.user.currentStudent);
+  const subscribe = () => {
+    axios
+      .put(`courses/subscribe-course/${_id}`, null)
 
+      .catch((err) => console.log(err));
+  };
+  const unsubscribe = () => {
+    axios
+      .put(`courses/unsubscribe-course/${_id}`, null)
+
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
     axios
-      .get(`rate-course/get-rate/${_id}`)
-      .then((value) => setrating(value.data.totalRate))
+      .get(`rate-course/${_id}`)
+      .then((value) => {
+        setrate({ ...value.data });
+      })
       .catch((err) => console.log(err));
-    axios
-      .get(`rate-course/rate/${_id}`)
-      .then((value) => setMyRate(value.data.totalRate))
-      .catch((err) => console.log(err));
-    console.log(myrate);
-  }, []);
+  });
   useEffect(() => {
-    if (myrate !== undefined && myrate !== 0)
+    if (change !== undefined && change !== 0)
       axios
-        .post(`rate-course/${_id}/${myrate}`)
-        .then(() => console.log("rated "))
+        .post(`rate-course/${_id}/${change}`)
         .catch((err) => console.log(err));
-  }, [myrate]);
+  }, [change]);
 
   const date = dateCreation;
 
   const [isHover, setIsHover] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div
@@ -100,18 +116,44 @@ const Card11Product: FC<Card11Props> = ({
           {subscribers + ":" + duration + "h"}
         </h2>
         <div className="flex items-end justify-between mt-auto">
-          {`rate:${rate}`}
+          {`rate:${rate.totalRate}`}
           {
             <ReactStars
-              value={myrate}
+              key={"star" + rate.myrate + ":" + _id}
+              value={rate.myrate}
               count={5}
               size={24}
               activeColor="#ffd700"
               onChange={(v) => {
-                setMyRate(v);
+                setChange(v);
               }}
             ></ReactStars>
           }
+        </div>
+        <div className="flex items-end justify-between mt-auto">
+          {((!students.includes(student._id) && sub === null) ||
+            sub === true) && (
+            <button
+              onClick={() => {
+                dispatch(setSub(false));
+                unsubscribe();
+              }}
+            >
+              unsubscribe
+            </button>
+          )}
+          {teacher === currentteacher._id && <label>your course</label>}
+          {((!students.includes(student._id) && sub === null) ||
+            sub === false) && (
+            <button
+              onClick={() => {
+                subscribe();
+                dispatch(setSub(true));
+              }}
+            >
+              subscribe
+            </button>
+          )}
         </div>
       </div>
     </div>
