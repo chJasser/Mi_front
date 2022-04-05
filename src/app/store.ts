@@ -32,7 +32,6 @@ const persistConfig = {
     "filterSlice",
     "karaoke",
     "filterCourseSlice",
-    "sub",
     "CoursemodalSlice",
   ],
 };

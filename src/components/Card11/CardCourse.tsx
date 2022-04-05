@@ -5,7 +5,6 @@ import axios from "axiosInstance";
 import ReactStars from "react-rating-stars-component";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "app/store";
-import { setSub } from "app/slices/sub";
 
 export interface Card11Props {
   className?: string;
@@ -36,9 +35,10 @@ const Card11Product: FC<Card11Props> = ({
     teacher,
   } = course;
   const dispatch = useDispatch();
-  const sub = useSelector((state: RootState) => state.sub.subscribe);
+  // const sub = useSelector((state: RootState) => state.sub.subscribe);
   const [rate, setrate] = useState({ totalRate: 0, myrate: 0 });
   const [change, setChange] = useState(0);
+  const [sub, setSubsc] = useState(null);
   const currentteacher = useSelector(
     (state: RootState) => state.user.currentTeacher
   );
@@ -69,7 +69,6 @@ const Card11Product: FC<Card11Props> = ({
         .post(`rate-course/${_id}/${change}`)
         .catch((err) => console.log(err));
   }, [change]);
-
   const date = dateCreation;
 
   const [isHover, setIsHover] = useState(false);
@@ -131,27 +130,48 @@ const Card11Product: FC<Card11Props> = ({
           }
         </div>
         <div className="flex items-end justify-between mt-auto">
-          {((!students.includes(student._id) && sub === null) ||
-            sub === true) && (
-            <button
-              onClick={() => {
-                dispatch(setSub(false));
-                unsubscribe();
-              }}
-            >
-              unsubscribe
-            </button>
-          )}
-          {teacher === currentteacher._id && <label>your course</label>}
-          {((!students.includes(student._id) && sub === null) ||
-            sub === false) && (
+          {sub === null &&
+            (teacher === currentteacher._id ? (
+              <label>your course</label>
+            ) : !students.includes(student._id) ? (
+              <button
+                onClick={() => {
+                  subscribe();
+                  setSubsc(true);
+                }}
+              >
+                subscribe
+              </button>
+            ) : (
+              students.includes(student._id) && (
+                <button
+                  onClick={() => {
+                    unsubscribe();
+                    setSubsc(false);
+                  }}
+                >
+                  unsubscribe
+                </button>
+              )
+            ))}
+          {sub === false && (
             <button
               onClick={() => {
                 subscribe();
-                dispatch(setSub(true));
+                setSubsc(true);
               }}
             >
               subscribe
+            </button>
+          )}
+          {sub === true && (
+            <button
+              onClick={() => {
+                unsubscribe();
+                setSubsc(false);
+              }}
+            >
+              unsubscribe
             </button>
           )}
         </div>
