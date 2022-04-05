@@ -31,7 +31,6 @@ const persistConfig = {
     "reclamationsManagement",
     "filterSlice",
     "filterCourseSlice",
-    "sub",
     "CoursemodalSlice",
   ],
 };

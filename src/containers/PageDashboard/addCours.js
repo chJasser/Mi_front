@@ -1,11 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Input from "components/Input/Input";
 import Label from "components/Label/Label";
-import LayoutPage from "components/LayoutPage/LayoutPage";
-import SocialsList from "components/SocialsList/SocialsList";
 import Textarea from "components/Textarea/Textarea";
-import { Helmet } from "react-helmet";
 import axios from "../../axiosInstance";
 import { Alert } from "@mui/material";
 import * as yup from "yup";
@@ -13,16 +10,10 @@ import { Formik } from "formik";
 import makeAnimated from "react-select/animated";
 import Select from "react-select";
 import { useDispatch } from "react-redux";
-import { getCurrentTeacher, login } from "app/slices/userSlice";
-import { useHistory } from "react-router-dom";
+import { setIsOpen } from "app/slices/modalSlice";
 
 const AddCours = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const [errors, setErrors] = useState(null);
-  const [success, setSuccess] = useState(null);
-  const [productImage, setimagesfiles] = useState("");
-
   const validationSchema = yup.object().shape({
     label: yup.string().min(4).max(15).required().trim(),
     description: yup.string().max(255).required().trim(),
@@ -49,24 +40,12 @@ const AddCours = () => {
         "others",
       ])
       .default("others"),
+    CourseImage: yup
+      .string()
+      .notRequired()
+      .default("1648931926897--téléchargement.jpg"),
   });
-
-  const [selectedOptionlevel, setSelectedOptionlevel] = useState([]);
-  const [selectedOptioncategory, setSelectedOptincategory] = useState([]);
-  const [selectedOptionlanguages, setSelectedOptionlanguages] = useState([]);
-  const [selectedOptionstate, setSelectedOptionstate] = useState([]);
   const animatedComponents = makeAnimated();
-  const handleInputChangelevel = (selectedOptionlevel) => {
-    setSelectedOptionlevel(selectedOptionlevel);
-  };
-  const handleInputChangecategory = (selectedOptioncategory) => {
-    setSelectedOptincategory(selectedOptioncategory);
-  };
-
-  const handleInputChangelanguages = (selectedOptionlanguages) => {
-    setSelectedOptionlanguages(selectedOptionlanguages);
-  };
-
   const optionscategory = [
     { value: "voice", label: "voice" },
     { value: "guitar", label: "guitar " },
@@ -91,47 +70,30 @@ const AddCours = () => {
   const onSubmit = async (values) => {
     var formData = new FormData();
     formData.append("label", values.label);
-    formData.append("description", values.description);
-    formData.append("duration", values.duration);
     formData.append("price", values.price);
-
-    formData.append("category", selectedOptioncategory.value.toString());
-    formData.append("languages", selectedOptionlanguages.value.toString());
-    formData.append("level", selectedOptionlevel.value.toString());
-
-    // for (const key of Object.keys(productImage)) {
-    //   formData.append("files", productImage[key]);
-    // }
-    console.log(values);
-    console.log(selectedOptioncategory.value);
-    console.log(selectedOptionlevel.value);
-    console.log(selectedOptionlanguages.value);
-    const response = await axios.post("courses/add", formData).catch((err) => {
-      if (err && err.response) {
-        setErrors(err.response.data.message);
-        setSuccess(null);
-        console.log(err);
-      }
-    });
-    if (response && response.data) {
-      setErrors(null);
-      setSuccess(response.data.message);
-
-      history.push("/dashboard");
-    }
+    formData.append(" duration", values.duration);
+    formData.append("description", values.description);
+    if (values.image !== null) formData.append("image", values.image);
+    console.log(values.image);
+    axios
+      .post("courses/add", formData)
+      .then(dispatch(setIsOpen(false)))
+      .catch((err) => console.log(err));
   };
 
   return (
-    <div className="rounded-xl md:border md:border-neutral-100 dark:border-neutral-800 md:p-6">
+    <div className="rounded-xl md:border md:border-neutral-100 dark:border-neutral-800 md:p-4">
+      <button onClick={() => dispatch(setIsOpen(false))}>close</button>
       <Formik
         initialValues={{
-          label: "hello",
+          label: "",
           price: "",
           duration: "",
           description: "",
           level: "beginner",
           languages: "english",
           category: "others",
+          image: null,
         }}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
@@ -213,13 +175,12 @@ const AddCours = () => {
             {touched.description && errors.description ? (
               <Alert severity="error">{errors.description}</Alert>
             ) : null}
-            <label className="block md:col-span-2">
-              <Label> Category</Label>
-              <Select
+            {/* <label className="block md:col-span-2">
+              <Label> Category</Label> */}
+            {/* <Select
                 name="category"
                 id="category"
-                value={selectedOptioncategory}
-                onChange={handleInputChangecategory}
+                onChange={handleChange}
                 components={animatedComponents}
                 options={optionscategory}
               />
@@ -233,8 +194,7 @@ const AddCours = () => {
               <Select
                 name="languages"
                 id="languages"
-                value={selectedOptionlanguages}
-                onChange={handleInputChangelanguages}
+                onChange={handleChange}
                 components={animatedComponents}
                 options={optionslanguages}
               />
@@ -247,17 +207,24 @@ const AddCours = () => {
               <Select
                 name="level"
                 id="level"
-                value={selectedOptionlevel}
-                onChange={handleInputChangelevel}
+                onChange={handleChange}
                 components={animatedComponents}
                 options={optionslevel}
               />
             </label>
             {touched.level && errors.level ? (
               <Alert severity="error">{errors.languages}</Alert>
-            ) : null}
-
-            <ButtonPrimary className="md:col-span-2" level="submit">
+            ) : null} */}
+            <Input
+              id="image"
+              name="image"
+              type="file"
+              accept=".png, .jpg, .jpeg"
+              className="mt-1 form-control form-control-sm"
+              style={{ border: "1px solid #D1D1D1" }}
+              onChange={(e) => setFieldValue("image", e.currentTarget.files[0])}
+            />
+            <ButtonPrimary className="md:col-span-2" type="submit">
               Add Cours
             </ButtonPrimary>
           </form>

@@ -15,7 +15,6 @@ import filterSlice from "./filterSlice/filterSlice";
 import Productsliceseller from "./productslice/Productsliceseller";
 import RecSlice from "./reclamations/recSlice";
 import filterCourseSlice from "./slices/courseFilter";
-import sub from "./slices/sub";
 import CoursemodalSlice from "./slices/modalSlice";
 
 const rootReducers = {
@@ -35,7 +34,6 @@ const rootReducers = {
   carteslics: carteslics,
   filterSlice: filterSlice,
   filterCourseSlice: filterCourseSlice,
-  sub: sub,
   CoursemodalSlice: CoursemodalSlice,
 };
 

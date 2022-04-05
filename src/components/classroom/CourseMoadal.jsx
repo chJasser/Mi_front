@@ -2,6 +2,7 @@ import Modal from "react-modal";
 import TeacherClassroom from "./TeacherClassroom";
 import { useSelector, useDispatch } from "react-redux";
 import { setIsOpen } from "app/slices/modalSlice";
+import AddCours from "./../../containers/PageDashboard/addCours";
 const customStyles = {
   content: {
     top: "50%",
@@ -10,6 +11,7 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
+    marginTop: "5rem",
   },
 };
 function CourseMoadal() {
@@ -25,15 +27,8 @@ function CourseMoadal() {
       contentLabel="Example Modal"
     >
       {/* <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2> */}
-      <button onClick={() => dispatch(setIsOpen(false))}>close</button>
-      <div>I am a modal</div>
-      <form>
-        <input />
-        <button>tab navigation</button>
-        <button>stays</button>
-        <button>inside</button>
-        <button>the modal</button>
-      </form>
+
+      <AddCours></AddCours>
     </Modal>
   );
 }

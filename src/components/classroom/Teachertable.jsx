@@ -6,7 +6,7 @@ function Teachertable() {
   const [list, setList] = useState([]);
   useEffect(() => {
     axios
-      .get("courses/student-course")
+      .get("courses/course-teacher")
       .then((course) => {
         setList(course.data);
       })
