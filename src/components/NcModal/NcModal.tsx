@@ -27,14 +27,14 @@ const NcModal: FC<NcModalProps> = ({
   let [isOpen, setIsOpen] = useState(!!isOpenProp);
 
   function closeModal() {
-    if (typeof isOpenProp !== "boolean") {
+    if (isOpenProp === true) {
       setIsOpen(false);
     }
     onCloseModal && onCloseModal();
   }
 
   function openModal() {
-    if (typeof isOpenProp !== "boolean") {
+    if (isOpenProp !== false) {
       setIsOpen(true);
     }
   }

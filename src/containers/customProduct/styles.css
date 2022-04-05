@@ -1,20 +1,35 @@
-h1 {
-    position: absolute;
-    top: 43px;
-    left: 140px;
-    padding: 0;
-    margin: 40px;
-    font-size: 5em;
-    font-weight: 600;
-    line-height: 0.7em;
-    letter-spacing: -6px;
-    color: #272730;
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.picker {
-    position: absolute !important;
-    top: 74px;
-    left: 70px;
-    width: 90px !important;
-    height: 90px !important;
+.card {
+    height: 50vh;
+    border-radius: 13px;
+    box-shadow: 20px 40px 33px rgba(0, 0, 0, 0.3);
+    padding: 2rem;
+    width: 35vw;
+    background-color: #a8a8a834;
+
+}
+
+.product-canvas {
+    width: 35vw;
+    height: 38vh;
+
+    border-radius: 0px;
+    margin-bottom: 20px
+}
+
+.colors {
+    display: flex;
+    flex-direction: row;
+}
+
+.colors div {
+    padding: 8px;
 }

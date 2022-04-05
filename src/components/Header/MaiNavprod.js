@@ -17,10 +17,13 @@ const MaiNnavprod = ({ isTop }) => {
   const isAuth = useSelector(isAuthenticated);
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.carteslics.cartItems);
+
+  console.log(cart);
   return (
     <div
-      className={`nc-MainNav1 relative z-10 ${isTop ? "onTop " : "notOnTop backdrop-filter"
-        }`}
+      className={`nc-MainNav1 relative z-10 ${
+        isTop ? "onTop " : "notOnTop backdrop-filter"
+      }`}
     >
       <div className="container py-5 relative flex justify-between items-center space-x-4 xl:space-x-8">
         <div className="flex justify-start flex-grow items-center space-x-4 sm:space-x-10 2xl:space-x-14">
@@ -40,13 +43,11 @@ const MaiNnavprod = ({ isTop }) => {
 
             <div className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
               <Link to="/back-office/dashboard">
-                <Badge color="secondary" >
+                <Badge color="secondary">
                   <ManageAccountsIcon />
                 </Badge>
               </Link>
             </div>
-
-
 
             <div className="px-1" />
             {isAuth ? (
@@ -63,9 +64,7 @@ const MaiNnavprod = ({ isTop }) => {
                 Logout
               </ButtonPrimary>
             ) : (
-              <ButtonPrimary href="/mi/login">
-                Sign up
-              </ButtonPrimary>
+              <ButtonPrimary href="/mi/login">Sign up</ButtonPrimary>
             )}
             <div className="px-1" />
             <MenuBar />

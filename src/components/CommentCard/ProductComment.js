@@ -1,12 +1,8 @@
-import React, { FC, useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Avatar from "components/Avatar/Avatar";
-import NcDropDown from "components/NcDropDown/NcDropDown";
-import CommentCardLikeReplyContainer from "containers/CommentCardLikeReplyContainer/CommentCardLikeReplyContainer";
-import { PostAuthorType } from "data/types";
 import { Link } from "react-router-dom";
-import twFocusClass from "utils/twFocusClass";
-import SingleCommentForm from "containers/PageSingle/SingleCommentForm";
 import axios from "axiosInstance";
+import { useDispatch, useSelector } from "react-redux";
 
 function ProductComment(props) {
   const base_url = "http://localhost:5050/";
@@ -17,10 +13,9 @@ function ProductComment(props) {
   const { profilePicture, userName, email } = user;
   useEffect(() => {
     axios
-      .get(`users/${review.user}`)
+      .get(`users/get-by-id/${review.user}`)
       .then((user) => {
         setUser(user.data);
-        console.log(user.data);
       })
       .catch((error) => {
         console.error(error);

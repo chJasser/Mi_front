@@ -3,6 +3,8 @@ import { PostDataType } from "data/types";
 import convertNumbThousand from "utils/convertNumbThousand";
 import twFocusClass from "utils/twFocusClass";
 
+import { isAuthenticated } from "app/slices/userSlice";
+import { useSelector } from "react-redux";
 export interface PostCardLikeActionProps {
   className?: string;
   postId?;
@@ -18,8 +20,10 @@ const ProductCardLikeAction: FC<PostCardLikeActionProps> = ({
   isLiked,
   onClickLike = () => {},
 }) => {
+  const isAuth = useSelector(isAuthenticated);
   return (
     <button
+      disabled={!isAuth}
       className={`nc-PostCardLikeAction relative min-w-[68px] flex items-center rounded-full leading-none group transition-colors ${className} ${twFocusClass()} ${
         isLiked
           ? "text-rose-600 bg-rose-50 dark:bg-rose-100"

@@ -37,6 +37,9 @@ import {
   setUserLogedIn,
   userRoles,
 } from "app/slices/userSlice";
+import { resetStateLikes } from "app/productLikes/productLikes";
+import { resetStateReviews } from "app/productReviews/productReviews";
+import { getAllUsers } from "app/usersSlice/adminSlice";
 import SectionBecomeAnTeacher from "components/SectionBecomeAnTeacher/SectionBecomeAnTeacher";
 import SectionBecomeAnStudent from "components/SectionBecomeAnStudent/SectionBecomeAnStudent";
 import SectionBecomeAnSeller from "components/SectionBecomeAnSeller/SectionBecomeAnSeller";
@@ -56,7 +59,11 @@ const PageHome: React.FC = () => {
   const isAuth = useSelector(isAuthenticated);
   const roles = useSelector(userRoles);
   const history = useHistory();
+
   useEffect(() => {
+    dispatch(getAllUsers());
+    dispatch(resetStateLikes());
+    dispatch(resetStateReviews());
     setToken(new URLSearchParams(search).get("token"));
     if (token !== null) {
       dispatch(login(token));
@@ -76,6 +83,7 @@ const PageHome: React.FC = () => {
     const timer = setTimeout(() => {
       history.push("/mi");
     }, 1000);
+    dispatch(setUserLogedIn());
     return () => clearTimeout(timer);
   }, [token]);
 
@@ -99,14 +107,14 @@ const PageHome: React.FC = () => {
           />
 
           {/* === SECTION  === */}
-          <div className="relative py-16">
+          {/* <div className="relative py-16">
             <BackgroundSection />
             <SectionSliderNewAuthors
               heading="Newest authors"
               subHeading="Say hello to future creator potentials"
               authors={DEMO_AUTHORS.filter((_, i) => i < 10)}
             />
-          </div>
+          </div> */}
 
           {isAuth && !roles.includes("teacher") && (
             <div className="relative py-16">
@@ -124,16 +132,16 @@ const PageHome: React.FC = () => {
           )}
 
           {/* === SECTION 5 === */}
-          <SectionSliderNewCategories
+          {/* <SectionSliderNewCategories
             className="py-16 lg:py-28"
             heading="Top trending topics"
             subHeading="Discover 233 topics"
             categories={DEMO_CATEGORIES.filter((_, i) => i < 10)}
             categoryCardType="card4"
-          />
+          /> */}
 
           {/* === SECTION 6 === */}
-          <div className="relative py-16">
+          {/* <div className="relative py-16">
             <BackgroundSection />
             <SectionSliderPosts
               postCardName="card9"
@@ -142,27 +150,27 @@ const PageHome: React.FC = () => {
               sliderStype="style2"
               posts={DEMO_POSTS_AUDIO.filter((_, i) => i > 3 && i < 10)}
             />
-          </div>
+          </div> */}
 
           {/* === SECTION 4 === */}
-          <SectionMagazine1
+          {/* <SectionMagazine1
             className="py-16 lg:py-28"
             posts={MAGAZINE1_POSTS}
             tabs={MAGAZINE1_TABS}
-          />
+          /> */}
 
           {/* === SECTION 3 === */}
-          <SectionAds />
+          {/* <SectionAds /> */}
 
           {/* === SECTION 7 === */}
-          <SectionMagazine7
+          {/* <SectionMagazine7
             className="py-16 lg:py-28"
             posts={DEMO_POSTS_GALLERY.filter((_, i) => i < 6)}
-          />
+          /> */}
         </div>
 
         {/* === SECTION 11 === */}
-        <div className="dark bg-neutral-900 dark:bg-black dark:bg-opacity-20 text-neutral-100">
+        {/* <div className="dark bg-neutral-900 dark:bg-black dark:bg-opacity-20 text-neutral-100">
           <div className="relative container">
             <SectionGridPosts
               className="py-16 lg:py-28"
@@ -174,41 +182,41 @@ const PageHome: React.FC = () => {
               gridClass="md:grid-cols-2 lg:grid-cols-3"
             />
           </div>
-        </div>
+        </div> */}
 
         <div className="container ">
           {/* === SECTION 9 === */}
-          <SectionMagazine8
+          {/* <SectionMagazine8
             className="py-16 lg:py-28"
             posts={DEMO_POSTS_AUDIO.filter((_, i) => i < 6)}
-          />
+          /> */}
 
           {/* === SECTION 9 === */}
-          <div className="relative py-16">
+          {/* <div className="relative py-16">
             <BackgroundSection />
             <SectionMagazine9
               posts={DEMO_POSTS_AUDIO.filter((_, i) => i >= 6 && i < 16)}
             />
-          </div>
+          </div> */}
 
           {/* === SECTION 5 === */}
-          <SectionGridAuthorBox
+          {/* <SectionGridAuthorBox
             className="py-16 lg:py-28"
             authors={DEMO_AUTHORS.filter((_, i) => i < 10)}
-          />
+          /> */}
 
           {/* === SECTION 8 === */}
 
           {/* === SECTION 11 === */}
-          <SectionMagazine4
+          {/* <SectionMagazine4
             className="py-16 lg:py-28"
             heading="Life styles 🎨 "
             posts={MAGAZINE2_POSTS}
             tabs={MAGAZINE1_TABS}
-          />
+          /> */}
 
           {/* === SECTION 12 === */}
-          <div className="relative py-16">
+          {/* <div className="relative py-16">
             <BackgroundSection />
             <SectionSliderPosts
               postCardName="card11"
@@ -219,19 +227,19 @@ const PageHome: React.FC = () => {
               )}
               sliderStype="style2"
             />
-          </div>
+          </div> */}
 
           {/* === SECTION 15 === */}
-          <SectionVideos className="py-16 lg:py-28" />
+          {/* <SectionVideos className="py-16 lg:py-28" /> */}
 
           {/* === SECTION 17 === */}
-          <SectionLatestPosts
+          {/* <SectionLatestPosts
             className="pb-16 lg:pb-28"
             posts={DEMO_POSTS.filter((_, i) => i > 8 && i < 16)}
             widgetPosts={DEMO_POSTS.filter((_, i) => i > 2 && i < 7)}
             categories={DEMO_CATEGORIES.filter((_, i) => i > 2 && i < 8)}
             tags={DEMO_CATEGORIES}
-          />
+          /> */}
         </div>
         {/* ======= END CONTAINER ============= */}
       </div>

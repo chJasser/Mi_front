@@ -103,7 +103,6 @@ export const setUserLogedIn = () => (dispatch) => {
     });
 };
 
-
 export const getCurrentStudent = () => (dispatch) => {
   axios
     .get("/students/getcurrentstudent")

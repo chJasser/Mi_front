@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from "axiosInstance";
 let initialState = {
   products: [],
   selectedProduct: {},
   loading: true,
+  open:false,
   errors: "",
 };
 
@@ -20,6 +21,9 @@ const ProductsSlice = createSlice({
     },
     unselectProduct(state) {
       state.selectedProduct = null;
+    },
+    selectopen(state,action){
+    state.open=action.payload;
     },
     deleteProduct: (state, action) => {
       //payload :id
@@ -76,6 +80,7 @@ export const {
   unselectProduct,
   setErrors,
   deleteProduct,
+  selectopen,
   updateProduct,
   addProduct,
 } = ProductsSlice.actions;

@@ -10,7 +10,7 @@ export interface PostCardSaveActionProps
   postData;
 }
 
-const PostCardSaveAction: FC<PostCardSaveActionProps> = ({
+const ProductCardSaveAction: FC<PostCardSaveActionProps> = ({
   className = "",
   hidenReadingTime = false,
   classBgIcon,
@@ -32,4 +32,4 @@ const PostCardSaveAction: FC<PostCardSaveActionProps> = ({
   );
 };
 
-export default PostCardSaveAction;
+export default ProductCardSaveAction;

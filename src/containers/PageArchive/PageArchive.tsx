@@ -1,23 +1,18 @@
 import React, { FC, useEffect, useState, Fragment, useRef } from "react";
-import ModalMarque from "./ModalMarque";
-import { DEMO_POSTS } from "data/posts";
-import { PostDataType, TaxonomyType } from "data/types";
-import { DEMO_CATEGORIES } from "data/taxonomies";
 import Pagination from "components/Pagination/Pagination";
 import ButtonPrimary from "components/Button/ButtonPrimary";
-import ArchiveFilterListBox from "components/ArchiveFilterListBox/ArchiveFilterListBox";
 import { Helmet } from "react-helmet";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import NcImage from "components/NcImage/NcImage";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
-import SectionGridCategory from "components/SectionGridCategoryBox/SectionGridCategory";
-import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
+import SellersSlider from "components/SectionSliderNewAthors/SellersSlider";
 import { DEMO_AUTHORS } from "data/authors";
 import axios from "axiosInstance";
 import Card11Product from "components/Card11/Card11Product";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { populateProducts } from "app/productslice/Productslice";
-
+import background from "../../images/shop5.jpg";
+import { isAuthenticated } from "app/slices/userSlice";
 import {
   getLikedProducts,
   getBookmarkedProducts,
@@ -25,23 +20,62 @@ import {
 import { Popover, Transition } from "@headlessui/react";
 import Input from "components/Input/Input";
 import Slider from "@material-ui/core/Slider";
+import { RootState } from "../../app/store";
+
 import Modalcart from "./Modalcart";
+import Marque from "../../components/Tag/Marque";
+import NcModal from "../../components/NcModal/NcModal";
+import { Link } from "react-router-dom";
+import Heading from "../../components/Heading/Heading";
+import CardCategory from "../../components/CardCategory2/CardCategory";
+// import Radio from "@material-tailwind/react/Radio";
 //import ModalCategoriesprod from "./Modalcategoriesprod";
 export interface PageArchiveProps {
   className?: string;
 }
-// Tag and category have same data type - we will use one demo data
-const posts: PostDataType[] = DEMO_POSTS.filter((_, i) => i < 16);
 
 const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
-  const path = "http://localhost:3000/archive/the-demo-archive-slug";
+  const filter = useSelector((state: RootState) => state.filterSlice);
+  const prod = useSelector((state: RootState) => state.product);
   const myRef = useRef(null);
   const inputRef = React.createRef<HTMLInputElement>();
   const [value, setValue] = React.useState([0, 100]);
-  let min = value[0] * 100;
-  let max = value[1] * 100;
+  let min = value[0];
+  let max = value[1];
+
+  const marques = [
+    "yamaha",
+    "shure",
+    "gibson",
+    "harman",
+    "fender",
+    "steinway",
+    "roland",
+    "others",
+  ];
+
+  let categories = [
+    "guitars",
+    "keyboards",
+    "strings",
+    "brass",
+    "percussions",
+    "woodwind",
+    "others",
+  ];
+
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   const rangeSelector = (event, newValue) => {
     setValue(newValue);
     axios.get(`products/price?min=${min}&max=${max}`).then((res) => {
@@ -50,12 +84,21 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   };
 
   const executeScroll = () => myRef.current.scrollIntoView();
-  let inputHandler = (e) => {
+
+  const inputHandler = (e) => {
     if (e.target.value) {
-      axios.get(`products/search?label=${e.target.value}`).then((res) => {
-        console.log(res.data);
-        setProducts(res.data);
-      });
+      axios
+        .get("products/filter")
+        .then((res) => {
+          setProducts(
+            res.data.products.filter((product) =>
+              product.label
+                .toLowerCase()
+                .startsWith(e.target.value.toLowerCase())
+            )
+          );
+        })
+        .catch((err) => console.log(err.message));
     } else {
       axios.get("products/filter").then((res) => {
         setProducts(res.data.products);
@@ -63,10 +106,71 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     }
   };
 
+  const filterMarque = (marque) => {
+    axios
+      .get(`products/marque?marque=${marque}`)
+      .then((res) => {
+        executeScroll();
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+  const filterCatgory = (cat) => {
+    axios
+      .get("products/filter")
+      .then((res) => {
+        let p = res.data.products.filter((product) => {
+          return product.category === cat;
+        });
+        setProducts(p);
+        dispatch(populateProducts(p));
+        // dispatch(changeValid(false));
+        executeScroll();
+      })
+      .catch((err) => console.log(err.message));
+  };
+  const getAllProduct = () => {
+    axios
+      .get("products/filter")
+      .then((res) => {
+        dispatch(populateProducts(res.data.products));
+        setProducts(res.data.products);
+        //dispatch(changeValid(true));
+      })
+      .catch((err) => console.log(err.message));
+  };
+
+  const getNewProducts = () => {
+    axios
+      .get("products/filter")
+      .then((res) => {
+        setProducts(
+          res.data.products.filter((product) => product.state === "new")
+        );
+      })
+      .catch((err) => console.log(err.message));
+  };
+
+  const getUsedProducts = () => {
+    axios
+      .get("products/filter")
+      .then((res) => {
+        setProducts(
+          res.data.products.filter((product) => product.state === "used")
+        );
+      })
+      .catch((err) => console.log(err.message));
+  };
+
+  /* ---------------- Alaa ------------------------------ */
+  const isAuth = useSelector(isAuthenticated);
   useEffect(() => {
     axios
       .get("products/liked-products")
       .then((response) => {
+        console.log(response);
         dispatch(getLikedProducts(response.data));
       })
       .catch((error) => {
@@ -75,193 +179,38 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     axios
       .get("products/bookmarked-products")
       .then((response) => {
+        console.log(response);
         dispatch(getBookmarkedProducts(response.data));
       })
       .catch((error) => {
         console.error(error);
       });
-    switch (window.location.href) {
-      case path + "?category=guitars":
-        axios
-          .get("products/fiter?category=guitars")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?category=strings":
-        axios
-          .get("products/fiter?category=strings")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?category=keyboards":
-        axios
-          .get("products/fiter?category=keyboards")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?category=brass":
-        axios
-          .get("products/fiter?category=brass")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?category=percussions":
-        axios
-          .get("products/fiter?category=percussions")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?category=woodwind":
-        axios
-          .get("products/fiter?category=woodwind")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?category=others":
-        axios
-          .get("products/filter")
-          .then((res) => {
-            executeScroll();
-            dispatch(populateProducts(res.data.products));
-            setProducts(res.data.products);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?marque=yamaha":
-        axios
-          .get("products/marque?marque=yamaha")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?marque=shure":
-        axios
-          .get("products/marque?marque=shure")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?marque=gibson":
-        axios
-          .get("products/marque?marque=gibson")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?marque=harman":
-        axios
-          .get("products/marque?marque=harman")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?marque=fender":
-        axios
-          .get("products/marque?marque=fender")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?marque=steinway":
-        axios
-          .get("products/marque?marque=steinway")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      case path + "?marque=roland":
-        axios
-          .get("products/marque?marque=roland")
-          .then((res) => {
-            executeScroll();
-            setProducts(res.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-      default:
-        axios
-          .get("products/filter")
-          .then((res) => {
-            dispatch(populateProducts(res.data.products));
-            setProducts(res.data.products);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-        break;
-    }
-    /**
-     *
-     */
+
+    // if(window.location.href === "http://localhost:3000/mi/archive/the-demo-archive-slug?seller"){
+    //   dispatch(populateProducts(p));
+    //   console.log(p)
+    //   setProducts(p);
+    // }
+    getAllProduct();
   }, [dispatch]);
 
-  const PAGE_DATA: TaxonomyType = DEMO_CATEGORIES[0];
-
-  const FILTERS = [
-    { name: "Most Recent" },
-    { name: "Curated by Admin" },
-    { name: "Most Appreciated" },
-    { name: "Most Discussed" },
-    { name: "Most Viewed" },
-  ];
+  const renderModalContent = () => {
+    return (
+      <div className="flex flex-wrap dark:text-neutral-200">
+        {marques.map((tag, index) => (
+          <div
+            key={index}
+            onClick={() => {
+              filterMarque(tag);
+              closeModal();
+            }}
+          >
+            <Marque key={index} tag={tag} className="mr-2 mb-2" />
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div
@@ -277,39 +226,139 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
         <div className="rounded-3xl relative aspect-w-16 aspect-h-16 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-6 overflow-hidden ">
           <NcImage
             containerClassName="absolute inset-0"
-            src="https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            //src="https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            src={background}
             className="object-cover w-full h-full"
           />
           <div className="absolute inset-0 bg-black text-white bg-opacity-30 flex flex-col items-center justify-center">
             <h2 className="inline-block align-middle text-5xl font-semibold md:text-7xl ">
-              {PAGE_DATA.name}
+              {/* {PAGE_DATA.name} */}
+              Welcome
             </h2>
             <span className="block mt-4 text-neutral-300">
-              {products.length} Articles
+              {/* {products.length} Articles */}
+              To Mi-Shop
             </span>
           </div>
         </div>
       </div>
       {/* ====================== END HEADER ====================== */}
-      <div className="relative py-5 container">
-        <BackgroundSection />
-        <SectionGridCategory />
+      <div className="relative py-16 container">
+        <div className="category">
+          <BackgroundSection />
+          {/* Category */}
+          <div className={`nc-SectionGridCategoryBox relative`}>
+            <Heading
+              desc="Discover over 100 Articles"
+              className="inline-flex items-center mb-10 headCategory"
+            >
+              Instruments
+            </Heading>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6 md:gap-8">
+              {categories.map((item, index) => (
+                <Link
+                  key={index}
+                  to={`/mi/archive/the-demo-archive-slug?category=${item}`}
+                  className="inline-flex items-center"
+                  onClick={() => {
+                    filterCatgory(item);
+                  }}
+                >
+                  <CardCategory
+                    key={index}
+                    category={item}
+                    products={products}
+                  />
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
+      {/* Marque */}
       <div
         ref={myRef}
-        className="container py-16 lg:py-28 space-y-16 lg:space-y-28"
+        className="container py-16 lg:py-10 space-y-16 lg:space-y-28"
       >
         <div>
           <div className="flex flex-col sm:items-center sm:justify-between sm:flex-row">
             <div className="flex space-x-2.5">
-              <ModalMarque />
+              {/*<ModalCategories categories={DEMO_CATEGORIES} />*/}
+              {/*<ModalCategoriesprod/>*/}
+              <NcModal
+                isOpenProp={modalIsOpen}
+                contentExtraClass="max-w-screen-md"
+                triggerText={
+                  <span
+                    onClick={() => openModal()}
+                    className="hidden sm:inline"
+                  >
+                    Marques
+                  </span>
+                }
+                modalTitle="Discover other tags"
+                renderContent={renderModalContent}
+              />
+              {/* <button onClick={() => filterMarque()}><ModalMarque /></button> */}
+              <Modalcart />
             </div>
+            {/*  */}
+            {/* Label */}
             <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>
             <div className="flex justify-end">
-              <ArchiveFilterListBox lists={FILTERS} />
+              {/* <ArchiveFilterListBox lists={FILTERS} /> */}
+              <React.Fragment>
+                <Popover className="relative">
+                  {({ open }) => {
+                    if (open) {
+                      setTimeout(() => {
+                        inputRef.current?.focus();
+                      }, 100);
+                    }
+
+                    return (
+                      <>
+                        <Popover.Button className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
+                          <i className="las la-search"></i>
+                        </Popover.Button>
+
+                        <Transition
+                          show={open}
+                          as={Fragment}
+                          enter="transition ease-out duration-200"
+                          enterFrom="opacity-0 translate-y-1"
+                          enterTo="opacity-100 translate-y-0"
+                          leave="transition ease-in duration-150"
+                          leaveFrom="opacity-100 translate-y-0"
+                          leaveTo="opacity-0 translate-y-1"
+                        >
+                          <Popover.Panel
+                            static
+                            className="absolute right-0 z-10 w-screen max-w-sm mt-3"
+                          >
+                            <form action="" method="POST" className="relative">
+                              <i className="las la-search absolute left-3 top-1/2 transform -translate-y-1/2 text-xl opacity-60"></i>
+                              <Input
+                                ref={inputRef}
+                                type="search"
+                                placeholder="Search by Label"
+                                className="pl-10"
+                                id="outlined-basic"
+                                onChange={inputHandler}
+                              />
+                              <input type="submit" hidden value="" />
+                            </form>
+                          </Popover.Panel>
+                        </Transition>
+                      </>
+                    );
+                  }}
+                </Popover>
+              </React.Fragment>
             </div>
           </div>
-
+          {/*  */}
+          {/* Price */}
           <div
             style={{
               margin: "auto",
@@ -322,92 +371,58 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               value={value}
               onChange={rangeSelector}
               valueLabelDisplay="auto"
+              min={0}
+              max={10000}
             />
             Your range of Price is between {min}$ and {max}$
           </div>
 
-          <React.Fragment>
-            <Popover className="relative">
-              {({ open }) => {
-                if (open) {
-                  setTimeout(() => {
-                    inputRef.current?.focus();
-                  }, 100);
-                }
-
-                return (
-                  <>
-                    <Popover.Button className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
-                      <i className="las la-search"></i>
-                    </Popover.Button>
-
-                    <Transition
-                      show={open}
-                      as={Fragment}
-                      enter="transition ease-out duration-200"
-                      enterFrom="opacity-0 translate-y-1"
-                      enterTo="opacity-100 translate-y-0"
-                      leave="transition ease-in duration-150"
-                      leaveFrom="opacity-100 translate-y-0"
-                      leaveTo="opacity-0 translate-y-1"
-                    >
-                      <Popover.Panel
-                        static
-                        className="absolute right-0 z-10 w-screen max-w-sm mt-3"
-                      >
-                        <form action="" method="POST" className="relative">
-                          <i className="las la-search absolute left-3 top-1/2 transform -translate-y-1/2 text-xl opacity-60"></i>
-                          <Input
-                            ref={inputRef}
-                            type="search"
-                            placeholder="Search by Label"
-                            className="pl-10"
-                            id="outlined-basic"
-                            onChange={inputHandler}
-                          />
-                          <input type="submit" hidden value="" />
-                        </form>
-                      </Popover.Panel>
-                    </Transition>
-                  </>
-                );
-              }}
-            </Popover>
-          </React.Fragment>
-
+          {/* <Link 
+          to ={`/mi/archive/the-demo-archive-slug`}> */}
+          <div className="flex justify-between">
+            <ButtonPrimary onClick={() => getAllProduct()}>
+              Show All Porducts
+            </ButtonPrimary>
+            <div className="radio-buttons">
+              New
+              <input
+                id="mac"
+                value="new"
+                name="platform"
+                type="radio"
+                onChange={() => getNewProducts()}
+              />
+              / Used
+              <input
+                id="linux"
+                value="used"
+                name="platform"
+                type="radio"
+                onChange={() => getUsedProducts()}
+              />
+            </div>
+            {/* <ButtonPrimary disabled={filter.valid}>Filter</ButtonPrimary> */}
+          </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
             {products.map((product) => (
               <Card11Product key={product._id} product={product} />
             ))}
           </div>
-
           {/* PAGINATIONS */}
           <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
             <Pagination />
             <ButtonPrimary>Show me more</ButtonPrimary>
           </div>
         </div>
-
-        {/* MORE SECTIONS */}
         {/* === SECTION 5 === */}
-        {/* <div className="relative py-16">
-          <BackgroundSection /> */}
-        {/* <SectionGridCategoryBox
-            categories={DEMO_CATEGORIES.filter((_, i) => i < 10)}
-          /> */}
-        {/* <SectionGridCategory/>
-          <div className="text-center mx-auto mt-10 md:mt-16">
-            <ButtonSecondary>Show me more</ButtonSecondary>
-          </div>
-        </div> */}
-
-        {/* === SECTION 5 === */}
-        <SectionSliderNewAuthors
+        <hr />
+        <SellersSlider
           heading="Top elite authors"
           subHeading="Discover our elite writers"
           authors={DEMO_AUTHORS.filter((_, i) => i < 10)}
+          //products={products}
         />
-
+        <hr />
         {/* SUBCRIBES */}
         <SectionSubscribe2 />
       </div>

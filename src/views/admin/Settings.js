@@ -1,17 +1,12 @@
-import React, { useEffect, useState } from "react";
-
 // components
 
 import CardSettings from "components/Cards/CardSettings.js";
 import CardProfile from "components/Cards/CardProfile.js";
-import axios from "../../axiosInstance";
 import { useDispatch } from "react-redux";
-import { setUserLogedIn } from "app/slices/userSlice";
 export default function Settings() {
-
   return (
-    <>
-      <div className="flex flex-wrap">
+    <div className="mt-10">
+      <div className="flex  flex-wrap">
         <div className="w-full lg:w-8/12 px-4">
           <CardSettings />
         </div>
@@ -19,6 +14,6 @@ export default function Settings() {
           <CardProfile />
         </div>
       </div>
-    </>
+    </div>
   );
 }

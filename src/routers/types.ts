@@ -20,16 +20,20 @@ export interface LocationStates {
   "/mi/single-audio/:slug"?: {};
   "/mi/single-video/:slug"?: {};
   //
+  "/mi/custom"?: {};
   "/mi/search"?: {};
   "/mi/search-v2"?: {};
   "/mi/about"?: {};
   "/mi/contact"?: {};
+  "/mi/contactUs"?: {};
   "/mi/login"?: {};
   "/mi/signup"?: {};
   "/mi/forgot-pass"?: {};
   "/mi/page404"?: {};
   "/mi/dashboard"?: {};
   "/mi/subscription"?: {};
+  "/mi/saved-products"?: {};
+  "/mi/edit-profile"?: {};
   //
   "/mi/theme-cyan-blueGrey"?: {};
   "/mi/theme-blue-blueGrey"?: {};
@@ -62,7 +66,6 @@ export interface LocationStates {
   // back-office
   "/headerback"?: {};
 }
-
 
 export type PathName = keyof LocationStates;
 

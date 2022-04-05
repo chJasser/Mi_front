@@ -1,28 +1,22 @@
-import React, { FC, useRef } from "react";
+import { useRef } from "react";
 import Logo from "components/Logo/Logo";
 import Navigation from "components/Navigation/Navigation";
 import SearchDropdown from "./SearchDropdown";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import MenuBar from "components/MenuBar/MenuBar";
 import DarkModeContainer from "containers/DarkModeContainer/DarkModeContainer";
-import NcImage from "components/NcImage/NcImage";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { isAuthenticated, logoutUser } from "app/slices/userSlice";
-import { useAppDispatch } from "app/hooks";
+import { isAuthenticated, logoutUser, userRoles } from "app/slices/userSlice";
+import { deslecetsellerproducts } from "app/productslice/Productsliceseller";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Badge from "@material-ui/core/Badge";
-import { Fragment, useState } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { XIcon } from '@heroicons/react/outline'
+import { Fragment, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { XIcon } from "@heroicons/react/outline";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import {
-  additem,
-  removeitem,
-  updateqte,
-  getTotal,
-  addtotal
-} from "app/cartslice/carteslics";
+import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
+import { removeitem } from "app/cartslice/carteslics";
 
 /*export interface MainNav1Props {
   isTop: boolean;
@@ -30,10 +24,14 @@ import {
 
 const MainNav1 = ({ isTop }) => {
   const isAuth = useSelector(isAuthenticated);
+  const isAdmin = useSelector(userRoles).includes("admin");
 
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.carteslics.cartItems);
+  const bookmarkedProducts = useSelector(
+    (state) => state.productLikes.bookmarkedProducts
+  );
   const [open, setOpen] = useState(false);
   const totale = useSelector((state) => state.carteslics.total);
   const executeScroll = () => myRef.current.scrollIntoView();
@@ -41,16 +39,15 @@ const MainNav1 = ({ isTop }) => {
   const base_url = "http://localhost:5050/";
   const calculTot = (items) => {
     let total = 0;
-    items.map((item) => {
-      total += item.price * item.qte;
-    });
-    dispatch(addtotal(total))
+    items.map((item) => (total += item.price * item.qte));
+
     return total;
   };
   return (
     <div
-      className={`nc-MainNav1 relative z-10 ${isTop ? "onTop " : "notOnTop backdrop-filter"
-        }`}
+      className={`nc-MainNav1 relative z-10 ${
+        isTop ? "onTop " : "notOnTop backdrop-filter"
+      }`}
     >
       <div className="container py-5 relative flex justify-between items-center space-x-4 xl:space-x-8">
         <div className="flex justify-start flex-grow items-center space-x-4 sm:space-x-10 2xl:space-x-14">
@@ -60,34 +57,53 @@ const MainNav1 = ({ isTop }) => {
         <div className="flex-shrink-0 flex items-center justify-end text-neutral-700 dark:text-neutral-100 space-x-1">
           <div className="hidden items-center xl:flex space-x-1">
             <DarkModeContainer />
-            <div className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
-              {open == true ? (<a onClick={() => setOpen(false)}>
-                <Badge color="secondary" badgeContent={cart.length}>
+            {isAuth && (
+              <div className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
+                <button
+                  onClick={() => {
+                    if (!open) setOpen(true);
+                    else if (open) setOpen(false);
+                  }}
+                >
+                  <Badge color="secondary" badgeContent={cart.length}>
+                    <ShoppingCartIcon />{" "}
+                  </Badge>
+                </button>
+              </div>
+            )}
+            {isAuth && (
+              <div className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
+                <Link to="/mi/saved-products">
+                  <Badge
+                    color="secondary"
+                    badgeContent={bookmarkedProducts.length}
+                  >
+                    <BookmarkAddedIcon />
+                  </Badge>
+                </Link>
+              </div>
+            )}
+            {isAdmin && (
+              <div className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
+                <Link to="/back-office/dashboard">
+                  <Badge color="secondary">
+                    <ManageAccountsIcon />
+                  </Badge>
+                </Link>
+              </div>
+            )}
 
-                  <ShoppingCartIcon />{" "}
-
-                </Badge>
-              </a>) : (<a onClick={() => setOpen(true)}>
-                <Badge color="secondary" badgeContent={cart.length}>
-
-                  <ShoppingCartIcon />{" "}
-
-                </Badge>
-              </a>)}
-
-            </div>
-            <div className="text-2xl md:text-[28px] w-12 h-12 rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
-              <Link to="/back-office/dashboard">
-                <Badge color="secondary" >
-                  <ManageAccountsIcon />
-                </Badge>
-              </Link>
-            </div>
             <SearchDropdown />
 
             <div className="px-1" />
             {isAuth ? (
-              <ButtonPrimary onClick={() => dispatch(logoutUser())}>
+              <ButtonPrimary
+                onClick={() => {
+                  dispatch(logoutUser());
+
+                  dispatch(deslecetsellerproducts());
+                }}
+              >
                 Logout
               </ButtonPrimary>
             ) : (
@@ -100,9 +116,7 @@ const MainNav1 = ({ isTop }) => {
                 Logout
               </ButtonPrimary>
             ) : (
-              <ButtonPrimary href="/mi/login">
-                Sign up
-              </ButtonPrimary>
+              <ButtonPrimary href="/mi/login">Sign up</ButtonPrimary>
             )}
             <div className="px-1" />
             <MenuBar />
@@ -110,7 +124,11 @@ const MainNav1 = ({ isTop }) => {
         </div>
       </div>
       <Transition.Root show={open} as={Fragment}>
-        <Dialog as="div" className=" fixed inset-0 overflow-hidden" onClose={setOpen}>
+        <Dialog
+          as="div"
+          className=" fixed inset-0 overflow-hidden"
+          onClose={setOpen}
+        >
           <div className="absolute modal inset-0 overflow-hidden">
             <Transition.Child
               as={Fragment}
@@ -138,7 +156,10 @@ const MainNav1 = ({ isTop }) => {
                   <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
                     <div className="flex-1 overflow-y-auto py-6 px-4 sm:px-6">
                       <div className="flex items-start justify-between">
-                        <Dialog.Title className="text-lg font-medium text-gray-900"> Shopping cart </Dialog.Title>
+                        <Dialog.Title className="text-lg font-medium text-gray-900">
+                          {" "}
+                          Shopping cart{" "}
+                        </Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <button
                             type="button"
@@ -153,12 +174,12 @@ const MainNav1 = ({ isTop }) => {
 
                       <div className="mt-8">
                         <div className="flow-root">
-                          <ul role="list" className="-my-6 divide-y divide-gray-200">
+                          <ul className="-my-6 divide-y divide-gray-200">
                             {cart.map((product) => (
                               <li key={product.productid} className="flex py-6">
                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                   <img
-                                    src={`${base_url}${product.productImage}`}
+                                    src={`${base_url}${product.productImage[0]}`}
                                     alt={product.label}
                                     className="h-full w-full object-cover object-center"
                                   />
@@ -167,20 +188,30 @@ const MainNav1 = ({ isTop }) => {
                                 <div className="ml-4 flex flex-1 flex-col">
                                   <div>
                                     <div className="flex justify-between text-base font-medium text-gray-900">
-                                      <h3>
-                                        <a href="#"> {product.label} </a>
-                                      </h3>
+                                      <h3>{product.label}</h3>
                                       <p className="ml-4">{product.price}</p>
                                     </div>
-                                    {<p className="mt-1 text-sm text-gray-500">noir</p>}
+                                    {
+                                      <p className="mt-1 text-sm text-gray-500">
+                                        noir
+                                      </p>
+                                    }
                                   </div>
                                   <div className="flex flex-1 items-end justify-between text-sm">
-                                    <p className="text-gray-500">Qty {product.qte}</p>
+                                    <p className="text-gray-500">
+                                      Qty {product.qte}
+                                    </p>
 
                                     <div className="flex">
-                                      <button onClick={() => {
-                                        dispatch(removeitem(product.productid));
-                                      }} type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                      <button
+                                        onClick={() => {
+                                          dispatch(
+                                            removeitem(product.productid)
+                                          );
+                                        }}
+                                        type="button"
+                                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                                      >
                                         Remove
                                       </button>
                                     </div>
@@ -198,7 +229,9 @@ const MainNav1 = ({ isTop }) => {
                         <p>Subtotal</p>
                         <p>{calculTot(cart)}</p>
                       </div>
-                      <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+                      <p className="mt-0.5 text-sm text-gray-500">
+                        Shipping and taxes calculated at checkout.
+                      </p>
                       <div className="mt-6">
                         <a
                           href="/mi/dashboard/posts"
@@ -209,27 +242,30 @@ const MainNav1 = ({ isTop }) => {
                       </div>
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>
-                          or{' '}
-                          {window.location.href == "http://localhost:3000/mi/archive/the-demo-archive-slug" ? (<a
-                            type="button"
-
-                            className="font-medium text-indigo-600 hover:text-indigo-500"
-                            onClick={() => setOpen(false)}
-                          >
-                            Continue Shopping<span aria-hidden="true"> &rarr;</span>
-                          </a>) : (
-                            <a
+                          or{" "}
+                          {window.location.href ===
+                          "http://localhost:3000/mi/archive/the-demo-archive-slug" ? (
+                            <button
+                              className="font-medium text-indigo-600 hover:text-indigo-500"
+                              onClick={() => setOpen(false)}
+                            >
+                              Continue Shopping
+                              <span aria-hidden="true"> &rarr;</span>
+                            </button>
+                          ) : (
+                            <button
                               type="button"
                               href="/mi/archive/the-demo-archive-slug"
                               className="font-medium text-indigo-600 hover:text-indigo-500"
                               onClick={() => {
-                                setOpen(false)
-                                executeScroll()
-                              }
-                              }
+                                setOpen(false);
+                                executeScroll();
+                              }}
                             >
-                              Continue Shopping<span aria-hidden="true"> &rarr;</span>
-                            </a>)}
+                              Continue Shopping
+                              <span aria-hidden="true"> &rarr;</span>
+                            </button>
+                          )}
                         </p>
                       </div>
                     </div>
