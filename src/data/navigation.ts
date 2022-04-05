@@ -68,7 +68,7 @@ const megaMenu3ItemDemo: MegamenuItem[] = [
     id: ncNanoId(),
     image:
       "https://images.pexels.com/photos/1751731/pexels-photo-1751731.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    title: "Strings",
+    title: "Filter By Category",
     items: __megamenu.map((i) => ({
       id: ncNanoId(),
       href: "#",
@@ -79,7 +79,7 @@ const megaMenu3ItemDemo: MegamenuItem[] = [
     id: ncNanoId(),
     image:
       "https://images.pexels.com/photos/2876659/pexels-photo-2876659.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    title: "Keyboards",
+    title: "Filter By Marque",
     items: __megamenu.map((i) => ({
       id: ncNanoId(),
       href: "#",
@@ -90,12 +90,11 @@ const megaMenu3ItemDemo: MegamenuItem[] = [
     id: ncNanoId(),
     image:
       "https://images.pexels.com/photos/5809453/pexels-photo-5809453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    title: "Percussion",
-    items: __megamenu.map((i) => ({
-      id: ncNanoId(),
-      href: "#",
-      name: i.Department,
-    })),
+    title: "Filter By State",
+    items: [
+      { id: ncNanoId(), href: "#", name: "New" },
+      { id: ncNanoId(), href: "#", name: "Used" },
+    ],
   },
 ];
 
@@ -171,16 +170,6 @@ const dashboardChildMenus: NavItemType[] = [
 const otherPageChildMenus: NavItemType[] = [
   {
     id: ncNanoId(),
-    href: "/mi/about",
-    name: "About",
-  },
-  {
-    id: ncNanoId(),
-    href: "/mi/contact",
-    name: "Contact us",
-  },
-  {
-    id: ncNanoId(),
     href: "/mi/login",
     name: "Login",
   },
@@ -206,6 +195,16 @@ const otherPageChildMenus: NavItemType[] = [
   //   type: "dropdown",
   //   children: dashboardChildMenus,
   // },
+  {
+    id: ncNanoId(),
+    href: "/mi/about",
+    name: "About",
+  },
+  {
+    id: ncNanoId(),
+    href: "/mi/contact",
+    name: "Contact us",
+  },
   {
     id: ncNanoId(),
     href: "/mi/subscription",
@@ -364,27 +363,37 @@ const singleChildrenMenus: NavItemType = {
 // ];
 
 const templateChilds: NavItemType[] = [
-  ...archviePageChildrenMenus,
-  singleChildrenMenus,
-  {
-    id: ncNanoId(),
-    href: "/mi/single-gallery/this-is-single-slug",
-    name: "Single Gallery",
-  },
-  {
-    id: ncNanoId(),
-    href: "/mi/single-audio/this-is-single-slug",
-    name: "Single Audio",
-  },
-  {
-    id: ncNanoId(),
-    href: "/mi/single-video/this-is-single-slug",
-    name: "Single Video",
-  },
+  // ...archviePageChildrenMenus,
+  // singleChildrenMenus,
+  // {
+  //   id: ncNanoId(),
+  //   href: "/mi/single-gallery/this-is-single-slug",
+  //   name: "Single Gallery",
+  // },
+  // {
+  //   id: ncNanoId(),
+  //   href: "/mi/single-audio/this-is-single-slug",
+  //   name: "Single Audio",
+  // },
+  // {
+  //   id: ncNanoId(),
+  //   href: "/mi/single-video/this-is-single-slug",
+  //   name: "Single Video",
+  // },
   {
     id: ncNanoId(),
     href: "/mi/Karaoke",
     name: "Karaoke",
+  },
+  {
+    id: ncNanoId(),
+    href: "/mi/custom",
+    name: "Custom Products",
+  },
+  {
+    id: ncNanoId(),
+    href: "/mi/contact",
+    name: "Feedback",
   },
 ];
 const classroomChildren: NavItemType[] = [
@@ -402,7 +411,7 @@ const classroomChildren: NavItemType[] = [
 export const NAVIGATION_DEMO: NavItemType[] = [
   {
     id: ncNanoId(),
-    href: "/mi#",
+    href: "/mi/archive/the-demo-archive-slug",
     name: "MI Shop 🏪",
     type: "megaMenu",
     megaMenu: megaMenu3ItemDemo,
@@ -416,14 +425,14 @@ export const NAVIGATION_DEMO: NavItemType[] = [
   },
   {
     id: ncNanoId(),
-    href: "/mi#",
+    href: "/mi/Karaoke",
     name: "MI Fun 🎷",
     type: "dropdown",
     children: templateChilds,
   },
   {
     id: ncNanoId(),
-    href: "/mi#",
+    href: "/mi/edit-profile",
     name: "Profile ⚙️",
     type: "dropdown",
     children: otherPageChildMenus,

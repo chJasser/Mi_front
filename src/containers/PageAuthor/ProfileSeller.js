@@ -132,7 +132,11 @@ const ProfileSeller = ({ className = "" }) => {
             </Nav>
             <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>
             <div className="flex justify-end">
-              <ArchiveFilterListBox lists={FILTERS} />
+             {/*<ArchiveFilterListBox lists={FILTERS} />*/} 
+
+          
+               <a href="/back-office/productstable">ee</a>
+           
             </div>
           </div>
 
