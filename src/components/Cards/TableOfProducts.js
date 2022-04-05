@@ -73,8 +73,8 @@ function TableOfProducts({ color, prod }) {
             </thead>
             <tbody>
               {prod && (
-                <div>
-                  {prod.map((product) => (
+                
+                  prod.map((product) => (
                     <tr key={product._id}>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex items-center">
@@ -83,7 +83,7 @@ function TableOfProducts({ color, prod }) {
                               {" "}
                               <img
                                 className="w-full h-full rounded-full"
-                                src={base_url + product.productImage}
+                                src={base_url + product.productImage[0]}
                                 alt={product.label}
                               />
                             </Suspense>
@@ -115,8 +115,8 @@ function TableOfProducts({ color, prod }) {
                         <ProductManagement product={product} id={product._id} />
                       </td>
                     </tr>
-                  ))}
-                </div>
+                  ))
+                
               )}
             </tbody>
           </table>

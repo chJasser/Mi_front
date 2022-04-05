@@ -58,7 +58,7 @@ import PageFavorite from "containers/PageArchive/PageFavorite";
 import PageHomeMi from "containers/PageHome/PageHomeMi";
 import DashboardEditProfile from "containers/PageDashboard/DashboardEditProfile";
 import Karaoke from "containers/Karaoke/Karaoke";
-
+import Manageproduct from "containers/PageDashboard/Manageproduct";
 export const pages: Page[] = [
   { path: "/mi", exact: true, component: PageHomeMi },
   { path: "/mi#", exact: true, component: PageHome },
@@ -122,6 +122,10 @@ export const pages: Page[] = [
   {
     path: "/mi/edit-profile",
     component: DashboardEditProfile,
+  },
+  {
+   path:"/mi/manageproduct",
+   component:Manageproduct,
   },
   {
     path: "/mi/Karaoke",

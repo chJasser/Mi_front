@@ -135,7 +135,7 @@ const ProfileSeller = ({ className = "" }) => {
             </Nav>
             <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>
             <div className="flex justify-end">
-              <ArchiveFilterListBox lists={FILTERS} />
+            <ButtonSecondary href="/Mi/manageproduct">ManageProduct</ButtonSecondary>
             </div>
           </div>
 
