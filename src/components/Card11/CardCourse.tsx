@@ -37,11 +37,19 @@ const Card11Product: FC<Card11Props> = ({
   const dispatch = useDispatch();
   // const sub = useSelector((state: RootState) => state.sub.subscribe);
   const [rate, setrate] = useState({ totalRate: 0, myrate: 0 });
-  const [change, setChange] = useState(0);
   const [sub, setSubsc] = useState(null);
   const currentteacher = useSelector(
     (state: RootState) => state.user.currentTeacher
   );
+  const handaleRate = async (v) => {
+    await axios.post(`rate-course/${_id}/${v}`);
+    await axios
+      .get(`rate-course/${_id}`)
+      .then((value) => {
+        setrate({ ...value.data });
+      })
+      .catch((err) => console.log(err));
+  };
   const student = useSelector((state: RootState) => state.user.currentStudent);
   const subscribe = () => {
     axios
@@ -62,13 +70,7 @@ const Card11Product: FC<Card11Props> = ({
         setrate({ ...value.data });
       })
       .catch((err) => console.log(err));
-  });
-  useEffect(() => {
-    if (change !== undefined && change !== 0)
-      axios
-        .post(`rate-course/${_id}/${change}`)
-        .catch((err) => console.log(err));
-  }, [change]);
+  }, []);
   const date = dateCreation;
 
   const [isHover, setIsHover] = useState(false);
@@ -124,7 +126,7 @@ const Card11Product: FC<Card11Props> = ({
               size={24}
               activeColor="#ffd700"
               onChange={(v) => {
-                setChange(v);
+                handaleRate(v);
               }}
             ></ReactStars>
           }
