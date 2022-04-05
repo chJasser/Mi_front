@@ -5,7 +5,7 @@ import { logoutUser } from "app/slices/userSlice";
 
 const UserDropdown = () => {
   const img = useSelector((state) => state.user.userLogedIn.profilePicture);
-  const dipatch = useDispatch()
+  const dipatch = useDispatch();
 
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
@@ -33,16 +33,18 @@ const UserDropdown = () => {
       >
         <div className="items-center flex">
           {console.log(img)}
-          {img !== undefined ? (<span className="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
-            <img
-              alt="..."
-              style={{ height: "50px", width: "50px" }}
-
-              className="w-full rounded-full align-middle border-none shadow-lg"
-              src={img !== undefined ? `http://localhost:5050/${img}` : ""}
-            />
-          </span>) :
-            (<span className="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full"></span>)}
+          {img !== undefined ? (
+            <span className="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
+              <img
+                alt="..."
+                style={{ height: "50px", width: "50px" }}
+                className="w-full rounded-full align-middle border-none shadow-lg"
+                src={img !== undefined ? `http://localhost:5050/${img}` : ""}
+              />
+            </span>
+          ) : (
+            <span className="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full"></span>
+          )}
         </div>
       </a>
       <div

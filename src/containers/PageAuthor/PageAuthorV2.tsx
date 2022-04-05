@@ -8,7 +8,7 @@ import Nav from "components/Nav/Nav";
 import NavItem from "components/NavItem/NavItem";
 import Avatar from "components/Avatar/Avatar";
 import SocialsList from "components/SocialsList/SocialsList";
-import ArchiveFilterListBox from "components/ArchiveFilterListBox/ArchiveFilterListBox";
+import ArchiveFilterListBox from "components/ArchiveFilterListBox/courseFilter";
 import HeadBackgroundCommon from "components/HeadBackgroundCommon/HeadBackgroundCommon";
 import { Helmet } from "react-helmet";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";

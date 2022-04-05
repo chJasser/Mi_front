@@ -86,7 +86,7 @@ const PageHome: React.FC = () => {
     dispatch(setUserLogedIn());
     return () => clearTimeout(timer);
   }, [token]);
-
+  
   return (
     <div className="nc-PageHome relative">
       <Helmet>

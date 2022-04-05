@@ -89,7 +89,7 @@ export default function Example() {
           <Canvas
             shadows
             dpr={[1, 2]}
-            camera={{ position: [0, 0, 20], fov: 50 }}
+            camera={{ position: [-10, 7, 15], fov: 50 }}
           >
             <ambientLight intensity={0.7} />
             <spotLight
