@@ -1,11 +1,10 @@
-import React, { FC, useState } from "react";
-import { DEMO_POSTS } from "data/posts";
-import { PostDataType } from "data/types";
+import React, { FC, useEffect, useState } from "react";
 import Pagination from "components/Pagination/Pagination";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Nav from "components/Nav/Nav";
 import NavItem from "components/NavItem/NavItem";
-import ArchiveFilterListBox from "components/ArchiveFilterListBox/ArchiveFilterListBox";
+import CourseFilter from "components/ArchiveFilterListBox/courseFilter";
+import CourseFilterLanguage from "components/ArchiveFilterListBox/courseLanguagesFilter";
 import Input from "components/Input/Input";
 import HeadBackgroundCommon from "components/HeadBackgroundCommon/HeadBackgroundCommon";
 import { Helmet } from "react-helmet";
@@ -16,31 +15,94 @@ import { DEMO_CATEGORIES } from "data/taxonomies";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
 import { DEMO_AUTHORS } from "data/authors";
-import Card11 from "components/Card11/Card11";
-import CardCategory2 from "components/CardCategory2/CardCategory2";
-import Tag from "components/Tag/Tag";
-import CardAuthorBox2 from "components/CardAuthorBox2/CardAuthorBox2";
+import CardCourse from "components/Card11/CardCourse";
+import axios from "axiosInstance";
+import CourseFilterCategory from "./../../components/ArchiveFilterListBox/courseCategoryFilter";
+import Slider from "@material-ui/core/Slider";
+import { useSelector, useDispatch } from "react-redux";
 
 export interface PageSearchV2Props {
   className?: string;
 }
-
-const posts: PostDataType[] = DEMO_POSTS.filter((_, i) => i < 12);
-const cats = DEMO_CATEGORIES.filter((_, i) => i < 15);
-const tags = DEMO_CATEGORIES.filter((_, i) => i < 32);
-const authors = DEMO_AUTHORS.filter((_, i) => i < 12);
-
-const FILTERS = [
-  { name: "Most Recent" },
-  { name: "Curated by Admin" },
-  { name: "Most Appreciated" },
-  { name: "Most Discussed" },
-  { name: "Most Viewed" },
+const categories = [
+  { name: "all" },
+  { name: "voice" },
+  { name: "guitar" },
+  { name: "keyboards" },
+  { name: "strings" },
+  { name: "percussions" },
+  { name: "brass" },
+  { name: "woodwind" },
+  { name: "others" },
 ];
-const TABS = ["Articles", "Categories", "Tags", "Authors"];
+const levels = [
+  { name: "all" },
+  { name: "beginner" },
+  { name: "intermediate" },
+  { name: "advanced" },
+];
+const languages = [
+  { name: "all" },
+  { name: "english" },
+  { name: "french" },
+  { name: "arabic" },
+];
+const TABS = [
+  "Most popular",
+  "Top Rated",
+  "Top courses for beginner",
+  "Recommended",
+];
+
+const courseSearch = {
+  label: null,
+  description: null,
+  level: null,
+  languages: null,
+  maxprice: null,
+  maxduration: null,
+  minprice: null,
+  minduration: null,
+  category: null,
+};
 
 const PageSearchV2: FC<PageSearchV2Props> = ({ className = "" }) => {
+  const category = useSelector((state) => state.filterCourseSlice.catrgory);
+  const [search, setSearch] = useState(courseSearch);
+  const [list, setList] = useState([]);
+  const [details, setDetails] = useState({
+    maxprice: 0,
+    minprice: 0,
+    maxduration: 0,
+    minduration: 0,
+  });
+  const nbLike = async (id) => {
+    const nb = await axios.get(`rate-course/get-rate/${id}`);
+    return nb.data.totalRate;
+  };
+  const comparelike = async (u, v) => {
+    const likeU = await nbLike(u._id);
+    const likeV = await nbLike(v._id);
+    return likeU - likeV;
+  };
   let s = "Ui Design";
+  useEffect(() => {
+    axios
+      .put("courses/searchCourse", { ...search })
+      .then((course) => {
+        setList(course.data);
+      })
+      .catch((err) => console.log(err));
+  }, [search]);
+  useEffect(() => {
+    axios
+      .get("courses/details")
+      .then((course) => {
+        setDetails(course.data);
+      })
+      .catch((err) => console.log(err));
+    console.log(category);
+  }, []);
 
   const [tabActive, setTabActive] = useState<string>(TABS[0]);
 
@@ -50,16 +112,15 @@ const PageSearchV2: FC<PageSearchV2Props> = ({ className = "" }) => {
     }
     setTabActive(item);
   };
-
   return (
     <div className={`nc-PageSearchV2 ${className}`} data-nc-id="PageSearchV2">
       <HeadBackgroundCommon className="h-24 2xl:h-28" />
       <Helmet>
-        <title>Nc || Search Page Template</title>
+        <title>Courses</title>
       </Helmet>
       <div className="container">
         <header className="max-w-2xl mx-auto -mt-10 flex flex-col lg:-mt-7">
-          <form className="relative" action="" method="post">
+          <div className="relative">
             <label
               htmlFor="search-input"
               className="text-neutral-500 dark:text-neutral-300"
@@ -68,10 +129,14 @@ const PageSearchV2: FC<PageSearchV2Props> = ({ className = "" }) => {
               <Input
                 id="search-input"
                 type="search"
-                placeholder="Type and press enter"
+                placeholder="Type the label of the course"
                 className="shadow-lg rounded-xl border-opacity-0"
                 sizeClass="pl-14 py-5 pr-5 md:pl-16"
-                defaultValue={s}
+                onChange={(e) => {
+                  if (e.target.value === "")
+                    setSearch({ ...search, label: null });
+                  else setSearch({ ...search, label: e.target.value });
+                }}
               />
               <span className="absolute left-5 top-1/2 transform -translate-y-1/2 text-2xl md:left-6">
                 <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -85,7 +150,7 @@ const PageSearchV2: FC<PageSearchV2Props> = ({ className = "" }) => {
                 </svg>
               </span>
             </label>
-          </form>
+          </div>
           <span className="block text-sm mt-4 text-neutral-500 dark:text-neutral-300">
             We found{" "}
             <strong className="font-semibold text-neutral-800 dark:text-neutral-100">
@@ -100,6 +165,45 @@ const PageSearchV2: FC<PageSearchV2Props> = ({ className = "" }) => {
       </div>
       <div className="container py-16 lg:py-28 space-y-16 lg:space-y-28">
         <main>
+          <div className="row">
+            <div
+              style={{
+                margin: "auto",
+                display: "block",
+                width: "fit-content",
+              }}
+            >
+              <h3>What is your budget?</h3>
+              <Slider
+                onChange={(e, v) =>
+                  setSearch({ ...search, maxprice: v[1], minprice: v[0] })
+                }
+                valueLabelDisplay="auto"
+                defaultValue={[details.minprice, details.maxprice]}
+                max={details.maxprice}
+                min={details.minprice}
+              />
+            </div>
+            <div
+              style={{
+                margin: "auto",
+                display: "block",
+                width: "fit-content",
+              }}
+            >
+              <h3>nomber of hours?</h3>
+              <Slider
+                onChange={(e, v) =>
+                  setSearch({ ...search, maxduration: v[1], minduration: v[0] })
+                }
+                valueLabelDisplay="auto"
+                defaultValue={[details.minduration, details.maxduration]}
+                max={details.maxduration}
+                min={details.minduration}
+              />
+            </div>
+          </div>
+
           {/* TABS FILTER */}
           <div className="flex flex-col sm:items-center sm:justify-between sm:flex-row ">
             <Nav
@@ -118,44 +222,45 @@ const PageSearchV2: FC<PageSearchV2Props> = ({ className = "" }) => {
             </Nav>
             <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>
             <div className="flex justify-end">
-              <ArchiveFilterListBox lists={FILTERS} />
+              <CourseFilter
+                className="my-2"
+                lists={levels}
+                setSearch={setSearch}
+                search={search}
+              />
+              <CourseFilterLanguage
+                className="my-2"
+                lists={languages}
+                setSearch={setSearch}
+                search={search}
+              ></CourseFilterLanguage>
+              <CourseFilterCategory
+                className="my-2"
+                lists={categories}
+                setSearch={setSearch}
+                search={search}
+              ></CourseFilterCategory>
             </div>
           </div>
-
           {/* LOOP ITEMS */}
           {/* LOOP ITEMS POSTS */}
-          {tabActive === "Articles" && (
+          {tabActive === "Most popular" && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-8 mt-8 lg:mt-10">
-              {posts.map((post) => (
-                <Card11 key={post.id} post={post} />
-              ))}
+              {list
+                .sort((v, u) => u.subscribers - v.subscribers)
+                .map((course, index) => (
+                  <CardCourse key={index} course={course} />
+                ))}
             </div>
           )}
-          {/* LOOP ITEMS CATEGORIES */}
-          {tabActive === "Categories" && (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 md:gap-8 mt-8 lg:mt-10">
-              {cats.map((cat) => (
-                <CardCategory2 key={cat.id} taxonomy={cat} />
-              ))}
+          {/* {tabActive === "Top Rated" && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-8 mt-8 lg:mt-10">
+             
             </div>
-          )}
-          {/* LOOP ITEMS TAGS */}
-          {tabActive === "Tags" && (
-            <div className="flex flex-wrap mt-12 ">
-              {tags.map((tag) => (
-                <Tag className="mb-3 mr-3" key={tag.id} tag={tag} />
-              ))}
-            </div>
-          )}
-          {/* LOOP ITEMS POSTS */}
-          {tabActive === "Authors" && (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 md:gap-8 mt-8 lg:mt-10">
-              {authors.map((author) => (
-                <CardAuthorBox2 key={author.id} author={author} />
-              ))}
-            </div>
-          )}
+          )} */}
 
+          {/* LOOP ITEMS CATEGORIES */}
+          {/* LOOP ITEMS POSTS */}
           {/* PAGINATION */}
           <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
             <Pagination />

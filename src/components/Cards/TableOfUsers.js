@@ -97,7 +97,6 @@ function TableOfUsers() {
                 </tr>
               </tbody>
             </table>
-           
           </div>
         </div>
       </div>

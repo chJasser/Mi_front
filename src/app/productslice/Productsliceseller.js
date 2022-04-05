@@ -4,7 +4,7 @@ let initialState = {
   products: [],
   selectedProduct: {},
   loading: true,
-  show:false,
+  show: false,
   errors: "",
 };
 
@@ -15,8 +15,8 @@ const ProductsSliceseller = createSlice({
     populatesellerProducts(state, action) {
       state.products = action.payload;
     },
-    deslecetsellerproducts(state){
-      state.products=[];
+    deslecetsellerproducts(state) {
+      state.products = [];
     },
     //productdetail
     selectsellerProduct(state, action) {
@@ -41,6 +41,9 @@ const ProductsSliceseller = createSlice({
       if (index !== -1) {
         state.products[index] = payload;
       }
+    },
+    showText: (state, action) =>{
+      state.text = action.payload;
     },
     showForm: (state, action) => {
       state.show = action.payload;
@@ -86,6 +89,7 @@ export const {
   deletesellerProduct,
   updatesellerProduct,
   addProduct,
-  showForm
+  showForm,
+  showText
 } = ProductsSliceseller.actions;
 export default ProductsSliceseller.reducer;

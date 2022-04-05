@@ -57,6 +57,7 @@ const ProductCardLikeContainer = (props) => {
 
   const isLiked = () => {
     var productsIds = [];
+
     likedProducts.forEach((product) => {
       productsIds.push(product._id);
     });

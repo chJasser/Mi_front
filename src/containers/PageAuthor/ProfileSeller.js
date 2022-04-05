@@ -1,6 +1,5 @@
 import React, { FC, Suspense, useEffect, useState } from "react";
 import { DEMO_POSTS } from "data/posts";
-import { PostAuthorType, PostDataType } from "data/types";
 import Pagination from "components/Pagination/Pagination";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import { DEMO_AUTHORS } from "data/authors";
@@ -11,12 +10,10 @@ import SocialsList from "components/SocialsList/SocialsList";
 import ArchiveFilterListBox from "components/ArchiveFilterListBox/ArchiveFilterListBox";
 import { Helmet } from "react-helmet";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
-import Card11 from "components/Card11/Card11";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import SectionGridCategoryBox from "components/SectionGridCategoryBox/SectionGridCategoryBox";
 import { DEMO_CATEGORIES } from "data/taxonomies";
 import ButtonSecondary from "components/Button/ButtonSecondary";
-import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
 import NcImage from "components/NcImage/NcImage";
 import axios from "../../../src/axiosInstance";
 //import Card11Product from "components/Card11/Card11Product";
@@ -135,7 +132,11 @@ const ProfileSeller = ({ className = "" }) => {
             </Nav>
             <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>
             <div className="flex justify-end">
-              <ArchiveFilterListBox lists={FILTERS} />
+             {/*<ArchiveFilterListBox lists={FILTERS} />*/} 
+
+          
+               <a href="/back-office/productstable">ee</a>
+           
             </div>
           </div>
 

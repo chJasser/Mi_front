@@ -34,6 +34,7 @@ export interface LocationStates {
   "/mi/subscription"?: {};
   "/mi/saved-products"?: {};
   "/mi/edit-profile"?: {};
+  "/mi/Karaoke"?: {};
   //
   "/mi/theme-cyan-blueGrey"?: {};
   "/mi/theme-blue-blueGrey"?: {};
@@ -62,6 +63,11 @@ export interface LocationStates {
   "/mi/become-teacher"?: {};
   "/mi/become-seller"?: {};
   "/mi/become-student"?: {};
+  "/mi/classroom"?: {};
+  "/mi/classroom/teacher"?: {};
+  "/mi/classroom/student"?: {};
+  "/mi/classroom/teacher/:id"?: {};
+  "/mi/classroom/student/:id"?: {};
 
   // back-office
   "/headerback"?: {};

@@ -2,7 +2,7 @@ import React, { FC, useState, lazy, useEffect } from "react";
 import ProductFeaturedMedia from "components/PostFeaturedMedia/ProductFeaturedMedia";
 import Badge from "components/Badge/Badge";
 import PostCardMeta from "components/PostCardMeta/PostCardMeta";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axiosInstance";
 import { Link } from "react-router-dom";
 import { selectProduct } from "app/productslice/Productslice";

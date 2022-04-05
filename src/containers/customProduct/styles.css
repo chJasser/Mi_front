@@ -33,3 +33,8 @@
 .colors div {
     padding: 8px;
 }
+.cust{
+    width: 15%;
+    display: flex;
+    justify-content: flex-end;
+}

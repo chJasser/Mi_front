@@ -1,9 +1,15 @@
-import React from "react";
+import React ,{useEffect}from "react";
 import UserManagementDropDown from "components/Dropdowns/UserManagementDropDown";
+import { useHistory } from "react-router-dom";
 
 function Users({ color, users }) {
+  const history = useHistory;
   const base_url = "http://localhost:5050/";
-
+  useEffect(() => {
+    if(!users){
+      history.push("/mi")
+    }
+  },[])
   return (
     <div
       className={
@@ -51,7 +57,7 @@ function Users({ color, users }) {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {users ? (users.map((user) => (
               <tr key={user._id}>
                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                   <div className="flex items-center">
@@ -103,7 +109,11 @@ function Users({ color, users }) {
                   <UserManagementDropDown user={user} id={user._id} />
                 </td>
               </tr>
-            ))}
+            ))):(
+              <div>
+                not allowed
+              </div>
+            )}
           </tbody>
         </table>
       </div>

@@ -6,8 +6,8 @@
     "Country": "Czech Republic",
     "AppName": "Tresom",
     "Department": "Marque",
-    "CarModel": "Marque",
-    "Corporate": "Marque"
+    "CarModel": "Fender",
+    "Corporate": "Guitar"
   },
   {
     "Company": "Livefish",
@@ -15,9 +15,9 @@
     "Contruction": "Plexiglass",
     "Country": "tunisia",
     "AppName": "Hatity",
-    "Department": "Category",
-    "CarModel": "Category",
-    "Corporate": "Category"
+    "Department": "Gibson",
+    "CarModel": "Gibson",
+    "Corporate": "Keys"
   },
   {
     "Company": "Digitube",
@@ -26,8 +26,8 @@
     "Country": "China",
     "AppName": "Otcom",
     "Department": "State",
-    "CarModel": "State",
-    "Corporate": "State"
+    "CarModel": "Yamaha",
+    "Corporate": "Strings"
   },
   {
     "Company": "Midel",
@@ -36,27 +36,7 @@
     "Country": "Japan",
     "AppName": "Daltfresh",
     "Department": "Type",
-    "CarModel": "Type",
-    "Corporate": "Type"
-  },
-  {
-    "Company": "Rhyloo",
-    "City": "Yahil’nytsya",
-    "Contruction": "Glass",
-    "Country": "Ukraine",
-    "AppName": "Duobam",
-    "Department": "Clothing",
-    "CarModel": "Cougar",
-    "Corporate": "Sales"
-  },
-  {
-    "Company": "Innojam",
-    "City": "Mandalay",
-    "Contruction": "Plexiglass",
-    "Country": "Myanmar",
-    "AppName": "Mat Lam Tam",
-    "Department": "Electronics",
-    "CarModel": "Galant",
-    "Corporate": "Management"
+    "CarModel": "Harman",
+    "Corporate": "Drums"
   }
 ]
