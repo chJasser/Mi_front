@@ -62,6 +62,7 @@ import Classroom from "./../components/classroom/classrom";
 import StudentClassroom from "../components/classroom/StudentClassroom";
 import TeacherClassroom from "../components/classroom/TeacherClassroom";
 
+import Manageproduct from "containers/PageDashboard/Manageproduct";
 export const pages: Page[] = [
   { path: "/mi", exact: true, component: PageHomeMi },
   { path: "/mi#", exact: true, component: PageHome },
@@ -125,6 +126,10 @@ export const pages: Page[] = [
   {
     path: "/mi/edit-profile",
     component: DashboardEditProfile,
+  },
+  {
+   path:"/mi/manageproduct",
+   component:Manageproduct,
   },
   {
     path: "/mi/Karaoke",

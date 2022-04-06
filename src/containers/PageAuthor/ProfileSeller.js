@@ -137,6 +137,7 @@ const ProfileSeller = ({ className = "" }) => {
           
                <a href="/back-office/productstable">ee</a>
            
+            {/*<ButtonSecondary href="/Mi/manageproduct">ManageProduct</ButtonSecondary>*/}
             </div>
           </div>
 

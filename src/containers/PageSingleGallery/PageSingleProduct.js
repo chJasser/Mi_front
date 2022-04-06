@@ -365,7 +365,7 @@ function PageSingleProduct() {
               </div> */}
               <ButtonPrimary
                 onClick={() => addrate(rate)}
-                href="/archive/the-demo-archive-slug"
+                href="/mi/archive/the-demo-archive-slug"
               >
                 Shop More
               </ButtonPrimary>
