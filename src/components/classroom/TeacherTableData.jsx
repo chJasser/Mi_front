@@ -14,7 +14,7 @@ function TeacherTableData({ course }) {
         setrate(value.data.totalRate);
       })
       .catch((err) => console.log(err));
-  });
+  },);
   return (
     <tr>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
