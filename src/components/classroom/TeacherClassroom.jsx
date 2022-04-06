@@ -4,12 +4,14 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { setIsOpen } from "app/slices/modalSlice";
 import CourseMoadal from "./CourseMoadal";
+import { useHistory } from "react-router-dom";
 function TeacherClassroom() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.CoursemodalSlice.isOpen);
   return (
-    <div key="modalCourse">
-      <CourseMoadal></CourseMoadal>
+    <div>
+      {/* <CourseMoadal></CourseMoadal> */}
       <div className="min-h-screen  text-gray-900 ">
         <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
           <div className="mt-4">
@@ -20,7 +22,7 @@ function TeacherClassroom() {
               <button
                 type="button"
                 className="btn btn-info add-new"
-                onClick={() => dispatch(setIsOpen(true))}
+                onClick={() => history.replace("/mi/classroom/teacher/add")}
               >
                 <i className="fa fa-plus"></i> Add New
               </button>

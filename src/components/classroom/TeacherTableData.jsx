@@ -4,9 +4,17 @@ import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
 const base_url = "http://localhost:5050/data/image/";
-
 function TeacherTableData({ course }) {
   const [rate, setrate] = useState(0);
+  const [courseChange, setcourseChange] = useState(false);
+  const handaleDelete = () => {
+    axios
+      .delete(`/courses/${course._id}`)
+      .then(() => {
+        setcourseChange(!courseChange);
+      })
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
     axios
       .get(`rate-course/${course._id}`)
@@ -14,7 +22,7 @@ function TeacherTableData({ course }) {
         setrate(value.data.totalRate);
       })
       .catch((err) => console.log(err));
-  });
+  }, []);
   return (
     <tr>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -42,6 +50,7 @@ function TeacherTableData({ course }) {
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <ReactStars
+          edit={false}
           key={"star" + rate + ":" + course._id}
           value={rate}
           count={5}
@@ -56,7 +65,11 @@ function TeacherTableData({ course }) {
         <button title="Edit" style={{ color: "#FFC107" }}>
           <i className="material-icons">&#xE254;</i>
         </button>
-        <button title="Delete" style={{ color: "#E34724" }}>
+        <button
+          title="Delete"
+          style={{ color: "#E34724" }}
+          onClick={() => handaleDelete()}
+        >
           <i className="material-icons ">&#xE872;</i>
         </button>
       </td>
