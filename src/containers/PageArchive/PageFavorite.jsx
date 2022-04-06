@@ -1,20 +1,39 @@
 import React, { FC, useEffect, useState, Fragment, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axiosInstance";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import NcImage from "components/NcImage/NcImage";
+import { addBookmark, removeBookmark } from "app/productLikes/productLikes";
+import { useDispatch, useSelector } from "react-redux";
+
 import {
   getLikedProducts,
   getBookmarkedProducts,
 } from "app/productLikes/productLikes";
 import ButtonPrimary from "components/Button/ButtonPrimary";
-
+import axios from "axiosInstance";
 function PageFavorite() {
+  const bookmarkedProducts = useSelector(
+    (state) => state.productLikes.bookmarkedProducts
+  );
   const [savedProds, setSavedProds] = useState([]);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
-
+  const removeBookMarkDB = async (product) => {
+    await axios
+      .put(`/products/remove-bookmark/${product._id}`)
+      .then((response) => {
+        console.log(response.data.success);
+      })
+      .catch((err) => {
+        console.log(err.response.data.success);
+      });
+    dispatch(removeBookmark(product._id));
+    // setProduct({
+    //   ...product,
+    //   likesCount: product.likesCount - 1,
+    //   isLiked: false,
+    // });
+  };
   useEffect(() => {
     axios
       .get("products/bookmarked-products")
@@ -34,7 +53,7 @@ function PageFavorite() {
       data-nc-id="PageArchiveAudio"
     >
       <Helmet>
-        <title>Archive || Blog Magazine React Template</title>
+        <title>Saved Products || MI Universe</title>
       </Helmet>
       <div className="w-full px-2 xl:max-w-screen-2xl mx-auto">
         <div className="rounded-3xl relative aspect-w-16 aspect-h-16 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-6 overflow-hidden ">
@@ -50,51 +69,53 @@ function PageFavorite() {
             <span className="block mt-4 text-neutral-300">
               {savedProds.length} Articles
             </span>
-            <ButtonPrimary href="/mi/archive/the-demo-archive-slug">home</ButtonPrimary>
+            <ButtonPrimary href="/mi/archive/the-demo-archive-slug">
+              home
+            </ButtonPrimary>
           </div>
         </div>
       </div>
       {loading ? (
         <div className="relative container ">
-          <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             loading ...
           </div>
         </div>
       ) : (
         <div className="relative container ">
-          <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" className="px-6 py-3">
                     Product name
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" className="px-6 py-3">
                     state
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" className="px-6 py-3">
                     Category
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" className="px-6 py-3">
                     Price
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" className="px-6 py-3">
                     description
                   </th>
-                  <th scope="col" class="px-6 py-3">
-                    <span class="sr-only">Edit</span>
+                  <th scope="col" className="px-6 py-3">
+                    <span className="sr-only">Edit</span>
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {savedProds.map((prod) => (
+                {bookmarkedProducts.map((prod) => (
                   <tr
                     className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                     key={prod._id}
                   >
                     <th
                       scope="row"
-                      class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                      className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
                     >
                       <Link to={`/mi/single-gallery/${prod._id}`}>
                         {prod.label}
@@ -104,12 +125,28 @@ function PageFavorite() {
                     <td className="px-6 py-4">{prod.category}</td>
                     <td className="px-6 py-4">{prod.price}</td>
                     <td className="px-6 py-4">{prod.reference}</td>
-                    <td class="px-6 py-4 text-right">
+                    <td className="px-6 py-4 text-right">
                       <button
-                        href="#"
-                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                        onClick={() => removeBookMarkDB(prod)}
+                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                       >
-                        Edit
+                        <svg
+                          width="24"
+                          height="24"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke="currentColor"
+                            aria-hidden="true"
+                            fill={true ? "currentColor" : "none"}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="1"
+                            d="M6.75 6.75C6.75 5.64543 7.64543 4.75 8.75 4.75H15.25C16.3546 4.75 17.25 5.64543 17.25 6.75V19.25L12 14.75L6.75 19.25V6.75Z"
+                          ></path>
+                        </svg>
+                        🗑️
                       </button>
                     </td>
                   </tr>

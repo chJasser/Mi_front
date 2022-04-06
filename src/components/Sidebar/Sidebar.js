@@ -1,11 +1,11 @@
 /*eslint-disable*/
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../../images/logo3.png";
 
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
-import LogoPng from "components/Logo/LogoPng";
+
+
 export default function Sidebar() {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   return (
@@ -172,6 +172,7 @@ export default function Sidebar() {
                   className="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
                   to="/mi"
                 >
+                  <i class="fa-solid fa-users"></i>
                   <i className="fas fa-fingerprint text-blueGray-400 mr-2 text-sm"></i>{" "}
                   Simple users
                 </Link>
@@ -185,7 +186,6 @@ export default function Sidebar() {
                   Teachers
                 </Link>
               </li>
-
               <li className="items-center">
                 <Link
                   className="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"

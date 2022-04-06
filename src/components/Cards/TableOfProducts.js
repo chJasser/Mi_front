@@ -13,7 +13,7 @@ import {
 } from "app/productslice/Productsliceseller";
 import { useDispatch, useSelector } from "react-redux";
 import Cardproducts from "./Cardproducts";
-import UpdateProduct from "../../containers/PageDashboard/updateProduct";
+import UpdateProduct from "../../containers/PageDashboard/UpdateProduct";
 function TableOfProducts({ color, prod }) {
   const [products, setproducts] = useState([]);
   const openn = useSelector((state) => state.product.open);
@@ -72,52 +72,49 @@ function TableOfProducts({ color, prod }) {
               </tr>
             </thead>
             <tbody>
-              {prod && (
-                <div>
-                  {prod.map((product) => (
-                    <tr key={product._id}>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <div className="flex items-center">
-                          <div className="flex-shrink-0 w-10 h-10">
-                            <Suspense fallback={null}>
-                              {" "}
-                              <img
-                                className="w-full h-full rounded-full"
-                                src={base_url + product.productImage}
-                                alt={product.label}
-                              />
-                            </Suspense>
-                          </div>
-                          <div className="ml-3">
-                            <p className="text-gray-900 whitespace-no-wrap">
-                              {product.label}
-                            </p>
-                          </div>
+              {prod &&
+                prod.map((product) => (
+                  <tr key={product._id}>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <div className="flex items-center">
+                        <div className="flex-shrink-0 w-10 h-10">
+                          <Suspense fallback={null}>
+                            {" "}
+                            <img
+                              className="w-full h-full rounded-full"
+                              src={base_url + product.productImage[0] }
+                              alt={product.label}
+                            />
+                          </Suspense>
                         </div>
-                      </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                          {product.category}
-                        </p>
-                      </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                          {product.marque}
-                        </p>
-                      </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                          {product.state}
-                        </p>
-                      </td>
+                        <div className="ml-3">
+                          <p className="text-gray-900 whitespace-no-wrap">
+                            {product.label}
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <p className="text-gray-900 whitespace-no-wrap">
+                        {product.category}
+                      </p>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <p className="text-gray-900 whitespace-no-wrap">
+                        {product.marque}
+                      </p>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <p className="text-gray-900 whitespace-no-wrap">
+                        {product.state}
+                      </p>
+                    </td>
 
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <ProductManagement product={product} id={product._id} />
-                      </td>
-                    </tr>
-                  ))}
-                </div>
-              )}
+                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                      <ProductManagement product={product} id={product._id} />
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

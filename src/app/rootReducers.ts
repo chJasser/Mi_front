@@ -14,6 +14,7 @@ import UsersSlice from "./usersSlice/adminSlice";
 import filterSlice from "./filterSlice/filterSlice";
 import Productsliceseller from "./productslice/Productsliceseller";
 import RecSlice from "./reclamations/recSlice";
+import KaraokeSlice from "./karaoke/karaoke";
 import filterCourseSlice from "./slices/courseFilter";
 import CoursemodalSlice from "./slices/modalSlice";
 
@@ -33,6 +34,7 @@ const rootReducers = {
   reclamationsManagement: RecSlice,
   carteslics: carteslics,
   filterSlice: filterSlice,
+  karaoke: KaraokeSlice,
   filterCourseSlice: filterCourseSlice,
   CoursemodalSlice: CoursemodalSlice,
 };
