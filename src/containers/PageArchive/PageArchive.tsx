@@ -44,7 +44,6 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   const [value, setValue] = React.useState([0, 100]);
   let min = value[0];
   let max = value[1];
-
   const marques = [
     "yamaha",
     "shure",
@@ -105,7 +104,6 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       });
     }
   };
-
   const filterMarque = (marque) => {
     axios
       .get(`products/marque?marque=${marque}`)
@@ -131,6 +129,28 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       })
       .catch((err) => console.log(err.message));
   };
+  let c,m,s;
+  const params = new URLSearchParams(window.location.search)
+  c = params.get('category')
+  m = params.get('marque');
+  s = params.get('state')
+  useEffect(() => {
+    if(params.has('category')){
+      let c = params.get('category');
+      filterCatgory(c);
+    }
+    if(params.has('marque')){
+      let m = params.get('marque');
+      filterMarque(m);
+    }
+    if(params.has('state')){
+      let s = params.get('state');
+      if(s === "used")
+        getUsedProducts();
+      if(s === "new")
+        getNewProducts();
+    }
+  },[c,m,s]);
   const getAllProduct = () => {
     axios
       .get("products/filter")
@@ -191,7 +211,8 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     //   console.log(p)
     //   setProducts(p);
     // }
-    getAllProduct();
+    if(!params.get('category') && !params.get('marque') && !params.get('state'))
+      getAllProduct();
   }, [dispatch]);
 
   const renderModalContent = () => {

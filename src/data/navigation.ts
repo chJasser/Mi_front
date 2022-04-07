@@ -71,7 +71,7 @@ const megaMenu3ItemDemo: MegamenuItem[] = [
     title: "Filter By Category",
     items: __megamenu.map((i) => ({
       id: ncNanoId(),
-      href: "#",
+      href: `/mi/archive/the-demo-archive-slug?category=${i.category}`,
       name: i.Corporate,
     })),
   },
@@ -82,7 +82,7 @@ const megaMenu3ItemDemo: MegamenuItem[] = [
     title: "Filter By Marque",
     items: __megamenu.map((i) => ({
       id: ncNanoId(),
-      href: "#",
+      href: `/mi/archive/the-demo-archive-slug?marque=${i.marque}`,
       name: i.CarModel,
     })),
   },
@@ -91,10 +91,11 @@ const megaMenu3ItemDemo: MegamenuItem[] = [
     image:
       "https://images.pexels.com/photos/5809453/pexels-photo-5809453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     title: "Filter By State",
-    items: [
-      { id: ncNanoId(), href: "#", name: "New" },
-      { id: ncNanoId(), href: "#", name: "Used" },
-    ],
+    items: __megamenu.map((i) => ({
+       id: ncNanoId(), 
+       href: `/mi/archive/the-demo-archive-slug?state=${i.etat}`, 
+       name: i.state 
+    })),
   },
 ];
 
