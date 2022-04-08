@@ -41,7 +41,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   const prod = useSelector((state: RootState) => state.product);
   const myRef = useRef(null);
   const inputRef = React.createRef<HTMLInputElement>();
-  const [value, setValue] = React.useState([0, 100]);
+  const [value, setValue] = React.useState([0, 10000]);
   let min = value[0];
   let max = value[1];
   const marques = [

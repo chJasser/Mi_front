@@ -1,15 +1,22 @@
 import { StarIcon } from "@heroicons/react/solid";
 import { RadioGroup } from "@headlessui/react";
 import { useState, Suspense, useEffect } from "react";
-import { ContactShadows, Environment, OrbitControls, Stars, Text } from "@react-three/drei";
+import {
+  ContactShadows,
+  Environment,
+  OrbitControls,
+  Stars,
+  Text,
+} from "@react-three/drei";
 
 import { Canvas } from "@react-three/fiber";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Pianoo from "./Pianoo";
-import Exemple1 from "./Exemple1"
-import {showText} from "../../app/productslice/Productsliceseller"
+import Piano from "./Piano";
+import { showText } from "../../app/productslice/Productsliceseller";
 import { useDispatch } from "react-redux";
-import { Input } from "@mui/material";
+//import { Input } from "@mui/material";
+import Input from "@material-tailwind/react/Input";
 
 const reviews = { href: "#", average: 4, totalCount: 117 };
 
@@ -17,27 +24,17 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example2() {
-  const sizes = [
-    { name: "XXS", inStock: false },
-    { name: "XS", inStock: true },
-    { name: "S", inStock: true },
-    { name: "M", inStock: true },
-    { name: "L", inStock: true },
-    { name: "XL", inStock: true },
-    { name: "2XL", inStock: true },
-    { name: "3XL", inStock: true },
-  ];
+export default function CustomPianoContainer() {
   const [selectedSize, setSelectedSize] = useState();
   const [Hinges, setHinges] = useState("#FFF36B");
   const [Keys, setKeys] = useState("#FFFFFF");
-  const [Piano, setPiano] = useState("#A8A8A8");
+  const [Pianoo, setPiano] = useState("#2E2E2E");
   const [HingesChanged, setHingesChanged] = useState(false);
   const [KeysChanged, setKeysChanged] = useState(false);
   const [PianoChanged, setPianoChanged] = useState(false);
   const [show, setShow] = useState(false);
   const [text, setText] = useState("");
-  const [color, setColor] = useState("#000000")
+  const [color, setColor] = useState("#ffffff");
   const dispatch = useDispatch();
   const [product, setProduct] = useState({
     name: "Basic Keyboard",
@@ -77,7 +74,8 @@ export default function Example2() {
     e.preventDefault();
     setHinges("#E1FF00");
     setKeys("#FAFAFA");
-    setPiano("#8F8F8F");
+    setPiano("#2E2E2E");
+    setText("");
     setHingesChanged(false);
     setPianoChanged(false);
     setKeysChanged(false);
@@ -89,18 +87,19 @@ export default function Example2() {
       price: 3000,
     });
   };
+
   return (
-    <div className=" container mx-auto flex items-center">
+    <div className="container mt-5 mb-10 mx-auto flex items-center">
       {/* Image gallery */}
       <div className="card">
-        <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
+        <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl dark:text-neutral-300">
           {product.name}
         </h1>
         <div className="product-canvas">
           <Canvas
             shadows
             dpr={[1, 2]}
-            camera={{ position: [-3, 0, 3], fov: 35 }} 
+            camera={{ position: [-3, 2, 3], fov: 30 }}
           >
             <ambientLight intensity={0.7} />
             <spotLight
@@ -111,29 +110,21 @@ export default function Example2() {
               castShadow
             />
             <Suspense fallback={null}>
-              <Exemple1
+              <Piano
                 customColors={{
                   Hinges: Hinges,
                   Keys: Keys,
-                  Piano: Piano,
+                  Piano: Pianoo,
                 }}
               />
               <Text
                 text={text}
                 color={color}
-                position={[0.02, 1, -0.02]}
-              >
-              </Text>
+                position={[0.02, 0.5, -0.02]}
+                maxLength={10}
+              ></Text>
               <Environment preset="city" />
-              {/* <ContactShadows
-                rotation-x={Math.PI / 2}
-                position={[0, -0.8, 0]}
-                opacity={0.25}
-                width={10}
-                height={10}
-                blur={1.5}
-                far={0.8}
-              /> */}
+
               <Stars
                 radius={100} // Radius of the inner sphere (default=100)
                 depth={50} // Depth of area where stars should fit (default=50)
@@ -148,22 +139,25 @@ export default function Example2() {
               enableZoom={true}
               enableRotate={true}
             />
-            
           </Canvas>
         </div>
       </div>
 
       {/* Product info */}
-      <div className="max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16 lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:pt-5 lg:pb-5 lg:px-8 lg:grid lg:grid-cols-1 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
         <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8"></div>
 
         {/* Options */}
         <div className="mt-4 lg:mt-0 lg:row-span-3">
-          <h2 className="sr-only">Product information</h2>
-          <p className="text-3xl text-gray-900">${product.price}</p>
+          <h2 className="mb-3 text-gray-900 dark:text-neutral-300">
+            Product information
+          </h2>
+          <p className="text-3xl text-gray-900 dark:text-neutral-300">
+            ${product.price}
+          </p>
 
           {/* Reviews */}
-          <div className="mt-6">
+          <div className="mt-4">
             <h3 className="sr-only">Reviews</h3>
             <div className="flex items-center">
               <div className="flex items-center">
@@ -172,8 +166,8 @@ export default function Example2() {
                     key={rating}
                     className={classNames(
                       reviews.average > rating
-                        ? "text-gray-900"
-                        : "text-gray-200",
+                        ? "text-gray-900 star"
+                        : "text-gray-200 emptyStar",
                       "h-5 w-5 flex-shrink-0"
                     )}
                     aria-hidden="true"
@@ -190,12 +184,15 @@ export default function Example2() {
             </div>
           </div>
 
-          <form className="mt-10">
+          <form className="mt-6">
             {/* Colors */}
             <div>
-              <h3 className="text-sm text-gray-900 font-medium">Color</h3>
+              <h3 className="text-md text-gray-900 font-medium dark:text-neutral-300">
+                Color :
+              </h3>
               <div className="colors">
                 <div>
+                  <label>Piano </label>
                   <input
                     type="color"
                     id="Piano"
@@ -203,10 +200,10 @@ export default function Example2() {
                     value={Piano}
                     onChange={(e) => handlePianoChanged(e)}
                   />
-                  <label>Piano</label>
                 </div>
 
                 <div>
+                  <label>Keys </label>
                   <input
                     type="color"
                     id="Keys"
@@ -214,9 +211,9 @@ export default function Example2() {
                     value={Keys}
                     onChange={(e) => handleKeysChanged(e)}
                   />
-                  <label>Keys</label>
                 </div>
                 <div>
+                  <label>Hinges </label>
                   <input
                     type="color"
                     id="Hinges"
@@ -224,109 +221,49 @@ export default function Example2() {
                     value={Hinges}
                     onChange={(e) => handleHingesChanged(e)}
                   />
-                  <label>Hinges</label>
                 </div>
               </div>
             </div>
 
             {/* Sizes */}
-            <div className="mt-10">
-              <div className="flex items-center justify-between">
-                <h3 className="text-sm text-gray-900 font-medium">
-                  Custom pictures
-                </h3>
-              </div>
-              <label>Text: </label>
-              <Input onChange={event => setText(event.target.value)} />
-              <label>Text Color</label>
-              <input
-                    type="color"
-                    id="text"
-                    name="text"
-                    value="black"
-                    onChange={(e) => handleTextColor(e)}
-                  />
 
-              <RadioGroup
-                value={selectedSize}
-                onChange={setSelectedSize}
-                className="mt-4"
-              >
-                <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
-                  {sizes.map((size) => (
-                    <RadioGroup.Option
-                      key={size.name}
-                      value={size}
-                      disabled={!size.inStock}
-                      className={({ active }) =>
-                        classNames(
-                          size.inStock
-                            ? "bg-white shadow-sm text-gray-900 cursor-pointer"
-                            : "bg-gray-50 text-gray-200 cursor-not-allowed",
-                          active ? "ring-2 ring-indigo-500" : "",
-                          "group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6"
-                        )
-                      }
-                    >
-                      {({ active, checked }) => (
-                        <>
-                          <RadioGroup.Label as="p">
-                            {size.name}
-                          </RadioGroup.Label>
-                          {size.inStock ? (
-                            <div
-                              className={classNames(
-                                active ? "border" : "border-2",
-                                checked
-                                  ? "border-indigo-500"
-                                  : "border-transparent",
-                                "absolute -inset-px rounded-md pointer-events-none"
-                              )}
-                              aria-hidden="true"
-                            />
-                          ) : (
-                            <div
-                              aria-hidden="true"
-                              className="absolute -inset-px rounded-md border-2 border-gray-200 pointer-events-none"
-                            >
-                              <svg
-                                className="absolute inset-0 w-full h-full text-gray-200 stroke-2"
-                                viewBox="0 0 100 100"
-                                preserveAspectRatio="none"
-                                stroke="currentColor"
-                              >
-                                <line
-                                  x1={0}
-                                  y1={100}
-                                  x2={100}
-                                  y2={0}
-                                  vectorEffect="non-scaling-stroke"
-                                />
-                              </svg>
-                            </div>
-                          )}
-                        </>
-                      )}
-                    </RadioGroup.Option>
-                  ))}
-                </div>
-              </RadioGroup>
+            <label className="mt-5">Text : </label>
+
+            <div className="mb-4">
+              <input
+                type="text"
+                onChange={(event) => setText(event.target.value)}
+                placeholder="some text"
+                className="px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
+                maxLength="20"
+              />
             </div>
 
-            <ButtonPrimary
-              onClick={(e) => handleSubmit(e)}
-              type="submit"
-              className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Add to bag
-            </ButtonPrimary>
-            <ButtonPrimary
-              type="button"
-              onClick={(e) => handleCancel(e)}
-              className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Cancel
-            </ButtonPrimary>
+            <label className="mt-2 ml-3 mr-2">Text Color :</label>
+            <input
+              type="color"
+              id="text"
+              name="text"
+              value="#ffffff"
+              onChange={(e) => handleTextColor(e)}
+            />
+
+            <div className="flex justify-between mt-7">
+              <ButtonPrimary
+                onClick={(e) => handleSubmit(e)}
+                type="submit"
+                className="bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Add to bag
+              </ButtonPrimary>
+              <ButtonPrimary
+                type="button"
+                onClick={(e) => handleCancel(e)}
+                className="cancel bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Cancel
+              </ButtonPrimary>
+            </div>
           </form>
         </div>
       </div>

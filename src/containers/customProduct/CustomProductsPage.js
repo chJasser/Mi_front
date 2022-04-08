@@ -1,14 +1,13 @@
 import "./styles.css";
-import Example from "./CustomProductContainer";
-import Example2 from "./CustomPianoContainer";
+import CustomGuitar from "./CustomProductContainer";
+import CustomPianoContainer from "./CustomPianoContainer";
 import ViolinContainer from "./ViolinContainer";
-import Exemple3 from "./CustomElectrique";
-import Exemple4 from "./CustomDrums";
+import CustomElectrique from "./CustomElectrique";
+import CustomDrums from "./CustomDrums";
 import ArchiveFilterListBox from "components/ArchiveFilterListBox/ArchiveFilterListBox";
 import { useState } from "react";
 import Dropdown from "@material-tailwind/react/Dropdown"
 import DropdownItem from "@material-tailwind/react/DropdownItem"
-import DropdownLink from "@material-tailwind/react/DropdownLink"
 const CustomProductsPage = () => {
   const FILTERS = [
     { name: "Guitar" },
@@ -18,14 +17,11 @@ const CustomProductsPage = () => {
     { name: "Drums" },
   ];
   const [selected, set] = useState(1)
-  const filter = (e) => {
-    set(e)
-    console.log(e)
-  }
   return (
-    <div className="">
+    <div>
+      <div className="flex justify-center">
       <Dropdown
-            className="flex justify-center ml-5 mt-5"
+            className="mr-5 mt-10"
             color="indigo"
             placement="bottom-start"
             buttonText="Instrument"
@@ -59,10 +55,11 @@ const CustomProductsPage = () => {
             </DropdownItem>
             
         </Dropdown>
-      {selected===1 ? <Example></Example> : ""} 
-      {selected===2 ?<Exemple3></Exemple3> : ""}
-      {selected===3 ?<Example2></Example2> : ""}
-      {selected===4 ?<Exemple4></Exemple4> : ""}
+      </div>
+      {selected===1 ? <CustomGuitar></CustomGuitar> : ""} 
+      {selected===2 ?<CustomElectrique></CustomElectrique> : ""}
+      {selected===3 ?<CustomPianoContainer></CustomPianoContainer> : ""}
+      {selected===4 ?<CustomDrums></CustomDrums> : ""}
       {selected===5 ?<ViolinContainer></ViolinContainer> : ""}
     </div>
   );

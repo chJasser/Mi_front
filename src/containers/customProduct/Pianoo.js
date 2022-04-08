@@ -7,7 +7,7 @@ import { useGLTF } from '@react-three/drei'
 
 export default function Pianoo({ ...props }) {
   const group = useRef()
-  const { nodes, materials } = useGLTF('/pianoo.glb')
+  const { nodes, materials } = useGLTF('/Blender/pianoo.glb')
   console.log(props)
   return (
     <group ref={group} {...props} dispose={null}>
