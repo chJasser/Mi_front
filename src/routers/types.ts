@@ -34,6 +34,7 @@ export interface LocationStates {
   "/mi/subscription"?: {};
   "/mi/saved-products"?: {};
   "/mi/edit-profile"?: {};
+  "/mi/manageproduct"?:{};
   "/mi/Karaoke"?: {};
   //
   "/mi/theme-cyan-blueGrey"?: {};
