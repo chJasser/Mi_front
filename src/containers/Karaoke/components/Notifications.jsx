@@ -14,7 +14,7 @@ const Notifications = () => {
             className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 my-3 rounded relative"
             role="alert"
           >
-            <strong className="font-bold">Holy smokes!</strong>{" "}
+            <strong className="font-bold">📞</strong>{" "}
             {call.name.length > 0 ? (
               <span className="block sm:inline">
                 `{call.name} is calling you ...`

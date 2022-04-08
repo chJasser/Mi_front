@@ -7,22 +7,20 @@ import { useDispatch } from "react-redux";
 import axios from "axiosInstance";
 import ReactPlayer from "react-player";
 import NcPlayIcon from "components/NcPlayIcon/NcPlayIcon";
-import SingleTitle from "containers/PageSingle/SingleTitle";
 import NcImage from "components/NcImage/NcImage";
 import isSafariBrowser from "utils/isSafariBrowser";
 /**
  *
  *
  */
-import { Typography, AppBar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import VideoPlayer from "./components/VideoPlayer";
 import Sidebar from "./components/SideBar";
 import Notifications from "./components/Notifications";
-import ButtonPrimary from "components/Button/ButtonPrimary";
 import Badge from "components/Badge/Badge";
 import ButtonSecondary from "components/Button/ButtonSecondary";
+import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
 const useStyles = makeStyles((theme) => ({
   appBar: {
     borderRadius: 15,
@@ -111,6 +109,7 @@ function Karaoke() {
         <Helmet>
           <title>MI || Karaoke</title>
         </Helmet>
+        <BgGlassmorphism />
         {/* HEADER */}
         <div className="w-screen px-2 xl:max-w-screen-2xl mx-auto">
           <div className="rounded-3xl relative aspect-w-16 aspect-h-16 sm:aspect-h-9 lg:aspect-h-5 overflow-hidden ">
@@ -242,12 +241,14 @@ function Karaoke() {
         </div>{" "}
         {/* ====================== END HEADER ====================== */}
       </div>
+
       <div
         className={`nc-PageSingleVideo  ${className}`}
         data-nc-id="PageSingleVideo"
       >
         {/* SINGLE HEADER */}
         <header className="container relative py-14 lg:py-20 flex flex-col lg:flex-row lg:items-center">
+          <BgGlassmorphism />
           <div className="relative lg:w-6/12 flex-shrink-0">
             <div className="aspect-w-16 aspect-h-16 sm:aspect-h-9 ">
               {renderMainVideo()}
@@ -264,6 +265,7 @@ function Karaoke() {
       {/* Streaming !!! */}
       <div className="gap-2 my-10"></div>
       <header className="container rounded-xl">
+        
         <div className={`nc-SingleHeader`}>
           <div className="w-full px-2 xl:max-w-screen-2xl mx-auto">
             <div className="rounded-3xl relative aspect-w-16 aspect-h-12 sm:aspect-h-7 lg:aspect-h-6 xl:aspect-h-5 2xl:aspect-h-4 overflow-hidden ">
@@ -286,9 +288,9 @@ function Karaoke() {
                     {reference}
                   </h4>
                 )} */}
+                <ButtonSecondary href="/mi">Home</ButtonSecondary>
               </div>
             </div>
-            <ButtonSecondary href="/mi">Home</ButtonSecondary>
           </div>
         </div>
       </header>

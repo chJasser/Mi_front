@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Sidebar = ({ children }) => {
+const Sidebar = () => {
   const {
     me,
     callAccepted,
@@ -122,7 +122,6 @@ const Sidebar = ({ children }) => {
               </Grid>
             </Grid>
           </form>
-          {children}
         </Paper>
       )}
     </Container>
