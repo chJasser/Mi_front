@@ -114,7 +114,10 @@ const Card11Product: FC<Card11Props> = ({
           {languages + ":" + level}
         </h2>
         <h2 className="nc-card-title block text-base font-semibold text-neutral-900 dark:text-neutral-100 ">
-          {subscribers + ":" + duration + "h"}
+          {"subscribers:" + subscribers}
+        </h2>
+        <h2 className="nc-card-title block text-base font-semibold text-neutral-900 dark:text-neutral-100 ">
+          {"duration: " + duration + "h"}
         </h2>
         <div className="flex items-end justify-between mt-auto">
           {`rate:${rate.totalRate}`}

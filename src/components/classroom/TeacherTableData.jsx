@@ -1,17 +1,20 @@
 import axios from "axiosInstance";
 import ReactStars from "react-rating-stars-component";
-import { Link } from "react-router-dom";
-import React, { useState, useEffect } from "react";
-
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setChange, setSelected } from "app/slices/courseSlice";
+import { useHistory } from "react-router-dom";
 const base_url = "http://localhost:5050/data/image/";
 function TeacherTableData({ course }) {
+  const dispatch = useDispatch();
+  const selected = useSelector((state) => state.courseSlice.selected);
+  const history = useHistory();
   const [rate, setrate] = useState(0);
-  const [courseChange, setcourseChange] = useState(false);
-  const handaleDelete = () => {
-    axios
+  const handaleDelete = async () => {
+    await axios
       .delete(`/courses/${course._id}`)
       .then(() => {
-        setcourseChange(!courseChange);
+        dispatch(setChange());
       })
       .catch((err) => console.log(err));
   };
@@ -62,7 +65,14 @@ function TeacherTableData({ course }) {
         <button title="View" style={{ color: "#03A9F4" }}>
           <i className="material-icons">&#xE417;</i>
         </button>
-        <button title="Edit" style={{ color: "#FFC107" }}>
+        <button
+          title="Edit"
+          style={{ color: "#FFC107" }}
+          onClick={() => {
+            dispatch(setSelected(course));
+            history.replace(`/mi/classroom/teacher/update`);
+          }}
+        >
           <i className="material-icons">&#xE254;</i>
         </button>
         <button

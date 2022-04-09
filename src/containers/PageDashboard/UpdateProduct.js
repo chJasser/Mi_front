@@ -339,12 +339,12 @@ const UpdateProduct = () => {
               <Alert severity="error">{errors.productImage}</Alert>
             ) : null}
 
-            <ButtonPrimary className="md:col-span-2" type="submit"
-            >
+            <ButtonPrimary className="md:col-span-2" type="submit">
               Update product
             </ButtonPrimary>
-            <ButtonPrimary className="md:col-span-2"
-            onClick={() => dispatch(showForm(false))}
+            <ButtonPrimary
+              className="md:col-span-2"
+              onClick={() => dispatch(showForm(false))}
             >
               Cancel
             </ButtonPrimary>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Input from "components/Input/Input";
 import Label from "components/Label/Label";
@@ -9,14 +9,17 @@ import * as yup from "yup";
 import { Formik } from "formik";
 import makeAnimated from "react-select/animated";
 import Select from "react-select";
-import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsOpen } from "app/slices/modalSlice";
+import { useHistory, useParams } from "react-router-dom";
 const customStyles = {
   width: "60%",
   marginLeft: "20%",
 };
 
-const AddCours = () => {
+const UpdateCourse = () => {
   const history = useHistory();
+  const course = useSelector((state) => state.courseSlice.selectedCourse);
   const validationSchema = yup.object().shape({
     label: yup.string().min(2).max(15).required().trim(),
     description: yup.string().max(255).required().trim(),
@@ -81,14 +84,13 @@ const AddCours = () => {
     formData.append("level", values.level);
 
     if (values.image !== null) formData.append("image", values.image);
-    await axios.post("courses/add", formData, {
+    await axios.put(`courses/update-course/${course._id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
     history.replace("/mi/classroom/teacher");
   };
-
   return (
     <div
       className="rounded-xl md:border md:border-neutral-100 dark:border-neutral-800 md:p-4 modal-body m-5"
@@ -96,13 +98,7 @@ const AddCours = () => {
     >
       <Formik
         initialValues={{
-          label: "",
-          price: "",
-          duration: "",
-          description: "",
-          level: "beginner",
-          languages: "english",
-          category: "others",
+          ...course,
           image: null,
         }}
         validationSchema={validationSchema}
@@ -129,7 +125,7 @@ const AddCours = () => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.label}
+                defaultValue={values.label}
                 placeholder="Example Doe"
                 level="text"
                 className="mt-1"
@@ -196,7 +192,10 @@ const AddCours = () => {
                 onChange={(e) => setFieldValue("category", e.value.toString())}
                 components={animatedComponents}
                 options={optionscategory}
-                defaultValue={{ value: "others", label: "others" }}
+                defaultValue={{
+                  value: course.category,
+                  label: course.category,
+                }}
               />
             </label>
             {touched.category && errors.category ? (
@@ -211,7 +210,10 @@ const AddCours = () => {
                 onChange={(e) => setFieldValue("languages", e.value.toString())}
                 components={animatedComponents}
                 options={optionslanguages}
-                defaultValue={{ value: "english", label: "english" }}
+                defaultValue={{
+                  value: course.languages,
+                  label: course.languages,
+                }}
               />
             </label>
             {touched.languages && errors.languages ? (
@@ -225,7 +227,7 @@ const AddCours = () => {
                 onChange={(e) => setFieldValue("level", e.value.toString())}
                 components={animatedComponents}
                 options={optionslevel}
-                defaultValue={{ value: "beginner", label: "beginner" }}
+                defaultValue={{ value: course.level, label: course.level }}
               />
             </label>
             {touched.level && errors.level ? (
@@ -241,7 +243,7 @@ const AddCours = () => {
               onChange={(e) => setFieldValue("image", e.currentTarget.files[0])}
             />
             <ButtonPrimary className="md:col-span-2" type="submit">
-              Add Cours
+              Update
             </ButtonPrimary>
           </form>
         )}
@@ -250,4 +252,4 @@ const AddCours = () => {
   );
 };
 
-export default AddCours;
+export default UpdateCourse;

@@ -68,6 +68,7 @@ export interface LocationStates {
   "/mi/classroom/student"?: {};
   "/mi/classroom/teacher/:id"?: {};
   "/mi/classroom/teacher/add"?: {};
+  "/mi/classroom/teacher/update"?: {};
   "/mi/classroom/student/:id"?: {};
 
   // back-office

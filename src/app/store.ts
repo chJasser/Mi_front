@@ -12,6 +12,7 @@ import {
 import storage from "redux-persist/lib/storage";
 import logger from "redux-logger";
 import rootReducers from "./rootReducers";
+import { CourseSlice } from "./slices/courseSlice";
 
 const isDev = process.env.NODE_ENV === "development";
 
@@ -33,6 +34,7 @@ const persistConfig = {
     "karaoke",
     "filterCourseSlice",
     "CoursemodalSlice",
+    "CourseSlice",
   ],
 };
 
