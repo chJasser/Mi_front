@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axiosInstance";
 export const CourseSlice = createSlice({
   name: "CourseSlice",
   initialState: {
@@ -8,9 +9,9 @@ export const CourseSlice = createSlice({
       price: "",
       duration: "",
       description: "",
-      level: "beginner",
-      languages: "english",
-      category: "others",
+      level: "",
+      languages: "",
+      category: "",
     },
   },
   reducers: {

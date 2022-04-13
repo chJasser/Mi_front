@@ -63,6 +63,7 @@ import StudentClassroom from "../components/classroom/StudentClassroom";
 import TeacherClassroom from "../components/classroom/TeacherClassroom";
 import AddCours from "./../containers/PageDashboard/addCours";
 import UpdateCourse from "components/classroom/updateCoures";
+import CourseDetails from "./../components/classroom/CourseDetails";
 
 export const pages: Page[] = [
   { path: "/mi", exact: true, component: PageHomeMi },
@@ -207,6 +208,12 @@ export const pages: Page[] = [
     exact: true,
     typeRoute: "classroom",
     component: UpdateCourse,
+  },
+  {
+    path: "/mi/classroom/teacher/details",
+    exact: true,
+    typeRoute: "classroom",
+    component: CourseDetails,
   },
   //back-office
 

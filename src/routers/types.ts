@@ -66,10 +66,10 @@ export interface LocationStates {
   "/mi/classroom"?: {};
   "/mi/classroom/teacher"?: {};
   "/mi/classroom/student"?: {};
-  "/mi/classroom/teacher/:id"?: {};
+  "/mi/classroom/teacher/details"?: {};
   "/mi/classroom/teacher/add"?: {};
   "/mi/classroom/teacher/update"?: {};
-  "/mi/classroom/student/:id"?: {};
+  "/mi/classroom/student/details"?: {};
 
   // back-office
   "/headerback"?: {};

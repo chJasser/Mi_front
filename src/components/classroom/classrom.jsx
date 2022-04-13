@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Pagination from "components/Pagination/Pagination";
-import ButtonPrimary from "components/Button/ButtonPrimary";
 import Nav from "components/Nav/Nav";
 import NavItem from "components/NavItem/NavItem";
 import CourseFilter from "components/ArchiveFilterListBox/courseFilter";
@@ -18,15 +17,11 @@ import { DEMO_AUTHORS } from "data/authors";
 import CardCourse from "components/Card11/CardCourse";
 import axios from "axiosInstance";
 import CourseFilterCategory from "./../../components/ArchiveFilterListBox/courseCategoryFilter";
-import Slider from "@material-ui/core/Slider";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  filterByPriceCourse,
-  filterByDurationCourse,
-  intialCourseSearch,
-} from "../../app/slices/courseFilter";
 import PriceFilter from "./PriceFilter";
 import DurationFilter from "./DurationFilter";
+import { filterByDurationCourse } from "../../app/slices/courseFilter";
+import { filterByPriceCourse } from "../../app/slices/courseFilter";
 const categories = [
   { name: "all" },
   { name: "voice" },
@@ -79,6 +74,16 @@ const Classroom = ({ className = "" }) => {
     axios
       .get("courses/details")
       .then((course) => {
+        dispatch(
+          filterByDurationCourse([
+            course.data.minduration,
+            course.data.maxduration,
+          ])
+        );
+        dispatch(
+          filterByPriceCourse([course.data.minprice, course.data.maxprice])
+        );
+        console.log(search);
         setDetails(course.data);
       })
       .catch((err) => console.log(err));
@@ -168,8 +173,8 @@ const Classroom = ({ className = "" }) => {
           {/* TABS FILTER */}
           <div className="flex flex-col sm:items-center sm:justify-between sm:flex-row ">
             <Nav
-              containerClassName="w-full overflow-x-auto hiddenScrollbar"
-              className=" sm:space-x-2"
+              containerClassName="w-full overflow-x-auto hiddenScrollbar "
+              className=" sm:space-x-2 "
             >
               {TABS.map((item, index) => (
                 <NavItem

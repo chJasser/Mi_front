@@ -62,7 +62,14 @@ function TeacherTableData({ course }) {
         ></ReactStars>
       </td>
       <td className=" border-b border-gray-200  text-sm ">
-        <button title="View" style={{ color: "#03A9F4" }}>
+        <button
+          title="View"
+          style={{ color: "#03A9F4" }}
+          onClick={() => {
+            dispatch(setSelected(course));
+            history.replace(`/mi/classroom/teacher/details`);
+          }}
+        >
           <i className="material-icons">&#xE417;</i>
         </button>
         <button
@@ -78,7 +85,9 @@ function TeacherTableData({ course }) {
         <button
           title="Delete"
           style={{ color: "#E34724" }}
-          onClick={() => handaleDelete()}
+          onClick={() => {
+            handaleDelete();
+          }}
         >
           <i className="material-icons ">&#xE872;</i>
         </button>
