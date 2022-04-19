@@ -5,6 +5,7 @@
   "homepage": "",
   "dependencies": {
     "@craco/craco": "^6.1.2",
+    "@daily-co/daily-js": "^0.25.0",
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
     "@fortawesome/fontawesome-free": "5.15.3",
@@ -27,6 +28,8 @@
     "@react-three/fiber": "7.0.26",
     "@react-three/postprocessing": "^2.3.1",
     "@reduxjs/toolkit": "^1.5.1",
+    "@stripe/react-stripe-js": "^1.7.1",
+    "@stripe/stripe-js": "^1.27.0",
     "@tailwindcss/aspect-ratio": "^0.2.1",
     "@tailwindcss/forms": "^0.3.2",
     "@tailwindcss/line-clamp": "^0.2.1",

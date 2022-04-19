@@ -34,7 +34,7 @@ export interface LocationStates {
   "/mi/subscription"?: {};
   "/mi/saved-products"?: {};
   "/mi/edit-profile"?: {};
-  "/mi/Karaoke"?: {};
+  "/mi/Karaoke/:id/:token"?: {};
   //
   "/mi/theme-cyan-blueGrey"?: {};
   "/mi/theme-blue-blueGrey"?: {};
@@ -68,6 +68,9 @@ export interface LocationStates {
   "/mi/classroom/student"?: {};
   "/mi/classroom/teacher/:id"?: {};
   "/mi/classroom/student/:id"?: {};
+  "/mi/payment"?: {};
+  "/mi/invoice/:id"?: {};
+  "/mi/room"?: {};
 
   // back-office
   "/headerback"?: {};

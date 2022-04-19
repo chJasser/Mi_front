@@ -382,7 +382,7 @@ const templateChilds: NavItemType[] = [
   // },
   {
     id: ncNanoId(),
-    href: "/mi/Karaoke",
+    href: "/mi/room",
     name: "Karaoke",
   },
   {
@@ -425,7 +425,7 @@ export const NAVIGATION_DEMO: NavItemType[] = [
   },
   {
     id: ncNanoId(),
-    href: "/mi/Karaoke",
+    href: "/mi/room",
     name: "MI Fun 🎷",
     type: "dropdown",
     children: templateChilds,

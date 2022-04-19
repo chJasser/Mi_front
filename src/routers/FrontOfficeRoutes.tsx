@@ -61,6 +61,10 @@ import Karaoke from "containers/Karaoke/Karaoke";
 import Classroom from "./../components/classroom/classrom";
 import StudentClassroom from "../components/classroom/StudentClassroom";
 import TeacherClassroom from "../components/classroom/TeacherClassroom";
+import IsAuthRoute from "./privateRoutes/IsAuthRoute";
+import Payment from "components/Payment/Payment.js";
+import PageInvoice from "components/Payment/PageInvoice";
+import Meeting from "containers/Karaoke/Meeting";
 
 export const pages: Page[] = [
   { path: "/mi", exact: true, component: PageHomeMi },
@@ -124,10 +128,11 @@ export const pages: Page[] = [
   { path: "/mi/signup", typeRoute: "auth", component: PageSignUp },
   {
     path: "/mi/edit-profile",
+    typeRoute: "isAuth",
     component: DashboardEditProfile,
   },
   {
-    path: "/mi/Karaoke",
+    path: "/mi/Karaoke/:id/:token",
     component: Karaoke,
   },
   {
@@ -138,7 +143,7 @@ export const pages: Page[] = [
   },
   { path: "/mi/dashboard", component: PageDashboard },
   { path: "/mi/subscription", component: PageSubcription },
-
+  { path: "/mi/payment", component: Payment },
   { path: "/mi/forgot-pass/:email", component: RestPasswordComponent },
   { path: "/mi/passport/register", component: PagePassword },
 
@@ -194,7 +199,8 @@ export const pages: Page[] = [
     typeRoute: "classroom",
     component: TeacherClassroom,
   },
-
+  { path: "/mi/invoice/:id",  component: PageInvoice },
+  { path: "/mi/room",  component: Meeting },
   //back-office
 
   //
@@ -237,6 +243,15 @@ export default function FronOfficeRoutes() {
           } else if (typeRoute === "teacher") {
             return (
               <BecomeTeacherRoute
+                key={path}
+                component={component}
+                exact={!!exact}
+                path={path}
+              />
+            );
+          } else if (typeRoute === "isAuth") {
+            return (
+              <IsAuthRoute
                 key={path}
                 component={component}
                 exact={!!exact}

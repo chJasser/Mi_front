@@ -24,6 +24,7 @@ ReactDOM.render(
     <PersistGate loading={null} persistor={persistor}>
       <ContextProvider>
         <App />
+        <form action="https://sandbox.paymee.tn/gateway/" ></form>
       </ContextProvider>
 
       {/* LOAD RTL CSS WHEN RTL MODE ENABLE */}
