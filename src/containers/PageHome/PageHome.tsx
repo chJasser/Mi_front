@@ -46,10 +46,10 @@ import SectionBecomeAnSeller from "components/SectionBecomeAnSeller/SectionBecom
 
 //
 const POSTS: PostDataType[] = DEMO_POSTS;
+const MAGAZINE2_POSTS = DEMO_POSTS.filter((_, i) => i >= 0 && i < 7);
 //
 const MAGAZINE1_TABS = ["all", "Garden", "Fitness", "Design"];
 const MAGAZINE1_POSTS = DEMO_POSTS.filter((_, i) => i >= 8 && i < 16);
-const MAGAZINE2_POSTS = DEMO_POSTS.filter((_, i) => i >= 0 && i < 7);
 //
 
 const PageHome: React.FC = () => {
@@ -90,7 +90,7 @@ const PageHome: React.FC = () => {
   return (
     <div className="nc-PageHome relative">
       <Helmet>
-        <title>Home || Blog Magazine React Template</title>
+        <title>Home || MI Universe</title>
       </Helmet>
 
       {/* ======== ALL SECTIONS ======== */}

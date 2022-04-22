@@ -64,6 +64,12 @@ import TeacherClassroom from "../components/classroom/TeacherClassroom";
 import AddCours from "./../containers/PageDashboard/addCours";
 
 import Manageproduct from "containers/PageDashboard/Manageproduct";
+import Stream from "containers/Stream/LiveStream";
+import LiveStream from "containers/Stream/LiveStream";
+import WatchStream from "containers/Stream/WatchStream";
+import StreamHome from "containers/Stream/StreamHome";
+import Streamer from "containers/Stream/Streamer";
+import StreamHomePage from "containers/Stream/StreamHomePage";
 export const pages: Page[] = [
   { path: "/mi", exact: true, component: PageHomeMi },
   { path: "/mi#", exact: true, component: PageHome },
@@ -129,13 +135,23 @@ export const pages: Page[] = [
     component: DashboardEditProfile,
   },
   {
-   path:"/mi/manageproduct",
-   component:Manageproduct,
+    path: "/mi/manageproduct",
+    component: Manageproduct,
   },
   {
-    path: "/mi/Karaoke",
+    path: "/mi/karaoke",
     component: Karaoke,
   },
+
+  {
+    path: "/mi/live-streaming",
+    component: StreamHomePage,
+  },
+  {
+    path: "/mi/live-stream/:id",
+    component: Streamer,
+  },
+
   {
     path: "/mi/forgot-pass",
     exact: true,

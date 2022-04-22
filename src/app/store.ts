@@ -33,6 +33,7 @@ const persistConfig = {
     "karaoke",
     "filterCourseSlice",
     "CoursemodalSlice",
+    "stream",
   ],
 };
 

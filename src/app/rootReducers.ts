@@ -17,7 +17,7 @@ import RecSlice from "./reclamations/recSlice";
 import KaraokeSlice from "./karaoke/karaoke";
 import filterCourseSlice from "./slices/courseFilter";
 import CoursemodalSlice from "./slices/modalSlice";
-
+import StreamSlice from "./streamSlice/liveRooms";
 const rootReducers = {
   bookmark: bookmarkReducer,
   postLike: postLikesReducer,
@@ -37,6 +37,7 @@ const rootReducers = {
   karaoke: KaraokeSlice,
   filterCourseSlice: filterCourseSlice,
   CoursemodalSlice: CoursemodalSlice,
+  stream: StreamSlice,
 };
 
 export default rootReducers;

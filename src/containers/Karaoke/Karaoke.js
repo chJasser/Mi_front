@@ -3,59 +3,26 @@ import Input from "components/Input/Input";
 import ButtonCircle from "components/Button/ButtonCircle";
 import { useState } from "react";
 import image from "images/dance.jpg";
-import { useDispatch } from "react-redux";
 import axios from "axiosInstance";
 import ReactPlayer from "react-player";
 import NcPlayIcon from "components/NcPlayIcon/NcPlayIcon";
 import NcImage from "components/NcImage/NcImage";
 import isSafariBrowser from "utils/isSafariBrowser";
-/**
- *
- *
- */
-import { makeStyles } from "@material-ui/core/styles";
 
-import VideoPlayer from "./components/VideoPlayer";
-import Sidebar from "./components/SideBar";
-import Notifications from "./components/Notifications";
-import Badge from "components/Badge/Badge";
-import ButtonSecondary from "components/Button/ButtonSecondary";
 import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
-const useStyles = makeStyles((theme) => ({
-  appBar: {
-    borderRadius: 15,
-    margin: "30px 100px",
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "600px",
-    border: "2px solid black",
 
-    [theme.breakpoints.down("xs")]: {
-      width: "90%",
-    },
-  },
-  image: {
-    marginLeft: "15px",
-  },
-  wrapper: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    width: "100%",
-  },
-}));
+import KaraokeOneToOne from "./karaokeOneToOne";
+import ButtonPrimary from "components/Button/ButtonPrimary";
+
 /**
  *
  *
  *
  */
 function Karaoke() {
-  const classes = useStyles();
-  const dispatch = useDispatch();
   let className = "";
   const [search, setSearch] = useState("");
+
   const [songs, setSongs] = useState([]);
   const [chosenSong, setChosenSong] = useState({});
   const [isPlay, setIsPlay] = useState(false);
@@ -90,8 +57,8 @@ function Karaoke() {
         )}
         <ReactPlayer
           url={chosenSong.Video}
-          className="absolute inset-0"
           style={{ borderRadius: 18, overflow: "hidden" }}
+          className=""
           playing={isSafariBrowser() ? isPlay : true}
           width="100%"
           height="100%"
@@ -154,37 +121,7 @@ function Karaoke() {
                         getSongFromDb(e.target.value);
                       }}
                     />
-                    {/* <Autocomplete
-                    freeSolo
-                    type="search"
-                    // className={`block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-full text-sm font-normal h-11 px-4 py-3 `}
-                    defaultValue={search}
-                    onChange={(e) => {
-                      setSearch(e.target.value);
-                    }}
-                    onKeyDown={(e) => {
-                      getSongFromDb(e.target.value);
-                    }}
-                    // disableClearable
 
-                    options={
-                      song.length > 0
-                        ? song.map((option) => option.Song || "")
-                        : []
-                    }
-                    renderInput={(params, index) => (
-                      <TextField
-                        {...params}
-                        key={index}
-                        label="Search input"
-                        className="rounded-full dark:text-white text-sm font-normal"
-                        InputProps={{
-                          ...params.InputProps,
-                          type: "search",
-                        }}
-                      />
-                    )}
-                  ></Autocomplete> */}
                     <ButtonCircle
                       className="absolute right-2.5 top-1/2 transform -translate-y-1/2"
                       size=" w-11 h-11"
@@ -246,54 +183,18 @@ function Karaoke() {
         className={`nc-PageSingleVideo  ${className}`}
         data-nc-id="PageSingleVideo"
       >
-        {/* SINGLE HEADER */}
-        <header className="container relative py-14 lg:py-20 flex flex-col lg:flex-row lg:items-center">
-          <BgGlassmorphism />
-          <div className="relative lg:w-6/12 flex-shrink-0">
-            <div className="aspect-w-16 aspect-h-16 sm:aspect-h-9 ">
+        {console.log(chosenSong)}
+        <KaraokeOneToOne></KaraokeOneToOne>
+        {chosenSong !== {} ? (
+          <div className=" py-14 lg:py-20">
+            <div className="aspect-w-16 aspect-h-9 sm:aspect-h-9 ">
               {renderMainVideo()}
             </div>
           </div>
-          <div className={classes.wrapper}>
-            <Sidebar>
-              <Notifications />
-            </Sidebar>
-          </div>
-        </header>
-        <VideoPlayer />
+        ) : (
+          <></>
+        )}
       </div>
-      {/* Streaming !!! */}
-      <div className="gap-2 my-10"></div>
-      <header className="container rounded-xl">
-        
-        <div className={`nc-SingleHeader`}>
-          <div className="w-full px-2 xl:max-w-screen-2xl mx-auto">
-            <div className="rounded-3xl relative aspect-w-16 aspect-h-12 sm:aspect-h-7 lg:aspect-h-6 xl:aspect-h-5 2xl:aspect-h-4 overflow-hidden ">
-              <NcImage
-                containerClassName="absolute inset-0"
-                src="https://images.pexels.com/photos/5967960/pexels-photo-5967960.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                className="object-cover w-full h-full"
-              />
-              <div className="absolute inset-0 bg-black text-white bg-opacity-30 flex flex-col items-center justify-center">
-                <div className="flex justify-between">
-                  <Badge className="" name="FREE" />
-                </div>
-
-                <h2 className="inline-block align-middle ml-3 text-5xl font-semibold md:text-7xl ">
-                  Enjoy yourself
-                </h2>
-
-                {/* {!!reference && !false && (
-                  <h4 className="inline-block align-middle ml-5 text-3xl md:text-2xl px-8 py- text-center">
-                    {reference}
-                  </h4>
-                )} */}
-                <ButtonSecondary href="/mi">Home</ButtonSecondary>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
     </>
   );
 }
