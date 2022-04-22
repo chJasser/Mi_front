@@ -71,6 +71,8 @@ export interface LocationStates {
   "/mi/payment"?: {};
   "/mi/invoice/:id"?: {};
   "/mi/room"?: {};
+  "/mi/invoices"?: {};
+ 
 
   // back-office
   "/headerback"?: {};

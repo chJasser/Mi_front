@@ -185,16 +185,15 @@ const otherPageChildMenus: NavItemType[] = [
   },
   {
     id: ncNanoId(),
+    href: "/mi/invoices",
+    name: "My Invoices",
+  },
+  {
+    id: ncNanoId(),
     href: "/mi/forgot-pass",
     name: "Forgot Password",
   },
-  // {
-  //   id: ncNanoId(),
-  //   href: "/mi/dashboard",
-  //   name: "Dashboard",
-  //   type: "dropdown",
-  //   children: dashboardChildMenus,
-  // },
+
   {
     id: ncNanoId(),
     href: "/mi/about",

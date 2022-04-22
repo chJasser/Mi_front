@@ -66,7 +66,7 @@ const Payment = ({ className = "" }) => {
 
         }
       }).catch(err => console.log(err))
-  }, [])
+  }, [cart])
 
 
   const checkPaymePayment = () => {
@@ -86,15 +86,15 @@ const Payment = ({ className = "" }) => {
     let cartId = cart.map((item) => item.productid);
     const invoice = {
       customer: user,
-      amount: payment.amount,
+      amount: calculTot(cart) + 5 + calculTot(cart) * 5 / 100,
       paymentId: payment.transaction_id,
       products: cartId,
     };
     const response = await axiosInstance.post("/payment/add", invoice);
-    if(response.data.success) {
+    if (response.data.success) {
       history.push(`/mi/invoice/${response.data.paiment.paymentId}`)
     }
-    
+
   };
   const appearance = {
     theme: "flat",

@@ -65,6 +65,7 @@ import IsAuthRoute from "./privateRoutes/IsAuthRoute";
 import Payment from "components/Payment/Payment.js";
 import PageInvoice from "components/Payment/PageInvoice";
 import Meeting from "containers/Karaoke/Meeting";
+import UserInvoices from "components/Payment/UserInvoices";
 
 export const pages: Page[] = [
   { path: "/mi", exact: true, component: PageHomeMi },
@@ -199,8 +200,20 @@ export const pages: Page[] = [
     typeRoute: "classroom",
     component: TeacherClassroom,
   },
-  { path: "/mi/invoice/:id",  component: PageInvoice },
-  { path: "/mi/room",  component: Meeting },
+  {
+    path: "/mi/invoice/:id",
+    typeRoute: "isAuth",
+    exact: true,
+    component: PageInvoice,
+  },
+  { path: "/mi/room", typeRoute: "isAuth", component: Meeting },
+  {
+    path: "/mi/invoices",
+    typeRoute: "isAuth",
+    exact: true,
+    component: UserInvoices,
+  },
+
   //back-office
 
   //
