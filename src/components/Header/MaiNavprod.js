@@ -18,7 +18,6 @@ const MaiNnavprod = ({ isTop }) => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.carteslics.cartItems);
 
-  console.log(cart);
   return (
     <div
       className={`nc-MainNav1 relative z-10 ${

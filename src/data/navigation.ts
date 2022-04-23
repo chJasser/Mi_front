@@ -5,64 +5,6 @@ import {
 import ncNanoId from "utils/ncNanoId";
 import __megamenu from "./jsons/__megamenu.json";
 
-// const megaMenuDemo: MegamenuItem[] = [
-//   {
-//     id: ncNanoId(),
-//     image:
-//       "https://images.unsplash.com/photo-1497215842964-222b430dc094?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGNvbXBhbnl8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60",
-//     title: "Company",
-//     items: __megamenu.map((i) => ({
-//       id: ncNanoId(),
-//       href: "/#",
-//       name: i.Company,
-//     })),
-//   },
-//   {
-//     id: ncNanoId(),
-//     image:
-//       "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTl8fGFwcHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60",
-//     title: "App Name",
-//     items: __megamenu.map((i) => ({
-//       id: ncNanoId(),
-//       href: "#",
-//       name: i.AppName,
-//     })),
-//   },
-//   {
-//     id: ncNanoId(),
-//     image:
-//       "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y2l0eXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60",
-//     title: "City",
-//     items: __megamenu.map((i) => ({
-//       id: ncNanoId(),
-//       href: "#",
-//       name: i.City,
-//     })),
-//   },
-//   {
-//     id: ncNanoId(),
-//     image:
-//       "https://images.unsplash.com/photo-1575328630189-440449ed8cd1?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mjd8fGNvbnRydWN0aW9ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60",
-//     title: "Contruction",
-//     items: __megamenu.map((i) => ({
-//       id: ncNanoId(),
-//       href: "#",
-//       name: i.Contruction,
-//     })),
-//   },
-//   {
-//     id: ncNanoId(),
-//     image:
-//       "https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y291bnRyeXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60",
-//     title: "Country",
-//     items: __megamenu.map((i) => ({
-//       id: ncNanoId(),
-//       href: "#",
-//       name: i.Country,
-//     })),
-//   },
-// ];
-
 const megaMenu3ItemDemo: MegamenuItem[] = [
   {
     id: ncNanoId(),
@@ -135,26 +77,12 @@ const megaMenu3ItemDemo2: MegamenuItem[] = [
 ];
 
 const dashboardChildMenus: NavItemType[] = [
-  // {
-  //   id: ncNanoId(),
-  //   href: "/dashboard",
-  //   name: "Dashboard",
-  // },
-  // {
-  //   id: ncNanoId(),
-  //   href: "/dashboard/posts",
-  //   name: "Posts",
-  // },
   {
     id: ncNanoId(),
     href: "/mi/dashboard/edit-profile",
     name: "Edit profile",
   },
-  // {
-  //   id: ncNanoId(),
-  //   href: "/mi/dashboard/billing-address",
-  //   name: "Billing address",
-  // },
+
   {
     id: ncNanoId(),
     href: "/mi/dashboard/subscription",
@@ -185,16 +113,15 @@ const otherPageChildMenus: NavItemType[] = [
   },
   {
     id: ncNanoId(),
+    href: "/mi/invoices",
+    name: "My Invoices",
+  },
+  {
+    id: ncNanoId(),
     href: "/mi/forgot-pass",
     name: "Forgot Password",
   },
-  // {
-  //   id: ncNanoId(),
-  //   href: "/mi/dashboard",
-  //   name: "Dashboard",
-  //   type: "dropdown",
-  //   children: dashboardChildMenus,
-  // },
+
   {
     id: ncNanoId(),
     href: "/mi/about",
@@ -315,75 +242,16 @@ const singleChildrenMenus: NavItemType = {
   ],
 };
 
-// const demoChildMenus: NavItemType[] = [
-//   {
-//     id: ncNanoId(),
-//     name:
-//       process.env.REACT_APP_LRT_OR_RTL === "rtl"
-//         ? "Default Demo - LTR"
-//         : "Default Demo",
-//     targetBlank: process.env.REACT_APP_LRT_OR_RTL === "rtl",
-//     href:
-//       process.env.REACT_APP_LRT_OR_RTL === "rtl"
-//         ? "https://chisnghiax.com/ncmaz/"
-//         : "/",
-//   },
-//   {
-//     id: ncNanoId(),
-//     href:
-//       process.env.REACT_APP_LRT_OR_RTL !== "rtl"
-//         ? "https://chisnghiax.com/ncmaz-rtl/"
-//         : "/",
-//     name: "Home Demo - RTL",
-//     targetBlank: process.env.REACT_APP_LRT_OR_RTL !== "rtl",
-//     isNew: true,
-//   },
-//   {
-//     id: ncNanoId(),
-//     href: "/home-demo-2",
-//     name: "Home Demo 2",
-//   },
-//   {
-//     id: ncNanoId(),
-//     href: "/home-demo-3",
-//     name: "Home Demo 3",
-//   },
-//   {
-//     id: ncNanoId(),
-//     href: "/home-demo-4",
-//     name: "Home Demo 4",
-//   },
-
-//   {
-//     id: ncNanoId(),
-//     href: "/home-demo-6",
-//     name: "Home Demo - News",
-//     isNew: true,
-//   },
-// ];
-
 const templateChilds: NavItemType[] = [
-  // ...archviePageChildrenMenus,
-  // singleChildrenMenus,
-  // {
-  //   id: ncNanoId(),
-  //   href: "/mi/single-gallery/this-is-single-slug",
-  //   name: "Single Gallery",
-  // },
-  // {
-  //   id: ncNanoId(),
-  //   href: "/mi/single-audio/this-is-single-slug",
-  //   name: "Single Audio",
-  // },
-  // {
-  //   id: ncNanoId(),
-  //   href: "/mi/single-video/this-is-single-slug",
-  //   name: "Single Video",
-  // },
   {
     id: ncNanoId(),
-    href: "/mi/Karaoke",
+    href: "/mi/room",
     name: "Karaoke",
+  },
+  {
+    id: ncNanoId(),
+    href: "/mi/live-streaming",
+    name: "Live Streaming",
   },
   {
     id: ncNanoId(),
@@ -425,7 +293,7 @@ export const NAVIGATION_DEMO: NavItemType[] = [
   },
   {
     id: ncNanoId(),
-    href: "/mi/Karaoke",
+    href: "/mi/room",
     name: "MI Fun 🎷",
     type: "dropdown",
     children: templateChilds,

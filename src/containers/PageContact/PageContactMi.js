@@ -21,7 +21,6 @@ const info = [
 ];
 
 const PageContactMi = ({ className = "" }) => {
-
   const [rec, setRec] = useState("");
   const [loading, setLoading] = useState(false);
   const textArea = document.querySelector(".textArea");
@@ -76,7 +75,7 @@ const PageContactMi = ({ className = "" }) => {
           <div>
             <form className="grid grid-cols-1 gap-6" action="#" method="post">
               <label className="block">
-                <Label>Message</Label>
+                <Label>Contact Us</Label>
 
                 <Textarea
                   onChange={(e) => setRec(e.target.value)}
@@ -90,7 +89,7 @@ const PageContactMi = ({ className = "" }) => {
                 disabled={loading}
                 type="submit"
               >
-                Send Message
+                Send Feedback
               </ButtonPrimary>
             </form>
           </div>

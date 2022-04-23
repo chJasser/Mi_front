@@ -35,6 +35,7 @@ const persistConfig = {
     "filterCourseSlice",
     "CoursemodalSlice",
     "CourseSlice",
+    "stream",
   ],
 };
 

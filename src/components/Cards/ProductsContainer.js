@@ -44,6 +44,7 @@ const dispatch=useDispatch();
   const paginateBack = () => setCurrentPage(currentPage - 1);
   return (
     <>
+    
       <TableOfProducts prod={currentPosts} color={color}/>
       <PaginationSimple
         lastPage={lastPage}
@@ -53,16 +54,16 @@ const dispatch=useDispatch();
         paginateFront={paginateFront}
         currentPage={currentPage}
       ></PaginationSimple>
-       <ButtonPrimary
+       <ButtonPrimary 
         onClick={() => {
           if (open) setopen(false);
           else setopen(true);
         }}
-      >
+        className="md:col-span-2">
         AddProduct
       </ButtonPrimary>
       {open && <Cardproducts />}
-
+      
     </>
   );
 }

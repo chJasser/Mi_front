@@ -9,8 +9,6 @@ import { PersistGate } from "redux-persist/integration/react";
 // import "@fortawesome/fontawesome-free/css/all.min.css";
 // import "./back-office/assets/styles/tailwind.css";
 
-import { ContextProvider } from "containers/Karaoke/Context.js";
-
 // STYLE front
 import "./styles/index.scss";
 import "./index.css";
@@ -22,9 +20,8 @@ const RtlImportCssLazy = React.lazy(() => import("RtlImportCss"));
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <ContextProvider>
         <App />
-      </ContextProvider>
+        <form action="https://sandbox.paymee.tn/gateway/" ></form>
 
       {/* LOAD RTL CSS WHEN RTL MODE ENABLE */}
       {process.env.REACT_APP_LRT_OR_RTL === "rtl" && (

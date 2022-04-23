@@ -61,9 +61,6 @@ export default function App() {
   }, [localStorage.token]);
 
   return (
-    // <div className="bg-white text-base dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">
-    //   <MyRouter />
-    // </div>
 
     <BrowserRouter basename={process.env.REACT_APP_LRT_OR_RTL}>
       <Switch>

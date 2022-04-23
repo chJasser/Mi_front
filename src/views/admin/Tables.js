@@ -2,16 +2,13 @@ import { useEffect } from "react";
 
 // components
 
-import CardTableReclamations from "components/Cards/CardTableReclamations";
 import CardTableOfUsers from "components/Cards/CardTableOfUsers";
 import { useDispatch } from "react-redux";
-import { getAllRecs } from "app/reclamations/recSlice";
 import { getAllUsers } from "app/usersSlice/adminSlice";
 
 export default function Tables() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getAllRecs());
     dispatch(getAllUsers());
   }, []);
 
@@ -22,11 +19,7 @@ export default function Tables() {
           <CardTableOfUsers color="light" />
         </div>
       </div>
-      <div className="flex flex-wrap mt-4">
-        <div className="w-full mb-12 px-4">
-          <CardTableReclamations color="dark" />
-        </div>
-      </div>
+     
     </>
   );
 }

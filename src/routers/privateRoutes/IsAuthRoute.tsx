@@ -12,7 +12,7 @@ const IsAuthRoute = ({ component: Component, ...rest }) => {
           return isAuth === true ? (
             <Component {...props} />
           ) : (
-            <Redirect to="/mi" />
+            <Redirect to="/mi/login" />
           );
         }}
       />
