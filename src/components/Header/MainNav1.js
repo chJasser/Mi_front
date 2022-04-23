@@ -104,7 +104,7 @@ const MainNav1 = ({ isTop }) => {
             <Avatar
               containerClassName="ring-4 ring-white dark:ring-0 shadow-2xl"
               imgUrl={base_url + currentUser.profilePicture}
-              sizeClass="w-10 h-10 text-xl lg:text-2xl lg:w-12 lg:h-12"
+              sizeClass="w-10 h-10 text-xl lg:text-2xl lg:w-11 lg:h-11"
               radius="rounded-full"
             />
             <h5>{currentUser.lastName}</h5>

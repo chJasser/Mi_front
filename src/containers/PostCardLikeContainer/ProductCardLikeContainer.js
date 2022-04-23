@@ -67,7 +67,7 @@ const ProductCardLikeContainer = (props) => {
   return (
     <ProductCardLikeAction
       {...args}
-      isLiked={isLiked()}
+      //isLiked={isLiked()}
       likeCount={product.likesCount}
       postId={productId}
       onClickLike={handleCLickLike}

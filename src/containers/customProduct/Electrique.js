@@ -28,7 +28,7 @@ export default function Electrique({ ...props }) {
       <mesh geometry={nodes.Plano003.geometry} material={nodes.Plano003.material} position={[-1.53, 0.09, 1.92]} rotation={[-Math.PI, 0, -3.08]} scale={0.37} />
       <mesh geometry={nodes.Cubo001.geometry} material={nodes.Cubo001.material} position={[1.58, -0.09, 1.38]} rotation={[-Math.PI, 0, -3.08]} />
       <mesh geometry={nodes.Cubo.geometry} material={nodes.Cubo.material} position={[-5.44, 0.11, 2.46]} />
-      <mesh material-color={props.customColors.body} geometry={nodes.Plano001.geometry} material={materials['Plano001']} position={[-0.28, 0, 1.85]} />
+      <mesh material-color={props.customColors.upper} geometry={nodes.Plano001.geometry} material={materials['Plano001']} position={[-0.28, 0, 1.85]} />
       <mesh geometry={nodes.Círculo021.geometry} material={nodes.Círculo021.material} position={[-1.1, 0.68, 1.28]} rotation={[0, 0, -0.15]} scale={0.15} />
       <mesh geometry={nodes.Cilindro003.geometry} material={nodes.Cilindro003.material} position={[-4.34, 2.41, 1.93]} rotation={[Math.PI / 2, 0, -1.53]} scale={0.06} />
       <mesh geometry={nodes.Cilindro002.geometry} material={nodes.Cilindro002.material} position={[-0.55, 2.41, 1.42]} rotation={[Math.PI / 2, 0, 1.41]} scale={0.06} />

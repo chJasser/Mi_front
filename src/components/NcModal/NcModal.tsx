@@ -2,6 +2,8 @@ import React, { FC, Fragment, ReactNode, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import ButtonDropdown from "components/ButtonDropdown/ButtonDropdown";
 import ButtonClose from "components/ButtonClose/ButtonClose";
+import { showForm } from "app/productslice/Productsliceseller";
+import { useDispatch } from "react-redux";
 
 export interface NcModalProps {
   renderContent: () => ReactNode;
@@ -11,6 +13,7 @@ export interface NcModalProps {
   triggerText?: ReactNode;
   modalTitle?: ReactNode;
   isOpenProp?: boolean;
+  hide?: boolean;
   onCloseModal?: () => void;
 }
 
@@ -22,13 +25,16 @@ const NcModal: FC<NcModalProps> = ({
   triggerText = "Open Modal",
   modalTitle = "Modal title",
   isOpenProp,
+  hide,
   onCloseModal,
 }) => {
   let [isOpen, setIsOpen] = useState(!!isOpenProp);
 
+  const dispatch = useDispatch();
   function closeModal() {
     if (isOpenProp === true) {
       setIsOpen(false);
+      dispatch(showForm(false))
     }
     onCloseModal && onCloseModal();
   }
@@ -48,7 +54,7 @@ const NcModal: FC<NcModalProps> = ({
       {renderTrigger ? (
         renderTrigger(openModal)
       ) : (
-        <ButtonDropdown onClick={openModal}> {triggerText} </ButtonDropdown>
+        hide && <ButtonDropdown onClick={openModal}> {triggerText} </ButtonDropdown>
       )}
 
       <Transition appear show={isOpen} as={Fragment}>

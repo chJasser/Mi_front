@@ -21,8 +21,10 @@ function TableOfProducts({ color, prod }) {
   const dispatch = useDispatch();
   const products1 = useSelector((state) => state.productseller.products);
   const show = useSelector((state) => state.productseller.show);
-  console.log(show);
+  const changedProduct = useSelector((state) => state.productseller.changedProduct);
   const base_url = "http://localhost:5050/";
+  const updatedProduct = useSelector((state) => state.productseller.changedProduct)
+  console.log(updatedProduct)
   useEffect(() => {
     axios.get("/products/getproductsseller").then((res) => {
       // console.log(res.data);
@@ -30,6 +32,10 @@ function TableOfProducts({ color, prod }) {
       setproducts(res.data);
     });
   }, []);
+  //let p = prod.map(p => {if(p._id === updatedProduct._id){  return {...p ,updatedProduct};} return p});
+  const objIndex = prod.findIndex((obj => obj._id === updatedProduct._id));
+  prod[objIndex] = updatedProduct;
+  console.log(prod)
   return (
     <>
       <div
@@ -69,12 +75,16 @@ function TableOfProducts({ color, prod }) {
                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   state
                 </th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  
+                </th>
               </tr>
             </thead>
             <tbody>
               {prod && (
                 
                   prod.map((product) => (
+                    //product._id === updatedProduct._id ? product = updatedProduct : ( 
                     <tr key={product._id}>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex items-center">
@@ -83,7 +93,7 @@ function TableOfProducts({ color, prod }) {
                               {" "}
                               <img
                                 className="w-full h-full rounded-full"
-                                src={base_url + product.productImage[0]}
+                                src={base_url + product.productImage}
                                 alt={product.label}
                               />
                             </Suspense>
@@ -123,7 +133,7 @@ function TableOfProducts({ color, prod }) {
         </div>
       </div>
 
-      {show ? <UpdateProduct /> : ""}
+      <UpdateProduct /> 
     </>
   );
 }

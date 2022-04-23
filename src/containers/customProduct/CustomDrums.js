@@ -1,14 +1,17 @@
 import { StarIcon } from "@heroicons/react/solid";
 import { RadioGroup } from "@headlessui/react";
 import { useState, Suspense, useEffect } from "react";
-import { ContactShadows, Environment, OrbitControls, Stars } from "@react-three/drei";
+import { ContactShadows, Environment, OrbitControls, Text,Stars } from "@react-three/drei";
 
 import { Canvas } from "@react-three/fiber";
 import Guitar from "./Guitar_model";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Electrique from "./Electrique";
 import Drums from "./Drums";
-
+import { useDispatch } from "react-redux";
+import { changeCategory, colorFilter } from "app/productslice/Productsliceseller";
+import { useHistory } from "react-router-dom";
+import ntc from "ntc";
 const reviews = { href: "#", average: 4, totalCount: 117 };
 
 function classNames(...classes) {
@@ -16,64 +19,118 @@ function classNames(...classes) {
 }
 
 export default function CustomDrums() {
-  const [selectedSize, setSelectedSize] = useState();
   const [face, setFace] = useState("#E8B187");
   const [chords, setChords] = useState("#B9B7BD");
   const [body, setBody] = useState("#4C2C2E");
   const [circulos, setCirculos] = useState("#FFF36B");
-  const [bodyChanged, setBodyChanged] = useState(false);
-  const [chordsChanged, setChordsChanged] = useState(false);
-  const [faceChanged, setFaceChanged] = useState(false);
   const [circulosChanged, setCirculosChanged] = useState(false);
+  const [text, setText] = useState("");
+  const [color, setColor] = useState("#FFFFFF");
   const [product, setProduct] = useState({
     name: "Basic Drums",
-    price: 1000,
-    changedBody: false,
-    changedChords: false,
-    changedFace: false,
+    price: 5000,
     changedCirculos: false,
   });
+  const [circulos_match, setCirculosMatch] = useState("");
+  const [hexCirculos, setHexCirculos] = useState("#FFF36B");
+  const dispatch = useDispatch();
   useEffect(() => {
-    const { changedBody, changedChords, changedFace, changedCirculos } =
+    const {changedCirculos } =
       product;
-    changedBody && setProduct({ ...product, price: product.price + 50 });
-    changedChords && setProduct({ ...product, price: product.price + 50 });
-    changedFace && setProduct({ ...product, price: product.price + 50 });
     changedCirculos && setProduct({ ...product, price: product.price + 50 });
-  }, [bodyChanged, chordsChanged, faceChanged, circulosChanged]);
-  const handleChordsChanged = (e) => {
-    setChords(e.target.value);
-    setChordsChanged(true);
-    setProduct({ ...product, changedChords: true });
-  };
-  const handleFaceChanged = (e) => {
-    setFace(e.target.value);
-    setFaceChanged(true);
-    setProduct({ ...product, changedFace: true });
-  };
-  const handleBodyChanged = (e) => {
-    setBody(e.target.value);
-    setBodyChanged(true);
-    setProduct({ ...product, changedBody: true });
-  };
+  }, [circulosChanged]);
+
   const handleCirculosChanged = (e) => {
+    const circulos_match = ntc.name(e.target.value);
+    setHexCirculos(e.target.value);
+    setCirculosMatch(circulos_match[1]);
     setCirculos(e.target.value);
     setProduct({ ...product, changedBody: true });
   };
+
+  function hexToName(hex) {
+    // first get hsl correspondance
+    var hsl = hexToHsl(hex);
+    if(!hsl){
+      return;
+    }
+    // get the base color
+    var color = getColorName(hsl[0] * 360);
+    // check saturation and luminosity
+    // needs more granularity, left as an exercise for the reader
+    if (hsl[1] < .5) {
+      return hsl[2] <= .5 ? hsl[2] === 0? 'black' : 'darkgray' : hsl[2] === 1 ? 'white': 'gray';
+    }
+    return hsl[2] <= .5 ? color : 'light' + color;
+  }
+
+  function getColorName(hue) {
+    // here you will need more work:
+    // we use fixed distance for this simple demo
+    var names = ['red', 'yellow', 'green', 'cyan', 'blue', 'magenta'];
+    var angles = [0, 60, 120, 180, 240, 300];
+    var match = angles.filter(a =>
+      a - 60 <= hue && a + 60 > hue
+    )[0] || 0;
+    return names[angles.indexOf(match)];
+  }
+  // shamelessly stolen from https://stackoverflow.com/a/3732187/3702797
+  function hexToHsl(hex) {
+    if (hex.length === 3) {
+      hex = hex.split('').map(c => c.repeat(2)).join('');
+    }
+    if (hex.length !== 6) {
+      return;
+    }
+    var r = parseInt(hex[0] + hex[1], 16);
+    var g = parseInt(hex[2] + hex[3], 16);
+    var b = parseInt(hex[4] + hex[5], 16);
+  
+    r /= 255; g /= 255; b /= 255;
+    var max = Math.max(r, g, b),
+      min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+  
+    if (max === min) {
+      h = s = 0; // achromatic
+    } else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch(max) {
+        case r:
+          h = (g - b) / d + (g < b ? 6 : 0);
+          break;
+        case g:
+          h = (b - r) / d + 2;
+          break;
+        case b:
+          h = (r - g) / d + 4;
+          break;
+        default: h = 0
+      }
+      h /= 6;
+    }
+  
+    return [h, s, l];
+  }
+  const history = useHistory();
   const handleSubmit = (e) => {
+    let colors = {}
+    colors.circulo = hexToName(hexCirculos.substring(1));
+    dispatch(colorFilter(colors));
+    dispatch(changeCategory("percussions"));
+    history.push(`/mi/archive/the-demo-archive-slug?custom=percussions`);
     e.preventDefault();
+  };
+  const handleTextColor = (e) => {
+    setColor(e.target.value);
   };
   const handleCancel = (e) => {
     e.preventDefault();
-    setBodyChanged(false);
-    setFaceChanged(false);
-    setChordsChanged(false);
+    setCirculos("")
     setCirculosChanged(false);
     setProduct({
       ...product,
-      changedBody: false,
-      changedFace: false,
-      changedChords: false,
       changedCirculos: false,
       price: 300,
     });
@@ -96,12 +153,16 @@ export default function CustomDrums() {
             <Suspense fallback={null}>
               <Drums
                 customColors={{
-                  face: face,
-                  chords: chords,
-                  body: body,
-                  circulos: circulos,
+                  circulosDrum: circulos
                 }}
               />
+              <Text
+                text={text}
+                color={color}
+                position={[7.1, -4.5, 15]}
+                rotation={[0, 0.8, 0]}
+                scale={90}
+              ></Text>
               <Environment preset="city" />
               <ContactShadows
                 rotation-x={Math.PI / 2}
@@ -123,7 +184,7 @@ export default function CustomDrums() {
             </Suspense>
             <OrbitControls
               enablePan={true}
-              enableZoom={false}
+              enableZoom={true}
               enableRotate={true}
             />
           </Canvas>
@@ -183,6 +244,24 @@ export default function CustomDrums() {
                   />
                 </div>
               </div>
+              <label className="mt-5">Text : </label>
+              <div className="mb-4">
+                <input
+                  type="text"
+                  onChange={(event) => setText(event.target.value)}
+                  placeholder="some text"
+                  className="px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
+                  maxLength="1"
+                />
+              </div>
+              <label className="mt-2 ml-3 mr-2">Text Color :</label>
+              <input
+                type="color"
+                id="text"
+                name="text"
+                value="#ffffff"
+                onChange={(e) => handleTextColor(e)}
+              />
             </div>
             <div className="flex justify-between mt-10">
               <ButtonPrimary
@@ -190,7 +269,7 @@ export default function CustomDrums() {
                 type="submit"
                 className="mr-5 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                Add to bag
+                Search
               </ButtonPrimary>
               <ButtonPrimary
                 type="button"

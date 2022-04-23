@@ -134,6 +134,26 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   c = params.get('category')
   m = params.get('marque');
   s = params.get('state')
+  let customCategory = params.get('custom')
+  const cat = useSelector((state: RootState) => state.productseller.category)
+  const colors = useSelector((state: RootState) => state.productseller.colors)
+
+  const filterColor = async() => {
+    console.log(colors)
+    const cust = await axios.post(`products/custom`, colors).then(c => {
+      console.log(c.data)
+       axios.post(`products/custom-products`, c.data).then(r => {
+        console.log(r.data)
+        let products = r.data.filter((product) => {
+          return product.category === customCategory;
+        });
+        console.log(products)
+        setProducts(products)
+      })
+      
+    })
+  }
+
   useEffect(() => {
     if(params.has('category')){
       let c = params.get('category');
@@ -150,13 +170,22 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       if(s === "new")
         getNewProducts();
     }
+    if(params.has('custom')){
+      filterColor();
+  }
   },[c,m,s]);
+  function modifyState() {
+    let stateObj = { id: "100" };
+    window.history.replaceState(stateObj,
+                "the-demo-archive-slug", "/mi/archive/the-demo-archive-slug");
+}
   const getAllProduct = () => {
     axios
       .get("products/filter")
       .then((res) => {
         dispatch(populateProducts(res.data.products));
         setProducts(res.data.products);
+        modifyState()
         //dispatch(changeValid(true));
       })
       .catch((err) => console.log(err.message));
@@ -169,6 +198,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
         setProducts(
           res.data.products.filter((product) => product.state === "new")
         );
+        executeScroll();
       })
       .catch((err) => console.log(err.message));
   };
@@ -180,9 +210,16 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
         setProducts(
           res.data.products.filter((product) => product.state === "used")
         );
+        executeScroll();
       })
       .catch((err) => console.log(err.message));
   };
+  function getPathFromUrl(url) {
+    return url.split("?")[0];
+  }
+
+  
+  
 
   /* ---------------- Alaa ------------------------------ */
   const isAuth = useSelector(isAuthenticated);
@@ -205,14 +242,9 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       .catch((error) => {
         console.error(error);
       });
-
-    // if(window.location.href === "http://localhost:3000/mi/archive/the-demo-archive-slug?seller"){
-    //   dispatch(populateProducts(p));
-    //   console.log(p)
-    //   setProducts(p);
-    // }
-    if(!params.get('category') && !params.get('marque') && !params.get('state'))
+    if(!params.get('category') && !params.get('marque') && !params.get('state') && !params.get('custom')){
       getAllProduct();
+    }
   }, [dispatch]);
 
   const renderModalContent = () => {
@@ -296,6 +328,33 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
           </div>
         </div>
       </div>
+      {/* <div className="relative mt-2 mx-auto search">
+            <label
+              htmlFor="search-input"
+              className="text-neutral-500 dark:text-neutral-300"
+            >
+              <span className="sr-only">Search all icons</span>
+              <Input
+                id="search-input"
+                type="search"
+                placeholder="Type the label of the course"
+                className="shadow-lg rounded-xl border-opacity-0"
+                sizeClass="pl-14 py-5 pr-5 md:pl-16"
+                
+              />
+              <span className="absolute left-5 top-1/2 transform -translate-y-1/2 text-2xl md:left-6">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="1.5"
+                    d="M19.25 19.25L15.5 15.5M4.75 11C4.75 7.54822 7.54822 4.75 11 4.75C14.4518 4.75 17.25 7.54822 17.25 11C17.25 14.4518 14.4518 17.25 11 17.25C7.54822 17.25 4.75 14.4518 4.75 11Z"
+                  ></path>
+                </svg>
+              </span>
+            </label>
+          </div> */}
       {/* Marque */}
       <div
         ref={myRef}
@@ -309,6 +368,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               <NcModal
                 isOpenProp={modalIsOpen}
                 contentExtraClass="max-w-screen-md"
+                hide={true}
                 triggerText={
                   <span
                     onClick={() => openModal()}
@@ -424,10 +484,11 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
             </div>
             {/* <ButtonPrimary disabled={filter.valid}>Filter</ButtonPrimary> */}
           </div>
+          {products.length===0 && params.has('custom') ? (<h1 className="flex justify-center mt-5">No products much your specification please change the category or the colors</h1>):""}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
-            {products.map((product) => (
+            {products ? products.map((product) => (
               <Card11Product key={product._id} product={product} />
-            ))}
+            )): <h3>No Products</h3>}
           </div>
           {/* PAGINATIONS */}
           <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">

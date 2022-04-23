@@ -14,7 +14,10 @@ import Guitar from "./Guitar_model";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Electrique from "./Electrique";
 import { Input } from "@mui/material";
-
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { changeCategory, colorFilter } from "app/productslice/Productsliceseller";
+import ntc from "ntc";
 const reviews = { href: "#", average: 4, totalCount: 117 };
 
 function classNames(...classes) {
@@ -25,9 +28,9 @@ export default function CustomElectrique() {
   const [selectedSize, setSelectedSize] = useState();
   const [face, setFace] = useState("#383838");
   const [chords, setChords] = useState("#BABABA");
-  const [body, setBody] = useState("#B19986");
+  const [upper, setUpper] = useState("#B19986");
   const [circulos, setCirculos] = useState("#E1FF00");
-  const [bodyChanged, setBodyChanged] = useState(false);
+  const [upperChanged, setUpperChanged] = useState(false);
   const [chordsChanged, setChordsChanged] = useState(false);
   const [faceChanged, setFaceChanged] = useState(false);
   const [circulosChanged, setCirculosChanged] = useState(false);
@@ -41,35 +44,132 @@ export default function CustomElectrique() {
     changedFace: false,
     changedCirculos: false,
   });
+  const [face_match, setFaceMatch] = useState("");
+  const [upper_match, setUpperMatch] = useState("");
+  const [chords_match, setChordsMatch] = useState("");
+  const [circulos_match, setCirculosMatch] = useState("");
+  const [hexFace, setHexFace] = useState("#E8B187");
+  const [hexChords, setHexChords] = useState("#B9B7BD");
+  const [hexUpper, setHexUpper] = useState("#4C2C2E");
+  const [hexCirculos, setHexCirculos] = useState("#4C2C2E");
+  const dispatch = useDispatch();
   useEffect(() => {
-    const { changedBody, changedChords, changedFace, changedCirculos } =
+    const { changedUpper, changedChords, changedFace, changedCirculos } =
       product;
-    changedBody && setProduct({ ...product, price: product.price + 50 });
+    changedUpper && setProduct({ ...product, price: product.price + 50 });
     changedChords && setProduct({ ...product, price: product.price + 50 });
     changedFace && setProduct({ ...product, price: product.price + 50 });
     changedCirculos && setProduct({ ...product, price: product.price + 50 });
-  }, [bodyChanged, chordsChanged, faceChanged, circulosChanged]);
+  }, [upperChanged, chordsChanged, faceChanged, circulosChanged]);
 
   const handleChordsChanged = (e) => {
+    const chords_match = ntc.name(e.target.value);
+    setHexChords(e.target.value);
+    setChordsMatch(chords_match[1]);
     setChords(e.target.value);
     setChordsChanged(true);
     setProduct({ ...product, changedChords: true });
   };
   const handleFaceChanged = (e) => {
+    const face_match = ntc.name(e.target.value);
+    setHexFace(e.target.value);
+    setFaceMatch(face_match[1]);
     setFace(e.target.value);
     setFaceChanged(true);
     setProduct({ ...product, changedFace: true });
   };
-  const handleBodyChanged = (e) => {
-    setBody(e.target.value);
-    setBodyChanged(true);
+  const handleUpperChanged = (e) => {
+    const upper_match = ntc.name(e.target.value);
+    setHexUpper(e.target.value);
+    setUpperMatch(upper_match[1]);
+    setUpper(e.target.value);
+    setUpperChanged(true);
     setProduct({ ...product, changedBody: true });
   };
   const handleCirculosChanged = (e) => {
+    const circulos_match = ntc.name(e.target.value);
+    setHexCirculos(e.target.value);
+    setCirculosMatch(circulos_match[1]);
     setCirculos(e.target.value);
     setProduct({ ...product, changedBody: true });
   };
+
+  function hexToName(hex) {
+    // first get hsl correspondance
+    var hsl = hexToHsl(hex);
+    if(!hsl){
+      return;
+    }
+    // get the base color
+    var color = getColorName(hsl[0] * 360);
+    // check saturation and luminosity
+    // needs more granularity, left as an exercise for the reader
+    if (hsl[1] < .5) {
+      return hsl[2] <= .5 ? hsl[2] === 0? 'black' : 'darkgray' : hsl[2] === 1 ? 'white': 'gray';
+    }
+    return hsl[2] <= .5 ? color : 'light' + color;
+  }
+
+  function getColorName(hue) {
+    // here you will need more work:
+    // we use fixed distance for this simple demo
+    var names = ['red', 'yellow', 'green', 'cyan', 'blue', 'magenta'];
+    var angles = [0, 60, 120, 180, 240, 300];
+    var match = angles.filter(a =>
+      a - 60 <= hue && a + 60 > hue
+    )[0] || 0;
+    return names[angles.indexOf(match)];
+  }
+  // shamelessly stolen from https://stackoverflow.com/a/3732187/3702797
+  function hexToHsl(hex) {
+    if (hex.length === 3) {
+      hex = hex.split('').map(c => c.repeat(2)).join('');
+    }
+    if (hex.length !== 6) {
+      return;
+    }
+    var r = parseInt(hex[0] + hex[1], 16);
+    var g = parseInt(hex[2] + hex[3], 16);
+    var b = parseInt(hex[4] + hex[5], 16);
+  
+    r /= 255; g /= 255; b /= 255;
+    var max = Math.max(r, g, b),
+      min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+  
+    if (max === min) {
+      h = s = 0; // achromatic
+    } else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch(max) {
+        case r:
+          h = (g - b) / d + (g < b ? 6 : 0);
+          break;
+        case g:
+          h = (b - r) / d + 2;
+          break;
+        case b:
+          h = (r - g) / d + 4;
+          break;
+        default: h = 0
+      }
+      h /= 6;
+    }
+  
+    return [h, s, l];
+  }
+
+  const history = useHistory();
   const handleSubmit = (e) => {
+    let colors = {}
+    colors.face = hexToName(hexFace.substring(1));
+    colors.circulos = hexToName(hexCirculos.substring(1));
+    colors.chords = hexToName(hexChords.substring(1));
+    colors.upper = hexToName(hexUpper.substring(1));
+    dispatch(colorFilter(colors));
+    dispatch(changeCategory("guitarElectrique"));
+    history.push(`/mi/archive/the-demo-archive-slug?custom=guitarElectrique`);
     e.preventDefault();
   };
 
@@ -79,11 +179,11 @@ export default function CustomElectrique() {
 
   const handleCancel = (e) => {
     e.preventDefault();
-    setBody("#B19986");
+    setUpper("#B19986");
     setChords("#BABABA");
     setFace("#383838");
     setCirculos("#E1FF00");
-    setBodyChanged(false);
+    setUpperChanged(false);
     setFaceChanged(false);
     setChordsChanged(false);
     setCirculosChanged(false);
@@ -116,7 +216,7 @@ export default function CustomElectrique() {
                 customColors={{
                   face: face,
                   chords: chords,
-                  body: body,
+                  upper: upper,
                   circulos: circulos,
                 }}
               />
@@ -230,8 +330,8 @@ export default function CustomElectrique() {
                     type="color"
                     id="support"
                     name="support"
-                    value={body}
-                    onChange={(e) => handleBodyChanged(e)}
+                    value={upper}
+                    onChange={(e) => handleUpperChanged(e)}
                   />
                 </div>
                 <div>
@@ -271,7 +371,7 @@ export default function CustomElectrique() {
                 type="submit"
                 className="bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                Add to bag
+                Search
               </ButtonPrimary>
               <ButtonPrimary
                 type="button"

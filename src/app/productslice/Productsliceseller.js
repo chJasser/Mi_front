@@ -5,6 +5,9 @@ let initialState = {
   selectedProduct: {},
   loading: true,
   show: false,
+  changedProduct: {},
+  colors: {},
+  category: "",
   errors: "",
 };
 
@@ -55,6 +58,15 @@ const ProductsSliceseller = createSlice({
     setErrors(state, action) {
       state.errors = action.payload;
     },
+    updateProduct: (state, action) => {
+      state.changedProduct = action.payload;
+    },
+    colorFilter: (state, action) => {
+      state.colors = action.payload;
+    },
+    changeCategory: (state, action) => {
+      state.category = action.payload;
+    }
   },
 });
 /*export const fetchProducts = () => (dispatch) => {
@@ -90,6 +102,9 @@ export const {
   updatesellerProduct,
   addProduct,
   showForm,
-  showText
+  showText,
+  updateProduct,
+  colorFilter,
+  changeCategory
 } = ProductsSliceseller.actions;
 export default ProductsSliceseller.reducer;

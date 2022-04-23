@@ -16,15 +16,6 @@ export default function Piano({ ...props }) {
         material={materials.Hinges}
         skeleton={nodes.Hinges.skeleton}
       >
-        <Text
-          scale={[1, 1, 1]}
-          color={props.color} // default
-          //anchorX="center" // default
-          anchorY="middle" // default
-          //position-z={-180}
-          text={props.text}
-          //position={[50, 50, 10]}
-        ></Text>
       </skinnedMesh>
       <skinnedMesh
         material-color={props.customColors.Keys}

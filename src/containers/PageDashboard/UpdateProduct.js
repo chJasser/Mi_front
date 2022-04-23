@@ -15,8 +15,9 @@ import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentTeacher, login } from "app/slices/userSlice";
 import { useHistory } from "react-router-dom";
-import { showForm } from "app/productslice/Productsliceseller";
+import { showForm, updateProduct } from "app/productslice/Productsliceseller";
 import NcModal from "components/NcModal/NcModal";
+//import {showForm} from "app/productslice/Productsliceseller";
 
 const UpdateProduct = () => {
   const dispatch = useDispatch();
@@ -43,9 +44,8 @@ const UpdateProduct = () => {
     type: Yup.string().required("Type are required"),
   });
 
-  const product = useSelector((state) => state.productseller.selectedProduct);
+  let product = useSelector((state) => state.productseller.selectedProduct);
   console.log(product);
-  console.log(productImage);
 
   const [selectedOptiontype, setSelectedOptiontype] = useState(product.type);
   const [selectedOptioncategory, setSelectedOptincategory] = useState(
@@ -109,31 +109,43 @@ const UpdateProduct = () => {
     formData.append(
       "category",
       selectedOptioncategory.value
-        ? selectedOptioncategory.value
+        ? (selectedOptioncategory.value,
+          (values.category = selectedOptioncategory.value))
         : product.category
     );
     formData.append(
       "marque",
-      selectedOptionmarque.value ? selectedOptionmarque.value : product.marque
+      selectedOptionmarque.value
+        ? (selectedOptionmarque.value,
+          (values.marque = selectedOptionmarque.value))
+        : product.marque
     );
     formData.append(
       "type",
-      selectedOptiontype.value ? selectedOptiontype.value : product.type
+      selectedOptiontype.value
+        ? (selectedOptiontype.value, 
+          (values.type = selectedOptiontype.value))
+        : product.type
     );
     formData.append(
       "state",
-      selectedOptionstate.value ? selectedOptionstate.value : product.state
+      selectedOptionstate.value
+        ? (selectedOptionstate.value,
+          (values.state = selectedOptionstate.value))
+        : product.state
     );
-    for (const key of Object.keys(
-      productImage
-        ? productImage
-        : (productImage.FileList.name = product.productImage)
-    )) {
-      console.log(productImage);
+    for (const key of Object.keys(values.productImage)) {
+      console.log(values.productImage);
       console.log(product.productImage);
       formData.append(
         "files",
-        productImage[key] ? productImage[key] : product.productImage[key]
+        values.productImage[key] ? values.productImage[key] : product.productImage[key]
+        //values.productImage[key].name ? values.productImage[key] : product.productImage[key]
+        // productImage[key]
+        //   ? productImage[key]
+        //   : (values.productImage = product.productImage)
+        //"uploads\\" + productImage[key].name
+        //? productImage[key] : product.productImage[key]
       );
       console.log(productImage[key]);
       console.log(product.productImage[key]);
@@ -153,6 +165,7 @@ const UpdateProduct = () => {
           console.log(err);
         }
       });
+    console.log(formData);
     if (response && response.data) {
       setErrors(null);
       setSuccess(response.data.message);
@@ -161,197 +174,255 @@ const UpdateProduct = () => {
     }
   };
 
+  const show = useSelector((state) => state.productseller.show);
+  console.log(show);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  function openModal() {
+    setIsOpen(true);
+    dispatch(showForm(true));
+  }
+  function closeModal() {
+    setIsOpen(false);
+    dispatch(showForm(false));
+  }
+  const renderModalContent = () => {
+    return (
+      <div className="flex flex-wrap dark:text-neutral-200">
+        <Formik
+          initialValues={{
+            label: product.label,
+            price: product.price,
+            reference: product.reference,
+            description: product.description,
+            state: product.state,
+            type: product.type,
+            marque: product.marque,
+            category: product.category,
+            // productImage: product.productImage[0],
+          }}
+          validationSchema={validationSchema}
+          onSubmit={onSubmit}
+        >
+          {({
+            handleSubmit,
+            handleChange,
+            handleBlur,
+            setFieldValue,
+            values,
+            touched,
+            errors,
+          }) => (
+            <form className="grid md:grid-cols-2 gap-6" onSubmit={handleSubmit}>
+              <label className="block">
+                <Label>Label</Label>
+                <Input
+                  id="label"
+                  name="label"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  //value={product.label}
+                  placeholder={product.label}
+                  type="text"
+                  className="mt-1"
+                />
+              </label>
+              {touched.label && errors.label ? (
+                <Alert severity="error">{errors.label}</Alert>
+              ) : null}
+
+              <label className="block">
+                <Label>Price</Label>
+                <Input
+                  id="price"
+                  name="price"
+                  type="text"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  //value={product.price}
+                  placeholder={product.price}
+                  className="mt-1"
+                />
+              </label>
+              {touched.price && errors.price ? (
+                <Alert severity="error">{errors.price}</Alert>
+              ) : null}
+              <label className="block">
+                <Label>Reference</Label>
+                <Input
+                  type="text"
+                  id="reference"
+                  name="reference"
+                  className="mt-1"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  //value={product.reference}
+                  placeholder={product.reference}
+                />
+              </label>
+              {touched.reference && errors.reference ? (
+                <Alert severity="error">{errors.reference}</Alert>
+              ) : null}
+              <label className="block">
+                <Label>Description</Label>
+                <Textarea
+                  id="description"
+                  name="description"
+                  className="mt-1"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  //value={product.description}
+                  placeholder={product.description}
+                  rows={6}
+                />
+              </label>
+              {touched.description && errors.description ? (
+                <Alert severity="error">{errors.description}</Alert>
+              ) : null}
+              <label className="block md:col-span-2">
+                <Label> Category</Label>
+                <Select
+                  name="category"
+                  id="category"
+                  value={selectedOptioncategory}
+                  onChange={handleInputChangecategory}
+                  components={animatedComponents}
+                  options={optionscategory}
+                  placeholder={product.category}
+                />
+              </label>
+              {touched.category && errors.category ? (
+                <Alert severity="error">{errors.category}</Alert>
+              ) : null}
+
+              <label className="block md:col-span-2">
+                <Label> Marque</Label>
+                <Select
+                  name="marque"
+                  id="marque"
+                  value={selectedOptionmarque}
+                  onChange={handleInputChangemarque}
+                  components={animatedComponents}
+                  options={optionsmarque}
+                  placeholder={product.marque}
+                />
+              </label>
+              {touched.marque && errors.marque ? (
+                <Alert severity="error">{errors.marque}</Alert>
+              ) : null}
+              <label className="block md:col-span-2">
+                <Label> Type</Label>
+                <Select
+                  name="type"
+                  id="type"
+                  value={selectedOptiontype}
+                  onChange={handleInputChangetype}
+                  components={animatedComponents}
+                  options={optionstype}
+                  placeholder={product.type}
+                />
+              </label>
+              {touched.type && errors.type ? (
+                <Alert severity="error">{errors.marque}</Alert>
+              ) : null}
+              <label className="block md:col-span-2">
+                <Label> State</Label>
+                <Select
+                  name="state"
+                  id="state"
+                  value={selectedOptionstate}
+                  onChange={handleInputChangestate}
+                  components={animatedComponents}
+                  options={optionsstate}
+                  placeholder={product.state}
+                />
+              </label>
+              {touched.state && errors.state ? (
+                <Alert severity="error">{errors.state}</Alert>
+              ) : null}
+
+              <Input
+                id="productImage"
+                name="productImage"
+                type="file"
+                className="mt-1 form-control form-control-sm"
+                style={{ border: "1px solid #D1D1D1" }}
+                onChange={(event) => {
+                  setFieldValue(
+                    "productImage",
+                    event.currentTarget.files
+                      ? event.currentTarget.files
+                      : product.productImage
+                  );
+                  setimagesfiles(
+                    event.target.files
+                      ? event.target.files
+                      : product.productImage
+                  );
+                }}
+                multiple
+                //value={product.productImage}
+              />
+              {touched.productImage && errors.productImage ? (
+                <Alert severity="error">{errors.productImage}</Alert>
+              ) : null}
+
+              <ButtonPrimary
+                className="md:col-span-2"
+                type="submit"
+                onClick={() => {
+                  dispatch(showForm(false));
+                  if(selectedOptioncategory.value !== undefined)
+                    values.category = selectedOptioncategory.value;
+                  else
+                    values.category = product.category;
+                  if(selectedOptionmarque.value !== undefined)
+                    values.marque = selectedOptionmarque.value
+                  else
+                    values.marque = product.category;
+                  if(selectedOptionstate.value !== undefined)
+                    values.state = selectedOptionstate.value
+                  else
+                    values.state = product.state;
+                  if(selectedOptiontype.value !== undefined)
+                    values.type = selectedOptiontype.value
+                  else
+                    values.type = product.type;
+                  if(productImage !== undefined)
+                    values.productImage = "uploads\\"+productImage[0].name;
+                  else
+                    values.productImage = "uploads\\"+product.productImage;
+                  
+                  console.log(values)
+                  
+                  console.log({...product, ...values})
+                  
+                  dispatch(updateProduct({...product, ...values}));
+                }}
+              >
+                Update product
+              </ButtonPrimary>
+              <ButtonPrimary
+                className="md:col-span-2"
+                onClick={() => dispatch(showForm(false))}
+              >
+                Cancel
+              </ButtonPrimary>
+            </form>
+          )}
+        </Formik>
+      </div>
+    );
+  };
+
   return (
-    <div className="rounded-xl md:border md:border-neutral-100 dark:border-neutral-800 md:p-6">
-      <Formik
-        initialValues={{
-          label: product.label,
-          price: product.price,
-          reference: product.reference,
-          description: product.description,
-          state: product.state,
-          type: product.type,
-          marque: product.marque,
-          category: product.category,
-          // productImage: product.productImage[0],
-        }}
-        validationSchema={validationSchema}
-        onSubmit={onSubmit}
-      >
-        {({
-          handleSubmit,
-          handleChange,
-          handleBlur,
-          setFieldValue,
-          values,
-          touched,
-          errors,
-        }) => (
-          <form className="grid md:grid-cols-2 gap-6" onSubmit={handleSubmit}>
-            <label className="block">
-              <Label>Label</Label>
-              <Input
-                id="label"
-                name="label"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                //value={product.label}
-                placeholder={product.label}
-                type="text"
-                className="mt-1"
-              />
-            </label>
-            {touched.label && errors.label ? (
-              <Alert severity="error">{errors.label}</Alert>
-            ) : null}
-
-            <label className="block">
-              <Label>Price</Label>
-              <Input
-                id="price"
-                name="price"
-                type="text"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                //value={product.price}
-                placeholder={product.price}
-                className="mt-1"
-              />
-            </label>
-            {touched.price && errors.price ? (
-              <Alert severity="error">{errors.price}</Alert>
-            ) : null}
-            <label className="block">
-              <Label>Reference</Label>
-              <Input
-                type="text"
-                id="reference"
-                name="reference"
-                className="mt-1"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                //value={product.reference}
-                placeholder={product.reference}
-              />
-            </label>
-            {touched.reference && errors.reference ? (
-              <Alert severity="error">{errors.reference}</Alert>
-            ) : null}
-            <label className="block">
-              <Label>Description</Label>
-              <Textarea
-                id="description"
-                name="description"
-                className="mt-1"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                //value={product.description}
-                placeholder={product.description}
-                rows={6}
-              />
-            </label>
-            {touched.description && errors.description ? (
-              <Alert severity="error">{errors.description}</Alert>
-            ) : null}
-            <label className="block md:col-span-2">
-              <Label> Category</Label>
-              <Select
-                name="category"
-                id="category"
-                value={selectedOptioncategory}
-                onChange={handleInputChangecategory}
-                components={animatedComponents}
-                options={optionscategory}
-                placeholder={product.category}
-              />
-            </label>
-            {touched.category && errors.category ? (
-              <Alert severity="error">{errors.category}</Alert>
-            ) : null}
-
-            <label className="block md:col-span-2">
-              <Label> Marque</Label>
-              <Select
-                name="marque"
-                id="marque"
-                value={selectedOptionmarque}
-                onChange={handleInputChangemarque}
-                components={animatedComponents}
-                options={optionsmarque}
-                placeholder={product.marque}
-              />
-            </label>
-            {touched.marque && errors.marque ? (
-              <Alert severity="error">{errors.marque}</Alert>
-            ) : null}
-            <label className="block md:col-span-2">
-              <Label> Type</Label>
-              <Select
-                name="type"
-                id="type"
-                value={selectedOptiontype}
-                onChange={handleInputChangetype}
-                components={animatedComponents}
-                options={optionstype}
-                placeholder={product.type}
-              />
-            </label>
-            {touched.type && errors.type ? (
-              <Alert severity="error">{errors.marque}</Alert>
-            ) : null}
-            <label className="block md:col-span-2">
-              <Label> State</Label>
-              <Select
-                name="state"
-                id="state"
-                value={selectedOptionstate}
-                onChange={handleInputChangestate}
-                components={animatedComponents}
-                options={optionsstate}
-                placeholder={product.state}
-              />
-            </label>
-            {touched.state && errors.state ? (
-              <Alert severity="error">{errors.state}</Alert>
-            ) : null}
-
-            <Input
-              id="productImage"
-              name="productImage"
-              type="file"
-              className="mt-1 form-control form-control-sm"
-              style={{ border: "1px solid #D1D1D1" }}
-              onChange={(event) => {
-                setFieldValue(
-                  "productImage",
-                  event.currentTarget.files
-                    ? event.currentTarget.files
-                    : product.productImage
-                );
-                setimagesfiles(
-                  event.target.files ? event.target.files : product.productImage
-                );
-              }}
-              multiple
-              //value={product.productImage}
-            />
-            {touched.productImage && errors.productImage ? (
-              <Alert severity="error">{errors.productImage}</Alert>
-            ) : null}
-
-            <ButtonPrimary className="md:col-span-2" type="submit"
-            >
-              Update product
-            </ButtonPrimary>
-            <ButtonPrimary className="md:col-span-2"
-            onClick={() => dispatch(showForm(false))}
-            >
-              Cancel
-            </ButtonPrimary>
-          </form>
-        )}
-      </Formik>
-    </div>
+    <NcModal
+      isOpenProp={show}
+      contentExtraClass="max-w-screen-md"
+      modalTitle="Update Product"
+      triggerText=""
+      renderContent={renderModalContent}
+      hide={false}
+    />
   );
 };
 

@@ -15,7 +15,7 @@ export default function Drums({ ...props }) {
   return (
     <group ref={group} {...props} dispose={null} scale={0.3} position={[0,-16,0]} rotation={[0 , -5.5, 0]}>
       <group rotation={[-Math.PI / 2, 0, 0]}>
-        <mesh material-color={props.customColors.circulos} geometry={nodes.Object_2.geometry} material={materials.blinn6SG} />
+        <mesh material-color={props.customColors.circulosDrum} geometry={nodes.Object_2.geometry} material={materials.blinn6SG} />
         <mesh geometry={nodes.Object_3.geometry} material={materials.lambert14SG} />
         <mesh geometry={nodes.Object_4.geometry} material={materials.lambert14SG} />
         <mesh geometry={nodes.Object_5.geometry} material={materials.lambert14SG} />

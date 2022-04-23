@@ -18,7 +18,7 @@ export default function Violin({ ...props }) {
         <group rotation={[Math.PI / 2, 0, 0]}>
           <group position={[0, 21.02, 0]} scale={21.45}>
             <mesh material-color={props.customColors.the_stick} geometry={nodes.Object_6.geometry} material={materials.the_stick} />
-            <mesh material-color={props.customColors.body} geometry={nodes.Object_9.geometry} material={materials.xiaotiqin} />
+            <mesh material-color={props.customColors.bodyViolin} geometry={nodes.Object_9.geometry} material={materials.xiaotiqin} />
           </group>
         </group>
       </group>
@@ -27,3 +27,4 @@ export default function Violin({ ...props }) {
 }
 
 useGLTF.preload('/Violin.glb')
+

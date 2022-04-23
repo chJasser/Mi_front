@@ -7,6 +7,12 @@ import { Canvas } from "@react-three/fiber";
 import Guitar from "./Guitar_model";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 
+import ntc from "ntc";
+import { useNameThatColor } from "react-ntc";
+import { useDispatch } from "react-redux";
+import { changeCategory, colorFilter } from "app/productslice/Productsliceseller";
+import { useHistory } from "react-router-dom";
+
 const reviews = { href: "#", average: 4, totalCount: 117 };
 
 function classNames(...classes) {
@@ -14,16 +20,6 @@ function classNames(...classes) {
 }
 
 export default function CustomGuitar() {
-  const sizes = [
-    { name: "XXS", inStock: false },
-    { name: "XS", inStock: true },
-    { name: "S", inStock: true },
-    { name: "M", inStock: true },
-    { name: "L", inStock: true },
-    { name: "XL", inStock: true },
-    { name: "2XL", inStock: true },
-    { name: "3XL", inStock: true },
-  ];
   const [selectedSize, setSelectedSize] = useState();
   const [face, setFace] = useState("#E8B187");
   const [chords, setChords] = useState("#B9B7BD");
@@ -38,6 +34,13 @@ export default function CustomGuitar() {
     changedChords: false,
     changedFace: false,
   });
+  const [face_match, setFaceMatch] = useState("");
+  const [body_match, setBodyMatch] = useState("");
+  const [chords_match, setChordsMatch] = useState("");
+  const [hexFace, setHexFace] = useState("#E8B187");
+  const [hexChords, setHexChords] = useState("#B9B7BD");
+  const [hexBody, setHexBody] = useState("#4C2C2E");
+  const dispatch = useDispatch();
   useEffect(() => {
     const { changedBody, changedChords, changedFace } = product;
     changedBody && setProduct({ ...product, price: product.price + 50 });
@@ -45,21 +48,104 @@ export default function CustomGuitar() {
     changedFace && setProduct({ ...product, price: product.price + 50 });
   }, [bodyChanged, chordsChanged, faceChanged]);
   const handleChordsChanged = (e) => {
+    const chords_match = ntc.name(e.target.value);
+    setHexChords(e.target.value);
+    setChordsMatch(chords_match[1]);
     setChords(e.target.value);
     setChordsChanged(true);
     setProduct({ ...product, changedChords: true });
   };
   const handleFaceChanged = (e) => {
+    const face_match = ntc.name(e.target.value);
+    setHexFace(e.target.value);
+    setFaceMatch(face_match[1]);
     setFace(e.target.value);
     setFaceChanged(true);
     setProduct({ ...product, changedFace: true });
   };
   const handleBodyChanged = (e) => {
+    const body_match = ntc.name(e.target.value);
+    setHexBody(e.target.value);
+    setBodyMatch(body_match[1]);
     setBody(e.target.value);
     setBodyChanged(true);
     setProduct({ ...product, changedBody: true });
   };
+
+  function hexToName(hex) {
+    // first get hsl correspondance
+    var hsl = hexToHsl(hex);
+    if(!hsl){
+      return;
+    }
+    // get the base color
+    var color = getColorName(hsl[0] * 360);
+    // check saturation and luminosity
+    // needs more granularity, left as an exercise for the reader
+    if (hsl[1] < .5) {
+      return hsl[2] <= .5 ? hsl[2] === 0? 'black' : 'darkgray' : hsl[2] === 1 ? 'white': 'gray';
+    }
+    return hsl[2] <= .5 ? color : 'light' + color;
+  }
+
+  function getColorName(hue) {
+    // here you will need more work:
+    // we use fixed distance for this simple demo
+    var names = ['red', 'yellow', 'green', 'cyan', 'blue', 'magenta'];
+    var angles = [0, 60, 120, 180, 240, 300];
+    var match = angles.filter(a =>
+      a - 60 <= hue && a + 60 > hue
+    )[0] || 0;
+    return names[angles.indexOf(match)];
+  }
+  // shamelessly stolen from https://stackoverflow.com/a/3732187/3702797
+  function hexToHsl(hex) {
+    if (hex.length === 3) {
+      hex = hex.split('').map(c => c.repeat(2)).join('');
+    }
+    if (hex.length !== 6) {
+      return;
+    }
+    var r = parseInt(hex[0] + hex[1], 16);
+    var g = parseInt(hex[2] + hex[3], 16);
+    var b = parseInt(hex[4] + hex[5], 16);
+  
+    r /= 255; g /= 255; b /= 255;
+    var max = Math.max(r, g, b),
+      min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+  
+    if (max === min) {
+      h = s = 0; // achromatic
+    } else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch(max) {
+        case r:
+          h = (g - b) / d + (g < b ? 6 : 0);
+          break;
+        case g:
+          h = (b - r) / d + 2;
+          break;
+        case b:
+          h = (r - g) / d + 4;
+          break;
+        default: h = 0
+      }
+      h /= 6;
+    }
+  
+    return [h, s, l];
+  }
+  const history = useHistory();
   const handleSubmit = (e) => {
+    let colors = {}
+    colors.face = hexToName(hexFace.substring(1));
+    colors.body = hexToName(hexBody.substring(1));
+    colors.chords = hexToName(hexChords.substring(1));
+    dispatch(colorFilter(colors));
+    dispatch(changeCategory("guitars"));
+    history.push(`/mi/archive/the-demo-archive-slug?custom=guitars`);
     e.preventDefault();
   };
   const handleCancel = (e) => {
@@ -217,7 +303,7 @@ export default function CustomGuitar() {
                 type="submit"
                 className="my-5 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                Add to bag
+                Filter
               </ButtonPrimary>
               <ButtonPrimary
                 type="button"

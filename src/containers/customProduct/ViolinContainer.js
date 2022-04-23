@@ -6,6 +6,10 @@ import { ContactShadows, Environment, OrbitControls, Stars } from "@react-three/
 import { Canvas } from "@react-three/fiber";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Violin from "./Violin";
+import ntc from "ntc";
+import { useDispatch } from "react-redux";
+import { changeCategory, colorFilter } from "app/productslice/Productsliceseller";
+import { useHistory } from "react-router-dom";
 
 const reviews = { href: "#", average: 4, totalCount: 117 };
 
@@ -17,7 +21,6 @@ export default function ViolinContainer() {
 
   const [the_stick, setThe_stick] = useState("#826466");
   const [body, setBody] = useState("#927C7C");
-
   const [the_stickChanged, setThe_stickChanged] = useState(false);
   const [bodyChanged, setBodyChanged] = useState(false);
   const [product, setProduct] = useState({
@@ -26,6 +29,11 @@ export default function ViolinContainer() {
     changedBody: false,
     changedStick: false,
   });
+  const [stick_match, setStickMatch] = useState("");
+  const [body_match, setBodyMatch] = useState("");
+  const [hexStick, setHexStick] = useState("#E8B187");
+  const [hexBody, setHexBody] = useState("#4C2C2E");
+  const dispatch = useDispatch();
   useEffect(() => {
     const { changedBody, changedStick } = product;
     changedBody && setProduct({ ...product, price: product.price + 50 });
@@ -33,17 +41,95 @@ export default function ViolinContainer() {
   }, [bodyChanged, the_stickChanged]);
 
   const handleStickChanged = (e) => {
+    const stick_match = ntc.name(e.target.value);
+    setHexStick(e.target.value);
+    setStickMatch(stick_match[1]);
     setThe_stick(e.target.value);
     setThe_stickChanged(true);
     setProduct({ ...product, changedStick: true });
   };
   const handleBodyChanged = (e) => {
+    const body_match = ntc.name(e.target.value);
+    setHexBody(e.target.value);
+    setBodyMatch(body_match[1]);
     setBody(e.target.value);
     setBodyChanged(true);
     setProduct({ ...product, changedBody: true });
   };
 
+  function hexToName(hex) {
+    // first get hsl correspondance
+    var hsl = hexToHsl(hex);
+    if(!hsl){
+      return;
+    }
+    // get the base color
+    var color = getColorName(hsl[0] * 360);
+    // check saturation and luminosity
+    // needs more granularity, left as an exercise for the reader
+    if (hsl[1] < .5) {
+      return hsl[2] <= .5 ? hsl[2] === 0? 'black' : 'darkgray' : hsl[2] === 1 ? 'white': 'gray';
+    }
+    return hsl[2] <= .5 ? color : 'light' + color;
+  }
+
+  function getColorName(hue) {
+    // here you will need more work:
+    // we use fixed distance for this simple demo
+    var names = ['red', 'yellow', 'green', 'cyan', 'blue', 'magenta'];
+    var angles = [0, 60, 120, 180, 240, 300];
+    var match = angles.filter(a =>
+      a - 60 <= hue && a + 60 > hue
+    )[0] || 0;
+    return names[angles.indexOf(match)];
+  }
+  // shamelessly stolen from https://stackoverflow.com/a/3732187/3702797
+  function hexToHsl(hex) {
+    if (hex.length === 3) {
+      hex = hex.split('').map(c => c.repeat(2)).join('');
+    }
+    if (hex.length !== 6) {
+      return;
+    }
+    var r = parseInt(hex[0] + hex[1], 16);
+    var g = parseInt(hex[2] + hex[3], 16);
+    var b = parseInt(hex[4] + hex[5], 16);
+  
+    r /= 255; g /= 255; b /= 255;
+    var max = Math.max(r, g, b),
+      min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+  
+    if (max === min) {
+      h = s = 0; // achromatic
+    } else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch(max) {
+        case r:
+          h = (g - b) / d + (g < b ? 6 : 0);
+          break;
+        case g:
+          h = (b - r) / d + 2;
+          break;
+        case b:
+          h = (r - g) / d + 4;
+          break;
+        default: h = 0
+      }
+      h /= 6;
+    }
+  
+    return [h, s, l];
+  }
+  const history = useHistory();
   const handleSubmit = (e) => {
+    let colors = {}
+    colors.stick = hexToName(hexStick.substring(1));
+    colors.bodyViolin = hexToName(hexBody.substring(1));
+    dispatch(colorFilter(colors));
+    dispatch(changeCategory("strings"));
+    history.push(`/mi/archive/the-demo-archive-slug?custom=strings`);
     e.preventDefault();
   };
   const handleCancel = (e) => {
@@ -85,7 +171,7 @@ export default function ViolinContainer() {
             <Suspense fallback={null}>
               <Violin
                 customColors={{
-                  body: body,
+                  bodyViolin: body,
                   the_stick: the_stick,
                 }}
               />
@@ -188,7 +274,7 @@ export default function ViolinContainer() {
                 type="submit"
                 className="mr-5 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                Add to bag
+                Search
               </ButtonPrimary>
               <ButtonPrimary
                 type="button"
