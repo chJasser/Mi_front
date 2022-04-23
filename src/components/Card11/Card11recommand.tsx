@@ -9,8 +9,13 @@ import { selectProduct } from "app/productslice/Productslice";
 import ProductCardLikeAndComment from "components/PostCardLikeAndComment/ProductCardLikeAndComment";
 import ProductCardSaveAction from "components/PostCardSaveAction/ProductCardSaveAction";
 import ModalProduct from "components/ModalProduct/ModalProduct";
+import Modalproductrecommand from "components/ModalProduct/Modalproductrecommand"
 import { getProductUser } from "../../app/productReviews/productReviews";
-import { selectrecommandprod } from 'app/productslice/Productsliceseller';
+import ProductCardLikeAndcommentRecommand from "components/PostCardLikeAndComment/ProductCardLikeandcommentRecommand";
+import ProductCardSaveActionRecommand from "components/PostCardSaveAction/ProductCardSaveActionRecommand";
+import { TwMainColor } from "data/types";
+import { green } from "@material-ui/core/colors";
+
 export interface Card11Props {
   className?: string;
   product;
@@ -18,20 +23,28 @@ export interface Card11Props {
   hiddenAuthor?: boolean;
 }
 
-const Card11Product: FC<Card11Props> = ({
+const Card11recommand: FC<Card11Props> = ({
   className = "h-full",
   product,
   hiddenAuthor = false,
   ratio = "aspect-w-4 aspect-h-3",
 }) => {
   const dispatch = useDispatch();
-
-  const { label, createdAt, category, price, productImage, _id } = product;
+  const [product1, setproduct] = useState();
+  axios
+  .get(`products/product/${product.id}`)
+  .then((res) => {
+    setrating(res.data.rate);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+  const { label, createdAt, category, price, productImage,id } = product;
   const [rate, setrating] = useState(0);
 
   const rating = () => {
     axios
-      .get(`products/getrating/${_id}`)
+      .get(`products/getratingbyuser/${id}`)
       .then((res) => {
         setrating(res.data.rate);
       })
@@ -77,16 +90,19 @@ const Card11Product: FC<Card11Props> = ({
         onClick={() => {
           getUser(product);
           dispatch(selectProduct({ ...product, rate }));
-          dispatch(selectrecommandprod(product));
-          /*insights('clickedObjectIDsAfterSearch', {
-            eventName: ' Search Result Clicked'
-          })*/
         }}
-        to={`/mi/single-gallery/${product._id}`}
+        to={`/mi/single-gallery/${product.id}`}
         className="absolute inset-0"
       ></Link>
-      <span className="absolute top-3 inset-x-3">
+      <span className="absolute top-3 inset-x-3 flex justify-between">
         <Badge name={category} />
+        {product._score && (
+        <Badge
+          color="green"
+          name={`%${product._score}`}
+          className="absolute "
+        />
+      )}
       </span>
 
       <div className="p-4 flex flex-col flex-grow space-y-3">
@@ -98,14 +114,14 @@ const Card11Product: FC<Card11Props> = ({
           {label + " " + price + " $"}
         </h2>
         <div className="flex items-end justify-between mt-auto">
-          <ProductCardLikeAndComment className="relative" postData={product} />
-          <ProductCardSaveAction className="relative" postData={product} />
+          <ProductCardLikeAndcommentRecommand className="relative" postData={product} />
+          <ProductCardSaveActionRecommand className="relative" postData={product} />
 
-          <ModalProduct product={product} open={isOpen} />
+          <Modalproductrecommand product={product} open={isOpen} />
         </div>
       </div>
     </div>
   );
 };
 
-export default Card11Product;
+export default Card11recommand;

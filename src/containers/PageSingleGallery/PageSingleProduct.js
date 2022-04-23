@@ -20,6 +20,7 @@ import {
 } from "app/productLikes/productLikes";
 import NcImage from "components/NcImage/NcImage";
 import ModalPhotos from "./ModalPhotos";
+import Productrecommand from "containers/PageDashboard/Productrecommand";
 
 import {
   getProductUser,
@@ -28,6 +29,7 @@ import {
 } from "../../app/productReviews/productReviews";
 import ModalPhotosProd from "./ModalPhotosProd";
 import { StarIcon } from "@heroicons/react/solid";
+import FrequentlyBought from "containers/PageDashboard/FrequentlyBought";
 /**
  *
  *
@@ -85,8 +87,9 @@ function PageSingleProduct() {
   const rat = useSelector((state) => state.product.selectedProduct.rate);
 
   useEffect(() => {
-    setrating(rat - 1);
-    console.log(likedProd);
+    console.log(rat);
+    setrating(rat-1 );
+    //console.log(likedProd);
   }, []);
 
   const Onmouseenter = (index) => {
@@ -104,17 +107,17 @@ function PageSingleProduct() {
     };
 
     axios.put(`/products/rating/${product._id}`, FormData).then((response) => {
-      console.log(response.data);
+      //console.log(response.data);
     });
   };
   const addLikeDB = async () => {
     await axios
-      .put(`/products/add-like/${product._id}`)
+      .put(`/products/add - like / ${ product._id }`)
       .then((response) => {
-        console.log(response.data.success);
+       // console.log(response.data.success);
       })
       .catch((err) => {
-        console.log(err.response.data.success);
+       // console.log(err.response.data.success);
       });
     dispatch(addNewLike(product));
     setProduct({
@@ -125,12 +128,12 @@ function PageSingleProduct() {
   };
   const removeLikeDB = async () => {
     await axios
-      .put(`/products/remove-like/${product._id}`)
+      .put(`/products/remove - like / ${ product._id }`)
       .then((response) => {
-        console.log(response.data.success);
+       // console.log(response.data.success);
       })
       .catch((err) => {
-        console.log(err.response.data.success);
+        //console.log(err.response.data.success);
       });
     dispatch(removeLike(product._id));
     setProduct({
@@ -141,12 +144,12 @@ function PageSingleProduct() {
   };
   const getSellerOfTheProduct = () => {
     axios
-      .get(`/products/seller/${prod.seller}`)
+      .get(`/products/seller / ${ prod.seller }`)
       .then((result) => {
         setUser(result.data);
       })
       .catch((err) => {
-        console.log(err.response.data);
+      //  console.log(err.response.data);
       });
   };
   const handleCLickLike = () => {
@@ -196,7 +199,7 @@ function PageSingleProduct() {
       setDisabled(false);
     } else {
       await axios
-        .put(`product_reviews/add-review/${product._id}`, {
+        .put(`product_reviews / add - review / ${ product._id }`, {
           content: comment,
         })
         .then((response) => {
@@ -206,7 +209,7 @@ function PageSingleProduct() {
           setDisabled(false);
         })
         .catch((error) => {
-          console.log(error.response);
+          //console.log(error.response);
         });
     }
   };
@@ -258,9 +261,8 @@ function PageSingleProduct() {
             <div className="gap-2 my-10"></div>
             <div className="flex flex-col sm:flex-row justify-between sm:items-end space-y-5 sm:space-y-0 sm:space-x-5">
               <div
-                className={`nc-PostCardMeta inline-flex items-center flex-wrap text-neutral-800 dark:text-neutral-200 ${
-                  size === "normal" ? "text-xs" : "text-base"
-                } ${className}`}
+                className={`nc-PostCardMeta inline-flex items-center flex-wrap text-neutral-800 dark:text-neutral-200 ${size === "normal" ? "text-xs" : "text-base"
+                  } ${className}`}
                 data-nc-id="PostCardMeta"
               >
                 <Link to="#" className="relative flex items-center space-x-2">
@@ -365,7 +367,7 @@ function PageSingleProduct() {
               </div> */}
               <ButtonPrimary
                 onClick={() => addrate(rate)}
-                href="/mi/archive/the-demo-archive-slug"
+               href="/mi/archive/the-demo-archive-slug"
               >
                 Shop More
               </ButtonPrimary>
@@ -388,9 +390,8 @@ function PageSingleProduct() {
                 .map((item, index) => (
                   <div
                     key={index}
-                    className={`relative rounded-xl overflow-hidden ${
-                      index >= 2 ? "hidden sm:block" : ""
-                    }`}
+                    className={`relative rounded-xl overflow-hidden ${index >= 2 ? "hidden sm:block" : ""
+                      }`}
                   >
                     <NcImage
                       containerClassName="aspect-w-6 aspect-h-8"
@@ -474,7 +475,11 @@ function PageSingleProduct() {
               </ButtonSecondary>
             </div>
           </form>
-          <div className="gap-2 my-10"></div>
+          
+         <Productrecommand/>
+         
+          <FrequentlyBought/>
+          
         </div>
       </div>
     </>

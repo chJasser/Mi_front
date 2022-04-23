@@ -28,8 +28,13 @@ import NcModal from "../../components/NcModal/NcModal";
 import { Link } from "react-router-dom";
 import Heading from "../../components/Heading/Heading";
 import CardCategory from "../../components/CardCategory2/CardCategory";
-// import Radio from "@material-tailwind/react/Radio";
-//import ModalCategoriesprod from "./Modalcategoriesprod";
+import aa from "search-insights";
+import {Hits,InstantSearch,Configure} from "react-instantsearch-dom"
+import algoliasearch from "algoliasearch/lite";
+
+
+// import MyRouter from "routers/MyRouter";
+
 export interface PageArchiveProps {
   className?: string;
 }
@@ -41,9 +46,20 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
   const prod = useSelector((state: RootState) => state.product);
   const myRef = useRef(null);
   const inputRef = React.createRef<HTMLInputElement>();
-  const [value, setValue] = React.useState([0, 10000]);
+  const [value, setValue] = React.useState([0, 100]);
+  const searchClient = algoliasearch(
+    '1RY92FSHMF',
+    "2a5deb3323c4edb2ecbcc46687c2c216",
+)
   let min = value[0];
   let max = value[1];
+
+  const currentUser = useSelector(
+    (state:RootState) => state.user.userLogedIn
+  );
+  // import Radio from "@material-tailwind/react/Radio";
+  //import ModalCategoriesprod from "./Modalcategoriesprod";
+  
   const marques = [
     "yamaha",
     "shure",
@@ -270,6 +286,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
       className={`nc-PageArchive overflow-hidden ${className}`}
       data-nc-id="PageArchive"
     >
+      
       <Helmet>
         <title>Our Products || MI Universe</title>
       </Helmet>
@@ -485,11 +502,18 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
             {/* <ButtonPrimary disabled={filter.valid}>Filter</ButtonPrimary> */}
           </div>
           {products.length===0 && params.has('custom') ? (<h1 className="flex justify-center mt-5">No products much your specification please change the category or the colors</h1>):""}
+          <InstantSearch indexName="products" searchClient={searchClient}>
+           <Configure clickAnalytics/> 
+        
+          
+       
+           
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
             {products ? products.map((product) => (
               <Card11Product key={product._id} product={product} />
             )): <h3>No Products</h3>}
           </div>
+          </InstantSearch>
           {/* PAGINATIONS */}
           <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
             <Pagination />
