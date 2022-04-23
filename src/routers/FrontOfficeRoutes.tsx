@@ -246,6 +246,12 @@ export const pages: Page[] = [
     typeRoute: "classroom",
     component: CourseDetails,
   },
+  {
+    path: "/mi/classroom/teacher/add",
+    exact: true,
+    typeRoute: "classroom",
+    component: AddCours,
+  },
   //back-office
 
   //
