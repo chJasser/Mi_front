@@ -250,11 +250,6 @@ const templateChilds: NavItemType[] = [
   },
   {
     id: ncNanoId(),
-    href: "/mi/streaming-room",
-    name: "Create Streaming Room",
-  },
-  {
-    id: ncNanoId(),
     href: "/mi/custom",
     name: "Custom Products",
   },
