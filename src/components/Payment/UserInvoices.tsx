@@ -71,7 +71,7 @@ const UserInvoices: FC<InvoiceProps> = ({ className = "" }) => {
                       Amount
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      <span className="sr-only">Edit</span>
+                      <span className="sr-only">Delete</span>
                     </th>
                   </tr>
                 </thead>
