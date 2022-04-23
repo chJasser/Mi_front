@@ -22,7 +22,7 @@ const UpdateCourse = () => {
   const course = useSelector((state) => state.courseSlice.selectedCourse);
   const validationSchema = yup.object().shape({
     label: yup.string().min(2).max(15).required().trim(),
-    description: yup.string().max(255).required().trim(),
+    description: yup.string().required().trim(),
     level: yup
       .string()
       .oneOf(["beginner", "intermediate", "advanced"])
@@ -72,7 +72,6 @@ const UpdateCourse = () => {
     { value: "french", label: "french" },
     { value: "arabic", label: "arbic" },
   ];
-
   const onSubmit = async (values) => {
     var formData = new FormData();
     formData.append("label", values.label);

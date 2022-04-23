@@ -7,24 +7,24 @@ import { Alert } from "@mui/material";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
-import { setIsOpen } from "app/slices/modalSlice";
+import { setIsOpenResource } from "app/slices/modalSlice";
 import { useParams } from "react-router-dom";
-import { setChange, setSelected, setChapter } from "app/slices/courseSlice";
-function Addchapter() {
+
+function AddResource() {
   const params = useParams();
   const dispatch = useDispatch();
-  const course = useSelector((state) => state.courseSlice.selectedCourse);
+  const chapter = useSelector((state) => state.courseSlice.chapter);
   const validationSchema = yup.object().shape({
     title: yup.string().required().trim(),
     description: yup.string().required().trim(),
+    file: yup.string.required(),
   });
   const onSubmit = async (values) => {
-    await axios.post(`chapters/${params.id}`, {
+    await axios.post(`/resources/${chapter._id}`, {
       title: values.title,
       description: values.description,
     });
-    dispatch(setIsOpen(false));
-    dispatch(setChange());
+    dispatch(setIsOpenResource(false));
   };
 
   return (
@@ -83,7 +83,7 @@ function Addchapter() {
               <Alert severity="error">{errors.description}</Alert>
             ) : null}
             <ButtonPrimary className="md:col-span-2" type="submit">
-              Add Chapter
+              Add resource
             </ButtonPrimary>
           </form>
         )}
@@ -92,4 +92,4 @@ function Addchapter() {
   );
 }
 
-export default Addchapter;
+export default AddResource;

@@ -67,7 +67,7 @@ function TeacherTableData({ course }) {
           style={{ color: "#03A9F4" }}
           onClick={() => {
             dispatch(setSelected(course));
-            history.replace(`/mi/classroom/teacher/details`);
+            history.replace(`/mi/classroom/teacher/details/${course._id}`);
           }}
         >
           <i className="material-icons">&#xE417;</i>

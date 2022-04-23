@@ -13,6 +13,8 @@ export const CourseSlice = createSlice({
       languages: "",
       category: "",
     },
+    resources: [],
+    chapter: { description: "", title: "" },
   },
   reducers: {
     setChange: (state) => {
@@ -21,8 +23,15 @@ export const CourseSlice = createSlice({
     setSelected: (state, action) => {
       state.selectedCourse = { ...action.payload };
     },
+    setresources: (state, action) => {
+      state.resources = action.payload;
+    },
+    setChapter: (state, action) => {
+      state.chapter = action.payload;
+    },
   },
 });
 
-export const { setChange, setSelected } = CourseSlice.actions;
+export const { setChange, setSelected, setresources, setChapter } =
+  CourseSlice.actions;
 export default CourseSlice.reducer;

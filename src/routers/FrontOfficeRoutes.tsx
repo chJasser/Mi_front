@@ -210,7 +210,7 @@ export const pages: Page[] = [
     component: UpdateCourse,
   },
   {
-    path: "/mi/classroom/teacher/details",
+    path: "/mi/classroom/teacher/details/:id",
     exact: true,
     typeRoute: "classroom",
     component: CourseDetails,
