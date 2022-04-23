@@ -1,30 +1,15 @@
 import React, { useEffect, useState } from "react";
-import SectionLatestPosts from "./SectionLatestPosts";
-import SectionSliderPosts from "./SectionSliderPosts";
-import SectionMagazine1 from "./SectionMagazine1";
-import SectionVideos from "./SectionVideos";
+
 import SectionLargeSlider from "./SectionLargeSlider";
 import { Helmet } from "react-helmet";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
-import SectionGridAuthorBox from "components/SectionGridAuthorBox/SectionGridAuthorBox";
 import { PostDataType } from "data/types";
 import jwt_decode from "jwt-decode";
 import {
   DEMO_POSTS,
-  DEMO_POSTS_AUDIO,
-  DEMO_POSTS_GALLERY,
-  DEMO_POSTS_VIDEO,
+
 } from "data/posts";
-import { DEMO_CATEGORIES } from "data/taxonomies";
-import { DEMO_AUTHORS } from "data/authors";
-import SectionSliderNewCategories from "components/SectionSliderNewCategories/SectionSliderNewCategories";
-import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
-import SectionMagazine4 from "./SectionMagazine4";
-import SectionAds from "./SectionAds";
-import SectionGridPosts from "./SectionGridPosts";
-import SectionMagazine7 from "./SectionMagazine7";
-import SectionMagazine8 from "./SectionMagazine8";
-import SectionMagazine9 from "./SectionMagazine9";
+
 import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";

@@ -11,7 +11,6 @@ export default function CardTableReclamations({ color }) {
   const recs = useSelector(
     (state) => state.reclamationsManagement.reclamations
   );
-  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
 

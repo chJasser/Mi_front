@@ -38,6 +38,7 @@ export interface LocationStates {
   "/mi/karaoke"?: {};
   "/mi/live-streaming"?: {};
   "/mi/live-stream/:id"?: {};
+  "/mi/Karaoke/:id/:token"?: {};
   //
   "/mi/theme-cyan-blueGrey"?: {};
   "/mi/theme-blue-blueGrey"?: {};
@@ -72,6 +73,11 @@ export interface LocationStates {
   "/mi/classroom/teacher/:id"?: {};
   "/mi/classroom/teacher/add"?: {};
   "/mi/classroom/student/:id"?: {};
+  "/mi/payment"?: {};
+  "/mi/invoice/:id"?: {};
+  "/mi/room"?: {};
+  "/mi/invoices"?: {};
+ 
 
   // back-office
   "/headerback"?: {};

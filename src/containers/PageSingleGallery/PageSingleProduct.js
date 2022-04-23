@@ -103,13 +103,13 @@ function PageSingleProduct() {
       rate: rate + 1,
     };
 
-    axios.put(`/products/rating/${product._id}`, FormData).then((response) => {
+    axios.put(`/products/rating / ${ product._id }`, FormData).then((response) => {
       console.log(response.data);
     });
   };
   const addLikeDB = async () => {
     await axios
-      .put(`/products/add-like/${product._id}`)
+      .put(`/products/add - like / ${ product._id }`)
       .then((response) => {
         console.log(response.data.success);
       })
@@ -125,7 +125,7 @@ function PageSingleProduct() {
   };
   const removeLikeDB = async () => {
     await axios
-      .put(`/products/remove-like/${product._id}`)
+      .put(`/products/remove - like / ${ product._id }`)
       .then((response) => {
         console.log(response.data.success);
       })
@@ -141,7 +141,7 @@ function PageSingleProduct() {
   };
   const getSellerOfTheProduct = () => {
     axios
-      .get(`/products/seller/${prod.seller}`)
+      .get(`/products/seller / ${ prod.seller }`)
       .then((result) => {
         setUser(result.data);
       })
@@ -196,7 +196,7 @@ function PageSingleProduct() {
       setDisabled(false);
     } else {
       await axios
-        .put(`product_reviews/add-review/${product._id}`, {
+        .put(`product_reviews / add - review / ${ product._id }`, {
           content: comment,
         })
         .then((response) => {
@@ -258,9 +258,8 @@ function PageSingleProduct() {
             <div className="gap-2 my-10"></div>
             <div className="flex flex-col sm:flex-row justify-between sm:items-end space-y-5 sm:space-y-0 sm:space-x-5">
               <div
-                className={`nc-PostCardMeta inline-flex items-center flex-wrap text-neutral-800 dark:text-neutral-200 ${
-                  size === "normal" ? "text-xs" : "text-base"
-                } ${className}`}
+                className={`nc-PostCardMeta inline-flex items-center flex-wrap text-neutral-800 dark:text-neutral-200 ${size === "normal" ? "text-xs" : "text-base"
+                  } ${className}`}
                 data-nc-id="PostCardMeta"
               >
                 <Link to="#" className="relative flex items-center space-x-2">
@@ -388,9 +387,8 @@ function PageSingleProduct() {
                 .map((item, index) => (
                   <div
                     key={index}
-                    className={`relative rounded-xl overflow-hidden ${
-                      index >= 2 ? "hidden sm:block" : ""
-                    }`}
+                    className={`relative rounded-xl overflow-hidden ${index >= 2 ? "hidden sm:block" : ""
+                      }`}
                   >
                     <NcImage
                       containerClassName="aspect-w-6 aspect-h-8"

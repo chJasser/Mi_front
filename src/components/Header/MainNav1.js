@@ -201,6 +201,7 @@ const MainNav1 = ({ isTop }) => {
                                     <p className="text-gray-500">
                                       Qty {product.qte}
                                     </p>
+                                    
 
                                     <div className="flex">
                                       <button
@@ -234,7 +235,7 @@ const MainNav1 = ({ isTop }) => {
                       </p>
                       <div className="mt-6">
                         <a
-                          href="/mi/dashboard/posts"
+                          href="/mi/dashboard/card"
                           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                         >
                           Checkout

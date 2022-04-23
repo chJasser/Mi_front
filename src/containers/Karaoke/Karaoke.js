@@ -1,8 +1,9 @@
 import { Helmet } from "react-helmet";
 import Input from "components/Input/Input";
 import ButtonCircle from "components/Button/ButtonCircle";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import image from "images/dance.jpg";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axiosInstance";
 import ReactPlayer from "react-player";
 import NcPlayIcon from "components/NcPlayIcon/NcPlayIcon";
@@ -13,6 +14,12 @@ import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
 
 import KaraokeOneToOne from "./karaokeOneToOne";
 import ButtonPrimary from "components/Button/ButtonPrimary";
+import Badge from "components/Badge/Badge";
+import ButtonSecondary from "components/Button/ButtonSecondary";
+import DailyIframe from "@daily-co/daily-js";
+import { useParams } from "react-router-dom";
+import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
+
 
 /**
  *
@@ -20,6 +27,7 @@ import ButtonPrimary from "components/Button/ButtonPrimary";
  *
  */
 function Karaoke() {
+  const dispatch = useDispatch();
   let className = "";
   const [search, setSearch] = useState("");
 
@@ -38,6 +46,45 @@ function Karaoke() {
         setSongs([]);
       });
   };
+
+
+  let { id } = useParams();
+
+  let { token } = useParams();
+  const getStream = async () => {
+    const container = document.getElementById("MyContainer")
+
+    const callFrame = DailyIframe.createFrame(container, {
+      iframeStyle: {
+        position: 'relative',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+
+      },
+      showLeaveButton: true,
+      showFullscreenButton: true,
+      customLayout: true,
+    });
+    const domain = "https://miuniverse.daily.co/";
+    await axios
+      .get(`/video-call/${id}`)
+      .then((res) => {
+        if (res.status === 200) {
+          callFrame.join({
+            url: `${domain}${id}?t=${token}`,
+          });
+        }
+      })
+      .catch((err) => console.log(err, "this is the error"));
+  };
+
+  useEffect(() => {
+    getStream();
+
+  }, [id]);
+
   const renderMainVideo = () => {
     return (
       <div className="bg-neutral-800 rounded-3xl overflow-hidden border-4 border-white dark:border-neutral-700 shadow-2xl">
@@ -60,8 +107,8 @@ function Karaoke() {
           style={{ borderRadius: 18, overflow: "hidden" }}
           className=""
           playing={isSafariBrowser() ? isPlay : true}
-          width="100%"
-          height="100%"
+          width="80%"
+          height="80%"
           controls
           light={isSafariBrowser() ? false : chosenSong.Image}
           playIcon={<NcPlayIcon />}
@@ -156,7 +203,6 @@ function Karaoke() {
                         className="inline-block"
                         onClick={() => {
                           setChosenSong(s);
-                          console.log(chosenSong);
                         }}
                       >
                         <h2 className="mr-2.5  inline-block font-normal">
@@ -182,20 +228,54 @@ function Karaoke() {
       <div
         className={`nc-PageSingleVideo  ${className}`}
         data-nc-id="PageSingleVideo"
+        style={{ height: "80%" }}
       >
-        {console.log(chosenSong)}
-        <KaraokeOneToOne></KaraokeOneToOne>
-        {chosenSong !== {} ? (
-          <div className=" py-14 lg:py-20">
-            <div className="aspect-w-16 aspect-h-9 sm:aspect-h-9 ">
+        {/* SINGLE HEADER */}
+        <header style={{ width: "100%", height: "80%" }} className="container-fluid   relative py-14 lg:py-20 flex flex-col lg:flex-row lg:items-center">
+          <BgGlassmorphism />
+          <div style={{ width: "100%", height: "80%" }} className="relative lg:w-6/12 flex-shrink-0">
+            <div className="aspect-w-16 aspect-h-16 sm:aspect-h-9 ">
               {renderMainVideo()}
             </div>
           </div>
-        ) : (
-          <></>
-        )}
+        </header>
+        <div className="container-fluid" style={{ height: "70vh" }} id="MyContainer">
+        </div>
       </div>
+      {/* Streaming !!! */}
+      <div className="gap-2 my-10"></div>
+      <header className="container rounded-xl">
+
+        <div className={`nc-SingleHeader`}>
+          <div className="w-full px-2 xl:max-w-screen-2xl mx-auto">
+            <div className="rounded-3xl relative aspect-w-16 aspect-h-12 sm:aspect-h-7 lg:aspect-h-6 xl:aspect-h-5 2xl:aspect-h-4 overflow-hidden ">
+              <NcImage
+                containerClassName="absolute inset-0"
+                src="https://images.pexels.com/photos/5967960/pexels-photo-5967960.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                className="object-cover w-full h-full"
+              />
+              <div className="absolute inset-0 bg-black text-white bg-opacity-30 flex flex-col items-center justify-center">
+                <div className="flex justify-between">
+                  <Badge className="" name="FREE" />
+                </div>
+
+                <h2 className="inline-block align-middle ml-3 text-5xl font-semibold md:text-7xl ">
+                  Enjoy yourself
+                </h2>
+
+                {/* {!!reference && !false && (
+                <h4 className="inline-block align-middle ml-5 text-3xl md:text-2xl px-8 py- text-center">
+                  {reference}
+                </h4>
+              )} */}
+                <ButtonSecondary href="/mi">Home</ButtonSecondary>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
     </>
+
   );
 }
 

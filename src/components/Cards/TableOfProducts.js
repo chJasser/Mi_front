@@ -33,6 +33,7 @@ function TableOfProducts({ color, prod }) {
   return (
     <>
       <div
+       style={{ marginTop: "75px" }}
         className={
           "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded " +
           (color === "light" ? "bg-white" : "bg-lightBlue-900 text-white")

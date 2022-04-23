@@ -18,6 +18,8 @@ import KaraokeSlice from "./karaoke/karaoke";
 import filterCourseSlice from "./slices/courseFilter";
 import CoursemodalSlice from "./slices/modalSlice";
 import StreamSlice from "./streamSlice/liveRooms";
+import InvoiceSlice from "./invoices/InvoiceSlice";
+
 const rootReducers = {
   bookmark: bookmarkReducer,
   postLike: postLikesReducer,
@@ -32,6 +34,7 @@ const rootReducers = {
   productReviews: productReviewsSlice,
   usersManagement: UsersSlice,
   reclamationsManagement: RecSlice,
+  invoices: InvoiceSlice,
   carteslics: carteslics,
   filterSlice: filterSlice,
   karaoke: KaraokeSlice,
