@@ -20,6 +20,7 @@ import {
 } from "app/productLikes/productLikes";
 import NcImage from "components/NcImage/NcImage";
 import ModalPhotos from "./ModalPhotos";
+import Productrecommand from "containers/PageDashboard/Productrecommand";
 
 import {
   getProductUser,
@@ -28,6 +29,7 @@ import {
 } from "../../app/productReviews/productReviews";
 import ModalPhotosProd from "./ModalPhotosProd";
 import { StarIcon } from "@heroicons/react/solid";
+import FrequentlyBought from "containers/PageDashboard/FrequentlyBought";
 /**
  *
  *
@@ -85,8 +87,9 @@ function PageSingleProduct() {
   const rat = useSelector((state) => state.product.selectedProduct.rate);
 
   useEffect(() => {
-    setrating(rat - 1);
-    console.log(likedProd);
+    console.log(rat);
+    setrating(rat-1 );
+    //console.log(likedProd);
   }, []);
 
   const Onmouseenter = (index) => {
@@ -103,18 +106,18 @@ function PageSingleProduct() {
       rate: rate + 1,
     };
 
-    axios.put(`/products/rating / ${ product._id }`, FormData).then((response) => {
-      console.log(response.data);
+    axios.put(`/products/rating/${product._id}`, FormData).then((response) => {
+      //console.log(response.data);
     });
   };
   const addLikeDB = async () => {
     await axios
       .put(`/products/add - like / ${ product._id }`)
       .then((response) => {
-        console.log(response.data.success);
+       // console.log(response.data.success);
       })
       .catch((err) => {
-        console.log(err.response.data.success);
+       // console.log(err.response.data.success);
       });
     dispatch(addNewLike(product));
     setProduct({
@@ -127,10 +130,10 @@ function PageSingleProduct() {
     await axios
       .put(`/products/remove - like / ${ product._id }`)
       .then((response) => {
-        console.log(response.data.success);
+       // console.log(response.data.success);
       })
       .catch((err) => {
-        console.log(err.response.data.success);
+        //console.log(err.response.data.success);
       });
     dispatch(removeLike(product._id));
     setProduct({
@@ -146,7 +149,7 @@ function PageSingleProduct() {
         setUser(result.data);
       })
       .catch((err) => {
-        console.log(err.response.data);
+      //  console.log(err.response.data);
       });
   };
   const handleCLickLike = () => {
@@ -206,7 +209,7 @@ function PageSingleProduct() {
           setDisabled(false);
         })
         .catch((error) => {
-          console.log(error.response);
+          //console.log(error.response);
         });
     }
   };
@@ -364,7 +367,7 @@ function PageSingleProduct() {
               </div> */}
               <ButtonPrimary
                 onClick={() => addrate(rate)}
-                href="/mi/archive/the-demo-archive-slug"
+               href="/mi/archive/the-demo-archive-slug"
               >
                 Shop More
               </ButtonPrimary>
@@ -472,7 +475,11 @@ function PageSingleProduct() {
               </ButtonSecondary>
             </div>
           </form>
-          <div className="gap-2 my-10"></div>
+          
+         <Productrecommand/>
+         
+          <FrequentlyBought/>
+          
         </div>
       </div>
     </>

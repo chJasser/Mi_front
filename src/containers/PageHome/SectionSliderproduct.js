@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import Heading from "components/Heading/Heading";
 import Card4 from "components/Card4/Card4";
 import Card7 from "components/Card7/Card7";
@@ -10,22 +10,15 @@ import NextPrev from "components/NextPrev/NextPrev";
 import Card10 from "components/Card10/Card10";
 import Card11 from "components/Card11/Card11";
 import Card10V2 from "components/Card10/Card10V2";
+import Card9product from "components/Card9/Card9product";
+import axios from "axiosInstance";
 
-export interface SectionSliderPostsProps {
-  className?: string;
-  heading: string;
-  subHeading?: string;
-  posts: PostDataType[];
-  postCardName?: "card4" | "card7" | "card9" | "card10" | "card10V2" | "card11";
-  sliderStype?: "style1" | "style2";
-  perView?: 2 | 3 | 4;
-}
 
-const SectionSliderPosts: FC<SectionSliderPostsProps> = ({
+
+const SectionSliderproduct = ({
   heading,
   subHeading,
   className = "",
-  posts,
   postCardName = "card4",
   sliderStype = "style1",
   perView = 4,
@@ -59,12 +52,32 @@ const SectionSliderPosts: FC<SectionSliderPostsProps> = ({
       },
     },
   });
+  const [topproducts, settopProducts] = useState([]);
+  const getTopratedproducts=()=>{
+    axios
+    .get("products/Topratedproducts")
+    .then((res) => {
+      //console.log(res.data);
+      settopProducts(res.data);
+    })
+    .catch((err) => {
+      console.log(err.data);
+    });
+  }
 
   useEffect(() => {
+    
     if (!MY_GLIDE) return;
     MY_GLIDE.mount();
   }, [MY_GLIDE]);
-
+  let isMountedRef = useRef(null);
+  useEffect(() => {
+    isMountedRef.current = true;
+    if (isMountedRef.current) {
+      getTopratedproducts();
+    }
+    return () => (isMountedRef.current = false);
+  }, []);
   const getPostComponent = () => {
     switch (postCardName) {
       case "card4":
@@ -108,14 +121,14 @@ const SectionSliderPosts: FC<SectionSliderPostsProps> = ({
         {renderHeading()}
         <div className="glide__track" data-glide-el="track">
           <ul className="glide__slides">
-            {posts.map((item, index) => (
+            {topproducts.map((item, index) => (
               <li
                 key={index}
                 className={`glide__slide h-auto  ${
                   sliderStype === "style2" ? "pb-12 xl:pb-16" : ""
                 }`}
               >
-                <Card9 post={item} />
+                <Card9product product={item} />
               </li>
             ))}
           </ul>
@@ -131,4 +144,4 @@ const SectionSliderPosts: FC<SectionSliderPostsProps> = ({
   );
 };
 
-export default SectionSliderPosts;
+export default SectionSliderproduct;

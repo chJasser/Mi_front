@@ -25,7 +25,7 @@ export default function Example(props) {
   /*const client= algoliasearch('1RY92FSHMF','2a5deb3323c4edb2ecbcc46687c2c216');
   const index=client.initIndex('events');*/
   const ratings = () => {
-    axios.get(`products/getrating/${product._id}`).then((res) => {
+    axios.get(`products/getrating/${product.id}`).then((res) => {
       setrating(res.data[0].rating);
     });
   };
@@ -34,7 +34,7 @@ export default function Example(props) {
     label: product.label,
     price: product.price,
     productImage: product.productImage,
-    productid: product._id,
+    productid: product.id,
     qte: qty,
   };
   useEffect(() => {
