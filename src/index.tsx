@@ -20,10 +20,8 @@ const RtlImportCssLazy = React.lazy(() => import("RtlImportCss"));
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <ContextProvider>
         <App />
         <form action="https://sandbox.paymee.tn/gateway/" ></form>
-      </ContextProvider>
 
       {/* LOAD RTL CSS WHEN RTL MODE ENABLE */}
       {process.env.REACT_APP_LRT_OR_RTL === "rtl" && (

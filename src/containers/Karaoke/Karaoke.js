@@ -18,7 +18,6 @@ import Badge from "components/Badge/Badge";
 import ButtonSecondary from "components/Button/ButtonSecondary";
 import DailyIframe from "@daily-co/daily-js";
 import { useParams } from "react-router-dom";
-import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
 
 
 /**

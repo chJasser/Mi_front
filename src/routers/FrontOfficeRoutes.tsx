@@ -142,10 +142,10 @@ export const pages: Page[] = [
     component: Manageproduct,
   },
   {
-    path: "/mi/karaoke",
     path: "/mi/Karaoke/:id/:token",
     component: Karaoke,
   },
+  
 
   {
     path: "/mi/live-streaming",

@@ -35,7 +35,7 @@ export interface LocationStates {
   "/mi/saved-products"?: {};
   "/mi/edit-profile"?: {};
   "/mi/manageproduct"?: {};
-  "/mi/karaoke"?: {};
+  
   "/mi/live-streaming"?: {};
   "/mi/live-stream/:id"?: {};
   "/mi/Karaoke/:id/:token"?: {};
