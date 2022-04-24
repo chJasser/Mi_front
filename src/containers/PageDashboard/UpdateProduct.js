@@ -45,7 +45,7 @@ const UpdateProduct = () => {
   });
 
   let product = useSelector((state) => state.productseller.selectedProduct);
-  console.log(product);
+  //console.log(product);
 
   const [selectedOptiontype, setSelectedOptiontype] = useState(product.type);
   const [selectedOptioncategory, setSelectedOptincategory] = useState(

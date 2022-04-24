@@ -84,13 +84,13 @@ function PageSingleProduct() {
   const size = "large";
   const hiddenAvatar = false;
   const textArea = document.querySelector("#comment_content");
-  const rat = useSelector((state) => state.product.selectedProduct.rate);
 
   useEffect(() => {
-    console.log(rat);
-    setrating(rat-1 );
-    //console.log(likedProd);
-  }, []);
+    axios.get(`/products/getratingbyuser/${prod._id}`).then((response) => {
+      console.log(response.data.rate);
+      setrating(response.data.rate - 1);
+    });
+  }, [rate]);
 
   const Onmouseenter = (index) => {
     sethoverrating(index);
@@ -106,18 +106,18 @@ function PageSingleProduct() {
       rate: rate + 1,
     };
 
-    axios.put(`/products/rating/${product._id}`, FormData).then((response) => {
-      //console.log(response.data);
+    axios.put(`/products/rating/${prod._id}`, FormData).then((response) => {
+      console.log(response.data);
     });
   };
   const addLikeDB = async () => {
     await axios
-      .put(`/products/add - like / ${ product._id }`)
+      .put(`/products/add - like / ${product._id}`)
       .then((response) => {
-       // console.log(response.data.success);
+        // console.log(response.data.success);
       })
       .catch((err) => {
-       // console.log(err.response.data.success);
+        // console.log(err.response.data.success);
       });
     dispatch(addNewLike(product));
     setProduct({
@@ -128,9 +128,9 @@ function PageSingleProduct() {
   };
   const removeLikeDB = async () => {
     await axios
-      .put(`/products/remove - like / ${ product._id }`)
+      .put(`/products/remove - like / ${product._id}`)
       .then((response) => {
-       // console.log(response.data.success);
+        // console.log(response.data.success);
       })
       .catch((err) => {
         //console.log(err.response.data.success);
@@ -144,12 +144,12 @@ function PageSingleProduct() {
   };
   const getSellerOfTheProduct = () => {
     axios
-      .get(`/products/seller / ${ prod.seller }`)
+      .get(`/products/seller/${prod.seller}`)
       .then((result) => {
         setUser(result.data);
       })
       .catch((err) => {
-      //  console.log(err.response.data);
+        //  console.log(err.response.data);
       });
   };
   const handleCLickLike = () => {
@@ -199,7 +199,7 @@ function PageSingleProduct() {
       setDisabled(false);
     } else {
       await axios
-        .put(`product_reviews / add - review / ${ product._id }`, {
+        .put(`product_reviews / add - review / ${product._id}`, {
           content: comment,
         })
         .then((response) => {
@@ -261,8 +261,9 @@ function PageSingleProduct() {
             <div className="gap-2 my-10"></div>
             <div className="flex flex-col sm:flex-row justify-between sm:items-end space-y-5 sm:space-y-0 sm:space-x-5">
               <div
-                className={`nc-PostCardMeta inline-flex items-center flex-wrap text-neutral-800 dark:text-neutral-200 ${size === "normal" ? "text-xs" : "text-base"
-                  } ${className}`}
+                className={`nc-PostCardMeta inline-flex items-center flex-wrap text-neutral-800 dark:text-neutral-200 ${
+                  size === "normal" ? "text-xs" : "text-base"
+                } ${className}`}
                 data-nc-id="PostCardMeta"
               >
                 <Link to="#" className="relative flex items-center space-x-2">
@@ -303,7 +304,9 @@ function PageSingleProduct() {
                         color="yellow"
                         key={rating}
                         className={classNames(
-                          rate >= rating ? "text-gray-900" : "text-gray-200",
+                          rate >= rating
+                            ? "text-gray-900 star"
+                            : "text-gray-200 emptyStar",
                           "h-7 w-7 flex-shrink-0"
                         )}
                         aria-hidden="true"
@@ -312,7 +315,9 @@ function PageSingleProduct() {
                       <StarIcon
                         key={rating}
                         className={classNames(
-                          hover >= rating ? "text-gray-900" : "text-gray-200",
+                          hover >= rating
+                            ? "text-gray-900 star"
+                            : "text-gray-200 emptyStar",
                           "h-7 w-7 flex-shrink-0"
                         )}
                         aria-hidden="true"
@@ -367,7 +372,7 @@ function PageSingleProduct() {
               </div> */}
               <ButtonPrimary
                 onClick={() => addrate(rate)}
-               href="/mi/archive/the-demo-archive-slug"
+                href="/mi/archive/the-demo-archive-slug"
               >
                 Shop More
               </ButtonPrimary>
@@ -379,7 +384,7 @@ function PageSingleProduct() {
                 onClick={() => handleOpenModal(0)}
               >
                 <NcImage
-                  containerClassName="aspect-w-6 aspect-h-8"
+                  containerClassName="aspect-w-2 aspect-h-1"
                   className="object-cover w-full h-full rounded-xl"
                   src={base_url + prod.productImage[0]}
                 />
@@ -390,11 +395,12 @@ function PageSingleProduct() {
                 .map((item, index) => (
                   <div
                     key={index}
-                    className={`relative rounded-xl overflow-hidden ${index >= 2 ? "hidden sm:block" : ""
-                      }`}
+                    className={`relative rounded-xl overflow-hidden ${
+                      index >= 2 ? "hidden sm:block" : ""
+                    }`}
                   >
                     <NcImage
-                      containerClassName="aspect-w-6 aspect-h-8"
+                      containerClassName="aspect-w-6 aspect-h-5"
                       className="object-cover w-full h-full rounded-xl "
                       src={base_url + item || ""}
                     />
@@ -475,11 +481,10 @@ function PageSingleProduct() {
               </ButtonSecondary>
             </div>
           </form>
-          
-         <Productrecommand/>
-         
-          <FrequentlyBought/>
-          
+
+          <Productrecommand />
+
+          <FrequentlyBought />
         </div>
       </div>
     </>
