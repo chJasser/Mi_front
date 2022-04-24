@@ -135,49 +135,109 @@ const Card11Product: FC<Card11Props> = ({
           }
         </div>
         <div className="flex items-end justify-between mt-auto">
-          {sub === null &&
-            (teacher === currentteacher._id ? (
-              <label>your course</label>
-            ) : !students.includes(student._id) ? (
-              <button
-                onClick={() => {
-                  subscribe();
-                  setSubsc(true);
-                }}
-              >
-                subscribe
-              </button>
-            ) : (
-              students.includes(student._id) && (
-                <button
-                  onClick={() => {
-                    unsubscribe();
-                    setSubsc(false);
-                  }}
-                >
-                  unsubscribe
-                </button>
-              )
-            ))}
-          {sub === false && (
-            <button
-              onClick={() => {
-                subscribe();
-                setSubsc(true);
-              }}
-            >
-              subscribe
-            </button>
-          )}
-          {sub === true && (
-            <button
-              onClick={() => {
-                unsubscribe();
-                setSubsc(false);
-              }}
-            >
-              unsubscribe
-            </button>
+          {(currentteacher !== null || student !== null) && (
+            <>
+              {currentteacher !== null && student === null && (
+                <>
+                  {sub === null && teacher === currentteacher._id && (
+                    <label>your course</label>
+                  )}
+                </>
+              )}
+              {currentteacher === null && student !== null && (
+                <>
+                  {sub === null && !students.includes(student._id) ? (
+                    <button
+                      onClick={() => {
+                        subscribe();
+                        setSubsc(true);
+                      }}
+                    >
+                      subscribe
+                    </button>
+                  ) : (
+                    students.includes(student._id) && (
+                      <button
+                        onClick={() => {
+                          unsubscribe();
+                          setSubsc(false);
+                        }}
+                      >
+                        unsubscribe
+                      </button>
+                    )
+                  )}
+                  {sub === false && (
+                    <button
+                      onClick={() => {
+                        subscribe();
+                        setSubsc(true);
+                      }}
+                    >
+                      subscribe
+                    </button>
+                  )}
+                  {sub === true && (
+                    <button
+                      onClick={() => {
+                        unsubscribe();
+                        setSubsc(false);
+                      }}
+                    >
+                      unsubscribe
+                    </button>
+                  )}
+                </>
+              )}
+              {currentteacher !== null && student !== null && (
+                <>
+                  {sub === null &&
+                    (teacher === currentteacher._id ? (
+                      <label>your course</label>
+                    ) : !students.includes(student._id) ? (
+                      <button
+                        onClick={() => {
+                          subscribe();
+                          setSubsc(true);
+                        }}
+                      >
+                        subscribe
+                      </button>
+                    ) : (
+                      students.includes(student._id) && (
+                        <button
+                          onClick={() => {
+                            unsubscribe();
+                            setSubsc(false);
+                          }}
+                        >
+                          unsubscribe
+                        </button>
+                      )
+                    ))}
+                  {sub === false && (
+                    <button
+                      onClick={() => {
+                        subscribe();
+                        setSubsc(true);
+                      }}
+                    >
+                      subscribe
+                    </button>
+                  )}
+                  {sub === true && (
+                    <button
+                      onClick={() => {
+                        unsubscribe();
+                        setSubsc(false);
+                      }}
+                    >
+                      unsubscribe
+                    </button>
+                  )}
+                </>
+              )}
+            </>
           )}
         </div>
       </div>
