@@ -7,34 +7,33 @@ import { Alert } from "@mui/material";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
-import { setIsOpenResource } from "app/slices/modalSlice";
+import { setIsOpenChapter } from "app/slices/modalSlice";
 import { useParams } from "react-router-dom";
-
-function AddResource() {
+import { setChange } from "app/slices/courseSlice";
+function Updatechapter() {
   const params = useParams();
   const dispatch = useDispatch();
+  const course = useSelector((state) => state.courseSlice.selectedCourse);
   const chapter = useSelector((state) => state.courseSlice.chapter);
   const validationSchema = yup.object().shape({
     title: yup.string().required().trim(),
-    description: yup.string().default("").trim(),
-    file: yup.string().required(),
+    description: yup.string().required().trim(),
   });
   const onSubmit = async (values) => {
-    await axios.post(`/resources/${chapter._id}`, {
+    await axios.put(`chapters/${chapter._id}`, {
       title: values.title,
       description: values.description,
-      path: values.file,
     });
-    dispatch(setIsOpenResource(false));
+    dispatch(setIsOpenChapter(false));
+    dispatch(setChange());
   };
 
   return (
     <div className="rounded-xl md:border md:border-neutral-100 dark:border-neutral-800 md:p-4 modal-body m-5">
       <Formik
         initialValues={{
-          title: "",
-          description: "",
-          file: "",
+          title: chapter.title,
+          description: chapter.description,
         }}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
@@ -43,7 +42,6 @@ function AddResource() {
           handleSubmit,
           handleChange,
           handleBlur,
-          setFieldValue,
           values,
           touched,
           errors,
@@ -85,23 +83,8 @@ function AddResource() {
             {touched.description && errors.description ? (
               <Alert severity="error">{errors.description}</Alert>
             ) : null}
-            <label className="block md:col-span-2">
-              <Input
-                id="file"
-                name="file"
-                type="file"
-                className="mt-1 form-control form-control-sm"
-                style={{ border: "1px solid #D1D1D1" }}
-                onChange={(e) =>
-                  setFieldValue("file", e.currentTarget.files[0])
-                }
-              />
-            </label>
-            {touched.file && errors.file ? (
-              <Alert severity="error">{errors.file}</Alert>
-            ) : null}
             <ButtonPrimary className="md:col-span-2" type="submit">
-              Add resource
+              update Chapter
             </ButtonPrimary>
           </form>
         )}
@@ -110,4 +93,4 @@ function AddResource() {
   );
 }
 
-export default AddResource;
+export default Updatechapter;
