@@ -58,6 +58,11 @@ import PageFavorite from "containers/PageArchive/PageFavorite";
 import PageHomeMi from "containers/PageHome/PageHomeMi";
 import DashboardEditProfile from "containers/PageDashboard/DashboardEditProfile";
 import Karaoke from "containers/Karaoke/Karaoke";
+import Manageproduct from "containers/PageDashboard/Manageproduct";
+import Recommand from "containers/PageDashboard/Recommand";
+import Productrecommand from "containers/PageDashboard/Productrecommand";
+import ProductPage from "containers/PageDashboard/ProductPage";
+//import SearchPage from "containers/PageDashboard/searchpage";
 import Classroom from "./../components/classroom/classrom";
 import StudentClassroom from "../components/classroom/StudentClassroom";
 import TeacherClassroom from "../components/classroom/TeacherClassroom";
@@ -70,7 +75,6 @@ import PageInvoice from "components/Payment/PageInvoice";
 import Meeting from "containers/Karaoke/Meeting";
 import UserInvoices from "components/Payment/UserInvoices";
 
-import Manageproduct from "containers/PageDashboard/Manageproduct";
 
 import Streamer from "containers/Stream/Streamer";
 import StreamHomePage from "containers/Stream/StreamHomePage";
@@ -85,7 +89,7 @@ export const pages: Page[] = [
   // { path: "/mi/author/:slug", component: PageAuthor },
 
   { path: "/mi/author/:slug", component: ProfileSeller },
-  // { path: "/mi/author-v2/:slug", component: PageAuthorV2 },
+  // { path: "/mi/recommand", component: Recommand },
   // { path: "/mi/author/:slug", component: PageAuthor },
   { path: "/mi/author-v2/:slug", component: PageAuthorV2 },
   //
@@ -126,9 +130,9 @@ export const pages: Page[] = [
     path: "/mi/single-video/:slug",
     component: PageSingleVideo,
   },
-
+ 
   { path: "/mi/search", component: PageSearch },
-  { path: "/mi/search-v2", component: PageSearchV2 },
+  //{ path: "/mi/search-v2", component: Recommand },
   { path: "/mi/about", exact: true, component: PageAbout },
   { path: "/mi/contact", component: PageContactMi },
   { path: "/mi/page404", component: Page404 },
@@ -143,20 +147,19 @@ export const pages: Page[] = [
     path: "/mi/manageproduct",
     component: Manageproduct,
   },
+  /*{
+    path:'/mi/products/:objectID?queryID=:queryID',
+    component:ProductPage,
+   },
+   {
+    path:'/mi/products1/:objectID',
+    component:Productrecommand,
+   },*/
   {
     path: "/mi/Karaoke/:id/:token",
     component: Karaoke,
   },
-
-  {
-    path: "/mi/live-streaming",
-    component: StreamHomePage,
-  },
-  {
-    path: "/mi/live-stream/:id",
-    component: Streamer,
-  },
-
+  
   {
     path: "/mi/forgot-pass",
     exact: true,

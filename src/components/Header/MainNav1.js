@@ -17,6 +17,7 @@ import { XIcon } from "@heroicons/react/outline";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import { removeitem } from "app/cartslice/carteslics";
+import Avatar from "components/Avatar/Avatar";
 
 /*export interface MainNav1Props {
   isTop: boolean;
@@ -43,6 +44,10 @@ const MainNav1 = ({ isTop }) => {
 
     return total;
   };
+  const currentUser = useSelector(
+    (state) => state.user.userLogedIn
+  );
+  console.log(currentUser)
   return (
     <div
       className={`nc-MainNav1 relative z-10 ${
@@ -93,7 +98,18 @@ const MainNav1 = ({ isTop }) => {
               </div>
             )}
 
-            <SearchDropdown />
+            {/* <SearchDropdown /> */}
+            {currentUser?(
+              <>
+            <Avatar
+              containerClassName="ring-4 ring-white dark:ring-0 shadow-2xl"
+              imgUrl={base_url + currentUser.profilePicture}
+              sizeClass="w-10 h-10 text-xl lg:text-2xl lg:w-11 lg:h-11"
+              radius="rounded-full"
+            />
+            <h5>{currentUser.lastName}</h5>
+            </>):
+            ""}
 
             <div className="px-1" />
             {isAuth ? (

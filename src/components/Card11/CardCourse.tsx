@@ -134,7 +134,7 @@ const Card11Product: FC<Card11Props> = ({
             ></ReactStars>
           }
         </div>
-        <div className="flex items-end justify-between mt-auto">
+        {/* <div className="flex items-end justify-between mt-auto">
           {sub === null &&
             (teacher === currentteacher._id ? (
               <label>your course</label>
@@ -179,7 +179,7 @@ const Card11Product: FC<Card11Props> = ({
               unsubscribe
             </button>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );

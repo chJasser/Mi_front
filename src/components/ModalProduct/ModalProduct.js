@@ -2,20 +2,28 @@ import { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 import { StarIcon } from "@heroicons/react/solid";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectProduct } from "app/productslice/Productslice";
 import { additem } from "app/cartslice/carteslics";
 import axios from "axiosInstance";
 import { Link } from "react-router-dom";
+import aa from "search-insights";
+import algoliasearch from "algoliasearch/lite"
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Example(props) {
+  
   const dispatch = useDispatch();
   const [product, setProduct] = useState(props.product);
   const [open, setOpen] = useState(false);
   const [rate, setrating] = useState(0);
+  const currentUser = useSelector(
+    (state) => state.user.userLogedIn
+  );
+  /*const client= algoliasearch('1RY92FSHMF','2a5deb3323c4edb2ecbcc46687c2c216');
+  const index=client.initIndex('events');*/
   const ratings = () => {
     axios.get(`products/getrating/${product._id}`).then((res) => {
       setrating(res.data[0].rating);
@@ -149,7 +157,7 @@ export default function Example(props) {
                       >
                         <div>
                           <h4 className="text-sm text-gray-900 font-medium">
-                            {product.reference}
+                            {product.description}
                           </h4>
                         </div>
                         <div>
@@ -159,6 +167,7 @@ export default function Example(props) {
                           </h4>
                           <input
                             type="number"
+                            disabled={true}
                             min={1}
                             value={qty}
                             onChange={(e) => {
@@ -172,6 +181,7 @@ export default function Example(props) {
                           onClick={() => {
                             dispatch(additem(item));
                             setOpen(false);
+                            
                           }}
                           type="button"
                           className="mt-6 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

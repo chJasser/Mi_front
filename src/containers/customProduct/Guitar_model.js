@@ -3,7 +3,7 @@ import { useGLTF } from "@react-three/drei";
 
 export default function Guitar({ ...props }) {
   const group = useRef();
-  const { nodes, materials } = useGLTF("/guitar_model.glb");
+  const { nodes, materials } = useGLTF("/Blender/guitar_model.glb");
   return (
     <group ref={group} {...props} dispose={null}>
       <mesh

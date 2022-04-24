@@ -10,7 +10,7 @@ import ProductCardLikeAndComment from "components/PostCardLikeAndComment/Product
 import ProductCardSaveAction from "components/PostCardSaveAction/ProductCardSaveAction";
 import ModalProduct from "components/ModalProduct/ModalProduct";
 import { getProductUser } from "../../app/productReviews/productReviews";
-
+import { selectrecommandprod } from 'app/productslice/Productsliceseller';
 export interface Card11Props {
   className?: string;
   product;
@@ -31,7 +31,7 @@ const Card11Product: FC<Card11Props> = ({
 
   const rating = () => {
     axios
-      .get(`products/getratingbyuser/${_id}`)
+      .get(`products/getrating/${_id}`)
       .then((res) => {
         setrating(res.data.rate);
       })
@@ -77,6 +77,10 @@ const Card11Product: FC<Card11Props> = ({
         onClick={() => {
           getUser(product);
           dispatch(selectProduct({ ...product, rate }));
+          dispatch(selectrecommandprod(product));
+          /*insights('clickedObjectIDsAfterSearch', {
+            eventName: ' Search Result Clicked'
+          })*/
         }}
         to={`/mi/single-gallery/${product._id}`}
         className="absolute inset-0"
@@ -88,7 +92,7 @@ const Card11Product: FC<Card11Props> = ({
       <div className="p-4 flex flex-col flex-grow space-y-3">
         <PostCardMeta meta={product} />
 
-        <span className="text-xs text-neutral-500">{date}</span>
+        {<span className="text-xs text-neutral-500">{date}</span>}
 
         <h2 className="nc-card-title block text-base font-semibold text-neutral-900 dark:text-neutral-100 ">
           {label + " " + price + " $"}

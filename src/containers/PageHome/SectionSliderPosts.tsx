@@ -68,17 +68,17 @@ const SectionSliderPosts: FC<SectionSliderPostsProps> = ({
   const getPostComponent = () => {
     switch (postCardName) {
       case "card4":
-        return Card4;
+        return Card7;
       case "card7":
         return Card7;
       case "card9":
         return Card9;
       case "card10":
-        return Card10;
+        return Card7;
       case "card10V2":
-        return Card10V2;
+        return Card7;
       case "card11":
-        return Card11;
+        return Card7;
 
       default:
         return Card4;
@@ -115,7 +115,7 @@ const SectionSliderPosts: FC<SectionSliderPostsProps> = ({
                   sliderStype === "style2" ? "pb-12 xl:pb-16" : ""
                 }`}
               >
-                <CardName post={item} />
+                <Card9 post={item} />
               </li>
             ))}
           </ul>

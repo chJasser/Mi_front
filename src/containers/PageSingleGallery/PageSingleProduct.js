@@ -10,6 +10,8 @@ import ProductComment from "components/CommentCard/ProductComment";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import ButtonSecondary from "components/Button/ButtonSecondary";
 import NcImage from "components/NcImage/NcImage";
+import ModalPhotos from "./ModalPhotos";
+import Productrecommand from "containers/PageDashboard/Productrecommand";
 
 import {
   addReview,
@@ -17,6 +19,7 @@ import {
 } from "../../app/productReviews/productReviews";
 import ModalPhotosProd from "./ModalPhotosProd";
 import { StarIcon } from "@heroicons/react/solid";
+import FrequentlyBought from "containers/PageDashboard/FrequentlyBought";
 /**
  *
  *
@@ -71,12 +74,13 @@ function PageSingleProduct() {
   const size = "large";
   const hiddenAvatar = false;
   const textArea = document.querySelector("#comment_content");
-  const rat = useSelector((state) => state.product.selectedProduct.rate);
 
   useEffect(() => {
-    setrating(rat - 1);
-    console.log(likedProd);
-  }, []);
+    axios.get(`/products/getratingbyuser/${prod._id}`).then((response) => {
+      console.log(response.data.rate);
+      setrating(response.data.rate - 1);
+    });
+  }, [rate]);
 
   const Onmouseenter = (index) => {
     sethoverrating(index);
@@ -92,18 +96,18 @@ function PageSingleProduct() {
       rate: rate + 1,
     };
 
-    axios.put(`/products/rating/${product._id}`, FormData).then((response) => {
+    axios.put(`/products/rating/${prod._id}`, FormData).then((response) => {
       console.log(response.data);
     });
   };
   const addLikeDB = async () => {
     await axios
-      .put(`/products/add-like/ ${product._id}`)
+      .put(`/products/add-like/${product._id}`)
       .then((response) => {
-        console.log(response.data.success);
+        // console.log(response.data.success);
       })
       .catch((err) => {
-        console.log(err.response.data.success);
+        // console.log(err.response.data.success);
       });
     dispatch(addNewLike(product));
     setProduct({
@@ -114,12 +118,12 @@ function PageSingleProduct() {
   };
   const removeLikeDB = async () => {
     await axios
-      .put(`/products/remove-like/ ${product._id}`)
+      .put(`/products/remove-like/${product._id}`)
       .then((response) => {
-        console.log(response.data.success);
+        // console.log(response.data.success);
       })
       .catch((err) => {
-        console.log(err.response.data.success);
+        //console.log(err.response.data.success);
       });
     dispatch(removeLike(product._id));
     setProduct({
@@ -130,12 +134,12 @@ function PageSingleProduct() {
   };
   const getSellerOfTheProduct = () => {
     axios
-      .get(`/products/seller/ ${prod.seller}`)
+      .get(`/products/seller/${prod.seller}`)
       .then((result) => {
         setUser(result.data);
       })
       .catch((err) => {
-        console.log(err.response.data);
+        //  console.log(err.response.data);
       });
   };
   const handleCLickLike = () => {
@@ -195,7 +199,7 @@ function PageSingleProduct() {
           setDisabled(false);
         })
         .catch((error) => {
-          console.log(error.response);
+          //console.log(error.response);
         });
     }
   };
@@ -290,7 +294,9 @@ function PageSingleProduct() {
                         color="yellow"
                         key={rating}
                         className={classNames(
-                          rate >= rating ? "text-gray-900" : "text-gray-200",
+                          rate >= rating
+                            ? "text-gray-900 star"
+                            : "text-gray-200 emptyStar",
                           "h-7 w-7 flex-shrink-0"
                         )}
                         aria-hidden="true"
@@ -299,7 +305,9 @@ function PageSingleProduct() {
                       <StarIcon
                         key={rating}
                         className={classNames(
-                          hover >= rating ? "text-gray-900" : "text-gray-200",
+                          hover >= rating
+                            ? "text-gray-900 star"
+                            : "text-gray-200 emptyStar",
                           "h-7 w-7 flex-shrink-0"
                         )}
                         aria-hidden="true"
@@ -366,7 +374,7 @@ function PageSingleProduct() {
                 onClick={() => handleOpenModal(0)}
               >
                 <NcImage
-                  containerClassName="aspect-w-6 aspect-h-8"
+                  containerClassName="aspect-w-2 aspect-h-1"
                   className="object-cover w-full h-full rounded-xl"
                   src={base_url + prod.productImage[0]}
                 />
@@ -382,7 +390,7 @@ function PageSingleProduct() {
                     }`}
                   >
                     <NcImage
-                      containerClassName="aspect-w-6 aspect-h-8"
+                      containerClassName="aspect-w-6 aspect-h-5"
                       className="object-cover w-full h-full rounded-xl "
                       src={base_url + item || ""}
                     />
@@ -463,7 +471,10 @@ function PageSingleProduct() {
               </ButtonSecondary>
             </div>
           </form>
-          <div className="gap-2 my-10"></div>
+
+          <Productrecommand />
+
+          <FrequentlyBought />
         </div>
       </div>
     </>

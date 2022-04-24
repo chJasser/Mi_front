@@ -1,11 +1,17 @@
 import { StarIcon } from "@heroicons/react/solid";
 import { RadioGroup } from "@headlessui/react";
 import { useState, Suspense, useEffect } from "react";
-import { ContactShadows, Environment, OrbitControls } from "@react-three/drei";
+import { ContactShadows, Environment, OrbitControls, Stars } from "@react-three/drei";
 
 import { Canvas } from "@react-three/fiber";
 import Guitar from "./Guitar_model";
 import ButtonPrimary from "components/Button/ButtonPrimary";
+
+import ntc from "ntc";
+import { useNameThatColor } from "react-ntc";
+import { useDispatch } from "react-redux";
+import { changeCategory, colorFilter } from "app/productslice/Productsliceseller";
+import { useHistory } from "react-router-dom";
 
 const reviews = { href: "#", average: 4, totalCount: 117 };
 
@@ -13,17 +19,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
-  const sizes = [
-    { name: "XXS", inStock: false },
-    { name: "XS", inStock: true },
-    { name: "S", inStock: true },
-    { name: "M", inStock: true },
-    { name: "L", inStock: true },
-    { name: "XL", inStock: true },
-    { name: "2XL", inStock: true },
-    { name: "3XL", inStock: true },
-  ];
+export default function CustomGuitar() {
   const [selectedSize, setSelectedSize] = useState();
   const [face, setFace] = useState("#E8B187");
   const [chords, setChords] = useState("#B9B7BD");
@@ -38,6 +34,13 @@ export default function Example() {
     changedChords: false,
     changedFace: false,
   });
+  const [face_match, setFaceMatch] = useState("");
+  const [body_match, setBodyMatch] = useState("");
+  const [chords_match, setChordsMatch] = useState("");
+  const [hexFace, setHexFace] = useState("#E8B187");
+  const [hexChords, setHexChords] = useState("#B9B7BD");
+  const [hexBody, setHexBody] = useState("#4C2C2E");
+  const dispatch = useDispatch();
   useEffect(() => {
     const { changedBody, changedChords, changedFace } = product;
     changedBody && setProduct({ ...product, price: product.price + 50 });
@@ -45,21 +48,104 @@ export default function Example() {
     changedFace && setProduct({ ...product, price: product.price + 50 });
   }, [bodyChanged, chordsChanged, faceChanged]);
   const handleChordsChanged = (e) => {
+    const chords_match = ntc.name(e.target.value);
+    setHexChords(e.target.value);
+    setChordsMatch(chords_match[1]);
     setChords(e.target.value);
     setChordsChanged(true);
     setProduct({ ...product, changedChords: true });
   };
   const handleFaceChanged = (e) => {
+    const face_match = ntc.name(e.target.value);
+    setHexFace(e.target.value);
+    setFaceMatch(face_match[1]);
     setFace(e.target.value);
     setFaceChanged(true);
     setProduct({ ...product, changedFace: true });
   };
   const handleBodyChanged = (e) => {
+    const body_match = ntc.name(e.target.value);
+    setHexBody(e.target.value);
+    setBodyMatch(body_match[1]);
     setBody(e.target.value);
     setBodyChanged(true);
     setProduct({ ...product, changedBody: true });
   };
+
+  function hexToName(hex) {
+    // first get hsl correspondance
+    var hsl = hexToHsl(hex);
+    if(!hsl){
+      return;
+    }
+    // get the base color
+    var color = getColorName(hsl[0] * 360);
+    // check saturation and luminosity
+    // needs more granularity, left as an exercise for the reader
+    if (hsl[1] < .5) {
+      return hsl[2] <= .5 ? hsl[2] === 0? 'black' : 'darkgray' : hsl[2] === 1 ? 'white': 'gray';
+    }
+    return hsl[2] <= .5 ? color : 'light' + color;
+  }
+
+  function getColorName(hue) {
+    // here you will need more work:
+    // we use fixed distance for this simple demo
+    var names = ['red', 'yellow', 'green', 'cyan', 'blue', 'magenta'];
+    var angles = [0, 60, 120, 180, 240, 300];
+    var match = angles.filter(a =>
+      a - 60 <= hue && a + 60 > hue
+    )[0] || 0;
+    return names[angles.indexOf(match)];
+  }
+  // shamelessly stolen from https://stackoverflow.com/a/3732187/3702797
+  function hexToHsl(hex) {
+    if (hex.length === 3) {
+      hex = hex.split('').map(c => c.repeat(2)).join('');
+    }
+    if (hex.length !== 6) {
+      return;
+    }
+    var r = parseInt(hex[0] + hex[1], 16);
+    var g = parseInt(hex[2] + hex[3], 16);
+    var b = parseInt(hex[4] + hex[5], 16);
+  
+    r /= 255; g /= 255; b /= 255;
+    var max = Math.max(r, g, b),
+      min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+  
+    if (max === min) {
+      h = s = 0; // achromatic
+    } else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch(max) {
+        case r:
+          h = (g - b) / d + (g < b ? 6 : 0);
+          break;
+        case g:
+          h = (b - r) / d + 2;
+          break;
+        case b:
+          h = (r - g) / d + 4;
+          break;
+        default: h = 0
+      }
+      h /= 6;
+    }
+  
+    return [h, s, l];
+  }
+  const history = useHistory();
   const handleSubmit = (e) => {
+    let colors = {}
+    colors.face = hexToName(hexFace.substring(1));
+    colors.body = hexToName(hexBody.substring(1));
+    colors.chords = hexToName(hexChords.substring(1));
+    dispatch(colorFilter(colors));
+    dispatch(changeCategory("guitars"));
+    history.push(`/mi/archive/the-demo-archive-slug?custom=guitars`);
     e.preventDefault();
   };
   const handleCancel = (e) => {
@@ -79,10 +165,10 @@ export default function Example() {
     });
   };
   return (
-    <div className=" container mx-auto flex items-center">
+    <div className=" container mt-10 mb-10 mx-auto flex items-center">
       {/* Image gallery */}
       <div className="card">
-        <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
+        <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl dark:text-neutral-300">
           {product.name}
         </h1>
         <div className="product-canvas">
@@ -117,6 +203,14 @@ export default function Example() {
                 blur={1.5}
                 far={0.8}
               />
+              <Stars
+                radius={100} // Radius of the inner sphere (default=100)
+                depth={50} // Depth of area where stars should fit (default=50)
+                count={5000} // Amount of stars (default=5000)
+                factor={4} // Size factor (default=4)
+                saturation={0} // Saturation 0-1 (default=0)
+                fade // Faded dots (default=false)
+              />
             </Suspense>
             <OrbitControls
               enablePan={true}
@@ -128,16 +222,16 @@ export default function Example() {
       </div>
 
       {/* Product info */}
-      <div className="max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16 lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:pt-5 lg:pb-5 lg:px-8 lg:grid lg:grid-cols-1 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
         <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8"></div>
 
         {/* Options */}
-        <div className="mt-4 lg:mt-0 lg:row-span-3">
-          <h2 className="sr-only">Product information</h2>
-          <p className="text-3xl text-gray-900">${product.price}</p>
+        <div className="lg:mt-0 lg:row-span-3">
+          <h2 className="mb-3 text-gray-900 dark:text-neutral-300">Product information</h2>
+          <p className="text-3xl text-gray-900 dark:text-neutral-300">${product.price}</p>
 
           {/* Reviews */}
-          <div className="mt-6">
+          <div className="mt-4">
             <h3 className="sr-only">Reviews</h3>
             <div className="flex items-center">
               <div className="flex items-center">
@@ -146,8 +240,8 @@ export default function Example() {
                     key={rating}
                     className={classNames(
                       reviews.average > rating
-                        ? "text-gray-900"
-                        : "text-gray-200",
+                        ? "text-gray-900 star"
+                        : "text-gray-200 emptyStar",
                       "h-5 w-5 flex-shrink-0"
                     )}
                     aria-hidden="true"
@@ -164,12 +258,13 @@ export default function Example() {
             </div>
           </div>
 
-          <form className="mt-10">
+          <form className="mt-6">
             {/* Colors */}
             <div>
-              <h3 className="text-sm text-gray-900 font-medium">Color</h3>
+              <h3 className="text-md text-gray-900 font-medium dark:text-neutral-300">Color :</h3>
               <div className="colors">
                 <div>
+                  <label>face </label>
                   <input
                     type="color"
                     id="face"
@@ -177,10 +272,10 @@ export default function Example() {
                     value={face}
                     onChange={(e) => handleFaceChanged(e)}
                   />
-                  <label>face</label>
                 </div>
 
                 <div>
+                  <label>chords </label>
                   <input
                     type="color"
                     id="chords"
@@ -188,9 +283,9 @@ export default function Example() {
                     value={chords}
                     onChange={(e) => handleChordsChanged(e)}
                   />
-                  <label>chords</label>
                 </div>
                 <div>
+                  <label>body </label>
                   <input
                     type="color"
                     id="support"
@@ -198,99 +293,26 @@ export default function Example() {
                     value={body}
                     onChange={(e) => handleBodyChanged(e)}
                   />
-                  <label>body</label>
                 </div>
               </div>
             </div>
 
-            {/* Sizes */}
-            <div className="mt-10">
-              <div className="flex items-center justify-between">
-                <h3 className="text-sm text-gray-900 font-medium">
-                  Custom pictures
-                </h3>
-              </div>
-
-              <RadioGroup
-                value={selectedSize}
-                onChange={setSelectedSize}
-                className="mt-4"
+            <div className="flex justify-between">
+              <ButtonPrimary
+                onClick={(e) => handleSubmit(e)}
+                type="submit"
+                className="my-5 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
-                  {sizes.map((size) => (
-                    <RadioGroup.Option
-                      key={size.name}
-                      value={size}
-                      disabled={!size.inStock}
-                      className={({ active }) =>
-                        classNames(
-                          size.inStock
-                            ? "bg-white shadow-sm text-gray-900 cursor-pointer"
-                            : "bg-gray-50 text-gray-200 cursor-not-allowed",
-                          active ? "ring-2 ring-indigo-500" : "",
-                          "group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6"
-                        )
-                      }
-                    >
-                      {({ active, checked }) => (
-                        <>
-                          <RadioGroup.Label as="p">
-                            {size.name}
-                          </RadioGroup.Label>
-                          {size.inStock ? (
-                            <div
-                              className={classNames(
-                                active ? "border" : "border-2",
-                                checked
-                                  ? "border-indigo-500"
-                                  : "border-transparent",
-                                "absolute -inset-px rounded-md pointer-events-none"
-                              )}
-                              aria-hidden="true"
-                            />
-                          ) : (
-                            <div
-                              aria-hidden="true"
-                              className="absolute -inset-px rounded-md border-2 border-gray-200 pointer-events-none"
-                            >
-                              <svg
-                                className="absolute inset-0 w-full h-full text-gray-200 stroke-2"
-                                viewBox="0 0 100 100"
-                                preserveAspectRatio="none"
-                                stroke="currentColor"
-                              >
-                                <line
-                                  x1={0}
-                                  y1={100}
-                                  x2={100}
-                                  y2={0}
-                                  vectorEffect="non-scaling-stroke"
-                                />
-                              </svg>
-                            </div>
-                          )}
-                        </>
-                      )}
-                    </RadioGroup.Option>
-                  ))}
-                </div>
-              </RadioGroup>
+                Filter
+              </ButtonPrimary>
+              <ButtonPrimary
+                type="button"
+                onClick={(e) => handleCancel(e)}
+                className="my-5 cancel bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Cancel
+              </ButtonPrimary>
             </div>
-
-            <ButtonPrimary
-              onClick={(e) => handleSubmit(e)}
-              type="submit"
-              className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Add to bag
-            </ButtonPrimary>
-            <ButtonPrimary
-              type="button"
-              onClick={(e) => handleCancel(e)}
-              className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Cancel
-            </ButtonPrimary>
           </form>
         </div>
       </div>
