@@ -2,11 +2,16 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
-import { setIsOpen, setIsOpenResource } from "app/slices/modalSlice";
+import {
+  setIsOpen,
+  setIsOpenResource,
+  setIsOpenChapter,
+} from "app/slices/modalSlice";
 import CourseMoadal from "./CourseMoadal";
 import axios from "axiosInstance";
 import CourseContent from "./courseContent";
 import { setChange, setSelected, setChapter } from "app/slices/courseSlice";
+import UpdateChapterMoadal from "./UpdateChapterModel";
 
 function CourseDetails() {
   const params = useParams();
@@ -95,7 +100,10 @@ function CourseDetails() {
                     <button
                       title="Edit"
                       style={{ color: "#FFC107" }}
-                      onClick={() => {}}
+                      onClick={() => {
+                        dispatch(setChapter(item));
+                        dispatch(setIsOpenChapter(true));
+                      }}
                     >
                       <i className="material-icons">&#xE254;</i>
                     </button>
@@ -122,6 +130,7 @@ function CourseDetails() {
             {/* Place your content here */}
             <CourseContent />
             <CourseMoadal />
+            <UpdateChapterMoadal />
           </div>
         </div>
       </div>
