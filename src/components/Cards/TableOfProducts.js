@@ -1,27 +1,13 @@
-import ButtonPrimary from "components/Button/ButtonPrimary";
-import ButtonSecondary from "components/Button/ButtonSecondary";
-import ButtonThird from "components/Button/ButtonThird";
-import React, { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import axios from "axiosInstance";
 import PropTypes from "prop-types";
 import ProductManagement from "components/Dropdowns/ProductMangement";
-import {
-  deletesellerProduct,
-  addProduct,
-  selectsellerProduct,
-  populatesellerProducts,
-} from "app/productslice/Productsliceseller";
 import { useDispatch, useSelector } from "react-redux";
-import Cardproducts from "./Cardproducts";
 import UpdateProduct from "../../containers/PageDashboard/UpdateProduct";
 function TableOfProducts({ color, prod }) {
   const [products, setproducts] = useState([]);
   const openn = useSelector((state) => state.product.open);
   const [open, setopen] = useState(openn);
-  const dispatch = useDispatch();
-  const products1 = useSelector((state) => state.productseller.products);
-  const show = useSelector((state) => state.productseller.show);
-  const changedProduct = useSelector((state) => state.productseller.changedProduct);
   const base_url = "http://localhost:5050/";
   const updatedProduct = useSelector((state) => state.productseller.changedProduct)
   console.log(updatedProduct)
@@ -33,9 +19,9 @@ function TableOfProducts({ color, prod }) {
     });
   }, []);
   //let p = prod.map(p => {if(p._id === updatedProduct._id){  return {...p ,updatedProduct};} return p});
-  const objIndex = prod.findIndex((obj => obj._id === updatedProduct._id));
-  prod[objIndex] = updatedProduct;
-  console.log(prod)
+  // const objIndex = prod.findIndex((obj => obj._id === updatedProduct._id));
+  // prod[objIndex] = updatedProduct;
+  
   return (
     <>
       <div

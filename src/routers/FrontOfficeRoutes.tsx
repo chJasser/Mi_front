@@ -75,7 +75,6 @@ import PageInvoice from "components/Payment/PageInvoice";
 import Meeting from "containers/Karaoke/Meeting";
 import UserInvoices from "components/Payment/UserInvoices";
 
-
 import Streamer from "containers/Stream/Streamer";
 import StreamHomePage from "containers/Stream/StreamHomePage";
 export const pages: Page[] = [
@@ -89,8 +88,7 @@ export const pages: Page[] = [
   // { path: "/mi/author/:slug", component: PageAuthor },
 
   { path: "/mi/author/:slug", component: ProfileSeller },
-  // { path: "/mi/recommand", component: Recommand },
-  // { path: "/mi/author/:slug", component: PageAuthor },
+
   { path: "/mi/author-v2/:slug", component: PageAuthorV2 },
   //
   { path: "/mi/single/:slug", component: PageSingleTemp3Sidebar },
@@ -130,7 +128,7 @@ export const pages: Page[] = [
     path: "/mi/single-video/:slug",
     component: PageSingleVideo,
   },
- 
+
   { path: "/mi/search", component: PageSearch },
   //{ path: "/mi/search-v2", component: Recommand },
   { path: "/mi/about", exact: true, component: PageAbout },
@@ -159,7 +157,7 @@ export const pages: Page[] = [
     path: "/mi/Karaoke/:id/:token",
     component: Karaoke,
   },
-  
+
   {
     path: "/mi/forgot-pass",
     exact: true,
@@ -179,6 +177,16 @@ export const pages: Page[] = [
 
     typeRoute: "auth",
     component: RestPasswordComponent,
+  },
+  {
+    path: "/mi/live-streaming",
+    exact: true,
+    component: StreamHomePage,
+  },
+  {
+    path: "/mi/live-stream/:id",
+    exact: true,
+    component: Streamer,
   },
   {
     path: "/mi/passport/register",
