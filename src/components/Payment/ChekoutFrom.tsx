@@ -22,7 +22,7 @@ export default function CheckoutForm({ cart }) {
     let total = 0;
     items.map((item) => (total += item.price * item.qte));
 
-    return total + 5 + total * 5 / 100;
+    return total + 5 + (total * 5) / 100;
   };
   useEffect(() => {
     if (!stripe) {
