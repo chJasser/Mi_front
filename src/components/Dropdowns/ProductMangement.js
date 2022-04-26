@@ -149,16 +149,14 @@ const ProductManagement = (props) => {
         // ? productImage
         // : (productImage.FileList.name = product.productImage)
     )) {
-      console.log(productImage);
-      console.log(product.productImage);
+   
       formData.append(
         "files",
         productImage[key] ? (productImage[key],values.productImage=productImage[0]) : product.productImage[key]
         //(values.productImage[key]) ? values.productImage[key] : product.productImage
         //values.productImage
         );
-      console.log(productImage[key]);
-      console.log(product.productImage[key]);
+  
     }
 
   //   if(values.productImage){
@@ -184,12 +182,6 @@ const ProductManagement = (props) => {
   //   }
   // }
 
-
-    console.log(values);
-    console.log(selectedOptioncategory);
-    console.log(selectedOptionstate);
-    console.log(selectedOptiontype);
-    console.log(selectedOptionmarque);
     const response = await axios
       .put(`/products/update-product/${product._id}`, formData)
       .then(() => dispatch(showForm(false)))
@@ -225,7 +217,7 @@ const ProductManagement = (props) => {
     axios
       .delete(`/products/delete-product/${id}`)
       .then((res) => {
-        console.log(res.data);
+  
       })
       .catch((err) => {
         console.log(err);
@@ -238,7 +230,7 @@ const ProductManagement = (props) => {
   };
 
   const show = useSelector((state) => state.productseller.show);
-  console.log(show);
+
 
 
   const renderModalContent = () => {

@@ -13,13 +13,6 @@ const InvoiceSlice = createSlice({
         deleteInvoices() {
 
         }
-        // setRecOk(state, action) {
-        //     state.reclamations.forEach((rec) => {
-        //         if (rec._id === action.payload) {
-        //             rec.status = true;
-        //         }
-        //     });
-        // },
     },
 });
 

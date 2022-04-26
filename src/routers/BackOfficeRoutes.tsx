@@ -11,6 +11,7 @@ import SimpleUsers from "views/admin/SimpleUsers";
 import Teachers from "views/admin/Teachers";
 import Students from "views/admin/Students";
 import Sellers from "views/admin/Sellers";
+import TablesproductsBack from "views/admin/TablesOfProductsBack";
 
 export default function BackOfficeRoutes() {
   return (
@@ -40,6 +41,12 @@ export default function BackOfficeRoutes() {
               exact
               component={SimpleUsers}
             />
+            <Route
+              path="/back-office/products"
+              exact
+              component={TablesproductsBack}
+            />
+            
             <Route path="/back-office/teachers" exact component={Teachers} />
             <Route path="/back-office/students" exact component={Students} />
             <Route path="/back-office/sellers" exact component={Sellers} />
