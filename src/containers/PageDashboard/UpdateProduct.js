@@ -15,7 +15,7 @@ import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentTeacher, login } from "app/slices/userSlice";
 import { useHistory } from "react-router-dom";
-import { showForm, updateProduct } from "app/productslice/Productsliceseller";
+import { showForm, updateProduct, updatesellerProduct } from "app/productslice/Productsliceseller";
 import NcModal from "components/NcModal/NcModal";
 //import {showForm} from "app/productslice/Productsliceseller";
 
@@ -374,25 +374,30 @@ const UpdateProduct = () => {
                   dispatch(showForm(false));
                   if (selectedOptioncategory.value !== undefined)
                     values.category = selectedOptioncategory.value;
-                  else values.category = product.category;
-                  if (selectedOptionmarque.value !== undefined)
-                    values.marque = selectedOptionmarque.value;
-                  else values.marque = product.category;
-                  if (selectedOptionstate.value !== undefined)
-                    values.state = selectedOptionstate.value;
-                  else values.state = product.state;
-                  if (selectedOptiontype.value !== undefined)
-                    values.type = selectedOptiontype.value;
-                  else values.type = product.type;
-                  if (productImage !== undefined)
-                    values.productImage = "uploads\\" + productImage[0].name;
-                  else values.productImage = "uploads\\" + product.productImage;
-
-                  console.log(values);
-
-                  console.log({ ...product, ...values });
-
-                  dispatch(updateProduct({ ...product, ...values }));
+                  else
+                    values.category = product.category;
+                  if(selectedOptionmarque.value !== undefined)
+                    values.marque = selectedOptionmarque.value
+                  else
+                    values.marque = product.category;
+                  if(selectedOptionstate.value !== undefined)
+                    values.state = selectedOptionstate.value
+                  else
+                    values.state = product.state;
+                  if(selectedOptiontype.value !== undefined)
+                    values.type = selectedOptiontype.value
+                  else
+                    values.type = product.type;
+                  if(productImage !== undefined)
+                    values.productImage = "uploads\\"+productImage[0].name;
+                  else
+                    values.productImage = "uploads\\"+product.productImage;
+                  
+                  console.log(values)
+                  
+                  console.log({...product, ...values})
+                  
+                  dispatch(updatesellerProduct({...product, ...values}));
                 }}
               >
                 Update product

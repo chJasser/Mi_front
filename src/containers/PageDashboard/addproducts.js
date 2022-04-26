@@ -12,9 +12,11 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import makeAnimated from "react-select/animated";
 import Select from "react-select";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCurrentTeacher, login } from "app/slices/userSlice";
 import { useHistory } from "react-router-dom";
+import { addProduct } from "app/productslice/Productsliceseller";
+import { selectopen } from "app/productslice/Productslice";
 
 const Addproducts = () => {
   const dispatch = useDispatch();
@@ -49,6 +51,9 @@ const Addproducts = () => {
     state: Yup.string().required("Degrees are required"),
     type: Yup.string().required("Type are required"),
   });
+
+  const openn = useSelector((state) => state.product.open);
+  const[open, setOpen] = useState(openn);
 
   const [selectedOptiontype, setSelectedOptiontype] = useState([]);
   const [selectedOptioncategory, setSelectedOptincategory] = useState([]);
@@ -118,7 +123,7 @@ const Addproducts = () => {
     { value: "used", label: "used" },
   ];
 
-  const onSubmit = async (values) => { 
+  const onSubmit = async (values, { resetForm }) => { 
     var colors = { face: "", body: "", chords: "",
       piano: "",keys:"",hinges: "",circulos: "",
       upper: "", stick: ""};
@@ -169,8 +174,16 @@ const Addproducts = () => {
             console.log(err);
           }
         });
-      }
-      history.push("/dashboard");
+        if (response && response.data) {
+          // onSubmitProps.resetForm();
+          resetForm();
+          dispatch(addProduct(response.data.products));
+          dispatch(selectopen(false));
+          setErrors(null);
+          setSuccess(response.data.message);
+        }
+       }
+      // history.push("/dashboard");
   };
 
   return (
@@ -202,7 +215,7 @@ const Addproducts = () => {
           touched,
           errors,
         }) => (
-          <form className="grid md:grid-cols-2 gap-6" onSubmit={handleSubmit}>
+          (openn &&<form className="grid md:grid-cols-2 gap-6" onSubmit={handleSubmit}>
             <label className="block">
               <Label>Label</Label>
               <Input
@@ -451,10 +464,11 @@ const Addproducts = () => {
               />
             </label>): null}
 
-            <ButtonPrimary className="md:col-span-2" type="submit">
+            <ButtonPrimary className="md:col-span-2" type="submit"
+            onClick={()=>  dispatch(selectopen(false))}>
               Add product
             </ButtonPrimary>
-          </form>
+          </form>)
         )}
       </Formik>
     </div>

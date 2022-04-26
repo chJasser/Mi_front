@@ -14,6 +14,11 @@ const carteslics = createSlice({
     total: 0,
   },
   reducers: {
+    DeselectItems:(state)=>{
+     
+      state.cartItems=[];
+      state.total=0;      
+  },
     removeitem: (state, action) => {
       return {
         ...state,
@@ -60,6 +65,6 @@ const carteslics = createSlice({
   },
 });
 
-export const { additem, removeitem, getTotal, updateqte, addtotal } =
+export const { additem, removeitem, getTotal, updateqte, addtotal,DeselectItems } =
   carteslics.actions;
 export default carteslics.reducer;

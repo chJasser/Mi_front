@@ -21,7 +21,8 @@ import {
   selectsellerProduct,
   populatesellerProducts,
   showForm,
-  updateProduct
+  updateProduct,
+  updatesellerProduct
 } from "app/productslice/Productsliceseller";
 import NcModal from "components/NcModal/NcModal";
 
@@ -143,43 +144,45 @@ const ProductManagement = (props) => {
           (values.state = selectedOptionstate.value))
         : product.state
     );
-    // for (const key of Object.keys(
-    //   productImage
-    //     ? productImage
-    //     : (productImage.FileList.name = product.productImage)
-    // )) {
-    //   console.log(productImage);
-    //   console.log(product.productImage);
-    //   formData.append(
-    //     "files",
-    //     productImage[key] ? productImage[key] : product.productImage[key]
-    //   );
-    //   console.log(productImage[key]);
-    //   console.log(product.productImage[key]);
-    // }
-
-    if(values.productImage){
-    for (const key of Object.keys(values.productImage)) {
-      console.log(values.productImage);
+    for (const key of Object.keys(
+      productImage
+        // ? productImage
+        // : (productImage.FileList.name = product.productImage)
+    )) {
+      console.log(productImage);
       console.log(product.productImage);
       formData.append(
         "files",
-        (values.productImage[key]) ? values.productImage[key] : product.productImage
-        //values.productImage[key].name ? values.productImage[key] : product.productImage[key]
-        // productImage[key]
-        //   ? productImage[key]
-        //   : (values.productImage = product.productImage)
-        //"uploads\\" + productImage[key].name
-        //? productImage[key] : product.productImage[key]
-      );
-      console.log(values.productImage);
-      console.log(product.productImage);
+        productImage[key] ? (productImage[key],values.productImage=productImage[0]) : product.productImage[key]
+        //(values.productImage[key]) ? values.productImage[key] : product.productImage
+        //values.productImage
+        );
+      console.log(productImage[key]);
+      console.log(product.productImage[key]);
     }
-  }else {
-    for (const key of Object.keys(productImage)) {
-      formData.append("files", productImage[key]);
-    }
-  }
+
+  //   if(values.productImage){
+  //   for (const key of Object.keys(values.productImage)) {
+  //     console.log(values.productImage);
+  //     console.log(product.productImage);
+  //     formData.append(
+  //       "files",
+  //       (values.productImage[key]) ? values.productImage[key] : product.productImage
+  //       //values.productImage[key].name ? values.productImage[key] : product.productImage[key]
+  //       // productImage[key]
+  //       //   ? productImage[key]
+  //       //   : (values.productImage = product.productImage)
+  //       //"uploads\\" + productImage[key].name
+  //       //? productImage[key] : product.productImage[key]
+  //     );
+  //     console.log(values.productImage);
+  //     console.log(product.productImage);
+  //   }
+  // }else {
+  //   for (const key of Object.keys(productImage)) {
+  //     formData.append("files", productImage[key]);
+  //   }
+  // }
 
 
     console.log(values);
@@ -443,16 +446,18 @@ const ProductManagement = (props) => {
                   if(productImage){
                     
                   console.log(productImage);
-                    console.log("http://localhost:5050/uploads\\"+productImage[0].name)
-                    values.productImage = "http://localhost:5050/uploads\\"+productImage[0].name;
+                    console.log("/uploads\\"+productImage[0].name)
+                    values.productImage = "uploads\\"+productImage[0].name;
                   }else
                     values.productImage = product.productImage;
-                  
+                  console.log(productImage);
                   console.log(values)
                   
                   console.log({...product, ...values})
                   
+                  dispatch(updatesellerProduct({...product, ...values}));
                   dispatch(updateProduct({...product, ...values}));
+                
                 }}
               >
                 Update product
