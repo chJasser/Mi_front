@@ -23,8 +23,8 @@ function TableOfProducts({ color, prod }) {
   const show = useSelector((state) => state.productseller.show);
   const changedProduct = useSelector((state) => state.productseller.changedProduct);
   const base_url = "http://localhost:5050/";
-  const updatedProduct = useSelector((state) => state.productseller.changedProduct)
-  console.log(updatedProduct)
+  //const updatedProduct = useSelector((state) => state.productseller.changedProduct)
+  //console.log(updatedProduct)
   useEffect(() => {
     axios.get("/products/getproductsseller").then((res) => {
       // console.log(res.data);
@@ -33,9 +33,9 @@ function TableOfProducts({ color, prod }) {
     });
   }, []);
   //let p = prod.map(p => {if(p._id === updatedProduct._id){  return {...p ,updatedProduct};} return p});
-  const objIndex = prod.findIndex((obj => obj._id === updatedProduct._id));
-  prod[objIndex] = updatedProduct;
-  console.log(prod)
+  // const objIndex = prod.findIndex((obj => obj._id === updatedProduct._id));
+  // prod[objIndex] = updatedProduct;
+  //console.log(prod)
   return (
     <>
       <div
@@ -89,11 +89,19 @@ function TableOfProducts({ color, prod }) {
                         <div className="flex-shrink-0 w-10 h-10">
                           <Suspense fallback={null}>
                             {" "}
+                            {(product._id !== changedProduct._id)?
                             <img
                               className="w-full h-full rounded-full"
                               src={base_url + product.productImage[0] }
                               alt={product.label}
                             />
+                            :
+                            <img
+                              className="w-full h-full rounded-full"
+                              src={base_url + changedProduct.productImage }
+                              alt={product.label}
+                            />
+                            }
                           </Suspense>
                         </div>
                         <div className="ml-3">

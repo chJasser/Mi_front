@@ -15,7 +15,7 @@ import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentTeacher, login } from "app/slices/userSlice";
 import { useHistory } from "react-router-dom";
-import { showForm, updateProduct } from "app/productslice/Productsliceseller";
+import { showForm, updateProduct, updatesellerProduct } from "app/productslice/Productsliceseller";
 import NcModal from "components/NcModal/NcModal";
 //import {showForm} from "app/productslice/Productsliceseller";
 
@@ -396,7 +396,7 @@ const UpdateProduct = () => {
                   
                   console.log({...product, ...values})
                   
-                  dispatch(updateProduct({...product, ...values}));
+                  dispatch(updatesellerProduct({...product, ...values}));
                 }}
               >
                 Update product

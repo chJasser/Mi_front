@@ -12,6 +12,8 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { selectopen } from "app/productslice/Productslice";
 import { addProduct } from "app/productslice/Productsliceseller";
+import Label from "components/Label/Label";
+import Textarea from "components/Textarea/Textarea";
 // import { format } from 'date-fns';
 // components
 
@@ -21,6 +23,15 @@ export default function Cardproducts() {
   const [errors, setErrors] = useState(null);
   const [success, setSuccess] = useState(null);
   const [productImage, setimagesfiles] = useState("");
+  const [face, setFace] = useState("");
+  const [body, setBody] = useState("");
+  const [chords, setChords] = useState("");
+  const [piano, setPiano] = useState("");
+  const [keys, setKeys] = useState("");
+  const [hinges, setHinges] = useState("");
+  const [circulos, setCirculos] = useState("");
+  const [upper, setUpper] = useState("");
+  const [stick, setStick] = useState("");
   const validationSchema = Yup.object({
     label: Yup.string()
       .required("label is required")
@@ -60,6 +71,25 @@ export default function Cardproducts() {
     setSelectedOptionmarque(selectedOptionmarque);
   };
 
+  const colors = [
+    {value: "blue", label: "Blue"},
+    {value: "red", label: "Red"},
+    {value: "black", label: "Black"},
+    {value: "yellow", label: "Yellow"},
+    {value: "white", label: "White"},
+    {value: "gray", label: "Gray"},
+    {value: "green", label: "Green"},
+    {value: "cyan", label: "Cyan"},
+    {value: "magenta", label: "Magenta"},
+    {value: "darkgray", label: "Darkgray"},
+    {value: "lightblue", label: "Light Blue"},
+    {value: "lightred", label: "Light Red"},
+    {value: "lightblack", label: "Light Black"},
+    {value: "lightyellow", label: "Light Yellow"},
+    {value: "lightgreen", label: "Light Green"},
+    {value: "lightcyan", label: "Light Cyan"}
+  ]
+
   const optionscategory = [
     { value: "guitars", label: "guitars" },
     { value: "keyboards", label: "keyboards" },
@@ -67,6 +97,7 @@ export default function Cardproducts() {
     { value: "brass", label: "brass" },
     { value: "percussions", label: "percussions" },
     { value: "woodwind", label: "woodwind" },
+    { value: "guitarElectrique", label: "guitar Electrique" },
     { value: "others", label: "others" },
   ];
   const optionstype = [
@@ -89,6 +120,18 @@ export default function Cardproducts() {
   ];
 
   const onSubmit = async (values, { resetForm }) => {
+    var colors = { face: "", body: "", chords: "",
+      piano: "",keys:"",hinges: "",circulos: "",
+      upper: "", stick: ""};
+    if(face.value) colors.face = face.value
+    if(body.value) colors.body = body.value
+    if(chords.value) colors.chords = chords.value
+    if(piano.value) colors.piano = piano.value
+    if(keys.value) colors.keys = keys.value
+    if(hinges.value) colors.hinges = hinges.value
+    if(circulos.value) colors.circulos = circulos.value
+    if(upper.value) colors.upper = upper.value
+    if(stick.value) colors.stick = stick.value
     var formData = new FormData();
     formData.append("label", values.label);
     formData.append("description", values.description);
@@ -102,11 +145,12 @@ export default function Cardproducts() {
     for (const key of Object.keys(productImage)) {
       formData.append("files", productImage[key]);
     }
-    console.log(values);
-    console.log(selectedOptioncategory.value);
-    console.log(selectedOptionstate.value);
-    console.log(selectedOptiontype.value);
-    console.log(selectedOptionmarque.value);
+    //== console.log(values);
+    // console.log(selectedOptioncategory.value);
+    // console.log(selectedOptionstate.value);
+    // console.log(selectedOptiontype.value);
+    // console.log(selectedOptionmarque.value);
+    console.log(formData)
     const response = await axios
       .post("/products/add-product", formData)
       .catch((err) => {
@@ -153,233 +197,258 @@ export default function Cardproducts() {
           touched,
           errors,
         }) => (
-          <form onSubmit={handleSubmit}>
-            <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-              Product Information
-            </h6>
-            <div className="flex flex-wrap">
-              <div className="w-full lg:w-6/12 px-4">
-                <div className="relative w-full mb-3">
-                  <label
-                    className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    Label
-                  </label>
-                  <input
-                    id="label"
-                    name="label"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.label}
-                    type="text"
-                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  />
-                  {touched.label && errors.label ? (
-                    <Alert severity="error">{errors.label}</Alert>
-                  ) : null}
-                </div>
-              </div>
-              <div className="w-full lg:w-6/12 px-4">
-                <div className="relative w-full mb-3">
-                  <label
-                    className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    Price
-                  </label>
-                  <input
-                    id="price"
-                    name="price"
-                    type="text"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.price}
-                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  />
-                  {touched.price && errors.price ? (
-                    <Alert severity="error">{errors.price}</Alert>
-                  ) : null}
-                </div>
-              </div>
-              <div className="w-full lg:w-6/12 px-4">
-                <div className="relative w-full mb-3">
-                  <label
-                    className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    Reference
-                  </label>
-                  <input
-                    id="reference"
-                    name="reference"
-                    type="text"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.reference}
-                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  />
-                  {touched.reference && errors.reference ? (
-                    <Alert severity="error">{errors.reference}</Alert>
-                  ) : null}
-                </div>
-              </div>
-              <div className="w-full lg:w-6/12 px-4">
-                <div className="relative w-full mb-3">
-                  <label
-                    className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    Category
-                  </label>
-                  <Select
-                    id="category"
-                    name="category"
-                    value={selectedOptioncategory}
-                    onChange={handleInputChangecategory}
-                    components={animatedComponents}
-                    options={optionscategory}
-                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  />
-                  {touched.category && errors.category ? (
-                    <Alert severity="error">{errors.category}</Alert>
-                  ) : null}
-                </div>
-              </div>
-              <div className="w-full lg:w-6/12 px-4">
-                <div className="relative w-full mb-3">
-                  <label
-                    className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    Marque
-                  </label>
-                  <Select
-                    id="marque"
-                    name="marque"
-                    value={selectedOptionmarque}
-                    onChange={handleInputChangemarque}
-                    components={animatedComponents}
-                    options={optionsmarque}
-                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  />
-                  {touched.marque && errors.marque ? (
-                    <Alert severity="error">{errors.marque}</Alert>
-                  ) : null}
-                </div>
-              </div>
-              <div className="w-full lg:w-6/12 px-4">
-                <div className="relative w-full mb-3">
-                  <label
-                    className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    Type
-                  </label>
-                  <Select
-                    id="type"
-                    name="type"
-                    value={selectedOptiontype}
-                    onChange={handleInputChangetype}
-                    components={animatedComponents}
-                    options={optionstype}
-                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  />
-                  {touched.type && errors.type ? (
-                    <Alert severity="error">{errors.marque}</Alert>
-                  ) : null}
-                  <label className="block md:col-span-2"></label>
-                </div>
-              </div>
-              <div className="w-full lg:w-12/12 px-4">
-                <div className="relative w-full mb-3">
-                  <label
-                    className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    State
-                  </label>
-                  <Select
-                    id="state"
-                    name="state"
-                    value={selectedOptionstate}
-                    onChange={handleInputChangestate}
-                    components={animatedComponents}
-                    options={optionsstate}
-                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  />
-                  {touched.state && errors.state ? (
-                    <Alert severity="error">{errors.state}</Alert>
-                  ) : null}
-                </div>
-              </div>
-            </div>
+          <form className="grid md:grid-cols-2 gap-6" onSubmit={handleSubmit}>
+            <label className="block">
+              <Label>Label</Label>
+              <Input
+                id="label"
+                name="label"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.label}
+                placeholder="Example Doe"
+                type="text"
+                className="mt-1"
+              />
+            </label>
+            {touched.label && errors.label ? (
+              <Alert severity="error">{errors.label}</Alert>
+            ) : null}
 
-            <hr className="mt-6 border-b-1 border-blueGray-300" />
+            <label className="block">
+              <Label>Price</Label>
+              <Input
+                id="price"
+                name="price"
+                type="text"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.price}
+                className="mt-1"
+              />
+            </label>
+            {touched.price && errors.price ? (
+              <Alert severity="error">{errors.price}</Alert>
+            ) : null}
+            <label className="block">
+              <Label>Reference</Label>
+              <Input
+                type="text"
+                id="reference"
+                name="reference"
+                className="mt-1"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.reference}
+              />
+            </label>
+            {touched.reference && errors.reference ? (
+              <Alert severity="error">{errors.reference}</Alert>
+            ) : null}
+            <label className="block">
+              <Label>Description</Label>
+              <Textarea
+                id="description"
+                name="description"
+                className="mt-1"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.description}
+                rows={6}
+              />
+            </label>
+            {touched.description && errors.description ? (
+              <Alert severity="error">{errors.description}</Alert>
+            ) : null}
+            <label className="block md:col-span-2">
+              <Label> Category</Label>
+              <Select
+                name="category"
+                id="category"
+                value={selectedOptioncategory}
+                onChange={handleInputChangecategory}
+                components={animatedComponents}
+                options={optionscategory}
+              />
+            </label>
+            {touched.category && errors.category ? (
+              <Alert severity="error">{errors.category}</Alert>
+            ) : null}
 
-            <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-              Product Image
-            </h6>
-            <div className="flex flex-wrap">
-              <div className="w-full lg:w-4/12 px-4">
-                <div className="relative w-full mb-3">
-                  <label
-                    className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    Image
-                  </label>
-                  <input
-                    id="productImage"
-                    name="productImage"
-                    type="file"
-                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    // defaultValue="City"
-                    onChange={(event) => {
-                      setFieldValue("productImage", event.currentTarget.files);
-                      setimagesfiles(event.target.files);
-                    }}
-                    multiple
-                  />
-                  {touched.productImage && errors.productImage ? (
-                    <Alert severity="error">{errors.productImage}</Alert>
-                  ) : null}
-                </div>
-              </div>
-            </div>
+            <label className="block md:col-span-2">
+              <Label> Marque</Label>
+              <Select
+                name="marque"
+                id="marque"
+                value={selectedOptionmarque}
+                onChange={handleInputChangemarque}
+                components={animatedComponents}
+                options={optionsmarque}
+              />
+            </label>
+            {touched.marque && errors.marque ? (
+              <Alert severity="error">{errors.marque}</Alert>
+            ) : null}
+            <label className="block md:col-span-2">
+              <Label> Type</Label>
+              <Select
+                name="type"
+                id="type"
+                value={selectedOptiontype}
+                onChange={handleInputChangetype}
+                components={animatedComponents}
+                options={optionstype}
+              />
+            </label>
+            {touched.type && errors.type ? (
+              <Alert severity="error">{errors.marque}</Alert>
+            ) : null}
+            <label className="block md:col-span-2">
+              <Label> State</Label>
+              <Select
+                name="state"
+                id="state"
+                value={selectedOptionstate}
+                onChange={handleInputChangestate}
+                components={animatedComponents}
+                options={optionsstate}
+              />
+            </label>
+            {touched.state && errors.state ? (
+              <Alert severity="error">{errors.state}</Alert>
+            ) : null}
 
-            <hr className="mt-6 border-b-1 border-blueGray-300" />
+            <Input
+              id="productImage"
+              name="productImage"
+              type="file"
+              className="mt-1 form-control form-control-sm"
+              style={{ border: "1px solid #D1D1D1" }}
+              onChange={(event) => {
+                setFieldValue("productImage", event.currentTarget.files);
+                setimagesfiles(event.target.files);
+              }}
+              multiple
+            />
+            {touched.productImage && errors.productImage ? (
+              <Alert severity="error">{errors.productImage}</Alert>
+            ) : null}
 
-            <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-              About Product
-            </h6>
-            <div className="flex flex-wrap">
-              <div className="w-full lg:w-12/12 px-4">
-                <div className="relative w-full mb-3">
-                  <label
-                    className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    Description
-                  </label>
-                  <textarea
-                    id="description"
-                    name="description"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.description}
-                    type="text"
-                    placeholder="About Product"
-                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    rows="4"
-                  ></textarea>
-                  {touched.description && errors.description ? (
-                    <Alert severity="error">{errors.description}</Alert>
-                  ) : null}
-                </div>
-              </div>
-            </div>
-            <ButtonPrimary type="submit">Save</ButtonPrimary>
+            {selectedOptioncategory.value === "guitars" || selectedOptioncategory.value === "guitarElectrique" ? (
+            <label className="block md:col-span-2">
+              <Label> Face</Label>
+              <Select
+                name="face"
+                id="face"
+                value={face}
+                onChange={(e) => setFace(e)}
+                components={animatedComponents}
+                options={colors}
+              />
+            </label>): null} 
+
+
+            {selectedOptioncategory.value === "violin" || selectedOptioncategory.value === "guitars" 
+            || selectedOptioncategory.value === "strings"? (
+            <label className="block md:col-span-2">
+              <Label> Body</Label>
+              <Select
+                name="body"
+                id="body"
+                value={body}
+                onChange={(e) => setBody(e)}
+                components={animatedComponents}
+                options={colors}
+              />
+            </label>): null} 
+            {selectedOptioncategory.value === "guitars" || selectedOptioncategory.value === "guitarElectrique"? (
+            <label className="block md:col-span-2">
+              <Label> Chords</Label>
+              <Select
+                name="chords"
+                id="chords"
+                value={chords}
+                onChange={(e) => setChords(e)}
+                components={animatedComponents}
+                options={colors}
+              />
+            </label>): null} 
+            {selectedOptioncategory.value === "guitarElectrique"? (
+            <label className="block md:col-span-2">
+              <Label> Upper</Label>
+              <Select
+                name="upper"
+                id="upper"
+                value={upper}
+                onChange={(e) => setUpper(e)}
+                components={animatedComponents}
+                options={colors}
+              />
+            </label>): null} 
+            {selectedOptioncategory.value === "guitarElectrique" || selectedOptioncategory.value === "percussions" ? (
+            <label className="block md:col-span-2">
+              <Label> Circulos</Label>
+              <Select
+                name="circulos"
+                id="circulos"
+                value={circulos}
+                onChange={(e) => setCirculos(e)}
+                components={animatedComponents}
+                options={colors}
+              />
+            </label>): null}
+            {selectedOptioncategory.value === "keyboards" ?(
+            <label className="block md:col-span-2">
+              <Label> Piano</Label>
+              <Select
+                name="piano"
+                id="piano"
+                value={piano}
+                onChange={(e) => setPiano(e)}
+                components={animatedComponents}
+                options={colors}
+              />
+            </label>): null}
+            {selectedOptioncategory.value === "keyboards" ?(
+            <label className="block md:col-span-2">
+              <Label> Keys</Label>
+              <Select
+                name="keys"
+                id="keys"
+                value={keys}
+                onChange={(e) => setKeys(e)}
+                components={animatedComponents}
+                options={colors}
+              />
+            </label>): null}
+            {selectedOptioncategory.value === "keyboards" ?(
+            <label className="block md:col-span-2">
+              <Label> Hinges</Label>
+              <Select
+                name="hinges"
+                id="hinges"
+                value={hinges}
+                onChange={(e) => setHinges(e)}
+                components={animatedComponents}
+                options={colors}
+              />
+            </label>): null}
+            {selectedOptioncategory.value === "strings" ?(
+            <label className="block md:col-span-2">
+              <Label> Stick</Label>
+              <Select
+                name="stick"
+                id="stick"
+                value={stick}
+                onChange={(e) => setStick(e)}
+                components={animatedComponents}
+                options={colors}
+              />
+            </label>): null}
+
+            <ButtonPrimary className="md:col-span-2" type="submit">
+              Add product
+            </ButtonPrimary>
           </form>
         )}
       </Formik>
