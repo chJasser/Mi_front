@@ -11,8 +11,9 @@ import PaginationSimple from "components/Pagination/PaginationSimple";
 import TableOfProducts from "./TableOfProducts";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Cardproducts from "./Cardproducts";
-import Addproducts from "containers/PageDashboard/AddProducts";
+
 import { selectopen } from "app/productslice/Productslice";
+import AddProducts from "containers/PageDashboard/AddProducts";
 export default function ProductsContainer({ color }) {
     
 const openn = useSelector((state) => state.product.open);
@@ -64,8 +65,7 @@ const dispatch=useDispatch();
         className="md:col-span-2">
         AddProduct
       </ButtonPrimary>
-      {open && <Addproducts />}
-      
+      {open &&  <Addproducts />}
     </>
   );
 }

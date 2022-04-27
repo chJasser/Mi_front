@@ -157,39 +157,12 @@ const ProductManagement = (props) => {
         //(values.productImage[key]) ? values.productImage[key] : product.productImage
         //values.productImage
         );
-      console.log(productImage[key]);
-      console.log(product.productImage[key]);
+   
     }
 
-  //   if(values.productImage){
-  //   for (const key of Object.keys(values.productImage)) {
-  //     console.log(values.productImage);
-  //     console.log(product.productImage);
-  //     formData.append(
-  //       "files",
-  //       (values.productImage[key]) ? values.productImage[key] : product.productImage
-  //       //values.productImage[key].name ? values.productImage[key] : product.productImage[key]
-  //       // productImage[key]
-  //       //   ? productImage[key]
-  //       //   : (values.productImage = product.productImage)
-  //       //"uploads\\" + productImage[key].name
-  //       //? productImage[key] : product.productImage[key]
-  //     );
-  //     console.log(values.productImage);
-  //     console.log(product.productImage);
-  //   }
-  // }else {
-  //   for (const key of Object.keys(productImage)) {
-  //     formData.append("files", productImage[key]);
-  //   }
-  // }
 
 
-    console.log(values);
-    console.log(selectedOptioncategory);
-    console.log(selectedOptionstate);
-    console.log(selectedOptiontype);
-    console.log(selectedOptionmarque);
+
     const response = await axios
       .put(`/products/update-product/${product._id}`, formData)
       .then(() => dispatch(showForm(false)))
@@ -225,10 +198,10 @@ const ProductManagement = (props) => {
     axios
       .delete(`/products/delete-product/${id}`)
       .then((res) => {
-        console.log(res.data);
+      
       })
       .catch((err) => {
-        console.log(err);
+       
       });
   };
   const handleupdateproduct = () => {
@@ -539,5 +512,4 @@ const ProductManagement = (props) => {
     </>
   );
 };
-
 export default ProductManagement;

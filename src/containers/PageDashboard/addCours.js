@@ -9,13 +9,16 @@ import * as yup from "yup";
 import { Formik } from "formik";
 import makeAnimated from "react-select/animated";
 import Select from "react-select";
-import { useDispatch } from "react-redux";
-import { setIsOpen } from "app/slices/modalSlice";
+import { useHistory } from "react-router-dom";
+const customStyles = {
+  width: "60%",
+  marginLeft: "20%",
+};
 
 const AddCours = () => {
-  const dispatch = useDispatch();
+  const history = useHistory();
   const validationSchema = yup.object().shape({
-    label: yup.string().min(4).max(15).required().trim(),
+    label: yup.string().min(2).max(15).required().trim(),
     description: yup.string().max(255).required().trim(),
     level: yup
       .string()
@@ -25,8 +28,8 @@ const AddCours = () => {
       .string()
       .oneOf(["english", "french", "arabic"])
       .default("english"),
-    price: yup.number().positive().required(),
-    duration: yup.number().positive().required(),
+    price: yup.number().integer().min(0).required(),
+    duration: yup.number().integer().min(0).required(),
     category: yup
       .string()
       .oneOf([
@@ -71,19 +74,26 @@ const AddCours = () => {
     var formData = new FormData();
     formData.append("label", values.label);
     formData.append("price", values.price);
-    formData.append(" duration", values.duration);
+    formData.append("duration", values.duration);
     formData.append("description", values.description);
+    formData.append("languages", values.languages);
+    formData.append("category", values.category);
+    formData.append("level", values.level);
+
     if (values.image !== null) formData.append("image", values.image);
-    console.log(values.image);
-    axios
-      .post("courses/add", formData)
-      .then(dispatch(setIsOpen(false)))
-      .catch((err) => console.log(err));
+    await axios.post("courses/add", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    history.replace("/mi/classroom/teacher");
   };
 
   return (
-    <div className="rounded-xl md:border md:border-neutral-100 dark:border-neutral-800 md:p-4">
-      <button onClick={() => dispatch(setIsOpen(false))}>close</button>
+    <div
+      className="rounded-xl md:border md:border-neutral-100 dark:border-neutral-800 md:p-4 modal-body m-5"
+      style={customStyles}
+    >
       <Formik
         initialValues={{
           label: "",
@@ -107,7 +117,10 @@ const AddCours = () => {
           touched,
           errors,
         }) => (
-          <form className="grid md:grid-cols-2 gap-6" onSubmit={handleSubmit}>
+          <form
+            className="grid md:grid-cols-2 gap-6 overflow-auto my-5"
+            onSubmit={handleSubmit}
+          >
             <label className="block">
               <Label>Label</Label>
               <Input
@@ -175,14 +188,15 @@ const AddCours = () => {
             {touched.description && errors.description ? (
               <Alert severity="error">{errors.description}</Alert>
             ) : null}
-            {/* <label className="block md:col-span-2">
-              <Label> Category</Label> */}
-            {/* <Select
+            <label className="block md:col-span-2">
+              <Label> Category</Label>
+              <Select
                 name="category"
                 id="category"
-                onChange={handleChange}
+                onChange={(e) => setFieldValue("category", e.value.toString())}
                 components={animatedComponents}
                 options={optionscategory}
+                defaultValue={{ value: "others", label: "others" }}
               />
             </label>
             {touched.category && errors.category ? (
@@ -194,9 +208,10 @@ const AddCours = () => {
               <Select
                 name="languages"
                 id="languages"
-                onChange={handleChange}
+                onChange={(e) => setFieldValue("languages", e.value.toString())}
                 components={animatedComponents}
                 options={optionslanguages}
+                defaultValue={{ value: "english", label: "english" }}
               />
             </label>
             {touched.languages && errors.languages ? (
@@ -207,14 +222,15 @@ const AddCours = () => {
               <Select
                 name="level"
                 id="level"
-                onChange={handleChange}
+                onChange={(e) => setFieldValue("level", e.value.toString())}
                 components={animatedComponents}
                 options={optionslevel}
+                defaultValue={{ value: "beginner", label: "beginner" }}
               />
             </label>
             {touched.level && errors.level ? (
               <Alert severity="error">{errors.languages}</Alert>
-            ) : null} */}
+            ) : null}
             <Input
               id="image"
               name="image"

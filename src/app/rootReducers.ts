@@ -17,6 +17,9 @@ import RecSlice from "./reclamations/recSlice";
 import KaraokeSlice from "./karaoke/karaoke";
 import filterCourseSlice from "./slices/courseFilter";
 import CoursemodalSlice from "./slices/modalSlice";
+import courseSlice from "./slices/courseSlice";
+import StreamSlice from "./streamSlice/liveRooms";
+import InvoiceSlice from "./invoices/InvoiceSlice";
 
 const rootReducers = {
   bookmark: bookmarkReducer,
@@ -32,11 +35,14 @@ const rootReducers = {
   productReviews: productReviewsSlice,
   usersManagement: UsersSlice,
   reclamationsManagement: RecSlice,
+  invoices: InvoiceSlice,
   carteslics: carteslics,
   filterSlice: filterSlice,
   karaoke: KaraokeSlice,
   filterCourseSlice: filterCourseSlice,
   CoursemodalSlice: CoursemodalSlice,
+  courseSlice: courseSlice,
+  stream: StreamSlice,
 };
 
 export default rootReducers;

@@ -123,8 +123,7 @@ const UpdateProduct = () => {
     formData.append(
       "type",
       selectedOptiontype.value
-        ? (selectedOptiontype.value, 
-          (values.type = selectedOptiontype.value))
+        ? (selectedOptiontype.value, (values.type = selectedOptiontype.value))
         : product.type
     );
     formData.append(
@@ -139,7 +138,9 @@ const UpdateProduct = () => {
       console.log(product.productImage);
       formData.append(
         "files",
-        values.productImage[key] ? values.productImage[key] : product.productImage[key]
+        values.productImage[key]
+          ? values.productImage[key]
+          : product.productImage[key]
         //values.productImage[key].name ? values.productImage[key] : product.productImage[key]
         // productImage[key]
         //   ? productImage[key]
@@ -371,7 +372,7 @@ const UpdateProduct = () => {
                 type="submit"
                 onClick={() => {
                   dispatch(showForm(false));
-                  if(selectedOptioncategory.value !== undefined)
+                  if (selectedOptioncategory.value !== undefined)
                     values.category = selectedOptioncategory.value;
                   else
                     values.category = product.category;

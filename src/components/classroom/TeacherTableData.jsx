@@ -1,12 +1,23 @@
 import axios from "axiosInstance";
 import ReactStars from "react-rating-stars-component";
-import { Link } from "react-router-dom";
-import React, { useState, useEffect } from "react";
-
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setChange, setSelected } from "app/slices/courseSlice";
+import { useHistory } from "react-router-dom";
 const base_url = "http://localhost:5050/data/image/";
-
 function TeacherTableData({ course }) {
+  const dispatch = useDispatch();
+  const selected = useSelector((state) => state.courseSlice.selected);
+  const history = useHistory();
   const [rate, setrate] = useState(0);
+  const handaleDelete = async () => {
+    await axios
+      .delete(`/courses/${course._id}`)
+      .then(() => {
+        dispatch(setChange());
+      })
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
     axios
       .get(`rate-course/${course._id}`)
@@ -14,7 +25,7 @@ function TeacherTableData({ course }) {
         setrate(value.data.totalRate);
       })
       .catch((err) => console.log(err));
-  });
+  }, []);
   return (
     <tr>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -42,6 +53,7 @@ function TeacherTableData({ course }) {
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <ReactStars
+          edit={false}
           key={"star" + rate + ":" + course._id}
           value={rate}
           count={5}
@@ -50,13 +62,33 @@ function TeacherTableData({ course }) {
         ></ReactStars>
       </td>
       <td className=" border-b border-gray-200  text-sm ">
-        <button title="View" style={{ color: "#03A9F4" }}>
+        <button
+          title="View"
+          style={{ color: "#03A9F4" }}
+          onClick={() => {
+            dispatch(setSelected(course));
+            history.replace(`/mi/classroom/teacher/details/${course._id}`);
+          }}
+        >
           <i className="material-icons">&#xE417;</i>
         </button>
-        <button title="Edit" style={{ color: "#FFC107" }}>
+        <button
+          title="Edit"
+          style={{ color: "#FFC107" }}
+          onClick={() => {
+            dispatch(setSelected(course));
+            history.replace(`/mi/classroom/teacher/update`);
+          }}
+        >
           <i className="material-icons">&#xE254;</i>
         </button>
-        <button title="Delete" style={{ color: "#E34724" }}>
+        <button
+          title="Delete"
+          style={{ color: "#E34724" }}
+          onClick={() => {
+            handaleDelete();
+          }}
+        >
           <i className="material-icons ">&#xE872;</i>
         </button>
       </td>

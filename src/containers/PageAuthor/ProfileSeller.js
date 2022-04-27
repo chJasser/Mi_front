@@ -38,11 +38,10 @@ const ProfileSeller = ({ className = "" }) => {
   const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
   });
-  const [iscurrentseller,cuurrentseller]=useState(false);
-  const isAuth = useSelector(isAuthenticated);
-  const isseller = useSelector(userRoles).includes("seller");
-  const seller1=useSelector((state)=>state.user.currentSeller);
-  
+  const [iscurrentseller, cuurrentseller] = useState(false);
+
+  const seller1 = useSelector((state) => state.user.currentSeller);
+
   const base_url = "http://localhost:5050/";
 
   const [tabActive, setTabActive] = useState(TABS[0]);
@@ -56,14 +55,17 @@ const ProfileSeller = ({ className = "" }) => {
 
   const [seller, setSeller] = useState({});
   const [products, setProducts] = useState([]);
-const verifyseller=(sellerid,currentsellerid)=>{
-  if(sellerid === currentsellerid)
-  
-  return true;
-  else 
- return false;
-  
-}
+
+  const verifyseller = (sellerid, currentsellerid) => {
+
+    if (sellerid === currentsellerid)
+
+      return true;
+    else
+      return false;
+
+  }
+
   const getProducts = () => {
     axios
       .get(`/products/filter`)
@@ -76,13 +78,13 @@ const verifyseller=(sellerid,currentsellerid)=>{
       })
       .catch((err) => console.log(err.message));
   };
- 
+
   const getSeller = () => {
     axios
       .get(`/products/seller/${params.seller}`)
       .then((seller) => {
         setSeller(seller.data);
-        
+
       })
       .catch((err) => console.error(err.message));
   };
@@ -90,8 +92,8 @@ const verifyseller=(sellerid,currentsellerid)=>{
   useEffect(() => {
     getSeller();
     getProducts();
-    
-  },[]);
+
+  }, []);
   //verifyseller(seller._id,seller1.user._id);
 
   return (
@@ -147,10 +149,10 @@ const verifyseller=(sellerid,currentsellerid)=>{
               ))}
             </Nav>
             <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>
-            <div className="flex justify-end">
-              {verifyseller(seller._id,seller1.user._id) && ( <ButtonSecondary href="/Mi/manageproduct">ManageProduct</ButtonSecondary>)}
-           
-            </div>
+            {seller1 !== null && (<div className="flex justify-end">
+              {verifyseller(seller._id, seller1.user._id) && (<ButtonSecondary href="/Mi/manageproduct">ManageProduct</ButtonSecondary>)}
+
+            </div>)}
           </div>
 
           <Suspense fallback={<div>Loading..</div>}>

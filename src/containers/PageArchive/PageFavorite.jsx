@@ -77,33 +77,33 @@ function PageFavorite() {
       </div>
       {loading ? (
         <div className="relative container ">
-          <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             loading ...
           </div>
         </div>
       ) : (
         <div className="relative container ">
-          <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" className="px-6 py-3">
                     Product name
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" className="px-6 py-3">
                     state
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" className="px-6 py-3">
                     Category
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" className="px-6 py-3">
                     Price
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" className="px-6 py-3">
                     description
                   </th>
-                  <th scope="col" class="px-6 py-3">
-                    <span class="sr-only">Edit</span>
+                  <th scope="col" className="px-6 py-3">
+                    <span className="sr-only">Edit</span>
                   </th>
                 </tr>
               </thead>
@@ -115,7 +115,7 @@ function PageFavorite() {
                   >
                     <th
                       scope="row"
-                      class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                      className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
                     >
                       <Link to={`/mi/single-gallery/${prod._id}`}>
                         {prod.label}
@@ -125,10 +125,10 @@ function PageFavorite() {
                     <td className="px-6 py-4">{prod.category}</td>
                     <td className="px-6 py-4">{prod.price}</td>
                     <td className="px-6 py-4">{prod.reference}</td>
-                    <td class="px-6 py-4 text-right">
+                    <td className="px-6 py-4 text-right">
                       <button
                         onClick={() => removeBookMarkDB(prod)}
-                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                       >
                         <svg
                           width="24"

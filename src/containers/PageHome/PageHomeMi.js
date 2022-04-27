@@ -69,9 +69,9 @@ const PageHomeMi = () => {
   const isAuth = useSelector(isAuthenticated);
   const roles = useSelector(userRoles);
   const history = useHistory();
-  const getProds = () => {
-    axios
-      .get("products/all-products")
+  const getProds = async () => {
+    await axios
+      .get("/products/all-products")
       .then((res) => {
         setProducts(res.data);
       })
@@ -97,7 +97,7 @@ const PageHomeMi = () => {
     dispatch(resetStateLikes());
     dispatch(resetStateReviews());
     axios
-      .get("products/liked-products")
+      .get("/products/liked-products")
       .then((response) => {
         console.log(response);
         dispatch(getLikedProducts(response.data));
@@ -106,7 +106,7 @@ const PageHomeMi = () => {
         console.error(error);
       });
     axios
-      .get("products/bookmarked-products")
+      .get("/products/bookmarked-products")
       .then((response) => {
         console.log(response);
         dispatch(getBookmarkedProducts(response.data));

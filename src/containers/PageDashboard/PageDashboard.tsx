@@ -42,10 +42,10 @@ const subPages = [
     pageName: "Dash board",
   },
   {
-    sPath: "/posts",
+    sPath: "/card",
     component: Cartproducts,
     emoij: "📕",
-    pageName: "Posts",
+    pageName: "Card",
   },
   {
     sPath: "/addproducts",
@@ -53,6 +53,7 @@ const subPages = [
     emoij: "📕",
     pageName: "Addproducts",
   },
+
   {
     sPath: "/edit-profile",
     component: DashboardEditProfile,

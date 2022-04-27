@@ -1,29 +1,19 @@
-import { useEffect, useState, Suspense, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
 import axios from "axiosInstance";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import Badge from "components/Badge/Badge";
-import SingleTitle from "../PageSingle/SingleTitle";
 import { Link } from "react-router-dom";
 import Avatar from "components/Avatar/Avatar";
-import convertNumbThousand from "utils/convertNumbThousand";
-import twFocusClass from "utils/twFocusClass";
 import { removeLike, addNewLike } from "app/productLikes/productLikes";
 import ProductComment from "components/CommentCard/ProductComment";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import ButtonSecondary from "components/Button/ButtonSecondary";
-import ProductCardLikeAndComment from "components/PostCardLikeAndComment/ProductCardLikeAndComment";
-import {
-  getLikedProducts,
-  getBookmarkedProducts,
-} from "app/productLikes/productLikes";
 import NcImage from "components/NcImage/NcImage";
 import ModalPhotos from "./ModalPhotos";
 import Productrecommand from "containers/PageDashboard/Productrecommand";
 
 import {
-  getProductUser,
   addReview,
   getProductReviews,
 } from "../../app/productReviews/productReviews";
@@ -112,7 +102,7 @@ function PageSingleProduct() {
   };
   const addLikeDB = async () => {
     await axios
-      .put(`/products/add - like / ${product._id}`)
+      .put(`/products/add-like/${product._id}`)
       .then((response) => {
         // console.log(response.data.success);
       })
@@ -128,7 +118,7 @@ function PageSingleProduct() {
   };
   const removeLikeDB = async () => {
     await axios
-      .put(`/products/remove - like / ${product._id}`)
+      .put(`/products/remove-like/${product._id}`)
       .then((response) => {
         // console.log(response.data.success);
       })
@@ -169,7 +159,7 @@ function PageSingleProduct() {
   };
   const getProductReviewsFun = (prod) => {
     axios
-      .get("product_reviews/get-prod-reviews/" + prod._id)
+      .get("/product_reviews/get-prod-reviews/" + prod._id)
       .then((response) => {
         dispatch(getProductReviews(response.data.reviews));
         setReviews(response.data.reviews);
@@ -199,7 +189,7 @@ function PageSingleProduct() {
       setDisabled(false);
     } else {
       await axios
-        .put(`product_reviews / add - review / ${product._id}`, {
+        .put(`/product_reviews/add-review/${product._id}`, {
           content: comment,
         })
         .then((response) => {

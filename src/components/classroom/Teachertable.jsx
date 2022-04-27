@@ -1,9 +1,18 @@
 import { useState, useEffect } from "react";
 import axios from "axiosInstance";
 import TeacherTableData from "./TeacherTableData";
-
+import { useSelector } from "react-redux";
 function Teachertable() {
+  const change = useSelector((state) => state.courseSlice.change);
   const [list, setList] = useState([]);
+  useEffect(() => {
+    axios
+      .get("courses/course-teacher")
+      .then((course) => {
+        setList(course.data);
+      })
+      .catch((err) => console.log(err));
+  }, [change]);
   useEffect(() => {
     axios
       .get("courses/course-teacher")

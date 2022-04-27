@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Pagination from "components/Pagination/Pagination";
-import ButtonPrimary from "components/Button/ButtonPrimary";
 import Nav from "components/Nav/Nav";
 import NavItem from "components/NavItem/NavItem";
 import CourseFilter from "components/ArchiveFilterListBox/courseFilter";
@@ -18,13 +17,11 @@ import { DEMO_AUTHORS } from "data/authors";
 import CardCourse from "components/Card11/CardCourse";
 import axios from "axiosInstance";
 import CourseFilterCategory from "./../../components/ArchiveFilterListBox/courseCategoryFilter";
-import Slider from "@material-ui/core/Slider";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  filterByPriceCourse,
-  filterByDurationCourse,
-  intialCourseSearch,
-} from "../../app/slices/courseFilter";
+import PriceFilter from "./PriceFilter";
+import DurationFilter from "./DurationFilter";
+import { filterByDurationCourse } from "../../app/slices/courseFilter";
+import { filterByPriceCourse } from "../../app/slices/courseFilter";
 const categories = [
   { name: "all" },
   { name: "voice" },
@@ -65,11 +62,6 @@ const Classroom = ({ className = "" }) => {
     maxduration: 0,
     minduration: 0,
   });
-  const nbLike = async (id) => {
-    const nb = await axios.get(`rate-course/get-rate/${id}`);
-    return nb.data.totalRate;
-  };
-
   useEffect(() => {
     axios
       .put("courses/searchCourse", { ...search, label })
@@ -82,22 +74,19 @@ const Classroom = ({ className = "" }) => {
     axios
       .get("courses/details")
       .then((course) => {
+        dispatch(
+          filterByDurationCourse([
+            course.data.minduration,
+            course.data.maxduration,
+          ])
+        );
+        dispatch(
+          filterByPriceCourse([course.data.minprice, course.data.maxprice])
+        );
+        console.log(search);
         setDetails(course.data);
       })
       .catch((err) => console.log(err));
-    dispatch(
-      intialCourseSearch({
-        label: null,
-        description: null,
-        level: null,
-        languages: null,
-        maxprice: null,
-        maxduration: null,
-        minprice: null,
-        minduration: null,
-        category: null,
-      })
-    );
   }, []);
 
   const [tabActive, setTabActive] = useState(TABS[0]);
@@ -167,20 +156,7 @@ const Classroom = ({ className = "" }) => {
               }}
             >
               <h3>What is your budget?</h3>
-              <Slider
-                key={"Priceslider" + details.minprice + "-" + details.maxprice}
-                onChange={(e, v) => {
-                  dispatch(filterByPriceCourse(v));
-                }}
-                valueLabelDisplay="auto"
-                defaultValue={[details.minprice, details.maxprice]}
-                max={details.maxprice}
-                min={details.minprice}
-                marks={[
-                  { label: details.minprice + "$", value: details.minprice },
-                  { label: details.maxprice + "$", value: details.maxprice },
-                ]}
-              />
+              <PriceFilter details={details} />
             </div>
             <div
               style={{
@@ -190,37 +166,15 @@ const Classroom = ({ className = "" }) => {
               }}
             >
               <h3>nomber of hours?</h3>
-              <Slider
-                key={
-                  "Durationslider---" +
-                  details.minduration +
-                  "---" +
-                  details.maxduration
-                }
-                onChange={(e, v) => dispatch(filterByDurationCourse(v))}
-                valueLabelDisplay="auto"
-                defaultValue={[details.minduration, details.maxduration]}
-                max={details.maxduration}
-                min={details.minduration}
-                marks={[
-                  {
-                    label: details.minduration + "h",
-                    value: details.minduration,
-                  },
-                  {
-                    label: details.maxduration + "h",
-                    value: details.maxduration,
-                  },
-                ]}
-              />
+              <DurationFilter details={details} />
             </div>
           </div>
 
           {/* TABS FILTER */}
           <div className="flex flex-col sm:items-center sm:justify-between sm:flex-row ">
             <Nav
-              containerClassName="w-full overflow-x-auto hiddenScrollbar"
-              className=" sm:space-x-2"
+              containerClassName="w-full overflow-x-auto hiddenScrollbar "
+              className=" sm:space-x-2 "
             >
               {TABS.map((item, index) => (
                 <NavItem
@@ -267,7 +221,6 @@ const Classroom = ({ className = "" }) => {
           {/* PAGINATION */}
           <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
             <Pagination />
-            <ButtonPrimary>Show me more</ButtonPrimary>
           </div>
         </main>
 

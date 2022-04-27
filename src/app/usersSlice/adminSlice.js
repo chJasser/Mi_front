@@ -2,6 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axiosInstance";
 let initialState = {
   users: [],
+  teachers: [],
+  sellers: [],
+  students: [],
 };
 
 const UsersSlice = createSlice({
@@ -31,6 +34,15 @@ const UsersSlice = createSlice({
         }
       });
     },
+    getTeachers(state, action) {
+      state.teachers = action.payload;
+    },
+    getStudents(state, action) {
+      state.students = action.payload;
+    },
+    getSellers(state, action) {
+      state.sellers = action.payload;
+    },
   },
 });
 export const getAllUsers = () => (dispatch) => {
@@ -43,6 +55,38 @@ export const getAllUsers = () => (dispatch) => {
       dispatch(getUsers([]));
     });
 };
-export const { getUsers, updateUsersList, removeUser, blockUser, unblockUser } =
+export const getAllTeachers = () => (dispatch) => {
+  axios
+    .get("/teachers/get-all-teachers")
+    .then((response) => {
+      dispatch(getTeachers(response.data));
+    })
+    .catch((err) => {
+      dispatch(getTeachers([]));
+    });
+};
+export const getAllStudents = () => (dispatch) => {
+  axios
+    .get("/students/get-all-students")
+    .then((response) => {
+      dispatch(getStudents(response.data));
+    })
+    .catch((err) => {
+      dispatch(getStudents([]));
+    });
+};
+export const getAllSellers = () => (dispatch) => {
+  axios
+    .get("/sellers/get-all-sellers")
+    .then((response) => {
+      dispatch(getSellers(response.data));
+    })
+    .catch((err) => {
+      dispatch(getSellers([]));
+    });
+};
+
+
+export const { getTeachers, getStudents, getSellers, getUsers, updateUsersList, removeUser, blockUser, unblockUser } =
   UsersSlice.actions;
 export default UsersSlice.reducer;

@@ -9,6 +9,7 @@ export default function CardTable({ color }) {
   return (
     <>
       <div
+       style={{ marginTop: "75px" }}
         className={
           "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded " +
           (color === "light" ? "bg-white" : "bg-lightBlue-900 text-white")
@@ -39,7 +40,7 @@ export default function CardTable({ color }) {
                     (color === "light"
                       ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                       : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                  }
+                  } 
                 >
                   Project
                 </th>

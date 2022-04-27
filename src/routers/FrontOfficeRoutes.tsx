@@ -66,7 +66,17 @@ import ProductPage from "containers/PageDashboard/ProductPage";
 import Classroom from "./../components/classroom/classrom";
 import StudentClassroom from "../components/classroom/StudentClassroom";
 import TeacherClassroom from "../components/classroom/TeacherClassroom";
+import AddCours from "./../containers/PageDashboard/addCours";
+import UpdateCourse from "components/classroom/updateCoures";
+import CourseDetails from "./../components/classroom/CourseDetails";
+import IsAuthRoute from "./privateRoutes/IsAuthRoute";
+import Payment from "components/Payment/Payment.js";
+import PageInvoice from "components/Payment/PageInvoice";
+import Meeting from "containers/Karaoke/Meeting";
+import UserInvoices from "components/Payment/UserInvoices";
 
+import Streamer from "containers/Stream/Streamer";
+import StreamHomePage from "containers/Stream/StreamHomePage";
 export const pages: Page[] = [
   { path: "/mi", exact: true, component: PageHomeMi },
   { path: "/mi#", exact: true, component: PageHome },
@@ -78,8 +88,7 @@ export const pages: Page[] = [
   // { path: "/mi/author/:slug", component: PageAuthor },
 
   { path: "/mi/author/:slug", component: ProfileSeller },
-  // { path: "/mi/recommand", component: Recommand },
-  // { path: "/mi/author/:slug", component: PageAuthor },
+
   { path: "/mi/author-v2/:slug", component: PageAuthorV2 },
   //
   { path: "/mi/single/:slug", component: PageSingleTemp3Sidebar },
@@ -119,7 +128,7 @@ export const pages: Page[] = [
     path: "/mi/single-video/:slug",
     component: PageSingleVideo,
   },
- 
+
   { path: "/mi/search", component: PageSearch },
   //{ path: "/mi/search-v2", component: Recommand },
   { path: "/mi/about", exact: true, component: PageAbout },
@@ -129,11 +138,12 @@ export const pages: Page[] = [
   { path: "/mi/signup", typeRoute: "auth", component: PageSignUp },
   {
     path: "/mi/edit-profile",
+    typeRoute: "isAuth",
     component: DashboardEditProfile,
   },
   {
-   path:"/mi/manageproduct",
-   component:Manageproduct,
+    path: "/mi/manageproduct",
+    component: Manageproduct,
   },
   /*{
     path:'/mi/products/:objectID?queryID=:queryID',
@@ -144,10 +154,10 @@ export const pages: Page[] = [
     component:Productrecommand,
    },*/
   {
-    path: "/mi/Karaoke",
+    path: "/mi/Karaoke/:id/:token",
     component: Karaoke,
   },
-  
+
   {
     path: "/mi/forgot-pass",
     exact: true,
@@ -156,7 +166,7 @@ export const pages: Page[] = [
   },
   { path: "/mi/dashboard", component: PageDashboard },
   { path: "/mi/subscription", component: PageSubcription },
-
+  { path: "/mi/payment", component: Payment },
   { path: "/mi/forgot-pass/:email", component: RestPasswordComponent },
   { path: "/mi/passport/register", component: PagePassword },
 
@@ -167,6 +177,16 @@ export const pages: Page[] = [
 
     typeRoute: "auth",
     component: RestPasswordComponent,
+  },
+  {
+    path: "/mi/live-streaming",
+    exact: true,
+    component: StreamHomePage,
+  },
+  {
+    path: "/mi/live-stream/:id",
+    exact: true,
+    component: Streamer,
   },
   {
     path: "/mi/passport/register",
@@ -212,7 +232,37 @@ export const pages: Page[] = [
     typeRoute: "classroom",
     component: TeacherClassroom,
   },
-
+  {
+    path: "/mi/invoice/:id",
+    typeRoute: "isAuth",
+    exact: true,
+    component: PageInvoice,
+  },
+  { path: "/mi/room", typeRoute: "isAuth", component: Meeting },
+  {
+    path: "/mi/invoices",
+    typeRoute: "isAuth",
+    exact: true,
+    component: UserInvoices,
+  },
+  {
+    path: "/mi/classroom/teacher/update",
+    exact: true,
+    typeRoute: "classroom",
+    component: UpdateCourse,
+  },
+  {
+    path: "/mi/classroom/teacher/details/:id",
+    exact: true,
+    typeRoute: "classroom",
+    component: CourseDetails,
+  },
+  {
+    path: "/mi/classroom/teacher/add",
+    exact: true,
+    typeRoute: "classroom",
+    component: AddCours,
+  },
   //back-office
 
   //
@@ -255,6 +305,15 @@ export default function FronOfficeRoutes() {
           } else if (typeRoute === "teacher") {
             return (
               <BecomeTeacherRoute
+                key={path}
+                component={component}
+                exact={!!exact}
+                path={path}
+              />
+            );
+          } else if (typeRoute === "isAuth") {
+            return (
+              <IsAuthRoute
                 key={path}
                 component={component}
                 exact={!!exact}

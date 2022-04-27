@@ -32,13 +32,7 @@ export const filterCourseSlice = createSlice({
       state.minduration = action.payload[0];
     },
     intialCourseSearch: (state, action) => {
-      state.maxprice = action.payload.maxprice;
-      state.minprice = action.payload.minprice;
-      state.level = action.payload.level;
-      state.category = action.payload.category;
-      state.maxduration = action.payload.maxduration;
-      state.minduration = action.payload.maxduration;
-      state.languages = action.payload.languages;
+      state = { ...state, ...action.payload };
     },
   },
 });

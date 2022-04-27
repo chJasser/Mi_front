@@ -134,7 +134,7 @@ export default function Sidebar() {
                 </Link>
               </li>
 
-              <li className="items-center">
+              {/* <li className="items-center">
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
@@ -144,20 +144,43 @@ export default function Sidebar() {
                   }
                   to="/back-office/tables"
                 >
+
                   <i
                     className={
-                      "fas fa-table mr-2 text-sm " +
+                      "fa-solid fa-user mr-2 text-sm " +
                       (window.location.href.indexOf("/back-office/tables") !==
                         -1
                         ? "opacity-75"
                         : "text-blueGray-300")
                     }
                   ></i>{" "}
-                  Tables
+                  Users
                 </Link>
-              </li>
+              </li> */}
 
               <li className="items-center">
+                <Link
+                  className={
+                    "text-xs uppercase py-3 font-bold block " +
+                    (window.location.href.indexOf("/back-office/products") !== -1
+                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      : "text-blueGray-700 hover:text-blueGray-500")
+                  }
+                  to="/back-office/products"
+                >
+                  <i
+                    className={
+                      "fa-brands fa-product-hunt mr-2 text-sm " +
+                      (window.location.href.indexOf("/back-office/products") !==
+                        -1
+                        ? "opacity-75"
+                        : "text-blueGray-300")
+                    }
+                  ></i>{" "}
+                  Products
+                </Link>
+              </li>
+              {/* <li className="items-center">
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
@@ -167,16 +190,64 @@ export default function Sidebar() {
                   }
                   to="/back-office/productstable"
                 >
+
                   <i
                     className={
-                      "fas fa-table mr-2 text-sm " +
+                      "fa-solid fa-rectangle-list mr-2 text-sm " +
                       (window.location.href.indexOf("/back-office/productstable") !==
                         -1
                         ? "opacity-75"
                         : "text-blueGray-300")
                     }
                   ></i>{" "}
-                  Manage Product
+                  Courses
+                </Link>
+              </li> */}
+
+
+              <li className="items-center">
+                <Link
+                  className={
+                    "text-xs uppercase py-3 font-bold block " +
+                    (window.location.href.indexOf("/back-office/reclamations") !== -1
+                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      : "text-blueGray-700 hover:text-blueGray-500")
+                  }
+                  to="/back-office/reclamations"
+                >
+                  <i
+                    className={
+                      "fa-solid fa-list-check mr-2 text-sm " +
+                      (window.location.href.indexOf("/back-office/reclamations") !==
+                        -1
+                        ? "opacity-75"
+                        : "text-blueGray-300")
+                    }
+                  ></i>{" "}
+                  reclamations
+                </Link>
+              </li>
+
+              <li className="items-center">
+                <Link
+                  className={
+                    "text-xs uppercase py-3 font-bold block " +
+                    (window.location.href.indexOf("/back-office/invoices") !== -1
+                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      : "text-blueGray-700 hover:text-blueGray-500")
+                  }
+                  to="/back-office/invoices"
+                >
+                  <i
+                    className={
+                      "fa-solid fa-file-invoice-dollar mr-2 text-sm " +
+                      (window.location.href.indexOf("/back-office/invoices") !==
+                        -1
+                        ? "opacity-75"
+                        : "text-blueGray-300")
+                    }
+                  ></i>{" "}
+                  Invoices
                 </Link>
               </li>
 
@@ -191,41 +262,97 @@ export default function Sidebar() {
             {/* Navigation */}
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
+
+
+
               <li className="items-center">
                 <Link
-                  className="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-                  to="/mi"
+                  className={
+                    "text-xs uppercase py-3 font-bold block " +
+                    (window.location.href.indexOf("/back-office/simple-users") !== -1
+                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      : "text-blueGray-700 hover:text-blueGray-500")
+                  }
+                  to="/back-office/simple-users"
                 >
-                  <i class="fa-solid fa-users"></i>
-                  <i className="fas fa-fingerprint text-blueGray-400 mr-2 text-sm"></i>{" "}
+                  <i
+                    className={
+                      "fa-solid fa-users mr-2 text-sm " +
+                      (window.location.href.indexOf("/back-office/simple-users") !==
+                        -1
+                        ? "opacity-75"
+                        : "text-blueGray-300")
+                    }
+                  ></i>
                   Simple users
                 </Link>
               </li>
               <li className="items-center">
                 <Link
-                  className="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-                  to="/mi"
+                  className={
+                    "text-xs uppercase py-3 font-bold block " +
+                    (window.location.href.indexOf("/back-office/teachers") !== -1
+                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      : "text-blueGray-700 hover:text-blueGray-500")
+                  }
+                  to="/back-office/teachers"
                 >
-                  <i className="fas fa-fingerprint text-blueGray-400 mr-2 text-sm"></i>{" "}
+                  <i
+                    className={
+                      "fa-solid fa-chalkboard-user mr-2 text-sm " +
+                      (window.location.href.indexOf("/back-office/teachers") !==
+                        -1
+                        ? "opacity-75"
+                        : "text-blueGray-300")
+                    }
+                  ></i>
                   Teachers
-                </Link>
-              </li>
-              <li className="items-center">
-                <Link
-                  className="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-                  to="/mi"
-                >
-                  <i className="fas fa-clipboard-list text-blueGray-300 mr-2 text-sm"></i>{" "}
-                  Students
                 </Link>
               </li>
 
               <li className="items-center">
                 <Link
-                  className="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-                  to="/mi"
+                  className={
+                    "text-xs uppercase py-3 font-bold block " +
+                    (window.location.href.indexOf("/back-office/students") !== -1
+                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      : "text-blueGray-700 hover:text-blueGray-500")
+                  }
+                  to="/back-office/students"
                 >
-                  <i className="fas fa-clipboard-list text-blueGray-300 mr-2 text-sm"></i>{" "}
+                  <i
+                    className={
+                      "fa-solid fa-graduation-cap mr-2 text-sm " +
+                      (window.location.href.indexOf("/back-office/students") !==
+                        -1
+                        ? "opacity-75"
+                        : "text-blueGray-300")
+                    }
+                  ></i>
+                  Students
+                </Link>
+              </li>
+
+
+              <li className="items-center">
+                <Link
+                  className={
+                    "text-xs uppercase py-3 font-bold block " +
+                    (window.location.href.indexOf("/back-office/sellers") !== -1
+                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      : "text-blueGray-700 hover:text-blueGray-500")
+                  }
+                  to="/back-office/sellers"
+                >
+                  <i
+                    className={
+                      "fa-solid fa-people-group mr-2 text-sm " +
+                      (window.location.href.indexOf("/back-office/sellers") !==
+                        -1
+                        ? "opacity-75"
+                        : "text-blueGray-300")
+                    }
+                  ></i>
                   Sellers
                 </Link>
               </li>

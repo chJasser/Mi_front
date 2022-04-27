@@ -82,6 +82,7 @@ function TableOfProducts({ color, prod }) {
             <tbody>
               {prod &&
                 prod.map((product) => (
+                  
                   <tr key={product._id}>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <div className="flex items-center">
@@ -97,11 +98,11 @@ function TableOfProducts({ color, prod }) {
                             :
                             <img
                               className="w-full h-full rounded-full"
-                              src={base_url + changedProduct.productImage }
+                              src={base_url + changedProduct.productImage[0] }
                               alt={product.label}
                             />
                             }
-                          </Suspense>
+                          </Suspense> 
                         </div>
                         <div className="ml-3">
                           <p className="text-gray-900 whitespace-no-wrap">

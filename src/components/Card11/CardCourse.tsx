@@ -114,7 +114,10 @@ const Card11Product: FC<Card11Props> = ({
           {languages + ":" + level}
         </h2>
         <h2 className="nc-card-title block text-base font-semibold text-neutral-900 dark:text-neutral-100 ">
-          {subscribers + ":" + duration + "h"}
+          {"subscribers:" + subscribers}
+        </h2>
+        <h2 className="nc-card-title block text-base font-semibold text-neutral-900 dark:text-neutral-100 ">
+          {"duration: " + duration + "h"}
         </h2>
         <div className="flex items-end justify-between mt-auto">
           {`rate:${rate.totalRate}`}
@@ -131,52 +134,112 @@ const Card11Product: FC<Card11Props> = ({
             ></ReactStars>
           }
         </div>
-        {/* <div className="flex items-end justify-between mt-auto">
-          {sub === null &&
-            (teacher === currentteacher._id ? (
-              <label>your course</label>
-            ) : !students.includes(student._id) ? (
-              <button
-                onClick={() => {
-                  subscribe();
-                  setSubsc(true);
-                }}
-              >
-                subscribe
-              </button>
-            ) : (
-              students.includes(student._id) && (
-                <button
-                  onClick={() => {
-                    unsubscribe();
-                    setSubsc(false);
-                  }}
-                >
-                  unsubscribe
-                </button>
-              )
-            ))}
-          {sub === false && (
-            <button
-              onClick={() => {
-                subscribe();
-                setSubsc(true);
-              }}
-            >
-              subscribe
-            </button>
+        <div className="flex items-end justify-between mt-auto">
+          {(currentteacher !== null || student !== null) && (
+            <>
+              {currentteacher !== null && student === null && (
+                <>
+                  {sub === null && teacher === currentteacher._id && (
+                    <label>your course</label>
+                  )}
+                </>
+              )}
+              {currentteacher === null && student !== null && (
+                <>
+                  {sub === null && !students.includes(student._id) ? (
+                    <button
+                      onClick={() => {
+                        subscribe();
+                        setSubsc(true);
+                      }}
+                    >
+                      subscribe
+                    </button>
+                  ) : (
+                    students.includes(student._id) && (
+                      <button
+                        onClick={() => {
+                          unsubscribe();
+                          setSubsc(false);
+                        }}
+                      >
+                        unsubscribe
+                      </button>
+                    )
+                  )}
+                  {sub === false && (
+                    <button
+                      onClick={() => {
+                        subscribe();
+                        setSubsc(true);
+                      }}
+                    >
+                      subscribe
+                    </button>
+                  )}
+                  {sub === true && (
+                    <button
+                      onClick={() => {
+                        unsubscribe();
+                        setSubsc(false);
+                      }}
+                    >
+                      unsubscribe
+                    </button>
+                  )}
+                </>
+              )}
+              {currentteacher !== null && student !== null && (
+                <>
+                  {sub === null &&
+                    (teacher === currentteacher._id ? (
+                      <label>your course</label>
+                    ) : !students.includes(student._id) ? (
+                      <button
+                        onClick={() => {
+                          subscribe();
+                          setSubsc(true);
+                        }}
+                      >
+                        subscribe
+                      </button>
+                    ) : (
+                      students.includes(student._id) && (
+                        <button
+                          onClick={() => {
+                            unsubscribe();
+                            setSubsc(false);
+                          }}
+                        >
+                          unsubscribe
+                        </button>
+                      )
+                    ))}
+                  {sub === false && (
+                    <button
+                      onClick={() => {
+                        subscribe();
+                        setSubsc(true);
+                      }}
+                    >
+                      subscribe
+                    </button>
+                  )}
+                  {sub === true && (
+                    <button
+                      onClick={() => {
+                        unsubscribe();
+                        setSubsc(false);
+                      }}
+                    >
+                      unsubscribe
+                    </button>
+                  )}
+                </>
+              )}
+            </>
           )}
-          {sub === true && (
-            <button
-              onClick={() => {
-                unsubscribe();
-                setSubsc(false);
-              }}
-            >
-              unsubscribe
-            </button>
-          )}
-        </div> */}
+        </div>
       </div>
     </div>
   );
