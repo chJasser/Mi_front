@@ -162,16 +162,16 @@ export default function Sidebar() {
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/back-office/productstable") !== -1
+                    (window.location.href.indexOf("/back-office/products") !== -1
                       ? "text-lightBlue-500 hover:text-lightBlue-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
-                  to="/back-office/productstable"
+                  to="/back-office/products"
                 >
                   <i
                     className={
                       "fa-brands fa-product-hunt mr-2 text-sm " +
-                      (window.location.href.indexOf("/back-office/productstable") !==
+                      (window.location.href.indexOf("/back-office/products") !==
                         -1
                         ? "opacity-75"
                         : "text-blueGray-300")
@@ -180,7 +180,7 @@ export default function Sidebar() {
                   Products
                 </Link>
               </li>
-              <li className="items-center">
+              {/* <li className="items-center">
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
@@ -202,7 +202,7 @@ export default function Sidebar() {
                   ></i>{" "}
                   Courses
                 </Link>
-              </li>
+              </li> */}
 
 
               <li className="items-center">

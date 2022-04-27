@@ -10,8 +10,7 @@ import DashboardSubcription from "./DashboardSubcription";
 import DashboardSubmitPost from "./DashboardSubmitPost";
 import { Helmet } from "react-helmet";
 import Cartproducts from "./Cartproducts";
-import Addproducts from "./addproducts";
-
+import Addproducts from "./AddProducts";
 export interface PageDashboardProps {
   className?: string;
 }

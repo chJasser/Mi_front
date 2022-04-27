@@ -16,6 +16,8 @@ import { DEMO_CATEGORIES } from "data/taxonomies";
 import ButtonSecondary from "components/Button/ButtonSecondary";
 import NcImage from "components/NcImage/NcImage";
 import axios from "../../../src/axiosInstance";
+import { useSelector } from "react-redux";
+import { isAuthenticated, logoutUser, userRoles } from "app/slices/userSlice";
 //import Card11Product from "components/Card11/Card11Product";
 const Card11Product = React.lazy(() =>
   import("components/Card11/Card11Product")
@@ -36,6 +38,9 @@ const ProfileSeller = ({ className = "" }) => {
   const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
   });
+  const [iscurrentseller, cuurrentseller] = useState(false);
+
+  const seller1 = useSelector((state) => state.user.currentSeller);
 
   const base_url = "http://localhost:5050/";
 
@@ -50,6 +55,16 @@ const ProfileSeller = ({ className = "" }) => {
 
   const [seller, setSeller] = useState({});
   const [products, setProducts] = useState([]);
+
+  const verifyseller = (sellerid, currentsellerid) => {
+
+    if (sellerid === currentsellerid)
+
+      return true;
+    else
+      return false;
+
+  }
 
   const getProducts = () => {
     axios
@@ -69,6 +84,7 @@ const ProfileSeller = ({ className = "" }) => {
       .get(`/products/seller/${params.seller}`)
       .then((seller) => {
         setSeller(seller.data);
+
       })
       .catch((err) => console.error(err.message));
   };
@@ -76,7 +92,9 @@ const ProfileSeller = ({ className = "" }) => {
   useEffect(() => {
     getSeller();
     getProducts();
+
   }, []);
+  //verifyseller(seller._id,seller1.user._id);
 
   return (
     <div className={`nc-PageAuthor  ${className}`} data-nc-id="PageAuthor">
@@ -131,13 +149,10 @@ const ProfileSeller = ({ className = "" }) => {
               ))}
             </Nav>
             <div className="block my-4 border-b w-full border-neutral-100 sm:hidden"></div>
-            <div className="flex justify-end">
-             {/*<ArchiveFilterListBox lists={FILTERS} />*/} 
+            {seller1 !== null && (<div className="flex justify-end">
+              {verifyseller(seller._id, seller1.user._id) && (<ButtonSecondary href="/Mi/manageproduct">ManageProduct</ButtonSecondary>)}
 
-          
-               <a href="/back-office/productstable">ee</a>
-           
-            </div>
+            </div>)}
           </div>
 
           <Suspense fallback={<div>Loading..</div>}>

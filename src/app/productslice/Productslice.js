@@ -74,6 +74,12 @@ export const selectProducts = (state) => {
 export const selectSelectedProduct = (state) => {
   return state.products.selectedProduct;
 };
+
+export const deleteProducts = (id) => (dispatch) => {
+  axios
+      .delete(`/products/productadmin/${id}`)
+     
+};
 export const {
   populateProducts,
   selectProduct,

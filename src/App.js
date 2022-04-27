@@ -19,14 +19,15 @@ import "./assets/styles/tailwind.css";
 import IsAuthRouteAndAdmin from "routers/privateRoutes/isAuthAndAdminRoute";
 import Dashboard from "views/admin/Dashboard";
 import Tables from "views/admin/Tables";
-// import MyRouter from "routers/MyRouter";
+import aa from "search-insights";
+
 
 if (localStorage.token) {
   // Set auth token header auth
   var token = localStorage.token;
   setAuthToken(token);
   // Decode token and get user info and exp
-
+  
   const decoded = jwt_decode(token);
 
   // Set user and isAuthenticated

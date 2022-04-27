@@ -5,7 +5,11 @@ let initialState = {
   selectedProduct: {},
   loading: true,
   show: false,
+  changedProduct: {},
+  colors: {},
+  category: "",
   errors: "",
+  prod:""
 };
 
 const ProductsSliceseller = createSlice({
@@ -52,9 +56,21 @@ const ProductsSliceseller = createSlice({
       const payload = action.payload;
       state.products.push(payload);
     },
+    selectrecommandprod:(state,action)=>{
+state.prod=action.payload;
+    },
     setErrors(state, action) {
       state.errors = action.payload;
     },
+    updateProduct: (state, action) => {
+      state.changedProduct = action.payload;
+    },
+    colorFilter: (state, action) => {
+      state.colors = action.payload;
+    },
+    changeCategory: (state, action) => {
+      state.category = action.payload;
+    }
   },
 });
 /*export const fetchProducts = () => (dispatch) => {
@@ -80,6 +96,7 @@ export const selectProducts = (state) => {
 export const selectSelectedProduct = (state) => {
   return state.products.selectedProduct;
 };
+
 export const {
   populatesellerProducts,
   selectsellerProduct,
@@ -89,7 +106,11 @@ export const {
   deletesellerProduct,
   updatesellerProduct,
   addProduct,
+  selectrecommandprod,
   showForm,
-  showText
+  showText,
+  updateProduct,
+  colorFilter,
+  changeCategory
 } = ProductsSliceseller.actions;
 export default ProductsSliceseller.reducer;

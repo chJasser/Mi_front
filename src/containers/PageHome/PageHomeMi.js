@@ -53,6 +53,7 @@ import SectionLargeSliderMi from "./SectionLargeSliderMi";
 //
 import SectionHero from "components/SectionHero/SectionHero";
 import rightImg from "images/hero-right.png";
+import SectionSliderproduct from "./SectionSliderproduct";
 //
 const MAGAZINE1_TABS = ["all", "Garden", "Fitness", "Design"];
 const MAGAZINE1_POSTS = DEMO_POSTS.filter((_, i) => i >= 8 && i < 16);
@@ -62,14 +63,15 @@ const MAGAZINE2_POSTS = DEMO_POSTS.filter((_, i) => i >= 0 && i < 7);
 const PageHomeMi = () => {
   const [token, setToken] = useState(null);
   const [products, setProducts] = useState([]);
+  const [topproducts, settopProducts] = useState([]);
   const dispatch = useDispatch();
   const search = useLocation().search;
   const isAuth = useSelector(isAuthenticated);
   const roles = useSelector(userRoles);
   const history = useHistory();
-  const getProds = () => {
-    axios
-      .get("products/all-products")
+  const getProds = async () => {
+    await axios
+      .get("/products/all-products")
       .then((res) => {
         setProducts(res.data);
       })
@@ -77,14 +79,25 @@ const PageHomeMi = () => {
         console.log(err.data);
       });
   };
+  const getTopratedproducts=()=>{
+    axios
+    .get("products/Topratedproducts")
+    .then((res) => {
+      //console.log(res.data);
+      settopProducts(res.data);
+    })
+    .catch((err) => {
+      console.log(err.data);
+    });
+  }
   useEffect(() => {
     getProds();
-
+     getTopratedproducts();
     roles.includes("admin") && dispatch(getAllUsers());
     dispatch(resetStateLikes());
     dispatch(resetStateReviews());
     axios
-      .get("products/liked-products")
+      .get("/products/liked-products")
       .then((response) => {
         console.log(response);
         dispatch(getLikedProducts(response.data));
@@ -93,7 +106,7 @@ const PageHomeMi = () => {
         console.error(error);
       });
     axios
-      .get("products/bookmarked-products")
+      .get("/products/bookmarked-products")
       .then((response) => {
         console.log(response);
         dispatch(getBookmarkedProducts(response.data));
@@ -188,12 +201,11 @@ const PageHomeMi = () => {
           {/* === SECTION 6 === */}
           <div className="relative py-16">
             <BackgroundSection />
-            <SectionSliderPosts
+            <SectionSliderproduct
               postCardName="card9"
-              heading="Explore latest audio articles"
-              subHeading="Click on the icon to enjoy the music or podcast 🎧"
+              heading="Explore our top rated products"
+             // subHeading="Click on the icon to enjoy the music or podcast 🎧"
               sliderStype="style2"
-              posts={DEMO_POSTS_AUDIO.filter((_, i) => i > 3 && i < 10)}
             />
           </div>
 

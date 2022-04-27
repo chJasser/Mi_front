@@ -88,9 +88,9 @@ const SectionSliderNewCategories: FC<SectionSliderNewCategoriesProps> = ({
   return (
     <div className={`nc-SectionSliderNewCategories ${className}`}>
       <div className={`${UNIQUE_CLASS} flow-root`}>
-        <Heading desc={subHeading} hasNextPrev>
+       { <Heading desc={subHeading} hasNextPrev>
           {heading}
-        </Heading>
+  </Heading>}
         <div className="glide__track" data-glide-el="track">
           <ul className="glide__slides">
             {categories.map((item, index) => (
