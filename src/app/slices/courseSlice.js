@@ -3,6 +3,7 @@ import axios from "axiosInstance";
 export const CourseSlice = createSlice({
   name: "CourseSlice",
   initialState: {
+    changeResource: false,
     change: false,
     selectedCourse: {
       label: "",
@@ -14,11 +15,15 @@ export const CourseSlice = createSlice({
       category: "",
     },
     resources: [],
-    chapter: { description: "", title: "" },
+    chapter: { _id: 0, description: "", title: "" },
+    selectedResource: null,
   },
   reducers: {
     setChange: (state) => {
       state.change = !state.change;
+    },
+    setChangeResource: (state) => {
+      state.changeResource = !state.changeResource;
     },
     setSelected: (state, action) => {
       state.selectedCourse = { ...action.payload };
@@ -29,9 +34,18 @@ export const CourseSlice = createSlice({
     setChapter: (state, action) => {
       state.chapter = action.payload;
     },
+    setSelectedResource: (state, action) => {
+      state.selectedResource = action.payload;
+    },
   },
 });
 
-export const { setChange, setSelected, setresources, setChapter } =
-  CourseSlice.actions;
+export const {
+  setChange,
+  setSelected,
+  setresources,
+  setChapter,
+  setChangeResource,
+  setSelectedResource,
+} = CourseSlice.actions;
 export default CourseSlice.reducer;

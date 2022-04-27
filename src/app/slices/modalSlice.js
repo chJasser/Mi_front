@@ -4,6 +4,7 @@ export const CoursemodalSlice = createSlice({
   initialState: {
     isOpen: false,
     isOpenResource: false,
+    isOpenUpResource: false,
     isOpenChapter: false,
   },
   reducers: {
@@ -13,12 +14,19 @@ export const CoursemodalSlice = createSlice({
     setIsOpenResource: (state, action) => {
       state.isOpenResource = action.payload;
     },
+    setIsOpenUpResource: (state, action) => {
+      state.isOpenUpResource = action.payload;
+    },
     setIsOpenChapter: (state, action) => {
       state.isOpenChapter = action.payload;
     },
   },
 });
 
-export const { setIsOpen, setIsOpenResource, setIsOpenChapter } =
-  CoursemodalSlice.actions;
+export const {
+  setIsOpen,
+  setIsOpenResource,
+  setIsOpenChapter,
+  setIsOpenUpResource,
+} = CoursemodalSlice.actions;
 export default CoursemodalSlice.reducer;

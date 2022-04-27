@@ -11,7 +11,7 @@ import { setIsOpenResource } from "app/slices/modalSlice";
 import { setChangeResource } from "app/slices/courseSlice.js";
 import { useParams } from "react-router-dom";
 
-function AddResource() {
+function UpdateResource() {
   const params = useParams();
   const dispatch = useDispatch();
   const chapter = useSelector((state) => state.courseSlice.chapter);
@@ -107,7 +107,7 @@ function AddResource() {
               <Alert severity="error">{errors.file}</Alert>
             ) : null}
             <ButtonPrimary className="md:col-span-2" type="submit">
-              Add resource
+              update resource
             </ButtonPrimary>
           </form>
         )}
@@ -116,4 +116,4 @@ function AddResource() {
   );
 }
 
-export default AddResource;
+export default UpdateResource;
