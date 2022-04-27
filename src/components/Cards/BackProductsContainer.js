@@ -11,7 +11,6 @@ import PaginationSimple from "components/Pagination/PaginationSimple";
 import TableOfProducts from "./TableOfProducts";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Cardproducts from "./Cardproducts";
-import Addproducts from "containers/PageDashboard/Addproducts";
 import { selectopen } from "app/productslice/Productslice";
 import TableOfProductsBack from "./TableOfProductsBack";
 

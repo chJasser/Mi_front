@@ -13,7 +13,7 @@ import ButtonPrimary from "components/Button/ButtonPrimary";
 import Cardproducts from "./Cardproducts";
 
 import { selectopen } from "app/productslice/Productslice";
-import Addproducts from "containers/PageDashboard/Addproducts";
+import AddProducts from "containers/PageDashboard/AddProducts";
 export default function ProductsContainer({ color }) {
     
 const openn = useSelector((state) => state.product.open);
@@ -65,7 +65,7 @@ const dispatch=useDispatch();
         className="md:col-span-2">
         AddProduct
       </ButtonPrimary>
-      {open &&  <Addproducts />}
+      {open &&  <AddProducts />}
     </>
   );
 }

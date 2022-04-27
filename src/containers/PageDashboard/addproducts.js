@@ -18,7 +18,7 @@ import { useHistory } from "react-router-dom";
 import { addProduct } from "app/productslice/Productsliceseller";
 import { selectopen } from "app/productslice/Productslice";
 
-const Addproducts = () => {
+const AddProducts = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState(null);
@@ -469,4 +469,4 @@ const Addproducts = () => {
   );
 };
 
-export default Addproducts;
+export default AddProducts;
