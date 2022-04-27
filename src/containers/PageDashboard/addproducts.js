@@ -465,7 +465,7 @@ const Addproducts = () => {
             </label>): null}
 
             <ButtonPrimary className="md:col-span-2" type="submit"
-            onClick={()=>  dispatch(selectopen(false))}>
+            >
               Add product
             </ButtonPrimary>
           </form>)

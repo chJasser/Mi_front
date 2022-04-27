@@ -23,8 +23,7 @@ function TableOfProducts({ color, prod }) {
   const show = useSelector((state) => state.productseller.show);
   const changedProduct = useSelector((state) => state.productseller.changedProduct);
   const base_url = "http://localhost:5050/";
-  //const updatedProduct = useSelector((state) => state.productseller.changedProduct)
-  //console.log(updatedProduct)
+
   useEffect(() => {
     axios.get("/products/getproductsseller").then((res) => {
       // console.log(res.data);
@@ -137,7 +136,6 @@ function TableOfProducts({ color, prod }) {
         </div>
       </div>
 
-      <UpdateProduct /> 
     </>
   );
 }

@@ -11,7 +11,7 @@ import PaginationSimple from "components/Pagination/PaginationSimple";
 import TableOfProducts from "./TableOfProducts";
 import ButtonPrimary from "components/Button/ButtonPrimary";
 import Cardproducts from "./Cardproducts";
-import Addproducts from "containers/PageDashboard/addproducts";
+import Addproducts from "containers/PageDashboard/AddProducts";
 import { selectopen } from "app/productslice/Productslice";
 export default function ProductsContainer({ color }) {
     
