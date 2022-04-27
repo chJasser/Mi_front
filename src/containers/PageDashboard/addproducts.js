@@ -151,12 +151,7 @@ const Addproducts = () => {
     for (const key of Object.keys(productImage)) {
       formData.append("files", productImage[key]);
     }
-    console.log(values);
-    console.log(selectedOptioncategory.value);
-    console.log(selectedOptionstate.value);
-    console.log(selectedOptiontype.value);
-    console.log(selectedOptionmarque.value);
-    console.log(colors);
+
 
       const res = await axios
         .post(`/products/add-color`, colors)
@@ -464,8 +459,7 @@ const Addproducts = () => {
               />
             </label>): null}
 
-            <ButtonPrimary className="md:col-span-2" type="submit"
-            onClick={()=>  dispatch(selectopen(false))}>
+            <ButtonPrimary className="md:col-span-2" type="submit">
               Add product
             </ButtonPrimary>
           </form>)
