@@ -128,7 +128,6 @@ function CourseContent({ course }) {
       )}
       <UpdateResourceMoadal></UpdateResourceMoadal>
       <ResourceMoadal />
-      <Meet />
     </div>
   );
 }

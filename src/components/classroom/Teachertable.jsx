@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axiosInstance";
 import TeacherTableData from "./TeacherTableData";
 import { useSelector } from "react-redux";
+import CreateMeet from "./CreateMeet";
 function Teachertable() {
   const change = useSelector((state) => state.courseSlice.change);
   const [list, setList] = useState([]);
@@ -23,6 +24,7 @@ function Teachertable() {
   }, []);
   return (
     <div className=" p-4 rounded-md w-full">
+      <CreateMeet></CreateMeet>
       <div>
         <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
           <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">

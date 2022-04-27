@@ -23,7 +23,11 @@ function UpdateResource() {
     formData2.append("title", values.title);
     formData2.append("description", values.description);
     if (values.file !== null) formData2.append("file", values.file);
-    await axios.put(`/resources/${resource._id}`, { title: values.title });
+    await axios.put(`/resources/${resource._id}`, {
+      title: values.title,
+      description: values.description,
+      file: values.file,
+    });
     dispatch(setIsOpenUpResource(false));
     dispatch(setChangeResource());
   };
