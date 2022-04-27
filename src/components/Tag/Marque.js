@@ -10,7 +10,6 @@ const Marque = ({ className = "", tag, hideCount = false }) => {
     axios
       .get(`products/marque?marque=${tag}`)
       .then((res) => {
-        console.log(res.data)
         setNbr(res.data.length);
       })
       .catch((err) => {
