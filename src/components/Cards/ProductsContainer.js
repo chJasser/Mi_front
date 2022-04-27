@@ -65,7 +65,7 @@ const dispatch=useDispatch();
         className="md:col-span-2">
         AddProduct
       </ButtonPrimary>
-      {open &&  <Addproducts />}
+      {open &&  <AddProducts />}
     </>
   );
 }

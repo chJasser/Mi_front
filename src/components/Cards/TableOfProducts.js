@@ -89,19 +89,19 @@ function TableOfProducts({ color, prod }) {
                         <div className="flex-shrink-0 w-10 h-10">
                           <Suspense fallback={null}>
                             {" "}
-                            {(product._id !== changedProduct._id)?
+                            {/* {(product._id !== changedProduct._id)? */}
                             <img
                               className="w-full h-full rounded-full"
                               src={base_url + product.productImage[0] }
                               alt={product.label}
                             />
-                            :
+                            {/* :
                             <img
                               className="w-full h-full rounded-full"
                               src={base_url + changedProduct.productImage[0] }
                               alt={product.label}
                             />
-                            }
+                            } */}
                           </Suspense> 
                         </div>
                         <div className="ml-3">
@@ -136,7 +136,7 @@ function TableOfProducts({ color, prod }) {
           </table>
         </div>
       </div>
-
+      {/* <UpdateProduct/> */}
     </>
   );
 }

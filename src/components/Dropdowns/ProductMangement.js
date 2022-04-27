@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { createPopper } from "@popperjs/core";
 import axios from "axiosInstance";
 import { useDispatch, useSelector } from "react-redux";
@@ -81,6 +81,12 @@ const ProductManagement = (props) => {
     setSelectedOptionmarque(selectedOptionmarque);
   };
 
+  const [image, setImage] = useState();
+
+  useEffect(() => {
+    setImage(productImage)
+  },[])
+
   const optionscategory = [
     { value: "guitars", label: "guitars" },
     { value: "keyboards", label: "keyboards" },
@@ -145,18 +151,25 @@ const ProductManagement = (props) => {
         : product.state
     );
     for (const key of Object.keys(
-      productImage
+      //productImage
         // ? productImage
         // : (productImage.FileList.name = product.productImage)
+        productImage
+        ? productImage
+        : (productImage.FileList.name = product.productImage)
     )) {
       console.log(productImage);
       console.log(product.productImage);
+      // formData.append(
+      //   "files",
+      //   productImage[key] ? (productImage[key],values.productImage=productImage) : product.productImage[key]
+      //   //(values.productImage[key]) ? values.productImage[key] : product.productImage
+      //   //values.productImage
+      //   );
       formData.append(
         "files",
-        productImage[key] ? (productImage[key],values.productImage=productImage[0]) : product.productImage[key]
-        //(values.productImage[key]) ? values.productImage[key] : product.productImage
-        //values.productImage
-        );
+        productImage[key] ? productImage[key] : product.productImage[key]
+      );
    
     }
 
@@ -398,7 +411,7 @@ const ProductManagement = (props) => {
               <ButtonPrimary
                 className="md:col-span-2"
                 type="submit"
-                onClick={() => {
+                onClick={() => {dispatch(showForm(false))
                   setOpen(false)
                   if(selectedOptioncategory.value !== undefined)
                     values.category = selectedOptioncategory.value;
@@ -416,21 +429,22 @@ const ProductManagement = (props) => {
                     values.type = selectedOptiontype.value
                   else
                     values.type = product.type;
-                  if(productImage){
+                  // if(productImage){
                     
-                  console.log(productImage);
-                    console.log("/uploads\\"+productImage[0].name)
-                    values.productImage = "uploads\\"+productImage[0].name;
-                  }else
-                    values.productImage = product.productImage;
-                  console.log(productImage);
-                  console.log(values)
+                  // console.log(productImage);
+                  //   console.log("/uploads\\"+productImage[0].name)
+                  //   values.productImage = "uploads\\"+productImage[0].name;
+                  // }else
+                  //   values.productImage = product.productImage;
+                  // console.log(productImage);
+                  // console.log(values)
                   
-                  console.log({...product, ...values})
+                  // console.log({...product, ...values})
                   
-                  dispatch(updatesellerProduct({...product, ...values}));
-                  dispatch(updateProduct({...product, ...values}));
-                
+                   dispatch(updatesellerProduct({...product, ...values}));
+                   dispatch(updateProduct({...product, ...values}));
+                   setTimeout(() => { window.location.reload(false); }, 10)
+                // }}
                 }}
               >
                 Update product
