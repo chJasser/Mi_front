@@ -13,7 +13,7 @@ import {
 import { Document, Page, pdfjs } from "react-pdf";
 import UpdateResourceMoadal from "./updateResourceModal";
 import Meet from "./meet";
-function CourseContent({ course }) {
+function CourseContentStudent({ course }) {
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
   const dispatch = useDispatch();
   const change = useSelector((state) => state.courseSlice.changeResource);
@@ -27,14 +27,6 @@ function CourseContent({ course }) {
     setNumPages(numPages);
   }
   const base_url = "http://localhost:5050/data/resources/";
-  const deleteResource = (resource) => {
-    axios
-      .delete(`/resources/${resource._id}`)
-      .then(() => {
-        dispatch(setChangeResource());
-      })
-      .catch((err) => console.log(err));
-  };
   useEffect(() => {
     if (chapter._id !== 0)
       axios
@@ -52,38 +44,10 @@ function CourseContent({ course }) {
       <span>{chapter.description}</span>
       <br />
       {chapter._id !== 0 && (
-        <button
-          onClick={() => {
-            dispatch(setIsOpenResource(true));
-          }}
-        >
-          addResource
-        </button>
-      )}
-      {chapter._id !== 0 && (
         <>
           {resources.map((resource, index) => (
             <div key={index}>
               {resource.title}
-              <button
-                title="Edit"
-                style={{ color: "#FFC107" }}
-                onClick={() => {
-                  dispatch(setSelectedResource(resource));
-                  dispatch(setIsOpenUpResource(true));
-                }}
-              >
-                <i className="material-icons">&#xE254;</i>
-              </button>
-              <button
-                title="Delete"
-                style={{ color: "#E34724" }}
-                onClick={() => {
-                  deleteResource(resource);
-                }}
-              >
-                <i className="material-icons ">&#xE872;</i>
-              </button>
               <>
                 {resource.type.startsWith("video") && (
                   <ReactPlayer
@@ -126,11 +90,9 @@ function CourseContent({ course }) {
           ))}
         </>
       )}
-      <UpdateResourceMoadal></UpdateResourceMoadal>
-      <ResourceMoadal />
       <Meet />
     </div>
   );
 }
 
-export default CourseContent;
+export default CourseContentStudent;

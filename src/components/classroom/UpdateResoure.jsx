@@ -7,30 +7,24 @@ import { Alert } from "@mui/material";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
-import { setIsOpenResource } from "app/slices/modalSlice";
+import { setIsOpenUpResource } from "app/slices/modalSlice";
 import { setChangeResource } from "app/slices/courseSlice.js";
 import { useParams } from "react-router-dom";
 
 function UpdateResource() {
-  const params = useParams();
   const dispatch = useDispatch();
-  const chapter = useSelector((state) => state.courseSlice.chapter);
+  const resource = useSelector((state) => state.courseSlice.selectedResource);
   const validationSchema = yup.object().shape({
     title: yup.string().required().trim(),
     description: yup.string().default("").trim(),
-    file: yup.string().required(),
   });
   const onSubmit = async (values) => {
-    var formData = new FormData();
-    formData.append("title", values.title);
-    formData.append("description", values.description);
-    formData.append("file", values.file);
-    await axios.post(`/resources/${chapter._id}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    dispatch(setIsOpenResource(false));
+    var formData2 = new FormData();
+    formData2.append("title", values.title);
+    formData2.append("description", values.description);
+    if (values.file !== null) formData2.append("file", values.file);
+    await axios.put(`/resources/${resource._id}`, { title: values.title });
+    dispatch(setIsOpenUpResource(false));
     dispatch(setChangeResource());
   };
 
@@ -38,9 +32,9 @@ function UpdateResource() {
     <div className="rounded-xl md:border md:border-neutral-100 dark:border-neutral-800 md:p-4 modal-body m-5">
       <Formik
         initialValues={{
-          title: "",
-          description: "",
-          content: null,
+          title: resource.title,
+          description: resource.description,
+          file: null,
         }}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
@@ -103,9 +97,6 @@ function UpdateResource() {
                 }}
               />
             </label>
-            {touched.file && errors.file ? (
-              <Alert severity="error">{errors.file}</Alert>
-            ) : null}
             <ButtonPrimary className="md:col-span-2" type="submit">
               update resource
             </ButtonPrimary>

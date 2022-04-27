@@ -1,7 +1,6 @@
 import Modal from "react-modal";
 import { useSelector, useDispatch } from "react-redux";
 import { setIsOpenUpResource } from "app/slices/modalSlice";
-import AddResource from "./AddResource";
 import UpdateResource from "./UpdateResoure";
 const customStyles = {
   content: {

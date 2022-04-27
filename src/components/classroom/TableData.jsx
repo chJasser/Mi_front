@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
 import axios from "axiosInstance";
 import ReactStars from "react-rating-stars-component";
-import { Link } from "react-router-dom";
-
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setChange, setSelected } from "app/slices/courseSlice";
+import { useHistory } from "react-router-dom";
 const base_url = "http://localhost:5050/data/image/";
 function TableData({ course }) {
+  const dispatch = useDispatch();
+  const selected = useSelector((state) => state.courseSlice.selected);
+  const history = useHistory();
   const [rate, setrate] = useState(0);
   useEffect(() => {
     axios
@@ -50,7 +54,14 @@ function TableData({ course }) {
         ></ReactStars>
       </td>
       <td className=" border-b border-gray-200 bg-white text-sm">
-        <button title="View" style={{ color: "#03A9F4" }}>
+        <button
+          title="View"
+          style={{ color: "#03A9F4" }}
+          onClick={() => {
+            dispatch(setSelected(course));
+            history.replace(`/mi/classroom/student/details/${course._id}`);
+          }}
+        >
           <i className="material-icons">&#xE417;</i>
         </button>
         <button title="Delete" style={{ color: "#E34724" }}>
