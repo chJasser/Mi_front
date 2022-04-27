@@ -133,7 +133,7 @@ const ProductManagement = (props) => {
     formData.append(
       "type",
       selectedOptiontype.value
-        ? (selectedOptiontype.value, 
+        ? (selectedOptiontype.value,
           (values.type = selectedOptiontype.value))
         : product.type
     );
@@ -146,18 +146,16 @@ const ProductManagement = (props) => {
     );
     for (const key of Object.keys(
       productImage
-        // ? productImage
-        // : (productImage.FileList.name = product.productImage)
+        ? productImage
+        : (productImage.FileList.name = product.productImage)
     )) {
-      console.log(productImage);
-      console.log(product.productImage);
+
       formData.append(
         "files",
-        productImage[key] ? (productImage[key],values.productImage=productImage[0]) : product.productImage[key]
-        //(values.productImage[key]) ? values.productImage[key] : product.productImage
-        //values.productImage
-        );
-   
+        // productImage[key] ? (productImage[key],values.productImage=productImage[0]) : product.productImage[key]
+        productImage[key] ? productImage[key] : product.productImage[key]
+      );
+
     }
 
 
@@ -198,10 +196,10 @@ const ProductManagement = (props) => {
     axios
       .delete(`/products/delete-product/${id}`)
       .then((res) => {
-      
+
       })
       .catch((err) => {
-       
+
       });
   };
   const handleupdateproduct = () => {
@@ -389,7 +387,7 @@ const ProductManagement = (props) => {
                   );
                 }}
                 multiple
-                //value={product.productImage}
+              //value={product.productImage}
               />
               {touched.productImage && errors.productImage ? (
                 <Alert severity="error">{errors.productImage}</Alert>
@@ -399,38 +397,35 @@ const ProductManagement = (props) => {
                 className="md:col-span-2"
                 type="submit"
                 onClick={() => {
-                  setOpen(false)
-                  if(selectedOptioncategory.value !== undefined)
+
+                  if (selectedOptioncategory.value !== undefined)
                     values.category = selectedOptioncategory.value;
                   else
                     values.category = product.category;
-                  if(selectedOptionmarque.value !== undefined)
+                  if (selectedOptionmarque.value !== undefined)
                     values.marque = selectedOptionmarque.value
                   else
                     values.marque = product.category;
-                  if(selectedOptionstate.value !== undefined)
+                  if (selectedOptionstate.value !== undefined)
                     values.state = selectedOptionstate.value
                   else
                     values.state = product.state;
-                  if(selectedOptiontype.value !== undefined)
+                  if (selectedOptiontype.value !== undefined)
                     values.type = selectedOptiontype.value
                   else
                     values.type = product.type;
-                  if(productImage){
-                    
-                  console.log(productImage);
-                    console.log("/uploads\\"+productImage[0].name)
-                    values.productImage = "uploads\\"+productImage[0].name;
-                  }else
+                  if (productImage) {
+
+                    console.log(productImage);
+                    console.log("/uploads\\" + productImage[0].name)
+                    values.productImage = "uploads\\" + productImage[0].name;
+                  } else
                     values.productImage = product.productImage;
-                  console.log(productImage);
-                  console.log(values)
-                  
-                  console.log({...product, ...values})
-                  
-                  dispatch(updatesellerProduct({...product, ...values}));
-                  dispatch(updateProduct({...product, ...values}));
-                
+
+                  dispatch(updatesellerProduct({ ...product, ...values }));
+                  dispatch(updateProduct({ ...product, ...values }));
+
+                  setOpen(false)
                 }}
               >
                 Update product
@@ -500,15 +495,15 @@ const ProductManagement = (props) => {
       </div>
 
       <NcModal
-      isOpenProp={open}
-      contentExtraClass="max-w-screen-md"
-      modalTitle="Update Product"
-      triggerText=""
-      renderContent={renderModalContent}
-      hide={false}
-    />
+        isOpenProp={open}
+        contentExtraClass="max-w-screen-md"
+        modalTitle="Update Product"
+        triggerText=""
+        renderContent={renderModalContent}
+        hide={false}
+      />
 
-      
+
     </>
   );
 };

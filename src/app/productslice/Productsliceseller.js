@@ -9,7 +9,7 @@ let initialState = {
   colors: {},
   category: "",
   errors: "",
-  prod:""
+  prod: ""
 };
 
 const ProductsSliceseller = createSlice({
@@ -46,7 +46,7 @@ const ProductsSliceseller = createSlice({
         state.products[index] = payload;
       }
     },
-    showText: (state, action) =>{
+    showText: (state, action) => {
       state.text = action.payload;
     },
     showForm: (state, action) => {
@@ -56,14 +56,15 @@ const ProductsSliceseller = createSlice({
       const payload = action.payload;
       state.products.push(payload);
     },
-    selectrecommandprod:(state,action)=>{
-state.prod=action.payload;
+    selectrecommandprod: (state, action) => {
+      state.prod = action.payload;
     },
     setErrors(state, action) {
       state.errors = action.payload;
     },
     updateProduct: (state, action) => {
       state.changedProduct = action.payload;
+      setTimeout(() => { window.location.reload(false); }, 10)
     },
     colorFilter: (state, action) => {
       state.colors = action.payload;
