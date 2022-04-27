@@ -10,6 +10,13 @@ function TableData({ course }) {
   const selected = useSelector((state) => state.courseSlice.selected);
   const history = useHistory();
   const [rate, setrate] = useState(0);
+  const unsubscribe = () => {
+    dispatch(setChange());
+    axios
+      .put(`courses/unsubscribe-course/${course._id}`, null)
+
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
     axios
       .get(`rate-course/${course._id}`)
@@ -64,7 +71,13 @@ function TableData({ course }) {
         >
           <i className="material-icons">&#xE417;</i>
         </button>
-        <button title="Delete" style={{ color: "#E34724" }}>
+        <button
+          title="Delete"
+          style={{ color: "#E34724" }}
+          onClick={() => {
+            unsubscribe();
+          }}
+        >
           <i className="material-icons ">&#xE872;</i>
         </button>
       </td>
