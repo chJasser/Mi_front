@@ -156,12 +156,13 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
 
   const filterColor = async() => {
     console.log(colors)
-    const cust = await axios.post(`products/custom`, colors).then(c => {
+    await axios.post(`products/custom`, colors).then(c => {
       console.log(c.data)
        axios.post(`products/custom-products`, c.data).then(r => {
         console.log(r.data)
         let products = r.data.filter((product) => {
-          return product.category === customCategory;
+          if(product !== null)
+            {return product.category === customCategory;}
         });
         console.log(products)
         setProducts(products)
