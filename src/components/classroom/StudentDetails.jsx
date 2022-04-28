@@ -37,7 +37,7 @@ function StudentDetails() {
   );
   useEffect(() => {
     console.log(chapters);
-  });
+  }, [chapters]);
   const isOpen = useSelector((state) => state.CoursemodalSlice.isOpen);
   const [tabActive, setTabActive] = useState(chapters[0]);
 
