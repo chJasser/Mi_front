@@ -13,6 +13,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import "./styles/index.scss";
 import "./index.css";
 import "./fonts/line-awesome-1.3.0/css/line-awesome.css";
+import Chat from "components/ChatBot/Chat";
 //
 const RtlImportCssLazy = React.lazy(() => import("RtlImportCss"));
 //
@@ -21,6 +22,7 @@ ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
         <App />
+        <Chat />
         <form action="https://sandbox.paymee.tn/gateway/" ></form>
 
       {/* LOAD RTL CSS WHEN RTL MODE ENABLE */}

@@ -38,17 +38,17 @@ function CourseContentStudent({ course }) {
   }, [chapter, change]);
   return (
     <div className="container-fluid">
-      <h1 className="text-center">{selected.label}</h1>
-      <span>{selected.description}</span>
-      <h2>{chapter.title}</h2>
-      <span>{chapter.description}</span>
+      <h1 className="text-center font-bold mt-1">{selected.label}</h1>
+      <span className="flex justify-center mt-1">{selected.description}</span>
+      <h2 className="text-center font-bold mt-1">{chapter.title}</h2>
+      <span className="flex justify-center mt-1">{chapter.description}</span>
       <br />
       {chapter._id !== 0 && (
         <>
           {resources.map((resource, index) => (
             <div key={index}>
-              {resource.title}
-              <>
+              <h2 className="font-bold flex justify-center">{resource.title}</h2>
+              <div className="flex justify-center">
                 {resource.type.startsWith("video") && (
                   <ReactPlayer
                     url={base_url + resource.path}
@@ -57,9 +57,10 @@ function CourseContentStudent({ course }) {
                     controls
                   ></ReactPlayer>
                 )}
+                <br></br>
                 {resource.type.startsWith("image") && (
                   <NcImage
-                    className="h-400 w-400"
+                    className="h-80 w-80"
                     src={`${base_url + resource.path}`}
                     alt={resource.title}
                   />
@@ -79,18 +80,18 @@ function CourseContentStudent({ course }) {
                       href={base_url + resource.path}
                       target="_blank"
                       rel="noreferrer"
+                      className="font-bold underline"
                     >
                       view Pdf
                     </a>
                   </>
                 )}
-              </>
+              </div>
               {resource.description}
             </div>
           ))}
         </>
       )}
-      <Meet />
     </div>
   );
 }

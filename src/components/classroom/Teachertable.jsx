@@ -22,8 +22,11 @@ function Teachertable() {
       })
       .catch((err) => console.log(err));
   }, []);
+  const currentteacher = useSelector(
+    (state) => state.user.currentTeacher
+  );
   return (
-    <div className=" p-4 rounded-md w-full">
+    currentteacher && (<div className=" p-4 rounded-md w-full">
       <CreateMeet></CreateMeet>
       <div>
         <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -60,7 +63,7 @@ function Teachertable() {
           </div>
         </div>
       </div>
-    </div>
+    </div>)
   );
 }
 

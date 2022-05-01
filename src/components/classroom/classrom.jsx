@@ -48,7 +48,6 @@ const languages = [
 const TABS = [
   "Most popular",
   "Top Rated",
-  "Top courses for beginner",
   "Recommended",
 ];
 const Classroom = ({ className = "" }) => {
@@ -138,7 +137,7 @@ const Classroom = ({ className = "" }) => {
           <span className="block text-sm mt-4 text-neutral-500 dark:text-neutral-300">
             We found{" "}
             <strong className="font-semibold text-neutral-800 dark:text-neutral-100">
-              1135
+              {list.length}
             </strong>{" "}
             results articles for{" "}
             <strong className="font-semibold text-neutral-800 dark:text-neutral-100"></strong>
@@ -224,27 +223,6 @@ const Classroom = ({ className = "" }) => {
           </div>
         </main>
 
-        {/* MORE SECTIONS */}
-        {/* === SECTION 5 === */}
-        <div className="relative py-16">
-          <BackgroundSection />
-          <SectionGridCategoryBox
-            categories={DEMO_CATEGORIES.filter((_, i) => i < 10)}
-          />
-          <div className="text-center mx-auto mt-10 md:mt-16">
-            <ButtonSecondary>Show me more</ButtonSecondary>
-          </div>
-        </div>
-
-        {/* === SECTION 5 === */}
-        <SectionSliderNewAuthors
-          heading="Top elite authors"
-          subHeading="Discover our elite writers"
-          authors={DEMO_AUTHORS.filter((_, i) => i < 10)}
-        />
-
-        {/* SUBCRIBES */}
-        <SectionSubscribe2 />
       </div>
     </div>
   );

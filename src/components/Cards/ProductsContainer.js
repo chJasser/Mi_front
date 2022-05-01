@@ -13,7 +13,7 @@ import ButtonPrimary from "components/Button/ButtonPrimary";
 import Cardproducts from "./Cardproducts";
 
 import { selectopen } from "app/productslice/Productslice";
-import AddProducts from "containers/PageDashboard/AddProducts";
+import AddProducts from "containers/PageDashboard/addproducts";
 export default function ProductsContainer({ color }) {
     
 const openn = useSelector((state) => state.product.open);

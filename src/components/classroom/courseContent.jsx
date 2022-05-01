@@ -13,6 +13,7 @@ import {
 import { Document, Page, pdfjs } from "react-pdf";
 import UpdateResourceMoadal from "./updateResourceModal";
 import Meet from "./meet";
+import ButtonPrimary from "components/Button/ButtonPrimary";
 function CourseContent({ course }) {
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
   const dispatch = useDispatch();
@@ -46,26 +47,29 @@ function CourseContent({ course }) {
   }, [chapter, change]);
   return (
     <div className="container-fluid">
-      <h1 className="text-center">{selected.label}</h1>
-      <span>{selected.description}</span>
-      <h2>{chapter.title}</h2>
-      <span>{chapter.description}</span>
+      <h1 className="text-center font-bold mt-1">{selected.label}</h1>
+      <span className="text-center mt-1">{selected.description}</span>
+      <h2 className="text-center font-bold mt-1">{chapter.title}</h2>
+      <span className="flex justify-center mt-1">{chapter.description}</span>
       <br />
       {chapter._id !== 0 && (
-        <button
+        <ButtonPrimary
+        className="flex justify-center my-3"
           onClick={() => {
             dispatch(setIsOpenResource(true));
           }}
         >
           addResource
-        </button>
+        </ButtonPrimary>
       )}
       {chapter._id !== 0 && (
         <>
           {resources.map((resource, index) => (
             <div key={index}>
-              {resource.title}
+              <h2 className="font-bold flex justify-center">{resource.title}</h2>
+              <div className="flex justify-center">
               <button
+              className="mr-3 my-3"
                 title="Edit"
                 style={{ color: "#FFC107" }}
                 onClick={() => {
@@ -73,7 +77,9 @@ function CourseContent({ course }) {
                   dispatch(setIsOpenUpResource(true));
                 }}
               >
-                <i className="material-icons">&#xE254;</i>
+               <i className="material-icons">&#xE254;</i>
+               Update
+            
               </button>
               <button
                 title="Delete"
@@ -82,9 +88,12 @@ function CourseContent({ course }) {
                   deleteResource(resource);
                 }}
               >
+                
                 <i className="material-icons ">&#xE872;</i>
+                Delete
               </button>
-              <>
+              </div>
+              <div className="flex justify-center">
                 {resource.type.startsWith("video") && (
                   <ReactPlayer
                     url={base_url + resource.path}
@@ -95,7 +104,7 @@ function CourseContent({ course }) {
                 )}
                 {resource.type.startsWith("image") && (
                   <NcImage
-                    className="h-400 w-400"
+                    className="h-80 w-80"
                     src={`${base_url + resource.path}`}
                     alt={resource.title}
                   />
@@ -115,13 +124,15 @@ function CourseContent({ course }) {
                       href={base_url + resource.path}
                       target="_blank"
                       rel="noreferrer"
+                      className="font-bold underline"
                     >
                       view Pdf
                     </a>
                   </>
                 )}
-              </>
-              {resource.description}
+              </div>
+              <br />
+              <p className="flex justify-center">{resource.description}</p>
             </div>
           ))}
         </>

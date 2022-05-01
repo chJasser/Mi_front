@@ -24,8 +24,10 @@ function Table() {
       })
       .catch((err) => console.log(err));
   }, [change]);
+
+  const student = useSelector((state) => state.user.currentStudent);
   return (
-    <div className=" p-8 rounded-md w-full">
+    student && (<div className=" p-8 rounded-md w-full">
       <Meet></Meet>
       <div>
         <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -60,7 +62,7 @@ function Table() {
           </div>
         </div>
       </div>
-    </div>
+    </div>)
   );
 }
 

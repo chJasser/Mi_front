@@ -98,8 +98,9 @@ function CourseDetails() {
                   key={index}
                 >
                   <div className="flex items-center">
-                    <span className="text-sm  ml-2">{item.title}</span>
+                    <span className="text-sm">{item.title}</span>
                     <button
+                    className="ml-3"
                       title="Edit"
                       style={{ color: "#FFC107" }}
                       onClick={() => {
@@ -110,6 +111,7 @@ function CourseDetails() {
                       <i className="material-icons">&#xE254;</i>
                     </button>
                     <button
+                    className="ml-2"
                       title="Delete"
                       style={{ color: "#E34724" }}
                       onClick={() => {
