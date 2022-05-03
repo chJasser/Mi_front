@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { stat } from "fs";
+let initialState = {
+    cartItems: [],
+    total: 0,
+};
 const getTotalAmmount = (state) => {
   const items = state.cartItems;
   items.forEach((i) => {
@@ -8,11 +12,7 @@ const getTotalAmmount = (state) => {
 };
 const carteslics = createSlice({
   name: "carteslics",
-  initialState: {
-    cartItems: [],
-
-    total: 0,
-  },
+  initialState,
   reducers: {
     removeitem: (state, action) => {
       return {
@@ -57,9 +57,14 @@ const carteslics = createSlice({
         total: getTotalAmmount(state),
       };
     },
+
+    DeselectItems:(state)=>{
+        state.cartItems=[];
+        state.total=0;      
+    }
   },
 });
 
-export const { additem, removeitem, getTotal, updateqte, addtotal } =
+export const { additem, removeitem, getTotal, updateqte, addtotal,DeselectItems } =
   carteslics.actions;
 export default carteslics.reducer;

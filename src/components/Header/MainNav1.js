@@ -16,7 +16,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
-import { removeitem } from "app/cartslice/carteslics";
+import { removeitem ,DeselectItems } from "app/cartslice/carteslics";
 
 /*export interface MainNav1Props {
   isTop: boolean;
@@ -102,6 +102,7 @@ const MainNav1 = ({ isTop }) => {
                   dispatch(logoutUser());
 
                   dispatch(deslecetsellerproducts());
+                  dispatch(DeselectItems());
                 }}
               >
                 Logout
@@ -112,7 +113,10 @@ const MainNav1 = ({ isTop }) => {
           </div>
           <div className="flex items-center xl:hidden">
             {isAuth ? (
-              <ButtonPrimary onClick={() => dispatch(logoutUser())}>
+              <ButtonPrimary onClick={() => {dispatch(logoutUser())
+                dispatch(DeselectItems());}
+              
+              }>
                 Logout
               </ButtonPrimary>
             ) : (

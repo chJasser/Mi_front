@@ -84,12 +84,16 @@ function PageSingleProduct() {
   const size = "large";
   const hiddenAvatar = false;
   const textArea = document.querySelector("#comment_content");
-  const rat = useSelector((state) => state.product.selectedProduct.rate);
+  //const rat = useSelector((state) => state.product.selectedProduct.rate);
 
   useEffect(() => {
-    console.log(rat);
-    setrating(rat-1 );
-    //console.log(likedProd);
+    
+    axios.get(`/products/getratingbyuser/${prod._id}`).then((response) => {
+      console.log(response.data.rate);
+     setrating((response.data.rate)-1);
+    });
+   
+    
   }, []);
 
   const Onmouseenter = (index) => {
@@ -106,8 +110,8 @@ function PageSingleProduct() {
       rate: rate + 1,
     };
 
-    axios.put(`/products/rating/${product._id}`, FormData).then((response) => {
-      //console.log(response.data);
+    axios.put(`/products/rating/${prod._id}`, FormData).then((response) => {
+      console.log(response.data);
     });
   };
   const addLikeDB = async () => {
@@ -475,9 +479,10 @@ function PageSingleProduct() {
               </ButtonSecondary>
             </div>
           </form>
+          <Productrecommand/> 
           
-         <Productrecommand/>
-         
+          
+          
           <FrequentlyBought/>
           
         </div>
