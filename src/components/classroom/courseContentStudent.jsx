@@ -13,8 +13,7 @@ import {
 import { Document, Page, pdfjs } from "react-pdf";
 import UpdateResourceMoadal from "./updateResourceModal";
 import Meet from "./meet";
-import ButtonPrimary from "components/Button/ButtonPrimary";
-function CourseContent({ course }) {
+function CourseContentStudent({ course }) {
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
   const dispatch = useDispatch();
   const change = useSelector((state) => state.courseSlice.changeResource);
@@ -28,14 +27,6 @@ function CourseContent({ course }) {
     setNumPages(numPages);
   }
   const base_url = "http://localhost:5050/data/resources/";
-  const deleteResource = (resource) => {
-    axios
-      .delete(`/resources/${resource._id}`)
-      .then(() => {
-        dispatch(setChangeResource());
-      })
-      .catch((err) => console.log(err));
-  };
   useEffect(() => {
     if (chapter._id !== 0)
       axios
@@ -48,51 +39,15 @@ function CourseContent({ course }) {
   return (
     <div className="container-fluid">
       <h1 className="text-center font-bold mt-1">{selected.label}</h1>
-      <span className="text-center mt-1">{selected.description}</span>
+      <span className="flex justify-center mt-1">{selected.description}</span>
       <h2 className="text-center font-bold mt-1">{chapter.title}</h2>
       <span className="flex justify-center mt-1">{chapter.description}</span>
       <br />
-      {chapter._id !== 0 && (
-        <ButtonPrimary
-        className="flex justify-center my-3"
-          onClick={() => {
-            dispatch(setIsOpenResource(true));
-          }}
-        >
-          addResource
-        </ButtonPrimary>
-      )}
       {chapter._id !== 0 && (
         <>
           {resources.map((resource, index) => (
             <div key={index}>
               <h2 className="font-bold flex justify-center">{resource.title}</h2>
-              <div className="flex justify-center">
-              <button
-              className="mr-3 my-3"
-                title="Edit"
-                style={{ color: "#FFC107" }}
-                onClick={() => {
-                  dispatch(setSelectedResource(resource));
-                  dispatch(setIsOpenUpResource(true));
-                }}
-              >
-               <i className="material-icons">&#xE254;</i>
-               Update
-            
-              </button>
-              <button
-                title="Delete"
-                style={{ color: "#E34724" }}
-                onClick={() => {
-                  deleteResource(resource);
-                }}
-              >
-                
-                <i className="material-icons ">&#xE872;</i>
-                Delete
-              </button>
-              </div>
               <div className="flex justify-center">
                 {resource.type.startsWith("video") && (
                   <ReactPlayer
@@ -102,6 +57,7 @@ function CourseContent({ course }) {
                     controls
                   ></ReactPlayer>
                 )}
+                <br></br>
                 {resource.type.startsWith("image") && (
                   <NcImage
                     className="h-80 w-80"
@@ -131,16 +87,13 @@ function CourseContent({ course }) {
                   </>
                 )}
               </div>
-              <br />
-              <p className="flex justify-center">{resource.description}</p>
+              {resource.description}
             </div>
           ))}
         </>
       )}
-      <UpdateResourceMoadal></UpdateResourceMoadal>
-      <ResourceMoadal />
     </div>
   );
 }
 
-export default CourseContent;
+export default CourseContentStudent;

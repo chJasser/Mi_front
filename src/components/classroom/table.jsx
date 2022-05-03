@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axiosInstance";
 import TableData from "./TableData";
+import Meet from "./meet";
+import { useDispatch, useSelector } from "react-redux";
+import { setChange, setSelected } from "app/slices/courseSlice";
 function Table() {
+  const dispatch = useDispatch();
+  const change = useSelector((state) => state.courseSlice.change);
   const [list, setList] = useState([]);
   useEffect(() => {
     axios
@@ -11,8 +16,19 @@ function Table() {
       })
       .catch((err) => console.log(err));
   }, []);
+  useEffect(() => {
+    axios
+      .get("courses/student-course")
+      .then((course) => {
+        setList(course.data);
+      })
+      .catch((err) => console.log(err));
+  }, [change]);
+
+  const student = useSelector((state) => state.user.currentStudent);
   return (
-    <div className=" p-8 rounded-md w-full">
+    student && (<div className=" p-8 rounded-md w-full">
+      <Meet></Meet>
       <div>
         <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
           <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
@@ -46,7 +62,7 @@ function Table() {
           </div>
         </div>
       </div>
-    </div>
+    </div>)
   );
 }
 

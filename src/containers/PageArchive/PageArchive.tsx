@@ -31,6 +31,8 @@ import CardCategory from "../../components/CardCategory2/CardCategory";
 import aa from "search-insights";
 import {Hits,InstantSearch,Configure} from "react-instantsearch-dom"
 import algoliasearch from "algoliasearch/lite";
+import Chat from "../../components/ChatBot/Chat";
+import { SortAscendingIcon } from "@heroicons/react/solid";
 
 
 // import MyRouter from "routers/MyRouter";
@@ -78,7 +80,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     "brass",
     "percussions",
     "woodwind",
-    "others",
+    //"others",
   ];
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -156,14 +158,15 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
 
   const filterColor = async() => {
     console.log(colors)
-    const cust = await axios.post(`products/custom`, colors).then(c => {
-      console.log(c.data)
+    await axios.post(`products/custom`, colors).then(c => {
        axios.post(`products/custom-products`, c.data).then(r => {
-        console.log(r.data)
-        let products = r.data.filter((product) => {
-          return product.category === customCategory;
-        });
-        console.log(products)
+        function f(product) {
+          if(product !== null)
+            return product.category === customCategory;
+        }
+        let products = r.data.filter((product) => 
+          f(product)
+        );
         setProducts(products)
       })
       
@@ -234,6 +237,26 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     return url.split("?")[0];
   }
 
+  const SortAscending = () => {
+    axios
+      .get("products/sortacs")
+      .then((res) => {
+        console.log(res.data)
+        setProducts(
+          res.data
+        );
+      })
+  }
+  const SortDescending = () => {
+    axios
+      .get("products/sortdec")
+      .then((res) => {
+        setProducts(
+          res.data
+        );
+      })
+  }
+
   
   
 
@@ -243,7 +266,6 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     axios
       .get("products/liked-products")
       .then((response) => {
-        console.log(response);
         dispatch(getLikedProducts(response.data));
       })
       .catch((error) => {
@@ -252,7 +274,6 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
     axios
       .get("products/bookmarked-products")
       .then((response) => {
-        console.log(response);
         dispatch(getBookmarkedProducts(response.data));
       })
       .catch((error) => {
@@ -312,6 +333,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
           </div>
         </div>
       </div>
+      {/* <Chat /> */}
       {/* ====================== END HEADER ====================== */}
       <div className="relative py-16 container">
         <div className="category">
@@ -345,33 +367,6 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
           </div>
         </div>
       </div>
-      {/* <div className="relative mt-2 mx-auto search">
-            <label
-              htmlFor="search-input"
-              className="text-neutral-500 dark:text-neutral-300"
-            >
-              <span className="sr-only">Search all icons</span>
-              <Input
-                id="search-input"
-                type="search"
-                placeholder="Type the label of the course"
-                className="shadow-lg rounded-xl border-opacity-0"
-                sizeClass="pl-14 py-5 pr-5 md:pl-16"
-                
-              />
-              <span className="absolute left-5 top-1/2 transform -translate-y-1/2 text-2xl md:left-6">
-                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="1.5"
-                    d="M19.25 19.25L15.5 15.5M4.75 11C4.75 7.54822 7.54822 4.75 11 4.75C14.4518 4.75 17.25 7.54822 17.25 11C17.25 14.4518 14.4518 17.25 11 17.25C7.54822 17.25 4.75 14.4518 4.75 11Z"
-                  ></path>
-                </svg>
-              </span>
-            </label>
-          </div> */}
       {/* Marque */}
       <div
         ref={myRef}
@@ -456,6 +451,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
             </div>
           </div>
           {/*  */}
+          
           {/* Price */}
           <div
             style={{
@@ -463,6 +459,7 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               display: "block",
               width: "fit-content",
             }}
+            className="flex justify-between"
           >
             <h3>What is your budget?</h3>
             <Slider
@@ -473,6 +470,14 @@ const PageArchive: FC<PageArchiveProps> = ({ className = "" }) => {
               max={10000}
             />
             Your range of Price is between {min}$ and {max}$
+          </div>
+          <div className="flex justify-center mt-3">
+            <button type="button" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+            onClick={() => SortAscending()}
+            >Sort 🔼</button>
+            <button type="button" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+            onClick={() => SortDescending()}
+            >Sort 🔽</button>
           </div>
 
           {/* <Link 

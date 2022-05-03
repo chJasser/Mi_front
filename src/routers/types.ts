@@ -70,7 +70,7 @@ export interface LocationStates {
   "/mi/classroom"?: {};
   "/mi/classroom/teacher"?: {};
   "/mi/classroom/student"?: {};
-  "/mi/classroom/teacher/details"?: {};
+  "/mi/classroom/teacher/details/:id"?: {};
   "/mi/classroom/teacher/add"?: {};
   "/mi/classroom/teacher/update"?: {};
   "/mi/classroom/teacher/details/:id"?: {};
@@ -79,6 +79,7 @@ export interface LocationStates {
   "/mi/invoice/:id"?: {};
   "/mi/room"?: {};
   "/mi/invoices"?: {};
+  "/mi/meet/:id/:token"?: {};
 
   // back-office
   "/headerback"?: {};

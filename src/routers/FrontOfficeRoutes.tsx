@@ -69,6 +69,7 @@ import TeacherClassroom from "../components/classroom/TeacherClassroom";
 import AddCours from "./../containers/PageDashboard/addCours";
 import UpdateCourse from "components/classroom/updateCoures";
 import CourseDetails from "./../components/classroom/CourseDetails";
+
 import IsAuthRoute from "./privateRoutes/IsAuthRoute";
 import Payment from "components/Payment/Payment.js";
 import PageInvoice from "components/Payment/PageInvoice";
@@ -77,6 +78,8 @@ import UserInvoices from "components/Payment/UserInvoices";
 
 import Streamer from "containers/Stream/Streamer";
 import StreamHomePage from "containers/Stream/StreamHomePage";
+import MeetRoom from "components/classroom/MeetRoom";
+import StudentDetails from "components/classroom/StudentDetails";
 export const pages: Page[] = [
   { path: "/mi", exact: true, component: PageHomeMi },
   { path: "/mi#", exact: true, component: PageHome },
@@ -201,6 +204,12 @@ export const pages: Page[] = [
     component: PageTeacher,
   },
   {
+    path: "/mi/meet/:id/:token",
+    exact: true,
+    typeRoute: "classroom",
+    component: MeetRoom,
+  },
+  {
     path: "/mi/become-seller",
     exact: true,
     typeRoute: "seller",
@@ -256,6 +265,12 @@ export const pages: Page[] = [
     exact: true,
     typeRoute: "classroom",
     component: CourseDetails,
+  },
+  {
+    path: "/mi/classroom/student/details/:id",
+    exact: true,
+    typeRoute: "classroom",
+    component: StudentDetails,
   },
   {
     path: "/mi/classroom/teacher/add",

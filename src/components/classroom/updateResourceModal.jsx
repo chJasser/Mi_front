@@ -1,7 +1,7 @@
 import Modal from "react-modal";
 import { useSelector, useDispatch } from "react-redux";
-import { setIsOpenResource } from "app/slices/modalSlice";
-import AddResource from "./AddResource";
+import { setIsOpenUpResource } from "app/slices/modalSlice";
+import UpdateResource from "./UpdateResoure";
 const customStyles = {
   content: {
     top: "50%",
@@ -13,22 +13,24 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
   },
 };
-function ResourceMoadal() {
+function UpdateResourceMoadal() {
   const dispatch = useDispatch();
-  const isOpen = useSelector((state) => state.CoursemodalSlice.isOpenResource);
+  const isOpen = useSelector(
+    (state) => state.CoursemodalSlice.isOpenUpResource
+  );
   Modal.setAppElement("#root");
   return (
     <Modal
       isOpen={isOpen}
       // onAfterOpen={afterOpenModal}
-      onRequestClose={() => dispatch(setIsOpenResource(false))}
+      onRequestClose={() => dispatch(setIsOpenUpResource(false))}
       style={customStyles}
       contentLabel="Example Modal"
     >
       {/* <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2> */}
-      <AddResource />
+      <UpdateResource />
     </Modal>
   );
 }
 
-export default ResourceMoadal;
+export default UpdateResourceMoadal;
