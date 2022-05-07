@@ -39,7 +39,7 @@ const UserDropdown = () => {
                 alt="..."
                 style={{ height: "50px", width: "50px" }}
                 className="w-full rounded-full align-middle border-none shadow-lg"
-                src={img !== undefined ? `http://localhost:5050/${img}` : ""}
+                src={img !== undefined ? `${img}` : ""}
               />
             </span>
           ) : (

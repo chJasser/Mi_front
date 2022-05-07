@@ -47,7 +47,7 @@ const MainNav1 = ({ isTop }) => {
   const currentUser = useSelector(
     (state) => state.user.userLogedIn
   );
-  console.log(currentUser)
+ 
   return (
     <div
       className={`nc-MainNav1 relative z-10 ${
@@ -103,7 +103,7 @@ const MainNav1 = ({ isTop }) => {
               <>
             <Avatar
               containerClassName="ring-4 ring-white dark:ring-0 shadow-2xl"
-              imgUrl={base_url + currentUser.profilePicture}
+              imgUrl={currentUser.profilePicture}
               sizeClass="w-10 h-10 text-xl lg:text-2xl lg:w-11 lg:h-11"
               radius="rounded-full"
             />

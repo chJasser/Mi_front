@@ -27,7 +27,7 @@ if (localStorage.token) {
   var token = localStorage.token;
   setAuthToken(token);
   // Decode token and get user info and exp
-  
+
   const decoded = jwt_decode(token);
 
   // Set user and isAuthenticated
@@ -74,3 +74,4 @@ export default function App() {
     </BrowserRouter>
   );
 }
+

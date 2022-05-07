@@ -53,20 +53,20 @@ const SectionSliderproduct = ({
     },
   });
   const [topproducts, settopProducts] = useState([]);
-  const getTopratedproducts=()=>{
+  const getTopratedproducts = () => {
     axios
-    .get("products/Topratedproducts")
-    .then((res) => {
-      //console.log(res.data);
-      settopProducts(res.data);
-    })
-    .catch((err) => {
-      console.log(err.data);
-    });
+      .get("products/Topratedproducts")
+      .then((res) => {
+        //console.log(res.data);
+        settopProducts(res.data);
+      })
+      .catch((err) => {
+        console.log(err.data);
+      });
   }
 
   useEffect(() => {
-    
+
     if (!MY_GLIDE) return;
     MY_GLIDE.mount();
   }, [MY_GLIDE]);
@@ -124,11 +124,11 @@ const SectionSliderproduct = ({
             {topproducts.map((item, index) => (
               <li
                 key={index}
-                className={`glide__slide h-auto  ${
-                  sliderStype === "style2" ? "pb-12 xl:pb-16" : ""
-                }`}
+                className={`glide__slide h-auto  ${sliderStype === "style2" ? "pb-12 xl:pb-16" : ""
+                  }`}
               >
                 <Card9product product={item} />
+               
               </li>
             ))}
           </ul>

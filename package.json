@@ -52,6 +52,7 @@
     "chartist-plugin-tooltips-updated": "^0.1.4",
     "classnames": "2.3.1",
     "dotenv-cra": "^3.0.2",
+    "firebase": "^9.8.0",
     "formik": "^2.2.9",
     "framer-motion": "^6.2.9",
     "heroicons-react": "^1.4.1",

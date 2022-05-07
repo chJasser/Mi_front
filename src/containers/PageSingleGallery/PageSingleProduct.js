@@ -80,7 +80,7 @@ function PageSingleProduct() {
       console.log(response.data.rate);
       setrating(response.data.rate - 1);
     });
-  }, [rate]);
+  }, []);
 
   const Onmouseenter = (index) => {
     sethoverrating(index);

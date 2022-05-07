@@ -17,7 +17,16 @@ import { getCurrentTeacher, login } from "app/slices/userSlice";
 import { useHistory } from "react-router-dom";
 import { showForm } from "app/productslice/Productsliceseller";
 import NcModal from "components/NcModal/NcModal";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  listAll,
+  list,
+} from "firebase/storage";
 
+import { v4 } from "uuid";
+import { storage } from "FireBase";
 const UpdateProduct = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -98,7 +107,30 @@ const UpdateProduct = () => {
     { value: "new", label: "new" },
     { value: "used", label: "used" },
   ];
+  const [loading, setLoading] = useState(false);
+  const [files, setFiles] = useState(null);
+  const [urls, setUrls] = useState([]);
+  const handleChangeImage = (e) => {
+   if(e.target.files){
+    
+    setUrls([])
+    setLoading(true)
+    setFiles(e.target.files.length)
 
+    for (const key of Object.keys(e.target.files)) {
+
+      const imageRef = ref(storage, `images/${e.target.files[key].name + v4()}`);
+      uploadBytes(imageRef, e.target.files[key]).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((url) => {
+          console.log(url.toString())
+          setUrls(oldArray => [...oldArray, url]);
+        });
+      });
+    }
+  }else{
+  setimagesfiles( product.productImage);
+  }
+  }
   const onSubmit = async (values) => {
     var formData = new FormData();
     formData.append("label", values.label);
@@ -129,14 +161,16 @@ const UpdateProduct = () => {
         ? productImage
         : (productImage.FileList.name = product.productImage)
     )) {
-      console.log(productImage);
-      console.log(product.productImage);
-      formData.append(
+     /// console.log(productImage);
+    //  console.log(product.productImage);
+    /*  formData.append(
         "files",
         productImage[key] ? productImage[key] : product.productImage[key]
-      );
-      console.log(productImage[key]);
-      console.log(product.productImage[key]);
+      );*/
+     // console.log(productImage[key]);
+     // console.log(product.productImage[key]);
+     
+     formData.append("urls",urls);
     }
     console.log(values);
     console.log(selectedOptioncategory);
