@@ -49,7 +49,7 @@ const PostCardMeta: FC<PostCardMetaProps> = ({
           <Avatar
             radius="rounded-full"
             sizeClass="h-7 w-7 text-sm"
-            imgUrl={base_url + profilePicture}
+            imgUrl={profilePicture}
             userName={userName}
           />
         )}

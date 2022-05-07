@@ -11,7 +11,7 @@ const CardAuthor2Mi = ({
   hoverReadingTime = true,
 }) => {
   const { userName, profilePicture } = user;
-  const base_url = "http://localhost:5050/";
+
 
   return (
     <Link
@@ -23,7 +23,7 @@ const CardAuthor2Mi = ({
         sizeClass="h-10 w-10 text-base"
         containerClassName="flex-shrink-0 mr-3"
         radius="rounded-full"
-        imgUrl={base_url + profilePicture}
+        imgUrl={profilePicture}
         userName={userName}
       />
       <div>

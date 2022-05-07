@@ -46,6 +46,7 @@ const PageBecomeStudent = ({ className = "", tags = tagsStudent }) => {
   const [success, setSuccess] = useState(null);
   const [studentTags, setTags] = useState([]);
   const dispatch = useDispatch();
+  
   const WidgetStudentTags: FC<WidgetTagsProps> = ({
     className = "bg-neutral-100 dark:bg-neutral-800",
     tags,
@@ -105,7 +106,7 @@ const PageBecomeStudent = ({ className = "", tags = tagsStudent }) => {
         setSuccess(response.data.message);
         dispatch(login(response.data.token));
         dispatch(getCurrentStudent());
-        history.push("/back-office/dashboard");
+        history.push("/mi/classroom/student");
         
       }
     };

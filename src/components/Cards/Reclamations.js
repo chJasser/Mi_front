@@ -2,8 +2,6 @@ import React from "react";
 import ReclamationManagementDropDown from "components/Dropdowns/RecManagementDropDown";
 import Avatar from "components/Avatar/Avatar";
 function Reclamations({ color, reclamations }) {
-  const base_url = "http://localhost:5050/";
-
   return (
     <div
       style={{ marginTop: "75px" }}
@@ -78,7 +76,7 @@ function Reclamations({ color, reclamations }) {
                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                   <Avatar
                     userName={rec.sender.userName}
-                    imgUrl={base_url + rec.sender.profilePicture}
+                    imgUrl={rec.sender.profilePicture}
                   />{" "}
                   <span
                     className={

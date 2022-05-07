@@ -71,7 +71,7 @@ function Teachers({ color, users }) {
                                         <div className="flex-shrink-0 w-10 h-10">
                                             <img
                                                 className="w-full h-full rounded-full"
-                                                src={base_url + user.user.profilePicture}
+                                                src={user.user.profilePicture}
                                                 alt={user.firstName}
                                             />
                                         </div>
@@ -99,16 +99,12 @@ function Teachers({ color, users }) {
                                 </td>
                                 <td className="px-3 py-5 border-b border-gray-200 bg-white text-sm">
                                         {user.degrees.map((el, index) =>
-
                                             <div key={index}><a href={base_url + el}>{el.substring(22)}</a></div>
-
                                         )}
                                 </td>
                                 <td className="px-3 py-5 border-b border-gray-200 bg-white text-sm">
                                         {user.specialties.map((el, index) =>
-
                                             <div key={index}> {el} </div>
-
                                         )}
                                 </td>
                                 <td className="border-t-0 px-3 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">

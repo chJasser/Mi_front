@@ -6,19 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import UpdateProduct from "../../containers/PageDashboard/UpdateProduct";
 import { deleteProduct, deleteProducts } from "app/productslice/Productslice";
 function TableOfProductsBack({ color, prod }) {
-
-   
     const dispatch = useDispatch();
-    const base_url = "http://localhost:5050/";
-
-
-
     const OnclicdeleteProduct = (product) => {
         dispatch(deleteProduct(product._id))
         dispatch(deleteProducts(product._id));
     }
-        
-       
 
     //let p = prod.map(p => {if(p._id === updatedProduct._id){  return {...p ,updatedProduct};} return p});
     // const objIndex = prod.findIndex((obj => obj._id === updatedProduct._id));
@@ -80,7 +72,7 @@ function TableOfProductsBack({ color, prod }) {
                                                         {" "}
                                                         <img
                                                             className="w-full h-full rounded-full"
-                                                            src={base_url + product.productImage[0]}
+                                                            src={ product.productImage[0]}
                                                             alt={product.label}
                                                         />
                                                     </Suspense>

@@ -38,7 +38,7 @@ const Card9product: FC<Card9Props> = ({
   const [rate, setrating] = useState(0);
   const [seller, setseller] = useState({});
   const [isOpen, setIsOpen] = useState(false);
-  const base_url = "http://localhost:5050/";
+
   const rating = () => {
     axios
       .get(`products/getrating/${_id}`)
@@ -123,7 +123,7 @@ const Card9product: FC<Card9Props> = ({
         <NcImage
           containerClassName="absolute inset-0 rounded-3xl"
           className="object-cover w-full h-full rounded-3xl"
-          src={base_url + productImage[0]}
+          src={ productImage[0]}
         />
         <PostTypeFeaturedIcon
           className="absolute top-3 left-3 group-hover:hidden"

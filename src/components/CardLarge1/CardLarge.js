@@ -32,7 +32,7 @@ const CardLarge = ({
       });
   }, []);
 
-  const base_url = "http://localhost:5050/";
+ 
   return (
     <Transition
       appear={true}
@@ -100,7 +100,7 @@ const CardLarge = ({
           <NcImage
             containerClassName="aspect-w-16 aspect-h-12 sm:aspect-h-9 md:aspect-h-14 lg:aspect-h-10 2xl:aspect-h-9 relative"
             className="absolute inset-0 object-cover rounded-3xl"
-            src={base_url + productImage[0]}
+            src={productImage[0]}
             alt={label}
           />
         </Link>

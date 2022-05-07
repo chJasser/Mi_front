@@ -21,7 +21,6 @@ const Payment = ({ className = "" }) => {
   const [loading, setLoading] = useState(false);
   const user = useSelector(userId);
   const cart = useSelector((state) => state.carteslics.cartItems);
-  const base_url = "http://localhost:5050/";
   const dispatch = useDispatch();
   const history = useHistory();
   const calculTot = (items) => {
@@ -152,7 +151,7 @@ const Payment = ({ className = "" }) => {
                           <li key={inedx} className="flex py-6">
                             <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                               <img
-                                src={`${base_url}${item.productImage[0]}`}
+                                src={`${item.productImage[0]}`}
                                 alt={item.label}
                                 className="h-full w-full object-cover object-center"
                               />

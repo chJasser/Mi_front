@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import { Document } from 'react-pdf';
 function Sellers({ color, users }) {
     const history = useHistory;
-    const base_url = "http://localhost:5050/";
     useEffect(() => {
         if (!users) {
             history.push("/mi")
@@ -65,7 +64,7 @@ function Sellers({ color, users }) {
                                         <div className="flex-shrink-0 w-10 h-10">
                                             <img
                                                 className="w-full h-full rounded-full"
-                                                src={base_url + user.user.profilePicture}
+                                                src={user.user.profilePicture}
                                                 alt={user.user.firstName}
                                             />
                                         </div>

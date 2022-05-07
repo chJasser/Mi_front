@@ -37,7 +37,6 @@ const MainNav1 = ({ isTop }) => {
   const totale = useSelector((state) => state.carteslics.total);
   const executeScroll = () => myRef.current.scrollIntoView();
   const myRef = useRef(null);
-  const base_url = "http://localhost:5050/";
   const calculTot = (items) => {
     let total = 0;
     items.map((item) => (total += item.price * item.qte));
@@ -196,7 +195,7 @@ const MainNav1 = ({ isTop }) => {
                               <li key={product.productid} className="flex py-6">
                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                   <img
-                                    src={`${base_url}${product.productImage[0]}`}
+                                    src={`${product.productImage[0]}`}
                                     alt={product.label}
                                     className="h-full w-full object-cover object-center"
                                   />

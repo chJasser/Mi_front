@@ -80,6 +80,8 @@ import Streamer from "containers/Stream/Streamer";
 import StreamHomePage from "containers/Stream/StreamHomePage";
 import MeetRoom from "components/classroom/MeetRoom";
 import StudentDetails from "components/classroom/StudentDetails";
+import IsStudentRoute from "./privateRoutes/IsStudentRoute";
+import IsTeacherRoute from "./privateRoutes/IsTeacherRoute";
 export const pages: Page[] = [
   { path: "/mi", exact: true, component: PageHomeMi },
   { path: "/mi#", exact: true, component: PageHome },
@@ -148,14 +150,6 @@ export const pages: Page[] = [
     path: "/mi/manageproduct",
     component: Manageproduct,
   },
-  /*{
-    path:'/mi/products/:objectID?queryID=:queryID',
-    component:ProductPage,
-   },
-   {
-    path:'/mi/products1/:objectID',
-    component:Productrecommand,
-   },*/
   {
     path: "/mi/Karaoke/:id/:token",
     component: Karaoke,
@@ -278,9 +272,7 @@ export const pages: Page[] = [
     typeRoute: "classroom",
     component: AddCours,
   },
-  //back-office
-
-  //
+ 
 ];
 
 export default function FronOfficeRoutes() {
@@ -329,6 +321,32 @@ export default function FronOfficeRoutes() {
           } else if (typeRoute === "isAuth") {
             return (
               <IsAuthRoute
+                key={path}
+                component={component}
+                exact={!!exact}
+                path={path}
+              />
+            );
+          } else if (
+            path === "/mi/classroom/student" ||
+            path === "/mi/classroom/student/details/:id"
+          ) {
+            return (
+              <IsStudentRoute
+                key={path}
+                component={component}
+                exact={!!exact}
+                path={path}
+              />
+            );
+          } else if (
+            path === "/mi/classroom/teacher" ||
+            path === "/mi/classroom/teacher/update" ||
+            path === "/mi/classroom/teacher/details/:id" ||
+            path === "/mi/classroom/teacher/add"
+          ) {
+            return (
+              <IsTeacherRoute
                 key={path}
                 component={component}
                 exact={!!exact}

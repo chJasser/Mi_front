@@ -9,7 +9,7 @@ import { populateProducts } from "../../app/productslice/Productslice";
 import { useDispatch, useSelector } from "react-redux";
 
 const CardSeller = ({ className = "", seller, id, author }) => {
-  const base_url = "http://localhost:5050/";
+ 
   // const { userName, email, profilePicture, phoneNumber, about } = seller;
   //console.log(profilePicture);
   //const {bgImage} = author;
@@ -100,7 +100,7 @@ const CardSeller = ({ className = "", seller, id, author }) => {
           containerClassName="ring-2 ring-white"
           sizeClass="w-16 h-16 text-2xl"
           radius="rounded-full"
-          imgUrl={base_url + sel.profilePicture}
+          imgUrl={sel.profilePicture}
           userName={sel.userName}
         />
         <div className="mt-3">

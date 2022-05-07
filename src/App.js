@@ -13,13 +13,10 @@ import { useEffect } from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import FronOfficeRoutes from "routers/FrontOfficeRoutes";
 import BackOfficeRoutes from "routers/BackOfficeRoutes";
-import IsAuthRoute from "routers/privateRoutes/IsAuthRoute";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./assets/styles/tailwind.css";
-import IsAuthRouteAndAdmin from "routers/privateRoutes/isAuthAndAdminRoute";
-import Dashboard from "views/admin/Dashboard";
-import Tables from "views/admin/Tables";
-import aa from "search-insights";
+
+import IsAdminRoute from "routers/privateRoutes/IsAdminRoute";
 
 
 if (localStorage.token) {
@@ -67,7 +64,7 @@ export default function App() {
       <Switch>
         <Route path="/mi" render={(props) => <FronOfficeRoutes {...props} />} />
 
-        <IsAuthRoute path="/back-office" component={BackOfficeRoutes} />
+        <IsAdminRoute path="/back-office" component={BackOfficeRoutes} />
 
         <Redirect from="*" to="/mi" />
       </Switch>

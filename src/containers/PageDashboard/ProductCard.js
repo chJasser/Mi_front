@@ -8,7 +8,7 @@ import { selectrecommandprod } from 'app/productslice/Productsliceseller';
 import algoliasearch from "algoliasearch/lite";
 const Product = ({hit ,insights}) => {
   const url =`/mi/products/${hit.objectID}queryID=${hit.__queryID}`;
-  const base_url = "http://localhost:5050/";
+
   const dispatch=useDispatch();
   const client = algoliasearch(
     '1RY92FSHMF',

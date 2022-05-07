@@ -3,7 +3,7 @@ import NcImage from "components/NcImage/NcImage";
 import { ProductDataType } from "data/types";
 import useIntersectionObserver from "hooks/useIntersectionObserver";
 
-const base_url = "http://localhost:5050/";
+
 export interface ProductFeaturedMediaProps {
   className?: string;
   isHover?: boolean;
@@ -47,7 +47,7 @@ const ProductFeaturedMedia: FC<ProductFeaturedMediaProps> = ({
     >
       <NcImage
         containerClassName="absolute inset-0"
-        src={base_url + productImage[0]}
+        src={ productImage[0]}
         alt="image"
       />
 

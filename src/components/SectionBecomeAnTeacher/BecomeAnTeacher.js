@@ -88,7 +88,7 @@ const PageTeacher = ({ className = "" }) => {
       setSuccess(response.data.message);
       dispatch(login(response.data.token));
       dispatch(getCurrentTeacher());
-      history.push("/back-office/dashboard");
+      history.push("/mi/classroom/teacher");
     }
   };
 

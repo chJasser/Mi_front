@@ -5,8 +5,6 @@ import axios from "axiosInstance";
 import { useDispatch, useSelector } from "react-redux";
 
 function ProductComment(props) {
-  const base_url = "http://localhost:5050/";
-
   const className = "";
   const { review } = props;
   const [user, setUser] = useState({});
@@ -29,7 +27,7 @@ function ProductComment(props) {
         data-comment-id={review._id}
       >
         <Avatar
-          imgUrl={base_url + profilePicture}
+          imgUrl={profilePicture}
           userName={userName}
           sizeClass={`h-6 w-6 text-base sm:text-lg sm:h-8 sm:w-8`}
           radius="rounded-full"

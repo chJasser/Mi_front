@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import PaginationSimple from "components/Pagination/PaginationSimple";
 import Reclamations from "./Reclamations";
 export default function CardTableReclamations({ color }) {
-  const base_url = "http://localhost:5050/";
   const recs = useSelector(
     (state) => state.reclamationsManagement.reclamations
   );

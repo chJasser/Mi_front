@@ -33,7 +33,7 @@ function PageSingleProduct() {
   /**
    *
    */
-  const base_url = "http://localhost:5050/";
+
   const dispatch = useDispatch();
   /**
    *
@@ -261,7 +261,7 @@ function PageSingleProduct() {
                     <Avatar
                       radius="rounded-full"
                       sizeClass="h-10 w-10 text-xl"
-                      imgUrl={base_url + profilePicture}
+                      imgUrl={profilePicture}
                       userName={userName}
                     />
                   )}
@@ -376,7 +376,7 @@ function PageSingleProduct() {
                 <NcImage
                   containerClassName="aspect-w-2 aspect-h-1"
                   className="object-cover w-full h-full rounded-xl"
-                  src={base_url + prod.productImage[0]}
+                  src={ prod.productImage[0]}
                 />
                 <div className="absolute inset-0 bg-neutral-900 bg-opacity-20 opacity-0 hover:opacity-100 transition-opacity"></div>
               </div>
@@ -392,7 +392,7 @@ function PageSingleProduct() {
                     <NcImage
                       containerClassName="aspect-w-6 aspect-h-5"
                       className="object-cover w-full h-full rounded-xl "
-                      src={base_url + item || ""}
+                      src={item || ""}
                     />
 
                     {/* OVERLAY */}

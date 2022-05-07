@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import PaginationSimple from "components/Pagination/PaginationSimple";
 import Invoices from "./Invoices";
 export default function CardInvoices({ color }) {
-    const base_url = "http://localhost:5050/";
     const recs = useSelector(
         (state) => {
             return state.invoices.invoices;

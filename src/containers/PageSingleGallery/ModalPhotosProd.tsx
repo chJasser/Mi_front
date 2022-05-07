@@ -19,8 +19,6 @@ const ModalPhotosProd: FC<ModalPhotosProps> = ({
   initFocus = 0,
 }) => {
   const UNIQUE_CLASS = "modalPhotos-single-gallery";
-  const base_url = "http://localhost:5050/";
-
   useEffect(() => {
     if (!isOpen) return;
     if (!document.querySelector(`.${UNIQUE_CLASS}`)) {
@@ -65,7 +63,7 @@ const ModalPhotosProd: FC<ModalPhotosProps> = ({
             {imgs.map((item, index) => (
               <li className="glide__slide h-full relative" key={index}>
                 <NcImage
-                  src={base_url + item}
+                  src={item}
                   containerClassName="w-full h-full"
                   className="absolute object-contain w-full h-full"
                 />

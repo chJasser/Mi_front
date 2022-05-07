@@ -9,7 +9,6 @@ export interface PostCardMetaProps {
   hiddenAvatar?: boolean;
   size?: "large" | "normal";
 }
-const base_url = "http://localhost:5050/";
 
 const PostMetaProduct: FC<PostCardMetaProps> = ({
   className = "leading-none",
@@ -50,7 +49,7 @@ const PostMetaProduct: FC<PostCardMetaProps> = ({
             sizeClass={
               size === "normal" ? "h-7 w-7 text-sm" : "h-10 w-10 text-xl"
             }
-            imgUrl={base_url + profilePicture}
+            imgUrl={profilePicture}
             userName={userName}
           />
         )}

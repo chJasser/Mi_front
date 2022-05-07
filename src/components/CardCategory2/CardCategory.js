@@ -10,13 +10,12 @@ const CardCategory = ({ category, products }) => {
   const [nbr, setNbrParCategory] = useState(0);
   const [name, setName] = useState("Article");
   const [image, setImage] = useState();
-  const base_url = "http://localhost:5050/";
   useEffect(() => {
     axios
       .get(`products/fiter?category=${category}`)
       .then((res) => {
         if (res.data.length !== 0) {
-          setImage(base_url + res.data[0].productImage[0]);
+          setImage(res.data[0].productImage[0]);
         }
         setName(category);
         setNbrParCategory(res.data.length);

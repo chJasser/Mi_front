@@ -1,41 +1,21 @@
-import ButtonPrimary from "components/Button/ButtonPrimary";
-import ButtonSecondary from "components/Button/ButtonSecondary";
-import ButtonThird from "components/Button/ButtonThird";
+
 import React, { Suspense, useEffect, useState } from "react";
 import axios from "axiosInstance";
 import PropTypes from "prop-types";
 import ProductManagement from "components/Dropdowns/ProductMangement";
-import {
-  deletesellerProduct,
-  addProduct,
-  selectsellerProduct,
-  populatesellerProducts,
-} from "app/productslice/Productsliceseller";
+
 import { useDispatch, useSelector } from "react-redux";
-import Cardproducts from "./Cardproducts";
-import UpdateProduct from "../../containers/PageDashboard/UpdateProduct";
+
 function TableOfProducts({ color, prod }) {
   const [products, setproducts] = useState([]);
   const openn = useSelector((state) => state.product.open);
-  const [open, setopen] = useState(openn);
-  const dispatch = useDispatch();
-  const products1 = useSelector((state) => state.productseller.products);
-  const show = useSelector((state) => state.productseller.show);
-  const changedProduct = useSelector((state) => state.productseller.changedProduct);
-  const base_url = "http://localhost:5050/";
 
   useEffect(() => {
     axios.get("/products/getproductsseller").then((res) => {
-      // console.log(res.data);
-      //dispatch(populatesellerProducts(res.data));
-      console.log(prod)
       setproducts(res.data);
     });
   }, []);
-  //let p = prod.map(p => {if(p._id === updatedProduct._id){  return {...p ,updatedProduct};} return p});
-  // const objIndex = prod.findIndex((obj => obj._id === updatedProduct._id));
-  // prod[objIndex] = updatedProduct;
-  //console.log(prod)
+
   return (
     <>
       <div
@@ -89,20 +69,11 @@ function TableOfProducts({ color, prod }) {
                       <div className="flex items-center">
                         <div className="flex-shrink-0 w-10 h-10">
                           <Suspense fallback={null}>
-                            {" "}
-                            {/* {(product._id !== changedProduct._id)? */}
                             <img
                               className="w-full h-full rounded-full"
-                              src={base_url + product.productImage[0]}
+                              src={product.productImage[0]}
                               alt={product.label}
                             />
-                            {/* :
-                            <img
-                              className="w-full h-full rounded-full"
-                              src={base_url + changedProduct.productImage[0] }
-                              alt={product.label}
-                            />
-                            } */}
                           </Suspense>
                         </div>
                         <div className="ml-3">

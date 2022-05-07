@@ -13,20 +13,11 @@ import { Formik } from "formik";
 import makeAnimated from "react-select/animated";
 import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentTeacher, login } from "app/slices/userSlice";
+
 import { useHistory } from "react-router-dom";
 import { showForm } from "app/productslice/Productsliceseller";
-import NcModal from "components/NcModal/NcModal";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  listAll,
-  list,
-} from "firebase/storage";
 
-import { v4 } from "uuid";
-import { storage } from "FireBase";
+
 const UpdateProduct = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -53,8 +44,7 @@ const UpdateProduct = () => {
   });
 
   const product = useSelector((state) => state.productseller.selectedProduct);
-  console.log(product);
-  console.log(productImage);
+
 
   const [selectedOptiontype, setSelectedOptiontype] = useState(product.type);
   const [selectedOptioncategory, setSelectedOptincategory] = useState(
@@ -110,27 +100,9 @@ const UpdateProduct = () => {
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState(null);
   const [urls, setUrls] = useState([]);
-  const handleChangeImage = (e) => {
-   if(e.target.files){
-    
-    setUrls([])
-    setLoading(true)
-    setFiles(e.target.files.length)
 
-    for (const key of Object.keys(e.target.files)) {
 
-      const imageRef = ref(storage, `images/${e.target.files[key].name + v4()}`);
-      uploadBytes(imageRef, e.target.files[key]).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then((url) => {
-          console.log(url.toString())
-          setUrls(oldArray => [...oldArray, url]);
-        });
-      });
-    }
-  }else{
-  setimagesfiles( product.productImage);
-  }
-  }
+
   const onSubmit = async (values) => {
     var formData = new FormData();
     formData.append("label", values.label);
@@ -156,21 +128,19 @@ const UpdateProduct = () => {
       "state",
       selectedOptionstate.value ? selectedOptionstate.value : product.state
     );
-    for (const key of Object.keys(
-      productImage
-        ? productImage
-        : (productImage.FileList.name = product.productImage)
+    for (const key of Object.keys(productImage ? productImage
+      : (productImage.FileList.name = product.productImage)
     )) {
-     /// console.log(productImage);
-    //  console.log(product.productImage);
-    /*  formData.append(
-        "files",
-        productImage[key] ? productImage[key] : product.productImage[key]
-      );*/
-     // console.log(productImage[key]);
-     // console.log(product.productImage[key]);
-     
-     formData.append("urls",urls);
+      /// console.log(productImage);
+      //  console.log(product.productImage);
+      /*  formData.append(
+          "files",
+          productImage[key] ? productImage[key] : product.productImage[key]
+        );*/
+      // console.log(productImage[key]);
+      // console.log(product.productImage[key]);
+
+      formData.append("urls", urls);
     }
     console.log(values);
     console.log(selectedOptioncategory);
@@ -365,9 +335,10 @@ const UpdateProduct = () => {
                 setimagesfiles(
                   event.target.files ? event.target.files : product.productImage
                 );
+   
               }}
               multiple
-              //value={product.productImage}
+            //value={product.productImage}
             />
             {touched.productImage && errors.productImage ? (
               <Alert severity="error">{errors.productImage}</Alert>
@@ -378,7 +349,7 @@ const UpdateProduct = () => {
               Update product
             </ButtonPrimary>
             <ButtonPrimary className="md:col-span-2"
-            onClick={() => dispatch(showForm(false))}
+              onClick={() => dispatch(showForm(false))}
             >
               Cancel
             </ButtonPrimary>

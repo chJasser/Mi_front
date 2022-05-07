@@ -4,7 +4,6 @@ import Avatar from "components/Avatar/Avatar";
 import { useDispatch } from "react-redux";
 import { deleteInvoice } from "app/invoices/InvoiceSlice";
 function Reclamations({ color, invoices }) {
-    const base_url = "http://localhost:5050/";
     const dispatch = useDispatch();
     return (
         <div
@@ -103,7 +102,7 @@ function Reclamations({ color, invoices }) {
                                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                                     <Avatar
                                         userName={item.customer.userName}
-                                        imgUrl={base_url + item.customer.profilePicture}
+                                        imgUrl={item.customer.profilePicture}
                                     />
                                     <span
                                         className={

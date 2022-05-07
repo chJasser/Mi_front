@@ -29,13 +29,12 @@ export default function ProductScreen(props) {
     qte:qty,
 
   }
-   const base_url = "http://localhost:5050/";
     return (
       <div>
        {/*<Link to="/">Back to result</Link>*/} 
         <div className="row top">
           <div className="col-1">
-            <img className="img large" src={base_url+productImage} alt={category}></img>
+            <img className="img large" src={productImage} alt={category}></img>
           </div>
           <div className="col-12">
             <ul>

@@ -11,7 +11,7 @@ import { Alert } from "@mui/material";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { getCurrentSeller, login } from "app/slices/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 export interface PageContactProps {
   className?: string;
@@ -33,6 +33,7 @@ const info = [
 ];
 
 const PageSeller: FC<PageContactProps> = ({ className = "" }) => {
+
   const history = useHistory();
   const [errors, setErrors] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -61,8 +62,7 @@ const PageSeller: FC<PageContactProps> = ({ className = "" }) => {
         setSuccess(response.data.message);
         dispatch(login(response.data.token));
         dispatch(getCurrentSeller());
-        history.push("/back-office/dashboard");
-      
+        history.push(`/mi/author/the-demo-author-slug?seller=${response.data.id}`);
       }
     };
 

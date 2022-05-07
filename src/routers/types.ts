@@ -73,7 +73,7 @@ export interface LocationStates {
   "/mi/classroom/teacher/details/:id"?: {};
   "/mi/classroom/teacher/add"?: {};
   "/mi/classroom/teacher/update"?: {};
-  "/mi/classroom/teacher/details/:id"?: {};
+  "/mi/classroom/student/details/:id"?: {};
   "/mi/classroom/student/:id"?: {};
   "/mi/payment"?: {};
   "/mi/invoice/:id"?: {};

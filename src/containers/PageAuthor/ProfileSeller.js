@@ -42,8 +42,6 @@ const ProfileSeller = ({ className = "" }) => {
 
   const seller1 = useSelector((state) => state.user.currentSeller);
 
-  const base_url = "http://localhost:5050/";
-
   const [tabActive, setTabActive] = useState(TABS[0]);
 
   const handleClickTab = (item) => {
@@ -115,7 +113,7 @@ const ProfileSeller = ({ className = "" }) => {
           <div className=" bg-white dark:bg-neutral-900 dark:border dark:border-neutral-700 p-5 lg:p-16 rounded-[40px] shadow-2xl flex flex-col sm:flex-row sm:items-center">
             <Avatar
               containerClassName="ring-4 ring-white dark:ring-0 shadow-2xl"
-              imgUrl={base_url + seller.profilePicture}
+              imgUrl={seller.profilePicture}
               sizeClass="w-20 h-20 text-xl lg:text-2xl lg:w-36 lg:h-36"
               radius="rounded-full"
             />

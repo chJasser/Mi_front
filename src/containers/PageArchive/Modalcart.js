@@ -37,7 +37,6 @@ export default function Example() {
   const [open, setOpen] = useState(false);
   const totale = useSelector((state) => state.carteslics.total);
   const carteitems = useSelector((state) => state.carteslics.cartItems);
-  const base_url = "http://localhost:5050/";
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -95,7 +94,7 @@ export default function Example() {
                             <li key={product.productid} className="flex py-6">
                               <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                 <img
-                                  src={`${base_url}${product.productImage}`}
+                                  src={`${product.productImage}`}
                                   alt={product.label}
                                   className="h-full w-full object-cover object-center"
                                 />
