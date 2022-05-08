@@ -13,19 +13,14 @@ import {
 import { Document, Page, pdfjs } from "react-pdf";
 import UpdateResourceMoadal from "./updateResourceModal";
 import Meet from "./meet";
+import PlayAudio from "./PlayAudio";
 function CourseContent({ course }) {
-  pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
   const dispatch = useDispatch();
   const change = useSelector((state) => state.courseSlice.changeResource);
   const [resources, setResources] = useState([]);
   const selected = useSelector((state) => state.courseSlice.selectedCourse);
   const chapter = useSelector((state) => state.courseSlice.chapter);
-  const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
 
-  function onDocumentLoadSuccess({ numPages }) {
-    setNumPages(numPages);
-  }
   const base_url = "http://localhost:5050/data/resources/";
   const deleteResource = (resource) => {
     axios
@@ -101,12 +96,21 @@ function CourseContent({ course }) {
                   />
                 )}
                 {resource.type.startsWith("audio") && (
-                  <ReactAudioPlayer
-                    className="w-90 h-90"
-                    src={`${base_url + resource.path}`}
-                    controls
-                    // other props here
-                  />
+                  // <ReactAudioPlayer
+                  //   className="w-90 h-90"
+                  //   src={`${base_url + resource.path}`}
+                  //   controls
+                  //   // other props here
+                  // />
+                  <>
+                    <br></br>
+                    <div className="mt-8 lg:mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                      <PlayAudio
+                        image={course.CourseImage}
+                        resource={resource}
+                      />
+                    </div>
+                  </>
                 )}
                 {resource.type === "application/pdf" && (
                   <>

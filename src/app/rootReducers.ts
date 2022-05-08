@@ -20,6 +20,7 @@ import CoursemodalSlice from "./slices/modalSlice";
 import courseSlice from "./slices/courseSlice";
 import StreamSlice from "./streamSlice/liveRooms";
 import InvoiceSlice from "./invoices/InvoiceSlice";
+import ResourceAudioRunningState from "components/classroom/mediaRunning";
 
 const rootReducers = {
   bookmark: bookmarkReducer,
@@ -43,6 +44,7 @@ const rootReducers = {
   CoursemodalSlice: CoursemodalSlice,
   courseSlice: courseSlice,
   stream: StreamSlice,
+  ResourceAudioRunningState: ResourceAudioRunningState,
 };
 
 export default rootReducers;

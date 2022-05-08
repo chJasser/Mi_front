@@ -7,6 +7,7 @@ import PostCardLikeAndComment from "components/PostCardLikeAndComment/PostCardLi
 import musicWave from "images/musicWave.png";
 import ButtonPlayMusicRunningContainer from "containers/ButtonPlayMusicRunningContainer/ButtonPlayMusicRunningContainer";
 import NcImage from "components/NcImage/NcImage";
+import ButtonPlayMusic from "./ButtonPlayMusic";
 function PlayAudio({ image, resource }) {
   const base_url = "http://localhost:5050/data/resources/";
   const href = base_url + resource.path;
@@ -83,12 +84,13 @@ function PlayAudio({ image, resource }) {
           <div className={`flex-grow `}>
             <img src={musicWave} alt="musicWave" />
           </div>
-          {/* <ButtonPlayMusicRunningContainer
-            post={post}
+          <ButtonPlayMusic
+            image={image}
+            resource={resource}
             renderDefaultBtn={() => renderListenButtonDefault()}
             renderPlayingBtn={() => renderListenButtonDefault("playing")}
             renderLoadingBtn={() => renderListenButtonDefault("loading")}
-          /> */}
+          />
         </div>
         <div className="p-5 mt-5 bg-white dark:bg-neutral-900 shadow-xl dark:shadow-2xl rounded-3xl rounded-tl-none flex flex-col flex-grow ">
           <h2 className="nc-card-title block text-xl font-semibold text-neutral-900 dark:text-neutral-100 ">
