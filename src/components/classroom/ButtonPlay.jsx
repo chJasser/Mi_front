@@ -6,34 +6,25 @@ import {
   MediaRunningState,
   addNewListPostAudio,
   selectCurrentMediaRunning,
-} from "app/mediaRunning/mediaRunning";
+} from "./mediaRunning";
 import LoadingVideo from "components/LoadingVideo/LoadingVideo";
 import iconPlaying from "images/icon-playing.gif";
 import PostTypeFeaturedIcon from "components/PostTypeFeaturedIcon/PostTypeFeaturedIcon";
 import { PostDataType } from "data/types";
 import isSafariBrowser from "utils/isSafariBrowser";
+import { useSelector } from "react-redux";
 
-export interface ButtonPlayMusic {
-  className?: string;
-  post: PostDataType;
-  renderChildren?: (
-    isCurrentRunning: boolean,
-    state: MediaRunningState["state"]
-  ) => ReactNode;
-  renderDefaultBtn?: () => ReactNode;
-  renderLoadingBtn?: () => ReactNode;
-  renderPlayingBtn?: () => ReactNode;
-}
-
-const ButtonPlayMusicRunningContainer: FC<ButtonPlayMusic> = ({
+const ButtonPlayMusic = ({
   className = "",
-  post,
+  resource,
   renderChildren,
   renderDefaultBtn,
   renderLoadingBtn,
   renderPlayingBtn,
 }) => {
-  const currentMediaRunning = useAppSelector(selectCurrentMediaRunning);
+  const currentMediaRunning = useSelector(
+    (state) => state.ResourceAudioRunningState
+  );
   const dispatch = useAppDispatch();
 
   // STATE
@@ -42,34 +33,38 @@ const ButtonPlayMusicRunningContainer: FC<ButtonPlayMusic> = ({
   //
   useEffect(() => {
     // check safari
-    if (!post || !isSafariBrowser()) {
+    if (!resource || !isSafariBrowser()) {
       return;
     }
-    dispatch(addNewListPostAudio(post));
-  }, [post]);
+    dispatch(addNewListPostAudio(resource));
+  }, [resource]);
+  useEffect(() => {
+    console.log(resource);
+    console.log(currentMediaRunning.state);
+  }, []);
   //
 
   const handleClickNewAudio = () => {
     return dispatch(
       changeCurrentMediaRunning({
-        postData: post,
+        postData: resource,
         state: "loading",
       })
     );
   };
 
   const handleClickNewAudioWhenMediaRunning = () => {
-    if (post.audioUrl === currentMediaRunning.postData?.audioUrl) {
+    if (resource.path === currentMediaRunning.resource.path) {
       return dispatch(
         changeCurrentMediaRunning({
-          postData: post,
+          resourceData: resource,
           state: "playing",
         })
       );
     }
     return dispatch(
       changeCurrentMediaRunning({
-        postData: post,
+        resourceData: resource,
         state: "loading",
       })
     );
@@ -77,12 +72,12 @@ const ButtonPlayMusicRunningContainer: FC<ButtonPlayMusic> = ({
 
   const handleClickButton = () => {
     // IF NOT EXIST MEDIA
-    if (!currentMediaRunning.postData || !currentMediaRunning.state) {
+    if (!currentMediaRunning.resource || !currentMediaRunning.state) {
       return handleClickNewAudio();
     }
 
     // IF MEDIA RUNNING AND CLICK OTHER POST
-    if (currentMediaRunning.postData.id !== post.id) {
+    if (currentMediaRunning.resourceData._id !== resource._id) {
       return handleClickNewAudioWhenMediaRunning();
     }
 
@@ -111,11 +106,10 @@ const ButtonPlayMusicRunningContainer: FC<ButtonPlayMusic> = ({
 
   const _renderLoadingBtn = () => {
     // RENDER DEFAULT IF IT NOT CURRENT
-    if (currentMediaRunning.postData?.id !== post.id) {
+    if (currentMediaRunning.resource?._id !== resource._id) {
       return _renderDefaultBtn();
     }
 
-    // RENDER WHEN IS CURRENT
     if (renderLoadingBtn) {
       return renderLoadingBtn();
     }
@@ -124,7 +118,7 @@ const ButtonPlayMusicRunningContainer: FC<ButtonPlayMusic> = ({
 
   const _renderPlayingBtn = () => {
     // RENDER DEFAULT IF IT NOT CURRENT
-    if (currentMediaRunning.postData?.id !== post.id) {
+    if (currentMediaRunning.resource?._id !== resource._id) {
       return _renderDefaultBtn();
     }
 
@@ -147,7 +141,10 @@ const ButtonPlayMusicRunningContainer: FC<ButtonPlayMusic> = ({
       onClick={handleClickButton}
     >
       {renderChildren ? (
-        renderChildren(currentMediaRunning.postData?.id === post.id, mediaState)
+        renderChildren(
+          currentMediaRunning.resource?._id === resource._id,
+          mediaState
+        )
       ) : (
         <>
           {(!mediaState || mediaState === "paused" || mediaState === "ended") &&

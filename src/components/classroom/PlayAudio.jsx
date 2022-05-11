@@ -7,13 +7,13 @@ import PostCardLikeAndComment from "components/PostCardLikeAndComment/PostCardLi
 import musicWave from "images/musicWave.png";
 import ButtonPlayMusicRunningContainer from "containers/ButtonPlayMusicRunningContainer/ButtonPlayMusicRunningContainer";
 import NcImage from "components/NcImage/NcImage";
-import ButtonPlayMusic from "./ButtonPlayMusic";
-function PlayAudio({ image, resource }) {
+import ButtonPlayMusic from "./ButtonPlay";
+import { ReactAudioPlayer } from "react-audio-player";
+function PlayAudio({ resource }) {
   const base_url = "http://localhost:5050/data/resources/";
   const href = base_url + resource.path;
   const desc = resource.description;
   const title = resource.title;
-  const featuredImage = "http://localhost:5050/data/image/" + image;
   const renderIcon = (state) => {
     if (!state) {
       return (
@@ -68,12 +68,15 @@ function PlayAudio({ image, resource }) {
         to={href}
         className={`block flex-shrink-0 relative w-full rounded-3xl overflow-hidden "aspect-w-3 xl:aspect-w-4 aspect-h-3"`}
       >
-        <NcImage src={featuredImage} />
+        <NcImage src="https://images.pexels.com/photos/144429/pexels-photo-144429.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" />
         <span className="bg-neutral-900 bg-opacity-30"></span>
       </Link>
 
       {/* ABSOLUTE */}
       <Link to={href} className="absolute inset-0"></Link>
+      <span className="absolute top-3 inset-x-3">
+        <CategoryBadgeList categories={"audio"} />
+      </span>
       {/* MAIN CONTENT */}
       <div className="w-11/12 transform -mt-32 ">
         <div
@@ -84,12 +87,11 @@ function PlayAudio({ image, resource }) {
           <div className={`flex-grow `}>
             <img src={musicWave} alt="musicWave" />
           </div>
-          <ButtonPlayMusic
-            image={image}
-            resource={resource}
-            renderDefaultBtn={() => renderListenButtonDefault()}
-            renderPlayingBtn={() => renderListenButtonDefault("playing")}
-            renderLoadingBtn={() => renderListenButtonDefault("loading")}
+          <ReactAudioPlayer
+            className="w-90 h-90"
+            src={`${base_url + resource.path}`}
+            controls
+            // other props here
           />
         </div>
         <div className="p-5 mt-5 bg-white dark:bg-neutral-900 shadow-xl dark:shadow-2xl rounded-3xl rounded-tl-none flex flex-col flex-grow ">

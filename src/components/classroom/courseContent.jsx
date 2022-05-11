@@ -96,19 +96,10 @@ function CourseContent({ course }) {
                   />
                 )}
                 {resource.type.startsWith("audio") && (
-                  // <ReactAudioPlayer
-                  //   className="w-90 h-90"
-                  //   src={`${base_url + resource.path}`}
-                  //   controls
-                  //   // other props here
-                  // />
                   <>
                     <br></br>
                     <div className="mt-8 lg:mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                      <PlayAudio
-                        image={course.CourseImage}
-                        resource={resource}
-                      />
+                      <PlayAudio resource={resource} />
                     </div>
                   </>
                 )}
